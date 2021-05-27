@@ -1,105 +1,20 @@
-# Guide
+# Work in progress
 
-## Tech stack
+# react-flow-editor
 
-- [typescript](https://www.typescriptlang.org/)
-- [nodejs](https://nodejs.org/)
-- [Yarn](https://classic.yarnpkg.com/)
-- [React.js](https://reactjs.org/)
-- [rollup.js](https://rollupjs.org/)
-- [jest](https://jestjs.io/)
-- [storybook](https://storybook.js.org/)
+## Overview
 
-## Setting up your develop environment
+React component to create graphic user interface with:
 
-- Install nodejs(version >= 12.*): https://nodejs.org/en/
-- Install yarn(version >= 1.12.*): https://classic.yarnpkg.com/
-- Clone the repository to your dev machine.
-- Run ```yarn``` at root directory.
-- Enjoy working.
+- draggable nodes with ports and edges on a directed graph editor.
+- extensibility to customize the widgets or behaviors.
+- accessbility and testability support
 
-## Creating a new component package
+## About the name "react-flow-editor"
 
-Run:
-
-```yarn new```
-
-Then follow the prompts. 
-
-## Yarn commands available in default package template.
-
-### Build
-
-``` 
-yarn build
-```
-
-Using src/index.ts as the entry point, to bundle all source files, including typescript(.ts), sass(.scss) and json(.json), into 3 bundled files: ESM + UMD(unminifiled) + UMD(minifiled).
-
-### Test
-
-```
-yarn test
-```
-
-Using jest for unit testing. Test suites under ./test folder.
-
-### Lint
-
-```
-yarn lint
-```
-
-Using eslint for code linting. If you'd prefer to see only errors and ignore all warnings. Run
-
-```
-yarn lint --quite
-```
-
-### Start
-
-```
-yarn start
-```
-
-Starting local storybook demos and docs at http://localhost:5000
-
-## Full build
-
-Run "yarn build" at root directory for full build.
-
-```
-yarn build
-```
-
-- Run the build script in each package. Thus, in case you create some packages without using the default package template, make sure to specify the "build" script in your package.json.
-
-
-## Start demo
-
-Run "yarn start" at root directory and follow the prompt to select the target package for demo.
-
-- All local packages will be linked together in the setup steps. There is alias configs in common storybook config will resolve all local dependencies to source file. So every local editing will trigger the demo reloading.
-
-
-## Test and lint
-
-At root directory, run
-
-```
-yarn test
-```
-
-```
-yarn lint
-```
-
-- "-u" option is not available at root directory. Change the working directory to target package to update jest snapshots.
-
-## Versioning
-
-- All local dependencies should match the local version. Run "yarn updatePackageJson" to ensure that.
-- Common external dependencies should have the same version exactly.
+- react: it is a react component created from scratch.
+- flow: directed acyclic graph editor. Our a11y solution assumes the graph is a DAG. If you intend to turn off the a11y features, it is fine to draw undirected or cyclic graph with this component.
+- editor: it supports readonly graphic data visualization. However the reason you choose this library is the highlight in the user interaction to create/edit a graph.
 
 ## Contributing
 

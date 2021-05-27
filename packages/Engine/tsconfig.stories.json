@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./"
+  },
+  "include": [
+    "src/**/*",
+    "stories/**/*",
+    "rollup.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "scripts"
+  ],
+  "typeRoots": [
+    "./node_modules/@types",
+    "./src/@types/"
+  ]
+}

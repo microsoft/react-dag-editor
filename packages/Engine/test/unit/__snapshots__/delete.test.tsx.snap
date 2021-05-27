@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should delete related edges: events 1`] = `Array []`;
+
+exports[`should do nothing if delete disabled: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+]
+`;
+
+exports[`should do nothing if nothing selected: events 1`] = `Array []`;
+
+exports[`should only delete edge: events 1`] = `Array []`;
+
+exports[`should only delete node: events 1`] = `Array []`;

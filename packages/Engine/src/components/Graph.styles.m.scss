@@ -1,0 +1,60 @@
+// use static css file here
+// if we use css-in-js, classNames are generated in Graph component
+// while node dragged out from module list can't get then className
+
+.svg {
+  position: absolute;
+  overflow: visible;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.node {
+  cursor: move;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.button-a11y {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.adding-node-svg {
+  z-index: 1000000;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.module-item {
+  user-select: none;
+  cursor: pointer;
+}
+
+.minimap {
+  height: 320px;
+  width: 320px;
+  user-select: none;
+  touch-action: none;
+
+  &-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

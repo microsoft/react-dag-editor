@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "@react-flow-editor-common/demo",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "dependencies": {
+    "circular-dependency-plugin": "^5.2.0",
+    "worker-plugin": "^5.0.0"
+  }
+}

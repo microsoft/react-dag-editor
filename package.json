@@ -1,0 +1,41 @@
+{
+  "private": true,
+  "scripts": {
+    "auth": "npx vsts-npm-auth -config .npmrc",
+    "lint": "lerna run lint",
+    "lintfix": "lerna run lintfix",
+    "build": "lerna run build",
+    "test": "jest && lerna run test",
+    "publish-packages": "git update-index --assume-unchanged .npmrc && lerna publish from-package --registry https://msdata.pkgs.visualstudio.com/_packaging/vienna-shared-ux/npm/registry/ --yes --no-git-reset",
+    "start": "node ./scripts/run-demo.js",
+    "updatePackageJson": "node ./scripts/edit-package-json.js",
+    "run-demo": "node ./scripts/run-demo.js",
+    "new": "node ./scripts/new-package.js",
+    "bump": "node ./scripts/bump-version.js"
+  },
+  "devDependencies": {
+    "execa": "^5.0.0",
+    "glob": "^7.1.6",
+    "glob-array": "^1.0.0",
+    "jest": "^26.4.2",
+    "lerna": "^3.22.1",
+    "prettier-package-json": "2.1.3",
+    "prompts": "^2.4.1",
+    "semver": "^7.3.5",
+    "yeoman-environment": "^3.2.0",
+    "yo": "^3.1.1"
+  },
+  "workspaces": [
+    "packages/*",
+    "shared/*"
+  ],
+  "engines": {
+    "node": ">=12.*",
+    "yarn": ">=1.12.*"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/test/*.test.js"
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "name": "node-1",
+      "x": 100,
+      "y": 100,
+      "ports": [{ "id": "port", "name": "port" }]
+    },
+    {
+      "id": "2",
+      "name": "node-2",
+      "x": 200,
+      "y": 200,
+      "ports": [{ "id": "port", "name": "port" }]
+    }
+  ],
+  "edges": [
+    {
+      "id": "0",
+      "source": "1",
+      "target": "2",
+      "sourcePortId": "port",
+      "targetPortId": "port"
+    }
+  ]
+}

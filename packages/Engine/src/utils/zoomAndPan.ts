@@ -6,7 +6,7 @@ import { IContainerRect, ITransformMatrix, IViewport } from "../models/viewport"
 import { IPoint } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize } from "./layout";
-import { getVisibleNodes } from "./viewPort";
+import { getVisibleNodes } from "./viewport";
 
 export type TTransformMatrix = ITransformMatrix;
 
@@ -386,18 +386,18 @@ export const focusArea = (
   minY: number,
   maxX: number,
   maxY: number,
-  viewPort: Required<IViewport>
+  viewport: Required<IViewport>
 ): IViewport => {
   const width = maxX - minX;
   const height = maxY - minY;
 
-  const scale = Math.min(viewPort.visibleRect.width / width, viewPort.visibleRect.height / height);
+  const scale = Math.min(viewport.visibleRect.width / width, viewport.visibleRect.height / height);
 
-  const dx = -scale * (minX + width / 2) + viewPort.rect.width / 2;
-  const dy = -scale * (minY + height / 2) + viewPort.rect.height / 2;
+  const dx = -scale * (minX + width / 2) + viewport.rect.width / 2;
+  const dy = -scale * (minY + height / 2) + viewport.rect.height / 2;
 
   return {
-    ...viewPort,
+    ...viewport,
     transformMatrix: [scale, 0, 0, scale, dx, dy]
   };
 };

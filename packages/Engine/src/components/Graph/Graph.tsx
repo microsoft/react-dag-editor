@@ -55,7 +55,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const propsAPI = React.useContext(PropsAPIContext);
   const { state, dispatch } = useGraphState();
   const data = state.data.present;
-  const { viewPort } = state;
+  const { viewport } = state;
 
   const panelContext = React.useContext(PanelContext);
 
@@ -260,7 +260,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   );
 
   const renderPortTooltip = () => {
-    if (!curHoverPort || !isViewPortComplete(state.viewPort)) {
+    if (!curHoverPort || !isViewPortComplete(state.viewport)) {
       return null;
     }
     const [nodeId, portId] = curHoverPort;
@@ -272,7 +272,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     if (!port) {
       return null;
     }
-    return <PortTooltips port={port} parentNode={node} data={data} viewPort={state.viewPort} />;
+    return <PortTooltips port={port} parentNode={node} data={data} viewport={state.viewport} />;
   };
 
   return (
@@ -306,11 +306,11 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       >
         <title>{props.title}</title>
         <desc>{props.desc}</desc>
-        <Transform matrix={viewPort.transformMatrix}>
-          {state.viewPort.rect && (
+        <Transform matrix={viewport.transformMatrix}>
+          {state.viewport.rect && (
             <VirtualizationRenderedContext.Provider value={virtualizationRenderedContextValue}>
               <VirtualizationProvider
-                viewPort={state.viewPort as Required<IViewport>}
+                viewport={state.viewport as Required<IViewport>}
                 isVirtualizationEnabled={isVirtualizationEnabled}
                 virtualizationDelay={virtualizationDelay}
                 eventChannel={eventChannel}
@@ -348,7 +348,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
           <Connecting
             graphConfig={graphConfig}
             eventChannel={eventChannel}
-            viewPort={state.viewPort}
+            viewport={state.viewport}
             styles={props.styles?.connectingLine}
             movingPoint={state.connectState.movingPoint}
           />
@@ -356,14 +356,14 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       </svg>
       {(!isVerticalScrollDisabled || !isHorizontalScrollDisabled || !isPanDisabled) &&
         isLimitBoundary &&
-        isViewPortComplete(state.viewPort) && (
+        isViewPortComplete(state.viewport) && (
           <Scrollbar
-            viewPort={state.viewPort}
+            viewport={state.viewport}
             offsetLimit={getOffsetLimit(
               data,
               graphConfig,
-              state.viewPort.rect,
-              viewPort.transformMatrix,
+              state.viewport.rect,
+              viewport.transformMatrix,
               data.groups[0]?.padding
             )}
             dispatch={dispatch}
@@ -374,8 +374,8 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
         )}
       <GraphContextMenu state={state} onClick={onContextMenuClick} data-automation-id="context-menu-container" />
       {isSidePanelEnabled && <SidePanel svgRef={svgRef} />}
-      {curHoverNode && isViewPortComplete(state.viewPort) && (
-        <NodeTooltips node={data.nodes.get(curHoverNode)} viewPort={state.viewPort} />
+      {curHoverNode && isViewPortComplete(state.viewport) && (
+        <NodeTooltips node={data.nodes.get(curHoverNode)} viewport={state.viewport} />
       )}
       {renderPortTooltip()}
     </div>

@@ -8,11 +8,11 @@ import { getNodeConfig, hasState } from "../utils";
 
 interface IProps {
   node?: NodeModel;
-  viewPort: Required<IViewport>;
+  viewport: Required<IViewport>;
 }
 
 export const NodeTooltips: React.FunctionComponent<IProps> = props => {
-  const { node, viewPort } = props;
+  const { node, viewport } = props;
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
   const { theme } = useTheme();
 
@@ -34,10 +34,10 @@ export const NodeTooltips: React.FunctionComponent<IProps> = props => {
     <div className="node-tooltips">
       {nodeConfig.renderTooltips({
         model: node,
-        containerRect: viewPort.rect,
-        zoomPanSettings: viewPort,
+        containerRect: viewport.rect,
+        zoomPanSettings: viewport,
         theme,
-        viewPort
+        viewport
       })}
     </div>
   );

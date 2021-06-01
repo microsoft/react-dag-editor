@@ -75,17 +75,17 @@ export const getClientDeltaByPointDelta = (x: number, y: number, transformMatrix
 export const getRealPointFromClientPoint = (
   clientX: number,
   clientY: number,
-  viewPort: Required<IViewport>
+  viewport: Required<IViewport>
 ): IPoint => {
-  const { rect } = viewPort;
+  const { rect } = viewport;
   const x = clientX - rect.left;
   const y = clientY - rect.top;
-  return reverseTransformPoint(x, y, viewPort.transformMatrix);
+  return reverseTransformPoint(x, y, viewport.transformMatrix);
 };
 
-export const getClientPointFromRealPoint = (realX: number, realY: number, viewPort: Required<IViewport>): IPoint => {
-  const { x, y } = transformPoint(realX, realY, viewPort.transformMatrix);
-  const { rect } = viewPort;
+export const getClientPointFromRealPoint = (realX: number, realY: number, viewport: Required<IViewport>): IPoint => {
+  const { x, y } = transformPoint(realX, realY, viewport.transformMatrix);
+  const { rect } = viewport;
   return {
     x: x + rect.left,
     y: y + rect.top
@@ -95,9 +95,9 @@ export const getClientPointFromRealPoint = (realX: number, realY: number, viewPo
 /**
  * get client point relative to container
  */
-export const getContainerClientPoint = (realX: number, realY: number, viewPort: Required<IViewport>) => {
-  const client = getClientPointFromRealPoint(realX, realY, viewPort);
-  const { visibleRect } = viewPort;
+export const getContainerClientPoint = (realX: number, realY: number, viewport: Required<IViewport>) => {
+  const client = getClientPointFromRealPoint(realX, realY, viewport);
+  const { visibleRect } = viewport;
   return {
     x: client.x - visibleRect.left,
     y: client.y - visibleRect.top

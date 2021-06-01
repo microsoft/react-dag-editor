@@ -58,7 +58,7 @@ describe("test getNearestConnectablePort", () => {
       clientY: 150,
       graphConfig,
       data,
-      viewPort: {
+      viewport: {
         rect: mockViewPort,
         visibleRect: mockViewPort,
         transformMatrix: [1, 0, 0, 1, 0, 0]
@@ -123,7 +123,7 @@ describe("test getNearestConnectablePort", () => {
       clientY: 150,
       graphConfig,
       data,
-      viewPort: {
+      viewport: {
         rect: mockViewPort,
         visibleRect: mockViewPort,
         transformMatrix: [1, 0, 0, 1, 0, 0]
@@ -300,7 +300,7 @@ describe("test Connecting", () => {
     connecting = new Connecting();
     eventChannel.trigger({
       type: GraphCanvasEvent.ViewPortResize,
-      viewPortRect: mockViewPort,
+      viewportRect: mockViewPort,
       visibleRect: mockViewPort
     });
   });

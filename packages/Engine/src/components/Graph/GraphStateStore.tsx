@@ -65,7 +65,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
 
   const [state, dispatchImpl] = React.useReducer(reducer, undefined, () => ({
     data: resetUndoStack(props.data ?? GraphModel.empty()),
-    viewPort: {
+    viewport: {
       rect: undefined,
       transformMatrix: defaultTransformMatrix
     },
@@ -126,7 +126,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
    */
   const shouldAutoZoomToFit = React.useRef(false);
   React.useEffect((): void => {
-    if (!isViewPortComplete(state.viewPort) || !shouldAutoZoomToFit.current) {
+    if (!isViewPortComplete(state.viewport) || !shouldAutoZoomToFit.current) {
       return;
     }
     shouldAutoZoomToFit.current = false;
@@ -142,7 +142,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     <AutoZoomFitContext.Provider value={shouldAutoZoomToFit}>
       <ConnectingState data={state.data.present} connectState={state.connectState}>
         <GraphStateContext.Provider value={contextValue}>
-          <ViewPortContext.Provider value={state.viewPort}>
+          <ViewPortContext.Provider value={state.viewport}>
             <GraphValueContext.Provider value={state.data.present}>
               <AlignmentLinesContext.Provider value={state.alignmentLines}>
                 {props.children}

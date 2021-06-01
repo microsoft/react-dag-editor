@@ -69,10 +69,10 @@ function clearAttach(state: IGraphState): IGraphState {
 
 // eslint-disable-next-line complexity
 export const connectingReducer: IBuiltinReducer = (state, action, context): IGraphState => {
-  if (!isViewPortComplete(state.viewPort)) {
+  if (!isViewPortComplete(state.viewport)) {
     return state;
   }
-  const { rect } = state.viewPort;
+  const { rect } = state.viewport;
   switch (action.type) {
     case GraphEdgeEvent.ConnectStart:
       return {
@@ -212,7 +212,7 @@ export const connectingReducer: IBuiltinReducer = (state, action, context): IGra
             clientY,
             graphConfig: context.graphConfig,
             data: state.data.present,
-            viewPort: state.viewPort,
+            viewport: state.viewport,
             anotherPort,
             anotherNode
           });

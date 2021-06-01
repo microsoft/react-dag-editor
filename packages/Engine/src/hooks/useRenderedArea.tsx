@@ -2,10 +2,10 @@ import { useMemo } from "react";
 import { IViewport } from "../models/viewport";
 import { getRenderedArea, IRectShape } from "../utils";
 
-export const useRenderedArea = (viewPort: IViewport, isVirtualizationEnabled: boolean): IRectShape => {
+export const useRenderedArea = (viewport: IViewport, isVirtualizationEnabled: boolean): IRectShape => {
   return useMemo<IRectShape>(() => {
     return isVirtualizationEnabled
-      ? getRenderedArea(viewPort)
+      ? getRenderedArea(viewport)
       : {
           minX: -Number.MAX_SAFE_INTEGER,
           minY: -Number.MAX_SAFE_INTEGER,
@@ -13,5 +13,5 @@ export const useRenderedArea = (viewPort: IViewport, isVirtualizationEnabled: bo
           maxY: Number.MAX_SAFE_INTEGER
         };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewPort, isVirtualizationEnabled]);
+  }, [viewport, isVirtualizationEnabled]);
 };

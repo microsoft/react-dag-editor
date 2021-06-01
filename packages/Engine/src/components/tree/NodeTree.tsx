@@ -4,7 +4,7 @@ import { INode, NodeType } from "../../collections/b-tree";
 import { NodeModel } from "../../models/NodeModel";
 import { GraphNodeParts, IGraphNodePartsProps } from "../GraphNodeParts";
 
-export interface INodeTreeNodeProps extends Omit<IGraphNodePartsProps, "node" | "viewPort"> {
+export interface INodeTreeNodeProps extends Omit<IGraphNodePartsProps, "node" | "viewport"> {
   node: INode<number, [string, NodeModel]>;
 }
 

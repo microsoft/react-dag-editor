@@ -9,12 +9,12 @@ import { edgeReducer } from "./edgeReducer";
 import { nodeReducer } from "./nodeReducer";
 import { portReducer } from "./portReducer";
 import { selectionReducer } from "./selectionReducer";
-import { viewPortReducer } from "./viewPortReducer";
+import { viewportReducer } from "./viewportReducer";
 
 const builtinReducer = composeReducers(
   [
     behaviorReducer,
-    viewPortReducer,
+    viewportReducer,
     nodeReducer,
     portReducer,
     edgeReducer,

@@ -175,7 +175,7 @@ export interface ICanvasCommonEvent extends IEventBase {
 
 export interface ICanvasViewPortResizeEvent {
   type: GraphCanvasEvent.ViewPortResize;
-  viewPortRect: IContainerRect | undefined;
+  viewportRect: IContainerRect | undefined;
   visibleRect: IContainerRect | undefined;
 }
 

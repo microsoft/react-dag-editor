@@ -325,7 +325,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    */
   getClientByPoint(x: number, y: number): IPoint;
   /**
-   * check if the node is in the viewPort
+   * check if the node is in the viewport
    *
    * @param nodeId
    */

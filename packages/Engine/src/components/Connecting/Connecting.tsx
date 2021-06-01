@@ -11,12 +11,12 @@ interface IConnectingProps {
   graphConfig: IGraphConfig;
   styles?: React.CSSProperties;
   eventChannel: EventChannel;
-  viewPort: IViewport;
+  viewport: IViewport;
   movingPoint: IPoint | undefined;
 }
 
 export const Connecting = React.memo<IConnectingProps>(props => {
-  const { styles, graphConfig, viewPort, movingPoint } = props;
+  const { styles, graphConfig, viewport, movingPoint } = props;
   const { sourcePort, sourceNode, targetPort, targetNode } = React.useContext(ConnectingStateContext);
   if (!sourceNode || !sourcePort) {
     return null;
@@ -34,8 +34,8 @@ export const Connecting = React.memo<IConnectingProps>(props => {
   if (!sourcePortPosition || !targetPortPosition) {
     return null;
   }
-  const sourcePoint = transformPoint(sourcePortPosition.x, sourcePortPosition.y, viewPort.transformMatrix);
-  const targetPoint = transformPoint(targetPortPosition.x, targetPortPosition.y, viewPort.transformMatrix);
+  const sourcePoint = transformPoint(sourcePortPosition.x, sourcePortPosition.y, viewport.transformMatrix);
+  const targetPoint = transformPoint(targetPortPosition.x, targetPortPosition.y, viewport.transformMatrix);
   const connectingLine: ILine = movingPoint
     ? {
         x1: sourcePoint.x,

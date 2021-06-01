@@ -31,14 +31,14 @@ export const useUpdateViewPortCallback = (
   eventChannel: EventChannel
 ) =>
   useCallback((): void => {
-    const viewPortRect = svgRef.current?.getBoundingClientRect();
+    const viewportRect = svgRef.current?.getBoundingClientRect();
     const visibleRect = containerRef.current?.getBoundingClientRect();
-    if (isRectChanged(rectRef.current, viewPortRect) || isRectChanged(visibleRectRef.current, visibleRect)) {
-      rectRef.current = viewPortRect;
+    if (isRectChanged(rectRef.current, viewportRect) || isRectChanged(visibleRectRef.current, visibleRect)) {
+      rectRef.current = viewportRect;
       visibleRectRef.current = visibleRect;
       eventChannel.trigger({
         type: GraphCanvasEvent.ViewPortResize,
-        viewPortRect,
+        viewportRect,
         visibleRect
       });
     }

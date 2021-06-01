@@ -31,6 +31,6 @@ Array [
 ]
 `;
 
-exports[`viewPort getRenderedEdges: events 1`] = `Array []`;
+exports[`viewport getRenderedEdges: events 1`] = `Array []`;
 
-exports[`viewPort getRenderedNodes: events 1`] = `Array []`;
+exports[`viewport getRenderedNodes: events 1`] = `Array []`;

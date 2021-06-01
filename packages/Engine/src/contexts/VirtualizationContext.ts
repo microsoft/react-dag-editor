@@ -4,7 +4,7 @@ import { IRectShape } from "../utils";
 import { EMPTY_TRANSFORM_MATRIX} from "./GraphStateContext";
 
 export interface IVirtualizationContext {
-  viewPort: Required<IViewport>;
+  viewport: Required<IViewport>;
   visibleArea: IRectShape;
   renderedArea: IRectShape;
 }
@@ -24,7 +24,7 @@ const EMPTY_RECT = {
 };
 
 export const VirtualizationContext = createContext<IVirtualizationContext>({
-  viewPort: {
+  viewport: {
     rect: EMPTY_RECT,
     visibleRect: EMPTY_RECT,
     transformMatrix: EMPTY_TRANSFORM_MATRIX

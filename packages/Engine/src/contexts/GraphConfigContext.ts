@@ -12,7 +12,7 @@ import { ITheme } from "./ThemeContext";
 export interface IItemConfigArgs<T> {
   model: T;
   theme: ITheme;
-  viewPort: Required<IViewport>;
+  viewport: Required<IViewport>;
   /**
    * @deprecated
    */
@@ -31,7 +31,7 @@ export interface IRectConfig<T> {
   render(args: IItemConfigArgs<T>): React.ReactNode;
   renderDummy?(rect: T, theme: ITheme): React.ReactNode;
   renderStatic?(
-    args: Omit<IItemConfigArgs<T>, "setData" | "containerRect" | "zoomPanSettings" | "viewPort">
+    args: Omit<IItemConfigArgs<T>, "setData" | "containerRect" | "zoomPanSettings" | "viewport">
   ): React.ReactNode;
   getStyle?(rect: T, theme: ITheme): React.CSSProperties;
   getMinWidth(rect: T): number;

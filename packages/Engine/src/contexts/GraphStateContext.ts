@@ -23,7 +23,7 @@ export enum GraphBehavior {
 export const EMPTY_GRAPH_STATE: IGraphState = {
   behavior: GraphBehavior.default,
   data: resetUndoStack(GraphModel.empty()),
-  viewPort: {
+  viewport: {
     transformMatrix: [1, 0, 0, 1, 0, 0],
     rect: undefined
   },
@@ -80,7 +80,7 @@ export const EMPTY_CONNECT_STATE = {
 
 export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   data: IGraphDataState<NodeData, EdgeData, PortData>;
-  viewPort: IViewport;
+  viewport: IViewport;
   behavior: GraphBehavior;
   dummyNodes: IDummyNodes;
   alignmentLines: ILine[];

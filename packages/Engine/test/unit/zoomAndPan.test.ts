@@ -125,14 +125,14 @@ describe("test focusArea", () => {
     width: 200
   };
 
-  const viewPort: Required<IViewport> = {
+  const viewport: Required<IViewport> = {
     rect,
     visibleRect: rect,
     transformMatrix: EMPTY_TRANSFORM_MATRIX
   };
 
   it("should focus", () => {
-    expect(focusArea(100, 100, 150, 150, viewPort)).toEqual({
+    expect(focusArea(100, 100, 150, 150, viewport)).toEqual({
       rect,
       visibleRect: rect,
       transformMatrix: [4, 0, 0, 4, -400, -400]

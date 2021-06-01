@@ -543,7 +543,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
   }
 
   public getViewPort(): IViewport {
-    return this.getGraphState().viewPort;
+    return this.getGraphState().viewport;
   }
 
   public getGraphSvgRef(): React.RefObject<SVGSVGElement> {
@@ -579,12 +579,12 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
       return false;
     }
 
-    const viewPort = this.getViewPort();
-    if (!isViewPortComplete(viewPort)) {
+    const viewport = this.getViewPort();
+    if (!isViewPortComplete(viewport)) {
       return false;
     }
 
-    return isNodeVisible(node, viewPort, graphConfig);
+    return isNodeVisible(node, viewport, graphConfig);
   }
 
   public getSelectedItems(): ICanvasData<NodeData, EdgeData, PortData> {
@@ -605,12 +605,12 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
       return [];
     }
 
-    const viewPort = this.getViewPort();
-    if (!isViewPortComplete(viewPort)) {
+    const viewport = this.getViewPort();
+    if (!isViewPortComplete(viewport)) {
       return [];
     }
 
-    return getVisibleNodes(this.getData().nodes, viewPort, graphConfig);
+    return getVisibleNodes(this.getData().nodes, viewport, graphConfig);
   }
 
   public getRenderedNodes(): ICanvasNode[] {
@@ -654,18 +654,18 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
   }
 
   public isNodeFullVisible(nodeId: string): boolean {
-    const { viewPort, data } = this.getGraphState();
+    const { viewport, data } = this.getGraphState();
     const node = data.present.nodes.get(nodeId);
     const { graphConfig } = this.getInstance();
-    if (!node || !graphConfig || !isViewPortComplete(viewPort)) {
+    if (!node || !graphConfig || !isViewPortComplete(viewport)) {
       return false;
     }
     const { x, y, width, height } = getNodeRect(node, graphConfig);
     return (
-      isPointVisible({ x, y }, viewPort) &&
-      isPointVisible({ x: x + width, y }, viewPort) &&
-      isPointVisible({ x: x + width, y: y + height }, viewPort) &&
-      isPointVisible({ x, y: y + height }, viewPort)
+      isPointVisible({ x, y }, viewport) &&
+      isPointVisible({ x: x + width, y }, viewport) &&
+      isPointVisible({ x: x + width, y: y + height }, viewport) &&
+      isPointVisible({ x, y: y + height }, viewport)
     );
   }
 

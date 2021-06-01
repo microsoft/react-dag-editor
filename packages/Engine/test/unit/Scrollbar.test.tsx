@@ -3,7 +3,7 @@ import { render } from "@testing-library/react";
 import { allFeatures, IEvent, IGraphConfig, IViewport } from "../../src";
 import { Scrollbar } from "../../src/components/Scrollbar";
 import { EMPTY_GRAPH_STATE, IGraphState} from "../../src/contexts/GraphStateContext";
-import { viewPortReducer } from "../../src/reducers/viewPortReducer";
+import { viewportReducer } from "../../src/reducers/viewportReducer";
 import { EventChannel } from "../../src/utils/eventChannel";
 import { getGraphConfig } from "../utils";
 
@@ -22,14 +22,14 @@ describe("Scrollbar", () => {
 
     const [, dispatch] = React.useReducer(
       (prev: IGraphState, action: IEvent) => {
-        return viewPortReducer(prev, action, { graphConfig, features: allFeatures });
+        return viewportReducer(prev, action, { graphConfig, features: allFeatures });
       },
       {
         ...EMPTY_GRAPH_STATE
       }
     );
 
-    const viewPort: Required<IViewport> = {
+    const viewport: Required<IViewport> = {
       rect,
       visibleRect: rect,
       transformMatrix: [1, 0, 0, 1, 0, 0]
@@ -37,7 +37,7 @@ describe("Scrollbar", () => {
 
     return (
       <Scrollbar
-        viewPort={viewPort}
+        viewport={viewport}
         offsetLimit={{ minX: -30, maxX: 20, minY: -100, maxY: 100 }}
         dispatch={dispatch}
         horizontal={true}

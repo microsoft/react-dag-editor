@@ -24,7 +24,7 @@ interface IScrollbarLayout {
 }
 
 interface IProps {
-  viewPort: Required<IViewport>;
+  viewport: Required<IViewport>;
   horizontal?: boolean;
   vertical?: boolean;
   offsetLimit: IOffsetLimit;
@@ -73,12 +73,12 @@ const useStyles = createUseStyles({
 });
 
 export const Scrollbar: React.FC<IProps> = props => {
-  const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewPort } = props;
+  const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewport } = props;
 
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
   const { theme } = useTheme();
 
-  const scrollbarLayout = getScrollbarLayout(viewPort, offsetLimit);
+  const scrollbarLayout = getScrollbarLayout(viewport, offsetLimit);
 
   const classes = useStyles({ scrollbarLayout, theme });
 
@@ -90,7 +90,7 @@ export const Scrollbar: React.FC<IProps> = props => {
   function onVerticalScrollMouseDown(e: React.MouseEvent): void {
     e.preventDefault();
     e.stopPropagation();
-    const { height: containerHeight } = viewPort.visibleRect;
+    const { height: containerHeight } = viewport.visibleRect;
 
     const dragging = new DragController(
       new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
@@ -135,7 +135,7 @@ export const Scrollbar: React.FC<IProps> = props => {
   function onHorizontalScrollMouseDown(e: React.MouseEvent): void {
     e.preventDefault();
     e.stopPropagation();
-    const { width: containerWidth } = viewPort.visibleRect;
+    const { width: containerWidth } = viewport.visibleRect;
 
     const dragging = new DragController(
       new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
@@ -177,7 +177,7 @@ export const Scrollbar: React.FC<IProps> = props => {
 
   return (
     <>
-      {vertical && scrollbarLayout.verticalScrollHeight < viewPort.visibleRect.height && (
+      {vertical && scrollbarLayout.verticalScrollHeight < viewport.visibleRect.height && (
         <div className={classes.verticalScrollWrapper}>
           <div
             className={classes.verticalScrollStyle}
@@ -189,7 +189,7 @@ export const Scrollbar: React.FC<IProps> = props => {
           />
         </div>
       )}
-      {horizontal && scrollbarLayout.horizontalScrollWidth < viewPort.visibleRect.width && (
+      {horizontal && scrollbarLayout.horizontalScrollWidth < viewport.visibleRect.width && (
         <div className={classes.horizontalScrollWrapper}>
           <div
             className={classes.horizontalScrollStyle}
@@ -239,8 +239,8 @@ function getTotalContentWidth(containerWidth: number, offsetLimit: IOffsetLimit)
  * @param zoomPanSettings
  * @returns
  */
-function getScrollbarLayout(viewPort: Required<IViewport>, offsetLimit: IOffsetLimit): IScrollbarLayout {
-  const { visibleRect, transformMatrix } = viewPort;
+function getScrollbarLayout(viewport: Required<IViewport>, offsetLimit: IOffsetLimit): IScrollbarLayout {
+  const { visibleRect, transformMatrix } = viewport;
   const totalContentHeight = getTotalContentHeight(visibleRect.height, offsetLimit);
   const totalContentWidth = getTotalContentWidth(visibleRect.width, offsetLimit);
 

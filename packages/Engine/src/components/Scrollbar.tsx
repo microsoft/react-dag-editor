@@ -2,7 +2,7 @@ import * as React from "react";
 import { createUseStyles } from "react-jss";
 import { GraphScrollBarEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts/GraphConfigContext";
-import { IViewPort, IDispatch } from "../contexts/GraphStateContext";
+import { IViewport, IDispatch } from "../contexts/GraphStateContext";
 import { ITheme } from "../contexts/ThemeContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers/DragController";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
@@ -23,7 +23,7 @@ interface IScrollbarLayout {
 }
 
 interface IProps {
-  viewPort: Required<IViewPort>;
+  viewPort: Required<IViewport>;
   horizontal?: boolean;
   vertical?: boolean;
   offsetLimit: IOffsetLimit;
@@ -238,7 +238,7 @@ function getTotalContentWidth(containerWidth: number, offsetLimit: IOffsetLimit)
  * @param zoomPanSettings
  * @returns
  */
-function getScrollbarLayout(viewPort: Required<IViewPort>, offsetLimit: IOffsetLimit): IScrollbarLayout {
+function getScrollbarLayout(viewPort: Required<IViewport>, offsetLimit: IOffsetLimit): IScrollbarLayout {
   const { visibleRect, transformMatrix } = viewPort;
   const totalContentHeight = getTotalContentHeight(visibleRect.height, offsetLimit);
   const totalContentWidth = getTotalContentWidth(visibleRect.width, offsetLimit);

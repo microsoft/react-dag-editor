@@ -1,7 +1,7 @@
 import * as React from "react";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
-import { IViewPort } from "../contexts/GraphStateContext";
+import { IViewport } from "../contexts/GraphStateContext";
 import { GraphPortState, ICanvasPort } from "../Graph.interface";
 import { useTheme } from "../hooks";
 import { GraphModel } from "../models/GraphModel";
@@ -12,7 +12,7 @@ interface IPortTooltipsProps {
   port: ICanvasPort;
   parentNode: NodeModel;
   data: GraphModel;
-  viewPort: Required<IViewPort>;
+  viewPort: Required<IViewport>;
 }
 
 export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = props => {

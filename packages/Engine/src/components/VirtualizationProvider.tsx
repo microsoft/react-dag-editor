@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphCanvasEvent } from "../common/GraphEvent.constant";
-import { IViewPort } from "../contexts/GraphStateContext";
+import { IViewport } from "../contexts/GraphStateContext";
 import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
 import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
 import { useRenderedArea } from "../hooks";
@@ -9,7 +9,7 @@ import { getVisibleArea } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 
 export interface IVirtualizationProviderProps {
-  viewPort: Required<IViewPort>;
+  viewPort: Required<IViewport>;
   isVirtualizationEnabled: boolean;
   virtualizationDelay: number;
   eventChannel: EventChannel;

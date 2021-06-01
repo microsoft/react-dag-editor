@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphCanvasEvent, GraphContextMenuEvent, GraphEdgeEvent, GraphNodeEvent } from "../common/GraphEvent.constant";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewPort } from "../contexts/GraphStateContext";
+import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
 import {
   GraphPortState,
@@ -542,7 +542,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     return this.getViewPort();
   }
 
-  public getViewPort(): IViewPort {
+  public getViewPort(): IViewport {
     return this.getGraphState().viewPort;
   }
 

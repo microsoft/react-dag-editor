@@ -24,11 +24,11 @@ export const EMPTY_TRANSFORM_MATRIX: ITransformMatrix = [1, 0, 0, 1, 0, 0];
 /**
  * @deprecated
  */
-export const EMPTY_ZOOM_PAN: Pick<IViewPort, "transformMatrix"> = {
+export const EMPTY_ZOOM_PAN: Pick<IViewport, "transformMatrix"> = {
   transformMatrix: EMPTY_TRANSFORM_MATRIX
 };
 
-export const EMPTY_VIEW_PORT: IViewPort = {
+export const EMPTY_VIEW_PORT: IViewport = {
   rect: undefined,
   transformMatrix: EMPTY_TRANSFORM_MATRIX
 };
@@ -74,7 +74,7 @@ export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortDat
 
 export type ITransformMatrix = [number, number, number, number, number, number];
 
-export interface IViewPort {
+export interface IViewport {
   rect?: IContainerRect;
   visibleRect?: IContainerRect;
   transformMatrix: ITransformMatrix;
@@ -101,7 +101,7 @@ export const EMPTY_CONNECT_STATE = {
 
 export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   data: IGraphDataState<NodeData, EdgeData, PortData>;
-  viewPort: IViewPort;
+  viewPort: IViewport;
   behavior: GraphBehavior;
   dummyNodes: IDummyNodes;
   alignmentLines: ILine[];

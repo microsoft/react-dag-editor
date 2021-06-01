@@ -1,4 +1,4 @@
-import { EMPTY_TRANSFORM_MATRIX, IViewPort } from "../../src";
+import { EMPTY_TRANSFORM_MATRIX, IViewport } from "../../src";
 import { focusArea, IPoint, pan, scrollIntoView, zoom, ZoomDirection, zoomTo } from "../../src/utils";
 
 describe("test zoomTo", () => {
@@ -125,7 +125,7 @@ describe("test focusArea", () => {
     width: 200
   };
 
-  const viewPort: Required<IViewPort> = {
+  const viewPort: Required<IViewport> = {
     rect,
     visibleRect: rect,
     transformMatrix: EMPTY_TRANSFORM_MATRIX

@@ -1,4 +1,4 @@
-import { ITransformMatrix, IViewPort } from "../contexts";
+import { ITransformMatrix, IViewport } from "../contexts";
 import { IPoint } from "./geometric";
 
 /**
@@ -75,7 +75,7 @@ export const getClientDeltaByPointDelta = (x: number, y: number, transformMatrix
 export const getRealPointFromClientPoint = (
   clientX: number,
   clientY: number,
-  viewPort: Required<IViewPort>
+  viewPort: Required<IViewport>
 ): IPoint => {
   const { rect } = viewPort;
   const x = clientX - rect.left;
@@ -83,7 +83,7 @@ export const getRealPointFromClientPoint = (
   return reverseTransformPoint(x, y, viewPort.transformMatrix);
 };
 
-export const getClientPointFromRealPoint = (realX: number, realY: number, viewPort: Required<IViewPort>): IPoint => {
+export const getClientPointFromRealPoint = (realX: number, realY: number, viewPort: Required<IViewport>): IPoint => {
   const { x, y } = transformPoint(realX, realY, viewPort.transformMatrix);
   const { rect } = viewPort;
   return {
@@ -95,7 +95,7 @@ export const getClientPointFromRealPoint = (realX: number, realY: number, viewPo
 /**
  * get client point relative to container
  */
-export const getContainerClientPoint = (realX: number, realY: number, viewPort: Required<IViewPort>) => {
+export const getContainerClientPoint = (realX: number, realY: number, viewPort: Required<IViewport>) => {
   const client = getClientPointFromRealPoint(realX, realY, viewPort);
   const { visibleRect } = viewPort;
   return {

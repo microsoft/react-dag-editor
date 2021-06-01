@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewPort } from "../contexts/GraphStateContext";
+import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
 import {
   GraphPortState,
   ICanvasData,
@@ -308,7 +308,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    * @deprecated
    */
   getZoomPanSettings(): IZoomPanSettings;
-  getViewPort(): IViewPort;
+  getViewPort(): IViewport;
   /**
    * get the svg ref object
    */

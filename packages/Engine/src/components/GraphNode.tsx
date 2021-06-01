@@ -1,7 +1,7 @@
 import * as React from "react";
 import { GraphNodeEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
-import { IViewPort } from "../contexts/GraphStateContext";
+import { IViewport } from "../contexts/GraphStateContext";
 import { INodeCommonEvent, INodeContextMenuEvent } from "../Graph.interface";
 import { useTheme } from "../hooks";
 import { NodeModel } from "../models/NodeModel";
@@ -14,7 +14,7 @@ import { IGraphProps } from "./Graph/IGraphProps";
 export interface IGraphNodeCommonProps {
   isNodeEditDisabled?: boolean;
   eventChannel: EventChannel;
-  viewPort: Required<IViewPort>;
+  viewPort: Required<IViewport>;
   getNodeAriaLabel: Required<IGraphProps>["getNodeAriaLabel"];
   graphId: string;
 }

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IGraphConfig } from "../../contexts";
 import { ConnectingStateContext } from "../../contexts/ConnectingStateContext";
-import { IViewPort } from "../../contexts/GraphStateContext";
+import { IViewport } from "../../contexts/GraphStateContext";
 import { IPoint, transformPoint } from "../../utils";
 import { EventChannel } from "../../utils/eventChannel";
 import { emptyLine, ILine } from "../Line";
@@ -11,7 +11,7 @@ interface IConnectingProps {
   graphConfig: IGraphConfig;
   styles?: React.CSSProperties;
   eventChannel: EventChannel;
-  viewPort: IViewPort;
+  viewPort: IViewport;
   movingPoint: IPoint | undefined;
 }
 

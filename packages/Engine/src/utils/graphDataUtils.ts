@@ -1,7 +1,7 @@
 import type * as React from "react";
 import { HashMapBuilder } from "../collections";
 import { MouseEventButton } from "../common/constants";
-import { IGetConnectableParams, IGraphConfig, IViewPort } from "../contexts";
+import { IGetConnectableParams, IGraphConfig, IViewport } from "../contexts";
 import {
   GraphEdgeState,
   GraphNodeState,
@@ -46,7 +46,7 @@ export interface IGetNearestConnectablePortParams<NodeData = unknown, EdgeData =
   clientY: number;
   graphConfig: IGraphConfig;
   data: GraphModel<NodeData, EdgeData, PortData>;
-  viewPort: Required<IViewPort>;
+  viewPort: Required<IViewport>;
 }
 
 export const getNearestConnectablePort = (params: IGetNearestConnectablePortParams): ICanvasPort | undefined => {

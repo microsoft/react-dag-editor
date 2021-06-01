@@ -3,7 +3,7 @@ import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphCanvasEvent, GraphContextMenuEvent } from "../../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig, PanelContext, PropsAPIContext } from "../../contexts";
-import { GraphBehavior, IViewPort } from "../../contexts/GraphStateContext";
+import { GraphBehavior, IViewport } from "../../contexts/GraphStateContext";
 import { VirtualizationRenderedContext } from "../../contexts/VirtualizationRenderedContext";
 import { defaultFeatures } from "../../Features";
 import { ICanvasCommonEvent, ICanvasKeyboardEvent, IContainerRect } from "../../Graph.interface";
@@ -309,7 +309,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
           {state.viewPort.rect && (
             <VirtualizationRenderedContext.Provider value={virtualizationRenderedContextValue}>
               <VirtualizationProvider
-                viewPort={state.viewPort as Required<IViewPort>}
+                viewPort={state.viewPort as Required<IViewport>}
                 isVirtualizationEnabled={isVirtualizationEnabled}
                 virtualizationDelay={virtualizationDelay}
                 eventChannel={eventChannel}

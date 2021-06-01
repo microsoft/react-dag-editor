@@ -6,13 +6,13 @@ import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { IZoomPanSettings } from "../utils";
-import { IViewPort } from "./GraphStateContext";
+import { IViewport } from "./GraphStateContext";
 import { ITheme } from "./ThemeContext";
 
 export interface IItemConfigArgs<T> {
   model: T;
   theme: ITheme;
-  viewPort: Required<IViewPort>;
+  viewPort: Required<IViewport>;
   /**
    * @deprecated
    */

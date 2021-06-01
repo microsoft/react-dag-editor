@@ -1,6 +1,6 @@
 import { GraphCanvasEvent, GraphMinimapEvent, GraphScrollBarEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
-import { EMPTY_TRANSFORM_MATRIX, IViewPort } from "../contexts/GraphStateContext";
+import { EMPTY_TRANSFORM_MATRIX, IViewport } from "../contexts/GraphStateContext";
 import { ICanvasResetViewPortEvent, ICanvasZoomToFitEvent, IContainerRect, IEvent } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
 import {
@@ -35,11 +35,11 @@ function getRectCenter(rect: IContainerRect | undefined): IPoint | undefined {
 }
 
 function resetViewPort(
-  viewPort: IViewPort,
+  viewPort: IViewport,
   data: GraphModel,
   graphConfig: IGraphConfig,
   action: ICanvasResetViewPortEvent
-): IViewPort {
+): IViewport {
   if (!isViewPortComplete(viewPort)) {
     return viewPort;
   }
@@ -99,11 +99,11 @@ function resetViewPort(
 }
 
 function zoomToFit(
-  viewPort: IViewPort,
+  viewPort: IViewport,
   data: GraphModel,
   graphConfig: IGraphConfig,
   action: ICanvasZoomToFitEvent
-): IViewPort {
+): IViewport {
   const { rect } = viewPort;
   if (!rect) {
     return viewPort;
@@ -120,7 +120,7 @@ function zoomToFit(
   };
 }
 
-const reducer = (viewPort: IViewPort, action: IEvent, context: IGraphReducerContext, data: GraphModel): IViewPort => {
+const reducer = (viewPort: IViewport, action: IEvent, context: IGraphReducerContext, data: GraphModel): IViewport => {
   switch (action.type) {
     case GraphCanvasEvent.ViewPortResize:
       return {

@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
-import { GraphModel, IPropsAPI, ITransformMatrix, IViewPort, ZoomDirection } from "../../src";
+import { GraphModel, IPropsAPI, ITransformMatrix, IViewport, ZoomDirection } from "../../src";
 import { Transform } from "../../src/components/Transform";
 import { getRenderedEdges, getRenderedNodes } from "../../src/utils/viewPort";
 import { TestComponent } from "../TestComponent";
@@ -20,7 +20,7 @@ describe("viewPort", () => {
     y: 16
   };
 
-  const viewPort = (transformMatrix: ITransformMatrix): Required<IViewPort> => ({
+  const viewPort = (transformMatrix: ITransformMatrix): Required<IViewport> => ({
     transformMatrix,
     rect,
     visibleRect: rect

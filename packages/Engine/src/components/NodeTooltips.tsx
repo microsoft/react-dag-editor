@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
-import { IViewPort } from "../contexts/GraphStateContext";
+import { IViewport } from "../contexts/GraphStateContext";
 import { GraphNodeState } from "../Graph.interface";
 import { useTheme } from "../hooks";
 import { NodeModel } from "../models/NodeModel";
@@ -8,7 +8,7 @@ import { getNodeConfig, hasState } from "../utils";
 
 interface IProps {
   node?: NodeModel;
-  viewPort: Required<IViewPort>;
+  viewPort: Required<IViewport>;
 }
 
 export const NodeTooltips: React.FunctionComponent<IProps> = props => {

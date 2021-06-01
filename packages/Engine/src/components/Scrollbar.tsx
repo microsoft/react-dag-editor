@@ -2,12 +2,13 @@ import * as React from "react";
 import { createUseStyles } from "react-jss";
 import { GraphScrollBarEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts/GraphConfigContext";
-import { IViewport, IDispatch } from "../contexts/GraphStateContext";
+import { IDispatch } from "../contexts/GraphStateContext";
 import { ITheme } from "../contexts/ThemeContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers/DragController";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { useRefValue } from "../hooks/useRefValue";
 import { useTheme } from "../hooks/useTheme";
+import { IViewport } from "../models/viewport";
 import { EventChannel } from "../utils/eventChannel";
 import { IOffsetLimit } from "../utils/getOffsetLimit";
 

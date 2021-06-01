@@ -1,4 +1,4 @@
-import { ITransformMatrix, IViewport } from "../contexts";
+import { ITransformMatrix, IViewport } from "../models/viewport";
 import { IPoint } from "./geometric";
 
 /**

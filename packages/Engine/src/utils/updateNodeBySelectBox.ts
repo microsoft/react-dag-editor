@@ -1,6 +1,7 @@
 import { ISelectBoxPosition } from "../components/Graph/SelectBox";
-import { IGraphConfig, ITransformMatrix } from "../contexts";
+import { IGraphConfig} from "../contexts";
 import { GraphModel } from "../models/GraphModel";
+import { ITransformMatrix } from "../models/viewport";
 import { checkRectIntersect, IRectShape } from "./geometric";
 import { getNodeSize } from "./layout";
 import { reverseTransformPoint } from "./transformMatrix";

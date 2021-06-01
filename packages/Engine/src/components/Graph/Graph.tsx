@@ -3,10 +3,10 @@ import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphCanvasEvent, GraphContextMenuEvent } from "../../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig, PanelContext, PropsAPIContext } from "../../contexts";
-import { GraphBehavior, IViewport } from "../../contexts/GraphStateContext";
+import { GraphBehavior} from "../../contexts/GraphStateContext";
 import { VirtualizationRenderedContext } from "../../contexts/VirtualizationRenderedContext";
 import { defaultFeatures } from "../../Features";
-import { ICanvasCommonEvent, ICanvasKeyboardEvent, IContainerRect } from "../../Graph.interface";
+import { ICanvasCommonEvent, ICanvasKeyboardEvent} from "../../Graph.interface";
 import {
   useContainerRect,
   useGraphState,
@@ -21,6 +21,7 @@ import { useConst } from "../../hooks/useConst";
 import { useEventChannel } from "../../hooks/useEventChannel";
 import { useFeatureControl } from "../../hooks/useFeatureControl";
 import { GraphModel } from "../../models/GraphModel";
+import { IContainerRect, IViewport } from "../../models/viewport";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { IPropsAPIInstance } from "../../props-api/IPropsAPIInstance";
 import { isSupported, isViewPortComplete } from "../../utils";

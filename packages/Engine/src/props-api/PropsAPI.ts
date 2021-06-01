@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphCanvasEvent, GraphContextMenuEvent, GraphEdgeEvent, GraphNodeEvent } from "../common/GraphEvent.constant";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
+import { GraphBehavior, IDispatchCallback, IGraphState} from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
 import {
   GraphPortState,
@@ -8,12 +8,12 @@ import {
   ICanvasEdge,
   ICanvasNode,
   ICanvasPort,
-  IContainerRect,
   IEvent
 } from "../Graph.interface";
 import { autoLayout, IAutoLayout } from "../libs";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { IContainerRect, IViewport } from "../models/viewport";
 import { IPosition } from "../testAPI";
 import {
   filterSelectedItems,

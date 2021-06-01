@@ -1,4 +1,8 @@
 import { createContext } from "react";
-import { EMPTY_VIEW_PORT, IViewport } from "./GraphStateContext";
+import { DEFAULT_TRANSFORM_MATRIX, IViewport } from "../models/viewport";
 
-export const ViewPortContext = createContext<IViewport>(EMPTY_VIEW_PORT);
+const dummyViewport: IViewport = {
+  transformMatrix: DEFAULT_TRANSFORM_MATRIX
+};
+
+export const ViewPortContext = createContext<IViewport>(dummyViewport);

@@ -12,6 +12,7 @@ import { IDummyNode } from "./components/dummyNodes";
 import { EdgeModel } from "./models/EdgeModel";
 import { GraphModel } from "./models/GraphModel";
 import { NodeModel } from "./models/NodeModel";
+import { IContainerRect } from "./models/viewport";
 import { IPoint, IZoomFixPublicOption, ZoomDirection } from "./utils";
 
 export interface ICanvasNode<T = unknown, P = unknown> {
@@ -171,8 +172,6 @@ export interface ICanvasCommonEvent extends IEventBase {
     | GraphCanvasEvent.Pan
   >;
 }
-
-export type IContainerRect = ClientRect | DOMRect;
 
 export interface ICanvasViewPortResizeEvent {
   type: GraphCanvasEvent.ViewPortResize;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IEventProvider, IGlobalMoveEventTypes } from "../event-provider/types";
-import { IContainerRect } from "../Graph.interface";
+import { IContainerRect } from "../models/viewport";
 import { DragController, TGetPositionFromEvent } from "./DragController";
 
 export class DragNodeController extends DragController {

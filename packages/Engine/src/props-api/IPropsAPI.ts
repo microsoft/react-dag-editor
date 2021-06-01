@@ -1,16 +1,16 @@
 import * as React from "react";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
+import { GraphBehavior, IDispatchCallback, IGraphState} from "../contexts/GraphStateContext";
 import {
   GraphPortState,
   ICanvasData,
   ICanvasEdge,
   ICanvasNode,
   ICanvasPort,
-  IContainerRect,
   IEvent
 } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { IContainerRect, IViewport } from "../models/viewport";
 import { IPoint, IZoomFixPublicOption, IZoomPanSettings, ZoomDirection } from "../utils";
 
 import { IAutoLayout } from "../libs";

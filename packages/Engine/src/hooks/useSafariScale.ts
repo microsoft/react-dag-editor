@@ -2,7 +2,7 @@ import { RefObject, useEffect } from "react";
 import { GraphCanvasEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig } from "../contexts";
 import { IDispatch } from "../contexts/GraphStateContext";
-import { IContainerRect } from "../Graph.interface";
+import { IContainerRect } from "../models/viewport";
 import { IPropsAPI } from "../props-api/IPropsAPI";
 import { BrowserType, getBrowser, getContainerCenter, isMobile } from "../utils";
 import { EventChannel } from "../utils/eventChannel";

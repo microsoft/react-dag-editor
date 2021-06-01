@@ -1,5 +1,5 @@
 import { RefObject, useLayoutEffect, useState } from "react";
-import { IContainerRect } from "../../Graph.interface";
+import { IContainerRect } from "../../models/viewport";
 
 export function useSvgRect(svgRef: RefObject<SVGSVGElement>): IContainerRect | undefined {
   const [rect, setRect] = useState<IContainerRect | undefined>(undefined);

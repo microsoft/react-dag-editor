@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphCanvasEvent } from "../common/GraphEvent.constant";
-import { IContainerRect } from "../Graph.interface";
+import { IContainerRect } from "../models/viewport";
 import { distance, getContainerCenter } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { ITouchHandler } from "./TouchController";

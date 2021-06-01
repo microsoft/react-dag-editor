@@ -13,3 +13,6 @@ export * from "./models/GraphModel";
 export * from "./models/NodeModel";
 export * from "./common/GraphEvent.constant";
 export * from "./reducers/composeReducers";
+export { IContainerRect } from "./models/viewport";
+export { IViewport } from "./models/viewport";
+export { ITransformMatrix } from "./models/viewport";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ITransformMatrix } from "../contexts";
+import { ITransformMatrix } from "../models/viewport";
 
 interface IProps {
   matrix: ITransformMatrix;

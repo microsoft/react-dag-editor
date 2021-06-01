@@ -3,11 +3,9 @@ import * as React from "react";
 import { GraphCanvasEvent } from "../../common/GraphEvent.constant";
 import { ConnectingState } from "../../ConnectingState";
 import {
-  EMPTY_TRANSFORM_MATRIX,
   GraphConfigContext,
   IGraphReducer,
   IGraphReducerContext,
-  ITransformMatrix,
   ViewPortContext
 } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
@@ -23,6 +21,7 @@ import { GraphFeatures } from "../../Features";
 
 import { usePropsAPI } from "../../hooks/usePropsAPI";
 import { GraphModel } from "../../models/GraphModel";
+import { DEFAULT_TRANSFORM_MATRIX, ITransformMatrix } from "../../models/viewport";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { useGraphReducer } from "../../reducers/useGraphReducer";
 import { isViewPortComplete, resetUndoStack } from "../../utils";
@@ -48,7 +47,7 @@ export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, P
 export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
   props: React.PropsWithChildren<IGraphStateStoreProps<NodeData, EdgeData, PortData, Action>>
 ): React.ReactElement {
-  const { defaultTransformMatrix = EMPTY_TRANSFORM_MATRIX, middleware, onStateChanged } = props;
+  const { defaultTransformMatrix = DEFAULT_TRANSFORM_MATRIX, middleware, onStateChanged } = props;
 
   const propsAPI = usePropsAPI<NodeData, EdgeData, PortData>();
   React.useImperativeHandle(props.propsAPIRef, () => propsAPI, [propsAPI]);

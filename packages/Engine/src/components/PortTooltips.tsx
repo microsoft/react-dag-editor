@@ -1,11 +1,11 @@
 import * as React from "react";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
-import { IViewport } from "../contexts/GraphStateContext";
 import { GraphPortState, ICanvasPort } from "../Graph.interface";
 import { useTheme } from "../hooks";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { IViewport } from "../models/viewport";
 import { hasState } from "../utils";
 
 interface IPortTooltipsProps {

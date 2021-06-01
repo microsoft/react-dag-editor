@@ -3,8 +3,9 @@ import { emptyDummyNodes, IDummyNodes } from "../components/dummyNodes";
 import { emptySelectBoxPosition, ISelectBoxPosition } from "../components/Graph/SelectBox";
 import { ILine } from "../components/Line";
 import { GraphFeatures } from "../Features";
-import { IContainerRect, IEvent } from "../Graph.interface";
+import { IEvent } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
+import { IViewport } from "../models/viewport";
 import { Debug } from "../utils/debug";
 import { IPoint } from "../utils/geometric";
 import { IHistory, resetUndoStack } from "../utils/history";
@@ -18,20 +19,6 @@ export enum GraphBehavior {
   connecting = "connecting",
   addingNode = "addingNode"
 }
-
-export const EMPTY_TRANSFORM_MATRIX: ITransformMatrix = [1, 0, 0, 1, 0, 0];
-
-/**
- * @deprecated
- */
-export const EMPTY_ZOOM_PAN: Pick<IViewport, "transformMatrix"> = {
-  transformMatrix: EMPTY_TRANSFORM_MATRIX
-};
-
-export const EMPTY_VIEW_PORT: IViewport = {
-  rect: undefined,
-  transformMatrix: EMPTY_TRANSFORM_MATRIX
-};
 
 export const EMPTY_GRAPH_STATE: IGraphState = {
   behavior: GraphBehavior.default,
@@ -71,14 +58,6 @@ export type TDataComposer<NodeData = unknown, EdgeData = unknown, PortData = unk
 
 export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortData = unknown>
   extends IHistory<GraphModel<NodeData, EdgeData, PortData>> {}
-
-export type ITransformMatrix = [number, number, number, number, number, number];
-
-export interface IViewport {
-  rect?: IContainerRect;
-  visibleRect?: IContainerRect;
-  transformMatrix: ITransformMatrix;
-}
 
 export interface IConnectingState {
   sourceNode: string;

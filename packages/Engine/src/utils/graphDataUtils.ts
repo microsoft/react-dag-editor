@@ -1,7 +1,7 @@
 import type * as React from "react";
 import { HashMapBuilder } from "../collections";
 import { MouseEventButton } from "../common/constants";
-import { IGetConnectableParams, IGraphConfig, IViewport } from "../contexts";
+import { IGetConnectableParams, IGraphConfig} from "../contexts";
 import {
   GraphEdgeState,
   GraphNodeState,
@@ -14,6 +14,7 @@ import {
 import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { IViewport } from "../models/viewport";
 import { IPoint } from "./geometric";
 import { getNodeConfig } from "./getNodeConfig";
 import { getPortPosition, getPortPositionByPortId } from "./getPortPosition";

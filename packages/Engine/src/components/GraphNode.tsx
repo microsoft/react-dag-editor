@@ -1,10 +1,10 @@
 import * as React from "react";
 import { GraphNodeEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
-import { IViewport } from "../contexts/GraphStateContext";
 import { INodeCommonEvent, INodeContextMenuEvent } from "../Graph.interface";
 import { useTheme } from "../hooks";
 import { NodeModel } from "../models/NodeModel";
+import { IViewport } from "../models/viewport";
 import { getNodeAutomationId, getNodeConfig, getNodeUid } from "../utils";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";

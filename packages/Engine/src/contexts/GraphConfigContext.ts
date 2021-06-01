@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import * as React from "react";
 import { IGraphClipBoard } from "../built-in/defaultClipboard";
-import { ICanvasEdge, ICanvasGroup, ICanvasNode, ICanvasPort, IContainerRect } from "../Graph.interface";
+import { ICanvasEdge, ICanvasGroup, ICanvasNode, ICanvasPort} from "../Graph.interface";
 import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { IContainerRect, IViewport } from "../models/viewport";
 import { IZoomPanSettings } from "../utils";
-import { IViewport } from "./GraphStateContext";
 import { ITheme } from "./ThemeContext";
 
 export interface IItemConfigArgs<T> {

@@ -1,9 +1,8 @@
 import * as React from "react";
 import { IGraphConfig } from "../contexts";
-import { ITransformMatrix, IViewport } from "../contexts/GraphStateContext";
-import { IContainerRect } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { IContainerRect, ITransformMatrix, IViewport } from "../models/viewport";
 import { IPoint } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize } from "./layout";

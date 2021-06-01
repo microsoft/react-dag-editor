@@ -1,4 +1,4 @@
-import { EMPTY_TRANSFORM_MATRIX, IViewport } from "../../src";
+import { EMPTY_TRANSFORM_MATRIX} from "../../src";
 import { focusArea, IPoint, pan, scrollIntoView, zoom, ZoomDirection, zoomTo } from "../../src/utils";
 
 describe("test zoomTo", () => {

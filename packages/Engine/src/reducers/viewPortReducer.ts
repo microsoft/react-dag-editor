@@ -1,8 +1,9 @@
 import { GraphCanvasEvent, GraphMinimapEvent, GraphScrollBarEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
-import { EMPTY_TRANSFORM_MATRIX, IViewport } from "../contexts/GraphStateContext";
-import { ICanvasResetViewPortEvent, ICanvasZoomToFitEvent, IContainerRect, IEvent } from "../Graph.interface";
+import { EMPTY_TRANSFORM_MATRIX} from "../contexts/GraphStateContext";
+import { ICanvasResetViewPortEvent, ICanvasZoomToFitEvent, IEvent } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
+import { IContainerRect, IViewport } from "../models/viewport";
 import {
   clamp,
   getGroupRect,

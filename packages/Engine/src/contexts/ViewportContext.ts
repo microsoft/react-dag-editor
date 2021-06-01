@@ -5,4 +5,4 @@ const dummyViewport: IViewport = {
   transformMatrix: DEFAULT_TRANSFORM_MATRIX
 };
 
-export const ViewPortContext = createContext<IViewport>(dummyViewport);
+export const ViewportContext = createContext<IViewport>(dummyViewport);

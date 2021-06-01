@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphMinimapEvent } from "../../common/GraphEvent.constant";
-import { GraphConfigContext, IGraphConfig, PropsAPIContext, ViewPortContext } from "../../contexts";
+import { GraphConfigContext, IGraphConfig, PropsAPIContext, ViewportContext } from "../../contexts";
 import { GraphStateContext } from "../../contexts/GraphStateContext";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
 import { TouchDragAdapter } from "../../controllers/TouchDragAdapter";
@@ -12,7 +12,7 @@ import {
   getPointDeltaByClientDelta,
   getVisibleArea,
   getZoomFitMatrix,
-  isViewPortComplete,
+  isViewportComplete,
   IZoomPanSettings,
   reverseTransformPoint,
   transformPoint
@@ -61,7 +61,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
     renderArrow = (arrowDeg: number) => undefined
   } = props;
 
-  const graphViewPort = React.useContext(ViewPortContext);
+  const graphViewport = React.useContext(ViewportContext);
   const propsAPI = React.useContext(PropsAPIContext);
   const { theme } = useTheme();
   const { data: dataState } = React.useContext(GraphStateContext).state;
@@ -86,7 +86,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   const miniMapZoomPanSettingRef = useRefValue(miniMapZoomPanSetting);
 
   const viewport = React.useMemo<IRect>(() => {
-    if (!rect || !isViewPortComplete(graphViewPort)) {
+    if (!rect || !isViewportComplete(graphViewport)) {
       return {
         startX: 0,
         startY: 0,
@@ -95,7 +95,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       };
     }
 
-    const boundaryPoints = getVisibleArea(graphViewPort);
+    const boundaryPoints = getVisibleArea(graphViewport);
 
     const { x: startX, y: startY } = transformPoint(
       boundaryPoints.minX,
@@ -116,7 +116,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       endY
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rect, miniMapZoomPanSetting, graphViewPort.rect, ...graphViewPort.transformMatrix]);
+  }, [rect, miniMapZoomPanSetting, graphViewport.rect, ...graphViewport.transformMatrix]);
 
   const onClick = React.useCallback(
     (evt: React.MouseEvent) => {

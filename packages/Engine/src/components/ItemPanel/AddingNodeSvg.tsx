@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphCanvasEvent } from "../../common/GraphEvent.constant";
-import { GraphConfigContext, PropsAPIContext, ViewPortContext } from "../../contexts";
+import { GraphConfigContext, PropsAPIContext, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { ICanvasNode } from "../../Graph.interface";
 import { useConst } from "../../hooks/useConst";
@@ -30,7 +30,7 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
   const graphConfig = React.useContext(GraphConfigContext);
   const propsAPI = React.useContext(PropsAPIContext);
   const alignmentLines = React.useContext(AlignmentLinesContext);
-  const viewport = React.useContext(ViewPortContext);
+  const viewport = React.useContext(ViewportContext);
 
   const dummyNode = React.useMemo(() => {
     if (!model || !viewport.rect) {

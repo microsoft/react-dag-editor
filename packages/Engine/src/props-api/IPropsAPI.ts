@@ -308,7 +308,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    * @deprecated
    */
   getZoomPanSettings(): IZoomPanSettings;
-  getViewPort(): IViewport;
+  getViewport(): IViewport;
   /**
    * get the svg ref object
    */
@@ -329,7 +329,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    *
    * @param nodeId
    */
-  isNodeInViewPort(nodeId: string): boolean;
+  isNodeInViewport(nodeId: string): boolean;
   /**
    * get selected item(s)
    */

@@ -34,7 +34,7 @@ export const SearchBox: React.FunctionComponent<ISearchBoxProps> = props => {
     (nodeId: string): void => {
       propsApi.selectNodeById(nodeId);
 
-      if (!propsApi.isNodeInViewPort(nodeId)) {
+      if (!propsApi.isNodeInViewport(nodeId)) {
         propsApi.centralizeNode(nodeId);
       }
     },

@@ -30,7 +30,7 @@ import {
   resetState,
   updateState,
   ZoomDirection,
-  isViewPortComplete,
+  isViewportComplete,
   transformPoint
 } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
@@ -347,7 +347,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
 
   public resetZoom(ensureNodeVisible = false): void {
     this.dispatch({
-      type: GraphCanvasEvent.ResetViewPort,
+      type: GraphCanvasEvent.ResetViewport,
       ensureNodeVisible
     });
   }
@@ -539,10 +539,10 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
    * @deprecated
    */
   public getZoomPanSettings(): IZoomPanSettings {
-    return this.getViewPort();
+    return this.getViewport();
   }
 
-  public getViewPort(): IViewport {
+  public getViewport(): IViewport {
     return this.getGraphState().viewport;
   }
 
@@ -564,10 +564,10 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
    * @param y
    */
   public getClientByPoint(x: number, y: number): IPoint {
-    return transformPoint(x, y, this.getViewPort().transformMatrix);
+    return transformPoint(x, y, this.getViewport().transformMatrix);
   }
 
-  public isNodeInViewPort(nodeId: string): boolean {
+  public isNodeInViewport(nodeId: string): boolean {
     const { graphConfig } = this.getInstance();
     if (!graphConfig) {
       return false;
@@ -579,8 +579,8 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
       return false;
     }
 
-    const viewport = this.getViewPort();
-    if (!isViewPortComplete(viewport)) {
+    const viewport = this.getViewport();
+    if (!isViewportComplete(viewport)) {
       return false;
     }
 
@@ -605,8 +605,8 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
       return [];
     }
 
-    const viewport = this.getViewPort();
-    if (!isViewPortComplete(viewport)) {
+    const viewport = this.getViewport();
+    if (!isViewportComplete(viewport)) {
       return [];
     }
 
@@ -614,7 +614,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
   }
 
   public getRenderedNodes(): ICanvasNode[] {
-    return getRenderedNodes(this.getData().nodes, this.getViewPort());
+    return getRenderedNodes(this.getData().nodes, this.getViewport());
   }
 
   public getRenderedEdges(): ICanvasEdge[] {
@@ -624,7 +624,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     }
     const { edges, nodes } = this.getData();
 
-    return getRenderedEdges(edges, nodes, graphConfig, this.getViewPort());
+    return getRenderedEdges(edges, nodes, graphConfig, this.getViewport());
   }
 
   public setData(data: GraphModel<NodeData, EdgeData, PortData>): void {
@@ -657,7 +657,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     const { viewport, data } = this.getGraphState();
     const node = data.present.nodes.get(nodeId);
     const { graphConfig } = this.getInstance();
-    if (!node || !graphConfig || !isViewPortComplete(viewport)) {
+    if (!node || !graphConfig || !isViewportComplete(viewport)) {
       return false;
     }
     const { x, y, width, height } = getNodeRect(node, graphConfig);

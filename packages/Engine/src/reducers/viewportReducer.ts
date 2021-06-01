@@ -1,9 +1,8 @@
 import { GraphCanvasEvent, GraphMinimapEvent, GraphScrollBarEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
-import { EMPTY_TRANSFORM_MATRIX} from "../contexts/GraphStateContext";
-import { ICanvasResetViewPortEvent, ICanvasZoomToFitEvent, IEvent } from "../Graph.interface";
+import { ICanvasResetViewportEvent, ICanvasZoomToFitEvent, IEvent } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
-import { IContainerRect, IViewport } from "../models/viewport";
+import { DEFAULT_TRANSFORM_MATRIX, IContainerRect, IViewport } from "../models/viewport";
 import {
   clamp,
   getGroupRect,
@@ -14,7 +13,7 @@ import {
   IShapePosition,
   IShapeRect,
   isRectVisible,
-  isViewPortComplete,
+  isViewportComplete,
   minimapPan,
   pan,
   scrollIntoView,
@@ -35,20 +34,20 @@ function getRectCenter(rect: IContainerRect | undefined): IPoint | undefined {
   };
 }
 
-function resetViewPort(
+function resetViewport(
   viewport: IViewport,
   data: GraphModel,
   graphConfig: IGraphConfig,
-  action: ICanvasResetViewPortEvent
+  action: ICanvasResetViewportEvent
 ): IViewport {
-  if (!isViewPortComplete(viewport)) {
+  if (!isViewportComplete(viewport)) {
     return viewport;
   }
 
   if (!action.ensureNodeVisible) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: DEFAULT_TRANSFORM_MATRIX
     };
   }
 
@@ -57,33 +56,34 @@ function resetViewPort(
   if (nodes.size === 0) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: DEFAULT_TRANSFORM_MATRIX
     };
   }
 
-  const isShapeRectInViewPort = (r: IShapeRect) => {
+  const isShapeRectInViewport = (r: IShapeRect) => {
     return isRectVisible(r, viewport);
   };
 
   const nodeRects = nodes.map(n => getNodeRect(n, graphConfig));
-  const hasVisibleNode = nodeRects.find(isShapeRectInViewPort);
+  const hasVisibleNode = nodeRects.find(isShapeRectInViewport);
 
   if (hasVisibleNode) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: DEFAULT_TRANSFORM_MATRIX
     };
   }
 
   const groupRects = groups.map(g => getGroupRect(g, nodes, graphConfig));
-  const hasVisibleGroup = groupRects.find(isShapeRectInViewPort);
+  const hasVisibleGroup = groupRects.find(isShapeRectInViewport);
   if (hasVisibleGroup) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: DEFAULT_TRANSFORM_MATRIX
     };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   let focusNode: IShapePosition = nodeRects.first()!;
   const findTopMostRect = (cur: IShapeRect) => {
     if (focusNode.y > cur.y) {
@@ -123,7 +123,7 @@ function zoomToFit(
 
 const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerContext, data: GraphModel): IViewport => {
   switch (action.type) {
-    case GraphCanvasEvent.ViewPortResize:
+    case GraphCanvasEvent.ViewportResize:
       return {
         ...viewport,
         rect: action.viewportRect,
@@ -135,7 +135,7 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
     case GraphCanvasEvent.MouseWheelScroll:
     case GraphCanvasEvent.Pan:
     case GraphCanvasEvent.Drag: {
-      if (!isViewPortComplete(viewport)) {
+      if (!isViewportComplete(viewport)) {
         return viewport;
       }
       const { transformMatrix, rect } = viewport;
@@ -160,8 +160,8 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
     }
     case GraphMinimapEvent.Pan:
       return minimapPan(action.dx, action.dy)(viewport);
-    case GraphCanvasEvent.ResetViewPort:
-      return resetViewPort(viewport, data, context.graphConfig, action);
+    case GraphCanvasEvent.ResetViewport:
+      return resetViewport(viewport, data, context.graphConfig, action);
     case GraphCanvasEvent.ZoomTo:
       return zoomTo(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
     case GraphCanvasEvent.ZoomToFit:

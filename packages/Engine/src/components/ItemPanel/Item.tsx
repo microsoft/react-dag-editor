@@ -11,7 +11,7 @@ import { GraphFeatures } from "../../Features";
 import { ICanvasNode} from "../../Graph.interface";
 import { useRefValue } from "../../hooks/useRefValue";
 import { IContainerRect, ITransformMatrix } from "../../models/viewport";
-import { deepClone, getRectHeight, getRectWidth, IPoint, isViewPortComplete, reverseTransformPoint } from "../../utils";
+import { deepClone, getRectHeight, getRectWidth, IPoint, isViewportComplete, reverseTransformPoint } from "../../utils";
 import { graphController } from "../../utils/graphController";
 import { identical } from "../../utils/identical";
 import { noop } from "../../utils/noop";
@@ -135,7 +135,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
           evt.clientX,
           evt.clientY,
           undefined,
-          propsAPI.getViewPort().transformMatrix,
+          propsAPI.getViewport().transformMatrix,
           model,
           nodeConfig
         ),
@@ -165,7 +165,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
               e.clientX,
               e.clientY,
               undefined,
-              propsAPI.getViewPort().transformMatrix,
+              propsAPI.getViewport().transformMatrix,
               model,
               nodeConfig
             )
@@ -173,9 +173,9 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
         });
       };
       drag.onEnd = ({ e }) => {
-        const viewport = propsAPI.getViewPort();
+        const viewport = propsAPI.getViewport();
         let nextNode = nextNodeRef.current;
-        if (!isViewPortComplete(viewport) || !nextNode || !isWithInBound(viewport.visibleRect, e.clientX, e.clientY)) {
+        if (!isViewportComplete(viewport) || !nextNode || !isWithInBound(viewport.visibleRect, e.clientX, e.clientY)) {
           setWorkingModel(null);
           eventChannel.trigger({
             type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,

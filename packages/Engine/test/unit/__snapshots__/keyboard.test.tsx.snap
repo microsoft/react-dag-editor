@@ -163,7 +163,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Select Columns in Dataset
                 </text>
-                
+
               </g>
             </g>
           </g>
@@ -197,7 +197,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Clean Missing Data
                 </text>
-                
+
               </g>
             </g>
           </g>
@@ -231,7 +231,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Split Data
                 </text>
-                
+
               </g>
             </g>
           </g>
@@ -265,7 +265,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Linear Regression
                 </text>
-                
+
               </g>
             </g>
           </g>
@@ -299,7 +299,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Train Model
                 </text>
-                
+
               </g>
             </g>
           </g>
@@ -333,7 +333,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Score Model
                 </text>
-                
+
               </g>
             </g>
           </g>
@@ -367,7 +367,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Evaluate Model
                 </text>
-                
+
               </g>
             </g>
           </g>
@@ -401,7 +401,7 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
                 >
                   Automobile price data (Raw)
                 </text>
-                
+
               </g>
             </g>
           </g>

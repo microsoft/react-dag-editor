@@ -6,7 +6,7 @@ import {
   addState,
   getNearestConnectablePort,
   isConnectable,
-  isViewPortComplete,
+  isViewportComplete,
   pushHistory,
   removeState,
   resetState,
@@ -69,7 +69,7 @@ function clearAttach(state: IGraphState): IGraphState {
 
 // eslint-disable-next-line complexity
 export const connectingReducer: IBuiltinReducer = (state, action, context): IGraphState => {
-  if (!isViewPortComplete(state.viewport)) {
+  if (!isViewportComplete(state.viewport)) {
     return state;
   }
   const { rect } = state.viewport;

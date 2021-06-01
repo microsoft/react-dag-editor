@@ -23,7 +23,7 @@ import {
   getRelativePoint,
   getRenderedNodes,
   isSelected,
-  isViewPortComplete,
+  isViewportComplete,
   pan,
   pushHistory,
   removeState,
@@ -65,7 +65,7 @@ function getSelectedNodes(data: GraphModel, graphConfig: IGraphConfig): IDummyNo
 }
 
 function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGraphReducerContext): IGraphState {
-  if (!isViewPortComplete(state.viewport)) {
+  if (!isViewportComplete(state.viewport)) {
     return state;
   }
   const e = event.rawEvent as MouseEvent;
@@ -218,7 +218,7 @@ function locateNode(
   graphConfig: IGraphConfig
 ): IGraphState {
   const data = state.data.present;
-  if (!isViewPortComplete(state.viewport) || !action.nodes.length) {
+  if (!isViewportComplete(state.viewport) || !action.nodes.length) {
     return state;
   }
   if (action.nodes.length === 1) {

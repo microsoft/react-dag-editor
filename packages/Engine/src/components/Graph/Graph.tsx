@@ -14,7 +14,7 @@ import {
   useSafariScale,
   useSelectBox,
   useTheme,
-  useUpdateViewPortCallback,
+  useUpdateViewportCallback,
   useWheelHandler
 } from "../../hooks";
 import { useConst } from "../../hooks/useConst";
@@ -24,7 +24,7 @@ import { GraphModel } from "../../models/GraphModel";
 import { IContainerRect, IViewport } from "../../models/viewport";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { IPropsAPIInstance } from "../../props-api/IPropsAPIInstance";
-import { isSupported, isViewPortComplete } from "../../utils";
+import { isSupported, isViewportComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";
 import { EventChannel } from "../../utils/eventChannel";
@@ -133,7 +133,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
 
   const eventChannel = useConst(() => new EventChannel());
 
-  const updateViewPort = useUpdateViewPortCallback(rectRef, visibleRectRef, svgRef, containerRef, eventChannel);
+  const updateViewport = useUpdateViewportCallback(rectRef, visibleRectRef, svgRef, containerRef, eventChannel);
 
   useEventChannel({
     props,
@@ -147,11 +147,11 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     graphConfig,
     setCurHoverNode,
     setCurHoverPort,
-    updateViewPort,
+    updateViewport,
     eventChannel
   });
 
-  useContainerRect(svgRef, containerRef, updateViewPort);
+  useContainerRect(svgRef, containerRef, updateViewport);
 
   const {
     isNodesDraggable,
@@ -260,7 +260,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   );
 
   const renderPortTooltip = () => {
-    if (!curHoverPort || !isViewPortComplete(state.viewport)) {
+    if (!curHoverPort || !isViewportComplete(state.viewport)) {
       return null;
     }
     const [nodeId, portId] = curHoverPort;
@@ -356,7 +356,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       </svg>
       {(!isVerticalScrollDisabled || !isHorizontalScrollDisabled || !isPanDisabled) &&
         isLimitBoundary &&
-        isViewPortComplete(state.viewport) && (
+        isViewportComplete(state.viewport) && (
           <Scrollbar
             viewport={state.viewport}
             offsetLimit={getOffsetLimit(
@@ -374,7 +374,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
         )}
       <GraphContextMenu state={state} onClick={onContextMenuClick} data-automation-id="context-menu-container" />
       {isSidePanelEnabled && <SidePanel svgRef={svgRef} />}
-      {curHoverNode && isViewPortComplete(state.viewport) && (
+      {curHoverNode && isViewportComplete(state.viewport) && (
         <NodeTooltips node={data.nodes.get(curHoverNode)} viewport={state.viewport} />
       )}
       {renderPortTooltip()}

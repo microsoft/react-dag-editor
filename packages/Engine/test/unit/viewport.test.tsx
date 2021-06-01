@@ -71,14 +71,14 @@ describe("test zoom", () => {
     act(() => {
       propsAPI.zoom(2);
     });
-    let transformMatrix = propsAPI.getViewPort().transformMatrix;
+    let transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(2);
     expect(transformMatrix[3]).toBe(2);
 
     act(() => {
       propsAPI.zoomTo(3);
     });
-    transformMatrix = propsAPI.getViewPort().transformMatrix;
+    transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(3);
     expect(transformMatrix[3]).toBe(3);
   });
@@ -87,14 +87,14 @@ describe("test zoom", () => {
     act(() => {
       propsAPI.zoom(2, ZoomDirection.X);
     });
-    let transformMatrix = propsAPI.getViewPort().transformMatrix;
+    let transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(2);
     expect(transformMatrix[3]).toBe(1);
 
     act(() => {
       propsAPI.zoomTo(3, undefined, ZoomDirection.X);
     });
-    transformMatrix = propsAPI.getViewPort().transformMatrix;
+    transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(3);
     expect(transformMatrix[3]).toBe(1);
   });
@@ -103,14 +103,14 @@ describe("test zoom", () => {
     act(() => {
       propsAPI.zoom(2, ZoomDirection.Y);
     });
-    let transformMatrix = propsAPI.getViewPort().transformMatrix;
+    let transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(1);
     expect(transformMatrix[3]).toBe(2);
 
     act(() => {
       propsAPI.zoomTo(3, undefined, ZoomDirection.Y);
     });
-    transformMatrix = propsAPI.getViewPort().transformMatrix;
+    transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(1);
     expect(transformMatrix[3]).toBe(3);
   });

@@ -3,7 +3,7 @@ import { GraphCanvasEvent } from "../common/GraphEvent.constant";
 import { GraphNodeState } from "../Graph.interface";
 import {
   getRealPointFromClientPoint,
-  isViewPortComplete,
+  isViewportComplete,
   notSelected,
   resetUndoStack,
   unSelectAllEntity
@@ -15,7 +15,7 @@ export const canvasReducer: IBuiltinReducer = (state, action) => {
   switch (action.type) {
     case GraphCanvasEvent.Paste: {
       const { position } = action;
-      if (!isViewPortComplete(state.viewport)) {
+      if (!isViewportComplete(state.viewport)) {
         return state;
       }
       const { rect } = state.viewport;

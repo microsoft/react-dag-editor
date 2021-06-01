@@ -6,7 +6,7 @@ import {
   GraphConfigContext,
   IGraphReducer,
   IGraphReducerContext,
-  ViewPortContext
+  ViewportContext
 } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { AutoZoomFitContext } from "../../contexts/AutoZoomFitContext";
@@ -24,7 +24,7 @@ import { GraphModel } from "../../models/GraphModel";
 import { DEFAULT_TRANSFORM_MATRIX, ITransformMatrix } from "../../models/viewport";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { useGraphReducer } from "../../reducers/useGraphReducer";
-import { isViewPortComplete, resetUndoStack } from "../../utils";
+import { isViewportComplete, resetUndoStack } from "../../utils";
 import { batchedUpdates } from "../../utils/batchedUpdates";
 import { graphController } from "../../utils/graphController";
 import { emptyDummyNodes } from "../dummyNodes";
@@ -126,7 +126,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
    */
   const shouldAutoZoomToFit = React.useRef(false);
   React.useEffect((): void => {
-    if (!isViewPortComplete(state.viewport) || !shouldAutoZoomToFit.current) {
+    if (!isViewportComplete(state.viewport) || !shouldAutoZoomToFit.current) {
       return;
     }
     shouldAutoZoomToFit.current = false;
@@ -142,13 +142,13 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     <AutoZoomFitContext.Provider value={shouldAutoZoomToFit}>
       <ConnectingState data={state.data.present} connectState={state.connectState}>
         <GraphStateContext.Provider value={contextValue}>
-          <ViewPortContext.Provider value={state.viewport}>
+          <ViewportContext.Provider value={state.viewport}>
             <GraphValueContext.Provider value={state.data.present}>
               <AlignmentLinesContext.Provider value={state.alignmentLines}>
                 {props.children}
               </AlignmentLinesContext.Provider>
             </GraphValueContext.Provider>
-          </ViewPortContext.Provider>
+          </ViewportContext.Provider>
         </GraphStateContext.Provider>
       </ConnectingState>
     </AutoZoomFitContext.Provider>

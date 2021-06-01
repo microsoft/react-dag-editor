@@ -8,7 +8,7 @@ import { IPoint, IRectShape, isPointInRect } from "./geometric";
 import { getNodeSize, IShapeRect } from "./layout";
 import { getContainerClientPoint, reverseTransformPoint } from "./transformMatrix";
 
-export const isViewPortComplete = (viewport: IViewport): viewport is Required<IViewport> => {
+export const isViewportComplete = (viewport: IViewport): viewport is Required<IViewport> => {
   return !!(viewport.rect && viewport.visibleRect);
 };
 
@@ -115,7 +115,7 @@ const isEdgeInRenderedArea = (source: IPoint, target: IPoint, renderedArea: IRec
 };
 
 export const getVisibleArea = (viewport: IViewport): IRectShape => {
-  if (!isViewPortComplete(viewport)) {
+  if (!isViewportComplete(viewport)) {
     return {
       minX: 0,
       minY: 0,
@@ -141,7 +141,7 @@ export const getVisibleArea = (viewport: IViewport): IRectShape => {
 };
 
 export const getRenderedArea = (viewport: IViewport): IRectShape => {
-  if (!isViewPortComplete(viewport)) {
+  if (!isViewportComplete(viewport)) {
     return {
       minX: 0,
       minY: 0,

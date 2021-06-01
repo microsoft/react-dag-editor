@@ -29,7 +29,7 @@ import { identical } from "../../src/utils/identical";
 import { TestComponent } from "../TestComponent";
 import { getGraphConfig, patchPointerEvent } from "../utils";
 
-const mockViewPort = {
+const mockViewport = {
   width: 800,
   height: 600,
   left: 0,
@@ -59,8 +59,8 @@ describe("test getNearestConnectablePort", () => {
       graphConfig,
       data,
       viewport: {
-        rect: mockViewPort,
-        visibleRect: mockViewPort,
+        rect: mockViewport,
+        visibleRect: mockViewport,
         transformMatrix: [1, 0, 0, 1, 0, 0]
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -124,8 +124,8 @@ describe("test getNearestConnectablePort", () => {
       graphConfig,
       data,
       viewport: {
-        rect: mockViewPort,
-        visibleRect: mockViewPort,
+        rect: mockViewport,
+        visibleRect: mockViewport,
         transformMatrix: [1, 0, 0, 1, 0, 0]
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -164,8 +164,8 @@ describe("test Connecting", () => {
         portId: port.id,
         rawEvent: new KeyboardEvent("keydown") as any,
         clientPoint: {
-          x: 190 + mockViewPort.left,
-          y: 151 + mockViewPort.top
+          x: 190 + mockViewport.left,
+          y: 151 + mockViewport.top
         }
       });
     }
@@ -299,9 +299,9 @@ describe("test Connecting", () => {
     }
     connecting = new Connecting();
     eventChannel.trigger({
-      type: GraphCanvasEvent.ViewPortResize,
-      viewportRect: mockViewPort,
-      visibleRect: mockViewPort
+      type: GraphCanvasEvent.ViewportResize,
+      viewportRect: mockViewport,
+      visibleRect: mockViewport
     });
   });
 
@@ -599,8 +599,8 @@ describe("test Connecting", () => {
         node: NodeModel.fromJSON(data.nodes[1], "0", undefined),
         rawEvent: new PointerEvent("pointerenter", {
           pointerId: 0,
-          clientX: 210 + mockViewPort.left,
-          clientY: 160 + mockViewPort.top
+          clientX: 210 + mockViewport.left,
+          clientY: 160 + mockViewport.top
         })
       });
     });
@@ -613,8 +613,8 @@ describe("test Connecting", () => {
         node: NodeModel.fromJSON(data.nodes[1], "0", undefined),
         rawEvent: new PointerEvent("pointerenter", {
           pointerId: 0,
-          clientX: 210 + mockViewPort.left,
-          clientY: 160 + mockViewPort.top
+          clientX: 210 + mockViewport.left,
+          clientY: 160 + mockViewport.top
         })
       });
     });

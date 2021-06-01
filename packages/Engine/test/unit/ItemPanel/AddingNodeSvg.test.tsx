@@ -2,7 +2,7 @@
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
-import { defaultFeatures, EMPTY_VIEW_PORT, PropsAPIContext } from "../../../src";
+import { defaultFeatures, DEFAULT_TRANSFORM_MATRIX, IViewport, PropsAPIContext } from "../../../src";
 import { MouseEventButton } from "../../../src/common/constants";
 import { Item } from "../../../src/components/ItemPanel";
 import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
@@ -16,6 +16,10 @@ import { withGraphConfigContext } from "../__mocks__/mockContext";
 import { mockPropsAPI } from "../__mocks__/mockPropsAPI";
 import { TestItemContent } from "./TestItemContent";
 
+const EMPTY_VIEWPORT: IViewport = {
+  transformMatrix: DEFAULT_TRANSFORM_MATRIX
+};
+
 const rect = {
   left: 100,
   top: 100,
@@ -28,7 +32,7 @@ const rect = {
 const propsAPI = {
   ...mockPropsAPI,
   getEventChannel: () => new EventChannel(),
-  getViewPort() {
+  getViewport(): IViewport {
     return {
       transformMatrix: [1, 0, 0, 1, 0, 0],
       visibleRect: rect,
@@ -166,7 +170,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
       }
     };
     noopInstance.containerRectRef = containerRect;
-    EMPTY_VIEW_PORT.rect = containerRect as any;
+    EMPTY_VIEWPORT.rect = containerRect as any;
 
     simulateDragging(screen.getByRole("button"), MouseEventButton.Primary, [
       [100, 100],

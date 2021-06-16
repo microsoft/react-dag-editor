@@ -2,7 +2,7 @@
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
-import { defaultFeatures, DEFAULT_TRANSFORM_MATRIX, IViewport, PropsAPIContext } from "../../../src";
+import { defaultFeatures, DEFAULT_TRANSFORM_MATRIX, IViewport, PropsAPIContext, ViewportContext } from "../../../src";
 import { MouseEventButton } from "../../../src/common/constants";
 import { Item } from "../../../src/components/ItemPanel";
 import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
@@ -29,15 +29,17 @@ const rect = {
   bottom: 900
 };
 
+const viewport: IViewport = {
+  transformMatrix: [1, 0, 0, 1, 0, 0],
+  visibleRect: rect,
+  rect
+}
+
 const propsAPI = {
   ...mockPropsAPI,
   getEventChannel: () => new EventChannel(),
   getViewport(): IViewport {
-    return {
-      transformMatrix: [1, 0, 0, 1, 0, 0],
-      visibleRect: rect,
-      rect
-    };
+    return viewport;
   }
 } as PropsAPI<any, any, any>;
 
@@ -73,16 +75,18 @@ describe("ItemPanel - AddingNodeSvg", () => {
 
     renderedWrapper = render(
       withGraphConfigContext(
-        <PropsAPIContext.Provider value={propsAPI}>
-          <Item
-            model={{ name: "node1", shape: "nodeShape" }}
-            dragWillStart={jest.fn()}
-            nodeWillAdd={nodeWillAdd}
-            nodeDidAdd={nodeDidAdd}
-          >
-            <TestItemContent text="test item for addingNodeSVG" />
-          </Item>
-        </PropsAPIContext.Provider>
+        <ViewportContext.Provider value={viewport}>
+          <PropsAPIContext.Provider value={propsAPI}>
+            <Item
+              model={{ name: "node1", shape: "nodeShape" }}
+              dragWillStart={jest.fn()}
+              nodeWillAdd={nodeWillAdd}
+              nodeDidAdd={nodeDidAdd}
+            >
+              <TestItemContent text="test item for addingNodeSVG" />
+            </Item>
+          </PropsAPIContext.Provider>
+        </ViewportContext.Provider>
       )
     );
   });

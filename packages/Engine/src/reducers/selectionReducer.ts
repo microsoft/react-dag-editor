@@ -26,7 +26,7 @@ function handleNavigate(state: IGraphState, action: ICanvasNavigateEvent): IGrap
 
 export const selectionReducer: IBuiltinReducer = (state, action, context) => {
   const data = state.data.present;
-  const isRangeSelectEnable = context.features.has(GraphFeatures.rangeSelect);
+  const isLassoSelectEnable = context.features.has(GraphFeatures.lassoSelect);
 
   switch (action.type) {
     case GraphCanvasEvent.Click:
@@ -61,7 +61,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
         },
         selectBoxPosition: {
           startX: point.x,
-          startY: !isRangeSelectEnable ? point.y : 0,
+          startY: !isLassoSelectEnable ? point.y : 0,
           width: 0,
           height: 0
         }
@@ -76,7 +76,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
         selectBoxPosition: {
           ...state.selectBoxPosition,
           width: state.selectBoxPosition.width + action.dx,
-          height: !isRangeSelectEnable
+          height: !isLassoSelectEnable
             ? state.selectBoxPosition.height + action.dy
             : state.viewPort.rect?.height ?? state.selectBoxPosition.height
         }

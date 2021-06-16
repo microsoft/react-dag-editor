@@ -9,7 +9,7 @@ export const useFeatureControl = (features: Set<GraphFeatures>) => {
     const isAutoFitDisabled = !features.has(GraphFeatures.autoFit);
     const isPanDisabled = !features.has(GraphFeatures.panCanvas);
     const isMultiSelectDisabled = !features.has(GraphFeatures.multipleSelect);
-    const isRangeSelectEnable = features.has(GraphFeatures.rangeSelect);
+    const isLassoSelectEnable = features.has(GraphFeatures.lassoSelect);
     const isNodeHoverViewEnabled = features.has(GraphFeatures.nodeHoverView);
     const isClickNodeToSelectDisabled = !features.has(GraphFeatures.clickNodeToSelect);
     const isConnectDisabled = !features.has(GraphFeatures.addNewEdges);
@@ -34,7 +34,7 @@ export const useFeatureControl = (features: Set<GraphFeatures>) => {
       isAutoFitDisabled,
       isPanDisabled,
       isMultiSelectDisabled,
-      isRangeSelectEnable,
+      isLassoSelectEnable,
       isNodeHoverViewEnabled,
       isClickNodeToSelectDisabled,
       isConnectDisabled,

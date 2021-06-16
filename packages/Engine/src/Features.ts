@@ -4,7 +4,7 @@ export enum GraphFeatures {
   clickNodeToSelect = "clickNodeToSelect",
   panCanvas = "panCanvas",
   multipleSelect = "multipleSelect",
-  rangeSelect = "rangeSelect",
+  lassoSelect = "lassoSelect",
   delete = "delete",
   addNewNodes = "addNewNodes",
   addNewEdges = "addNewEdges",
@@ -31,7 +31,7 @@ export const allFeatures = new Set([
   GraphFeatures.clickNodeToSelect,
   GraphFeatures.panCanvas,
   GraphFeatures.multipleSelect,
-  GraphFeatures.rangeSelect,
+  GraphFeatures.lassoSelect,
   GraphFeatures.delete,
   GraphFeatures.addNewNodes,
   GraphFeatures.addNewEdges,
@@ -100,7 +100,7 @@ export const GanttChartFeatures = new Set([
   GraphFeatures.nodeHoverView,
   GraphFeatures.portHoverView,
   GraphFeatures.a11yFeatures,
-  GraphFeatures.rangeSelect,
+  GraphFeatures.lassoSelect,
   GraphFeatures.limitBoundary
 ]);
 

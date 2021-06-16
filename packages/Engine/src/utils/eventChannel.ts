@@ -5,7 +5,8 @@ import { batchedUpdates } from "./batchedUpdates";
 export type IGraphEventHandler<T = unknown, P = unknown, U = unknown> = (event: IEvent<T, P, U>) => void;
 
 export class EventChannel {
-  public readonly listenersRef = createRef<IGraphEventHandler[]>();
+  public readonly listenersRef = createRef<IGraphEventHandler>();
+  public readonly externalHandlerRef = createRef<IGraphEventHandler | undefined>();
   private queue: IEvent[] = [];
   private working = false;
 
@@ -15,11 +16,11 @@ export class EventChannel {
     } else {
       this.working = true;
       batchedUpdates(() => {
-        this.listenersRef.current?.forEach(fn => fn(event));
+        this.callHandlers(event);
         // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < this.queue.length; i += 1) {
           const e = this.queue[i];
-          this.listenersRef.current?.forEach(fn => fn(e));
+          this.callHandlers(e);
         }
         this.queue = [];
       });
@@ -37,6 +38,13 @@ export class EventChannel {
       }
       this.queue.push(...events.slice(1));
       this.trigger(first);
+    }
+  }
+
+  private callHandlers(e: IEvent): void {
+    this.listenersRef.current?.(e);
+    if (!e.intercepted) {
+      this.externalHandlerRef.current?.(e);
     }
   }
 }

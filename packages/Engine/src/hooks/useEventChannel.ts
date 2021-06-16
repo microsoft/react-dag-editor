@@ -14,7 +14,7 @@ import { IGraphConfig } from "../contexts";
 import { GraphBehavior, IDispatch } from "../contexts/GraphStateContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
-import { GraphNodeState, IContainerRect, IEvent, INodeCommonEvent, IPortEvent } from "../Graph.interface";
+import { GraphNodeState, IContainerRect, IEvent, IGap, INodeCommonEvent, IPortEvent } from "../Graph.interface";
 import { onContainerMouseDown, onNodePointerDown } from "../handlers";
 import { PropsAPI } from "../props-api/PropsAPI";
 import { handleBehaviorChange } from "../reducers/behaviorReducer";
@@ -51,6 +51,7 @@ export interface IUseEventChannelParams {
   featureControl: ReturnType<typeof useFeatureControl>;
   graphConfig: IGraphConfig;
   eventChannel: EventChannel;
+  canvasBoundaryPadding: IGap | undefined;
   setFocusedWithoutMouse(value: boolean): void;
   setCurHoverNode(nodeId: string | undefined): void;
   setCurHoverPort(value: [string, string] | undefined): void;
@@ -70,6 +71,7 @@ export function useEventChannel({
   setCurHoverNode,
   setCurHoverPort,
   eventChannel,
+  canvasBoundaryPadding,
   updateViewPort
 }: IUseEventChannelParams): void {
   const {
@@ -192,6 +194,7 @@ export function useEventChannel({
         break;
       case GraphCanvasEvent.MouseDown:
         {
+          graphController.nodeClickOnce = null;
           svgRef.current?.focus({ preventScroll: true });
           setFocusedWithoutMouse(false);
           const evt = event.rawEvent as React.MouseEvent;
@@ -206,6 +209,7 @@ export function useEventChannel({
             containerRef,
             getPositionFromEvent: defaultGetPositionFromEvent,
             graphConfig,
+            canvasBoundaryPadding,
             limitBoundary: isLimitBoundary,
             eventChannel
           });
@@ -335,7 +339,6 @@ export function useEventChannel({
       case GraphNodeEvent.DragStart:
       case GraphNodeEvent.Drag:
       case GraphNodeEvent.DragEnd:
-      case GraphNodeEvent.Click:
       case GraphNodeEvent.SelectAll:
         dispatch(event);
         break;
@@ -344,6 +347,7 @@ export function useEventChannel({
         break;
       case GraphNodeEvent.PointerDown:
         {
+          graphController.nodeClickOnce = null;
           if (graphController.getBehavior() !== GraphBehavior.default) {
             return;
           }
@@ -370,11 +374,25 @@ export function useEventChannel({
         onNodePointerLeave(event);
         break;
       case GraphNodeEvent.MouseDown:
+        graphController.nodeClickOnce = null;
         event.rawEvent.preventDefault();
         if (isNodesDraggable) {
           event.rawEvent.stopPropagation();
         }
         setFocusedWithoutMouse(false);
+        break;
+      case GraphNodeEvent.Click:
+        if (graphController.nodeClickOnce?.id === event.node.id) {
+          const { currentTarget } = event.rawEvent;
+          if (currentTarget instanceof SVGElement) {
+            currentTarget.focus({ preventScroll: true });
+          }
+          event.node = graphController.nodeClickOnce;
+          dispatch(event);
+          graphController.nodeClickOnce = null;
+        } else {
+          event.intercepted = true;
+        }
         break;
       case GraphNodeEvent.ContextMenu:
         event.rawEvent.preventDefault();
@@ -638,7 +656,6 @@ export function useEventChannel({
     //#endregion other events
   };
 
-  React.useImperativeHandle(eventChannel.listenersRef, () =>
-    props.onEvent ? [handleEvent, props.onEvent] : [handleEvent]
-  );
+  React.useImperativeHandle(eventChannel.listenersRef, () => handleEvent);
+  React.useImperativeHandle(eventChannel.externalHandlerRef, () => props.onEvent);
 }

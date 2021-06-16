@@ -1,7 +1,7 @@
 import { GraphEdgeEvent } from "../common/GraphEvent.constant";
 import { GraphFeatures } from "../Features";
 import { GraphEdgeState } from "../Graph.interface";
-import { addState, pushHistory, removeState, resetState, updateState } from "../utils";
+import { addState, pushHistory, removeState, resetState, unSelectAllEntity, updateState } from "../utils";
 import { graphController } from "../utils/graphController";
 import { IBuiltinReducer } from "./builtinReducer.type";
 
@@ -40,7 +40,10 @@ export const edgeReducer: IBuiltinReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateEdge(action.edge.id, updateState(addState(GraphEdgeState.selected)))
+          present: unSelectAllEntity()(state.data.present).updateEdge(
+            action.edge.id,
+            updateState(addState(GraphEdgeState.selected))
+          )
         }
       };
     case GraphEdgeEvent.Add:

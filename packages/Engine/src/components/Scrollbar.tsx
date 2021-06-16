@@ -6,6 +6,7 @@ import { IViewPort, IDispatch } from "../contexts/GraphStateContext";
 import { ITheme } from "../contexts/ThemeContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers/DragController";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
+import { IGap } from "../Graph.interface";
 import { useRefValue } from "../hooks/useRefValue";
 import { useTheme } from "../hooks/useTheme";
 import { EventChannel } from "../utils/eventChannel";
@@ -26,6 +27,7 @@ interface IProps {
   viewPort: Required<IViewPort>;
   horizontal?: boolean;
   vertical?: boolean;
+  canvasBoundaryPadding: IGap | undefined;
   offsetLimit: IOffsetLimit;
   eventChannel: EventChannel;
   dispatch: IDispatch;
@@ -72,7 +74,7 @@ const useStyles = createUseStyles({
 });
 
 export const Scrollbar: React.FC<IProps> = props => {
-  const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewPort } = props;
+  const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewPort, canvasBoundaryPadding } = props;
 
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
   const { theme } = useTheme();
@@ -148,7 +150,8 @@ export const Scrollbar: React.FC<IProps> = props => {
         rawEvent,
         dx,
         dy: 0,
-        limitBoundary: true
+        limitBoundary: true,
+        canvasBoundaryPadding
       });
 
       if (scrollbarDx < 0) {

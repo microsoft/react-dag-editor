@@ -105,7 +105,10 @@ export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = 
    * Port circle radius.
    */
   portRadius?: number;
-
+  /**
+   * The padding between the boundary of the canvas and the graph when scrolling/panning
+   */
+  canvasBoundaryPadding?: IGap;
   /**
    * Padding of graph.
    */

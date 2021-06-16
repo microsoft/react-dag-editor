@@ -139,15 +139,16 @@ const reducer = (viewPort: IViewPort, action: IEvent, context: IGraphReducerCont
       }
       const { transformMatrix, rect } = viewPort;
       let { dx, dy } = action;
-      const { limitBoundary, groupPadding } = action;
+      const { limitBoundary, groupPadding, canvasBoundaryPadding } = action;
       if (limitBoundary) {
-        const { minX, maxX, minY, maxY } = getOffsetLimit(
+        const { minX, maxX, minY, maxY } = getOffsetLimit({
           data,
-          context.graphConfig,
+          graphConfig: context.graphConfig,
           rect,
           transformMatrix,
+          canvasBoundaryPadding,
           groupPadding
-        );
+        });
         dx = clamp(minX - transformMatrix[4], maxX - transformMatrix[4], dx);
         dy = clamp(minY - transformMatrix[5], maxY - transformMatrix[5], dy);
       }

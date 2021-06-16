@@ -56,11 +56,6 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
 
   const isMultiSelect = checkIsMultiSelect(evt);
 
-  /**
-   * evt.currentTarget is set to null in `onEnd` although `event.persis()` is called in GraphNode.tsx
-   */
-  const element = evt.currentTarget as SVGGElement;
-
   const dragging = new DragNodeController(
     new PointerEventProvider(graphConfig.getGlobalEventTarget(), evt.pointerId),
     getPositionFromEvent,
@@ -93,13 +88,7 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
       isDragCanceled
     });
     if (isDragCanceled || !isNodesDraggable) {
-      events.push({
-        type: GraphNodeEvent.Click,
-        node: target,
-        rawEvent: e,
-        isMultiSelect
-      });
-      element.focus();
+      graphController.nodeClickOnce = target;
     }
     eventChannel.batch(events);
   };

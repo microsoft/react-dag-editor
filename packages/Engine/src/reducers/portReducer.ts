@@ -1,6 +1,6 @@
 import { GraphPortEvent } from "../common/GraphEvent.constant";
 import { GraphPortState } from "../Graph.interface";
-import { addState, removeState, updateState } from "../utils";
+import { addState, removeState, unSelectAllEntity, updateState } from "../utils";
 import { IBuiltinReducer } from "./builtinReducer.type";
 
 export const portReducer: IBuiltinReducer = (state, action) => {
@@ -37,7 +37,7 @@ export const portReducer: IBuiltinReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updatePort(
+          present: unSelectAllEntity()(state.data.present).updatePort(
             action.node.id,
             action.port.id,
             updateState(addState(GraphPortState.selected))

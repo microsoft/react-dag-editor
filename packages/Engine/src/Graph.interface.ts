@@ -208,6 +208,7 @@ export interface ICanvasPanEvent extends IEventBase {
   dx: number;
   dy: number;
   limitBoundary: boolean;
+  canvasBoundaryPadding?: IGap;
   groupPadding?: IGap;
 }
 
@@ -354,7 +355,8 @@ export interface INodeContextMenuEvent<NodeData = unknown, PortData = unknown> e
   node: NodeModel<NodeData, PortData>;
 }
 
-export interface INodeClickEvent<NodeData = unknown, PortData = unknown> extends IEventBase<MouseEvent> {
+export interface INodeClickEvent<NodeData = unknown, PortData = unknown>
+  extends IEventBase<MouseEvent | React.MouseEvent> {
   type: GraphNodeEvent.Click;
   node: NodeModel<NodeData, PortData>;
   isMultiSelect: boolean;
@@ -513,11 +515,12 @@ export interface IContextMenuCloseEvent {
 
 export type IContextMenuEvent = IContextMenuOpenEvent | IContextMenuCloseEvent;
 
-export type IEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> =
+export type IEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> = (
   | ICanvasEvent<NodeData, EdgeData, PortData>
   | INodeEvent<NodeData, PortData>
   | IEdgeEvent<EdgeData>
   | IPortEvent<NodeData, PortData>
   | IScrollBarEvent
   | IMinimapEvent
-  | IContextMenuEvent;
+  | IContextMenuEvent
+) & { intercepted?: boolean };

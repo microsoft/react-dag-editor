@@ -5,7 +5,7 @@ import { IGraphConfig } from "../contexts";
 import { IGraphState } from "../contexts/GraphStateContext";
 import { DragController, IOnDragEnd } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
-import { CanvasMouseMode, ICanvasCommonEvent, IEvent } from "../Graph.interface";
+import { CanvasMouseMode, ICanvasCommonEvent, IEvent, IGap } from "../Graph.interface";
 import { IPoint } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { graphController } from "../utils/graphController";
@@ -22,6 +22,7 @@ export interface IContainerMouseDownParams {
   containerRef: React.RefObject<HTMLDivElement>;
   eventChannel: EventChannel;
   graphConfig: IGraphConfig;
+  canvasBoundaryPadding?: IGap;
   getPositionFromEvent(e: MouseEvent): IPoint;
 }
 
@@ -74,7 +75,7 @@ const dragMultiSelect = (e: MouseEvent, params: IContainerMouseDownParams): void
 };
 
 const dragPan = (e: MouseEvent, params: IContainerMouseDownParams): void => {
-  const { getPositionFromEvent, graphConfig, limitBoundary, eventChannel } = params;
+  const { getPositionFromEvent, graphConfig, limitBoundary, eventChannel, canvasBoundaryPadding } = params;
 
   const dragging = new DragController(
     new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
@@ -86,7 +87,8 @@ const dragPan = (e: MouseEvent, params: IContainerMouseDownParams): void => {
       rawEvent,
       dx,
       dy,
-      limitBoundary
+      limitBoundary,
+      canvasBoundaryPadding
     });
   };
   dragging.onEnd = withSimulatedClick(params, GraphCanvasEvent.DragEnd);

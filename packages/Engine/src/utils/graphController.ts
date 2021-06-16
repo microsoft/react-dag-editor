@@ -1,5 +1,6 @@
 import { GraphBehavior } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
+import { NodeModel } from "../models/NodeModel";
 import { IPoint } from "./geometric";
 
 /**
@@ -19,6 +20,7 @@ class GraphController {
    * simulate canvas click event once
    */
   public canvasClickOnce = false;
+  public nodeClickOnce: NodeModel | null = null;
   private mouseClientPoint?: IPoint;
   private enabledFeatures: Set<GraphFeatures>;
   private behavior = GraphBehavior.default;

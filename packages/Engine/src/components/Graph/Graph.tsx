@@ -23,7 +23,7 @@ import { useFeatureControl } from "../../hooks/useFeatureControl";
 import { GraphModel } from "../../models/GraphModel";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { IPropsAPIInstance } from "../../props-api/IPropsAPIInstance";
-import { isSupported, isViewPortComplete } from "../../utils";
+import { isSelected, isSupported, isViewPortComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";
 import { EventChannel } from "../../utils/eventChannel";
@@ -102,7 +102,8 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     zoomSensitivity = 0.1,
     scrollSensitivity = 0.5,
     svgRef = defaultSVGRef,
-    virtualizationDelay = 500
+    virtualizationDelay = 500,
+    canvasBoundaryPadding
   } = props;
 
   graphController.setEnabledFeatures(features);
@@ -147,6 +148,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     setCurHoverNode,
     setCurHoverPort,
     updateViewPort,
+    canvasBoundaryPadding,
     eventChannel
   });
 
@@ -204,6 +206,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     graphConfig,
     propsAPI,
     limitBoundary: isLimitBoundary,
+    canvasBoundaryPadding,
     groupPadding: data.groups?.[0]?.padding
   });
 
@@ -272,6 +275,22 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       return null;
     }
     return <PortTooltips port={port} parentNode={node} data={data} viewPort={state.viewPort} />;
+  };
+
+  const renderNodeTooltip = () => {
+    if (!curHoverNode || !isViewPortComplete(state.viewPort)) {
+      return null;
+    }
+
+    // do not show tooltip if current node has contextmenu
+    const curHoverNodeHasContextMenu =
+      state.contextMenuPosition && curHoverNode === state.data.present.nodes.find(isSelected)?.id;
+
+    if (curHoverNodeHasContextMenu) {
+      return null;
+    }
+
+    return <NodeTooltips node={data.nodes.get(curHoverNode)} viewPort={state.viewPort} />;
   };
 
   return (
@@ -358,13 +377,15 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
         isViewPortComplete(state.viewPort) && (
           <Scrollbar
             viewPort={state.viewPort}
-            offsetLimit={getOffsetLimit(
+            canvasBoundaryPadding={canvasBoundaryPadding}
+            offsetLimit={getOffsetLimit({
               data,
               graphConfig,
-              state.viewPort.rect,
-              viewPort.transformMatrix,
-              data.groups[0]?.padding
-            )}
+              rect: state.viewPort.rect,
+              transformMatrix: viewPort.transformMatrix,
+              canvasBoundaryPadding,
+              groupPadding: data.groups[0]?.padding
+            })}
             dispatch={dispatch}
             horizontal={!isHorizontalScrollDisabled}
             vertical={!isVerticalScrollDisabled}
@@ -373,9 +394,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
         )}
       <GraphContextMenu state={state} onClick={onContextMenuClick} data-automation-id="context-menu-container" />
       {isSidePanelEnabled && <SidePanel svgRef={svgRef} />}
-      {curHoverNode && isViewPortComplete(state.viewPort) && (
-        <NodeTooltips node={data.nodes.get(curHoverNode)} viewPort={state.viewPort} />
-      )}
+      {renderNodeTooltip()}
       {renderPortTooltip()}
     </div>
   );

@@ -22,6 +22,7 @@ export interface IWheelOptions {
   propsAPI: IPropsAPI;
   dispatch: IDispatch;
   limitBoundary: boolean;
+  canvasBoundaryPadding: IGap | undefined;
   groupPadding?: IGap;
 }
 
@@ -42,6 +43,7 @@ export const useWheelHandler = (args: IWheelOptions) => {
     propsAPI,
     dispatch,
     limitBoundary,
+    canvasBoundaryPadding,
     groupPadding
   } = args;
 
@@ -88,6 +90,7 @@ export const useWheelHandler = (args: IWheelOptions) => {
         dy,
         rawEvent: e,
         groupPadding,
+        canvasBoundaryPadding,
         limitBoundary
       });
     };

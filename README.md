@@ -40,44 +40,6 @@ React component to create graphic user interface with:
 
 
 
-## Basic feature
-
-### Node drag-and-drop to relocate.
-
-Demo: WIP
-
-### Node click-to-select
-
-### Built-in Item component to build custom pallette.
-
-### Drag-n-drop to connect 2 nodes.
-
-### Nodes inline editing.
-
-### Panning canvas by mouse drag-n-drop
-
-### Zooming in/out by mouse-wheel scrolling
-
-### Ctrl click multi selection
-
-### Lasso select
-
-### Undo by ctrl+z/Redo by ctrl + y
-
-## Advanced features
-
-### Minimap
-
-### Hover to view tooltips
-
-### contextual menus
-
-### Layout auto fitting
-
-### Auto aligning of nodes
-
-### Auto layout
-
 ## compatibility
 
 ### Touch screen/touch pad support

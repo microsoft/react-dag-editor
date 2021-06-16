@@ -16,9 +16,79 @@ React component to create graphic user interface with:
 - flow: directed acyclic graph editor. Our a11y solution assumes the graph is a DAG. If you intend to turn off the a11y features, it is fine to draw undirected or cyclic graph with this component.
 - editor: it supports readonly graphic data visualization. However the reason you choose this library is the highlight in the user interaction to create/edit a graph.
 
+## Features
+
+| Feature                         | Description                                                  | Demo  | Is in default feature set? | Is in read only mode feature set? |
+| ------------------------------- | ------------------------------------------------------------ | ----- | -------------------------- | --------------------------------- |
+| GraphFeatures.nodeDraggable     | Node drag-and-drop to relocate                               | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.nodeResizable     | Double clicking on a node to enable the anchors to resize it | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.clickNodeToSelect | Node click-to-select                                         | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.panCanvas         | Drag-n-drop on canvas to pan                                 | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.multipleSelect    | Ctrl click multi selection                                   | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.lassoSelect       | Lasso select                                                 | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.delete            | Use delete key to delete a node                              | (WIP) | Yes                        | No                                |
+| GraphFeatures.addNewNodes       | Adding new nodes                                             | (WIP) | Yes                        | No                                |
+| GraphFeatures.addNewEdges       | Adding new edges                                             | (WIP) | Yes                        | No                                |
+| GraphFeatures.addNewPorts       | Adding new ports                                             | (WIP) | Yes                        | No                                |
+| GraphFeatures.sidePanel,        | Built-in side panel                                          | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.autoFit           | Auto pan/zoom the whole canvas to fit the viewport on every move | (WIP) | No                         | No                                |
+| GraphFeatures.editNode          | Node inline editing mode                                     | (WIP) | Yes                        | No                                |
+| GraphFeatures.autoAlign         | Auto aligning hint on node drag-n-drop                       | (WIP) | Yes                        | No                                |
+| GraphFeatures.undoStack         | Undo stack to support undo/redo                              | (WIP) | Yes                        | No                                |
+| GraphFeatures.ctrlKeyZoom       | Zooming by ctrl clicking + mousewheel                        | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.limitBoundary     | Constraint the allowed drag-n-drop area                      | (WIP) | Yes                        | Yes                               |
+
+
+
+## Basic feature
+
+### Node drag-and-drop to relocate.
+
+Demo: WIP
+
+### Node click-to-select
+
+### Built-in Item component to build custom pallette.
+
+### Drag-n-drop to connect 2 nodes.
+
+### Nodes inline editing.
+
+### Panning canvas by mouse drag-n-drop
+
+### Zooming in/out by mouse-wheel scrolling
+
+### Ctrl click multi selection
+
+### Lasso select
+
+### Undo by ctrl+z/Redo by ctrl + y
+
+## Advanced features
+
+### Minimap
+
+### Hover to view tooltips
+
+### contextual menus
+
+### Layout auto fitting
+
+### Auto aligning of nodes
+
+### Auto layout
+
+## compatibility
+
+### Touch screen/touch pad support
+
+### Deceeded rendering on old browsers
+
+## Extensibility & customization
+
 ## Contributing
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+This project welcomes contributions and suggestions. Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
 the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
 
@@ -32,8 +102,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 ## Trademarks
 
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
+This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
+trademarks or logos is subject to and must follow
 [Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
 Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
 Any use of third-party trademarks or logos are subject to those third-party's policies.

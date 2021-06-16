@@ -157,7 +157,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     isNodeResizable,
     isPanDisabled,
     isMultiSelectDisabled,
-    isRangeSelectEnable,
+    isLassoSelectEnable,
     isNodeEditDisabled,
     isVerticalScrollDisabled,
     isHorizontalScrollDisabled,
@@ -340,7 +340,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
           )}
           <AlignmentLines style={props.styles?.alignmentLine} />
         </Transform>
-        {(!isMultiSelectDisabled || isRangeSelectEnable) && (
+        {(!isMultiSelectDisabled || isLassoSelectEnable) && (
           <SelectBox selectBoxPosition={state.selectBoxPosition} style={props.styles?.selectBox} />
         )}
         {state.connectState && (

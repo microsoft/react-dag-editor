@@ -16,7 +16,7 @@ export interface IContainerMouseDownParams {
   canvasMouseMode: CanvasMouseMode | undefined;
   isPanDisabled: boolean;
   isMultiSelectDisabled: boolean;
-  isRangeSelectEnable: boolean;
+  isLassoSelectEnable: boolean;
   dragThreshold: number;
   limitBoundary: boolean;
   containerRef: React.RefObject<HTMLDivElement>;
@@ -105,7 +105,7 @@ export const onContainerMouseDown = (e: React.MouseEvent, params: IContainerMous
     return;
   }
 
-  const { canvasMouseMode, isPanDisabled, isMultiSelectDisabled, state, isRangeSelectEnable } = params;
+  const { canvasMouseMode, isPanDisabled, isMultiSelectDisabled, state, isLassoSelectEnable } = params;
   // in pan mode, hold ctrl or shift to perform select.
   // in select mode, hold space to perform pan
   const isPanMode =
@@ -113,7 +113,7 @@ export const onContainerMouseDown = (e: React.MouseEvent, params: IContainerMous
 
   if (!isPanDisabled && isPanMode) {
     dragPan(e.nativeEvent, params);
-  } else if (!isMultiSelectDisabled || (isRangeSelectEnable && !e.ctrlKey && !e.metaKey)) {
+  } else if (!isMultiSelectDisabled || (isLassoSelectEnable && !e.ctrlKey && !e.metaKey)) {
     dragMultiSelect(e.nativeEvent, params);
   } else {
     graphController.canvasClickOnce = true;

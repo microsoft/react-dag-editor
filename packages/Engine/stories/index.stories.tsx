@@ -1,10 +1,11 @@
 /* eslint-disable import/no-default-export */
 import * as React from "react";
+import { FeaturesDemo } from "./components/FeaturesDemo";
 
 export default {
   title: "react-flow-editor"
 };
 
-export const FeatureDemo = () => <FeatureDemo />;
+export const Features = () => <FeaturesDemo />;
 
-FeatureDemo.storyName = "features";
+Features.storyName = "features";

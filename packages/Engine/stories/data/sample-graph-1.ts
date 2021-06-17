@@ -10,6 +10,24 @@ export const sampleGraphData: ICanvasData = {
       x: 100,
       y: 100,
       shape: "source"
+    },
+    {
+      id: "step-1",
+      name: "the first step",
+      ports: [],
+      data: {},
+      x: 100,
+      y: 400,
+      shape: "step"
+    },
+    {
+      id: "step-2",
+      name: "the second step",
+      ports: [],
+      data: {},
+      x: 600,
+      y: 400,
+      shape: "step"
     }
   ],
   edges: []

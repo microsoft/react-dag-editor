@@ -11,7 +11,9 @@ import {
   IRectConfig,
   NodeModel,
   getRectHeight,
-  getRectWidth
+  getRectWidth,
+  hasState,
+  GraphNodeState
 } from "../../src";
 import { sampleGraphData } from "../data/sample-graph-1";
 
@@ -44,14 +46,18 @@ const sourceNodeConfig: IRectConfig<NodeModel> = {
     const height = getRectHeight(sourceNodeConfig, args.model);
     const width = getRectWidth(sourceNodeConfig, args.model);
 
+    const fill = hasState(GraphNodeState.activated)(args.model.state) ? "red" : "blue";
+    const stroke = hasState(GraphNodeState.selected)(args.model.state) ? "green" : "none";
+
     return (
       <ellipse
         rx={width / 2}
         ry={height / 2}
         cx={args.model.x + width / 2}
         cy={args.model.y + height / 2}
-        stroke="blue"
-        fill="blue"
+        stroke={stroke}
+        strokeWidth={4}
+        fill={fill}
         fillOpacity={0.8}
       />
     );

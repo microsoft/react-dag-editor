@@ -5,7 +5,15 @@ export const sampleGraphData: ICanvasData = {
     {
       id: "source",
       name: "source",
-      ports: [],
+      ports: [
+        {
+          id: "source-port",
+          position: [0.5, 1],
+          name: "source port",
+          isInputDisabled: true,
+          isOutputDisabled: false
+        }
+      ],
       data: {},
       x: 100,
       y: 100,
@@ -14,7 +22,32 @@ export const sampleGraphData: ICanvasData = {
     {
       id: "step-1",
       name: "the first step",
-      ports: [],
+      ports: [
+        {
+          id: "input-top",
+          position: [0.5, 0],
+          name: "input top",
+          isOutputDisabled: true
+        },
+        {
+          id: "input-left",
+          position: [0, 0.5],
+          name: "input left",
+          isOutputDisabled: true
+        },
+        {
+          id: "output-bottom",
+          position: [0.5, 1],
+          name: "output bottom",
+          isInputDisabled: true
+        },
+        {
+          id: "output-right",
+          position: [1, 0.5],
+          name: "output right",
+          isInputDisabled: true
+        }
+      ],
       data: {},
       x: 100,
       y: 400,
@@ -23,7 +56,32 @@ export const sampleGraphData: ICanvasData = {
     {
       id: "step-2",
       name: "the second step",
-      ports: [],
+      ports: [
+        {
+          id: "input-top",
+          position: [0.5, 0],
+          name: "input top",
+          isOutputDisabled: true
+        },
+        {
+          id: "input-left",
+          position: [0, 0.5],
+          name: "input left",
+          isOutputDisabled: true
+        },
+        {
+          id: "output-bottom",
+          position: [0.5, 1],
+          name: "output bottom",
+          isInputDisabled: true
+        },
+        {
+          id: "output-right",
+          position: [1, 0.5],
+          name: "output right",
+          isInputDisabled: true
+        }
+      ],
       data: {},
       x: 600,
       y: 400,

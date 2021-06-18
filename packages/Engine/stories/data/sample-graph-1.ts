@@ -27,25 +27,29 @@ export const sampleGraphData: ICanvasData = {
           id: "input-top",
           position: [0.5, 0],
           name: "input top",
-          isOutputDisabled: true
+          isOutputDisabled: true,
+          shape: "myPort"
         },
         {
           id: "input-left",
           position: [0, 0.5],
           name: "input left",
-          isOutputDisabled: true
+          isOutputDisabled: true,
+          shape: "myPort"
         },
         {
           id: "output-bottom",
           position: [0.5, 1],
           name: "output bottom",
-          isInputDisabled: true
+          isInputDisabled: true,
+          shape: "myPort"
         },
         {
           id: "output-right",
           position: [1, 0.5],
           name: "output right",
-          isInputDisabled: true
+          isInputDisabled: true,
+          shape: "myPort"
         }
       ],
       data: {},
@@ -61,25 +65,29 @@ export const sampleGraphData: ICanvasData = {
           id: "input-top",
           position: [0.5, 0],
           name: "input top",
-          isOutputDisabled: true
+          isOutputDisabled: true,
+          shape: "myPort"
         },
         {
           id: "input-left",
           position: [0, 0.5],
           name: "input left",
-          isOutputDisabled: true
+          isOutputDisabled: true,
+          shape: "myPort"
         },
         {
           id: "output-bottom",
           position: [0.5, 1],
           name: "output bottom",
-          isInputDisabled: true
+          isInputDisabled: true,
+          shape: "myPort"
         },
         {
           id: "output-right",
           position: [1, 0.5],
           name: "output right",
-          isInputDisabled: true
+          isInputDisabled: true,
+          shape: "myPort"
         }
       ],
       data: {},

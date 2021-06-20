@@ -172,60 +172,60 @@ export class GraphConfig<NodeData = unknown, EdgeData = unknown, PortData = unkn
 export const defaultGraphConfigContext: IGraphConfig = {
   get defaultNodeShape(): string {
     console.warn(
-      "loading defaultNodeShape from default GraphConfig. It is probably caused by using GraphContext without Engine component rendered."
+      "loading defaultNodeShape from default GraphConfig. It is probably caused by using GraphContext without ReactDagEditor component rendered."
     );
 
     return "default";
   },
   get defaultEdgeShape(): string {
     console.warn(
-      "loading defaultEdgeShape from default GraphConfig. It is probably caused by using GraphContext without Engine component rendered."
+      "loading defaultEdgeShape from default GraphConfig. It is probably caused by using GraphContext without ReactDagEditor component rendered."
     );
 
     return "default";
   },
   get defaultPortShape(): string {
     console.warn(
-      "loading defaultPortShape from default GraphConfig. It is probably caused by using GraphContext without Engine component rendered."
+      "loading defaultPortShape from default GraphConfig. It is probably caused by using GraphContext without ReactDagEditor component rendered."
     );
 
     return "default";
   },
   get defaultGroupShape(): string {
     console.warn(
-      "loading defaultGroupShape from default GraphConfig. It is probably caused by using GraphContext without Engine component rendered."
+      "loading defaultGroupShape from default GraphConfig. It is probably caused by using GraphContext without ReactDagEditor component rendered."
     );
 
     return "default";
   },
   registerNode: () => {
     console.warn(
-      "registerNode is NOOP now. Please check if you are using RegisterNode without Engine rendered"
+      "registerNode is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
   },
   getNodeConfigByName: () => undefined,
   registerEdge: () => {
     console.warn(
-      "registerEdge is NOOP now. Please check if you are using RegisterNode without Engine rendered"
+      "registerEdge is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
   },
   getEdgeConfigByName: () => undefined,
   registerPort: () => {
     console.warn(
-      "registerPort is NOOP now. Please check if you are using RegisterNode without Engine rendered"
+      "registerPort is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
   },
   getPortConfigByName: () => undefined,
   registerClipboard: () => {
     console.warn(
-      "registerClipboard is NOOP now. Please check if you are using RegisterNode without Engine rendered"
+      "registerClipboard is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
   },
   getClipboard: () => (({} as unknown) as IGraphClipBoard),
   getGlobalEventTarget: () => window,
   registerGroup: () => {
     console.warn(
-      "registerGroup is NOOP now. Please check if you are using RegisterNode without Engine rendered"
+      "registerGroup is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
   },
   getGroupConfigByName: () => undefined

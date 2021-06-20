@@ -16,9 +16,9 @@ import { RegisterClipboard, RegisterEdge, RegisterNode, RegisterPort } from "./R
 import { IThemeProviderProps, ThemeProvider } from "./ThemeProvider";
 
 /**
- * Engine props
+ * ReactDagEditor props
  */
-export interface IEngineProps extends IThemeProviderProps {
+export interface IReactDagEditorProps extends IThemeProviderProps {
   /**
    * @default Window
    */
@@ -37,17 +37,17 @@ export interface IEngineProps extends IThemeProviderProps {
   handleWarning?(message: string): void;
 
   /**
-   * Fired when Engine catches an error. And the return value will be rendered.
+   * Fired when ReactDagEditor catches an error. And the return value will be rendered.
    */
   handleError?(error?: Error, errorInfo?: React.ErrorInfo, children?: React.ReactNode): React.ReactChild;
 }
 
 /**
- * Engine top level container component
+ * ReactDagEditor top level container component
  *
  * @param props
  */
-export const Engine: React.FunctionComponent<IEngineProps> = props => {
+export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = props => {
   const clipboardStorage = useConst(() => new DefaultStorage());
   const clipboard = useConst(() => new DefaultClipboard(clipboardStorage));
 

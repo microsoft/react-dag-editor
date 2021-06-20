@@ -404,7 +404,7 @@ export const focusArea = (
 };
 
 export const getContainer = (svgRef: React.RefObject<SVGSVGElement>) =>
-  svgRef.current?.closest<HTMLDivElement>(".react-flow-editor-container");
+  svgRef.current?.closest<HTMLDivElement>(".react-dag-editor-container");
 
 /**
  * @param rectRef

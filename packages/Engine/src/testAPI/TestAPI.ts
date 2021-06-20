@@ -123,7 +123,7 @@ export class TestAPI {
   }
 
   public async rightClickOnCanvas(x: number, y: number): Promise<void> {
-    await this.adapter.rightClick("svg.react-flow-editor-svg-container", {
+    await this.adapter.rightClick("svg.react-dag-editor-svg-container", {
       position: { x, y }
     });
   }
@@ -245,7 +245,7 @@ export class TestAPI {
   }
 
   public async getCanvasBoundingBox(): Promise<IBoundingBox> {
-    return this.getElementBoundingBox("svg.react-flow-editor-svg-container");
+    return this.getElementBoundingBox("svg.react-dag-editor-svg-container");
   }
 
   public async getMinimapBoundingBox(): Promise<IBoundingBox> {

@@ -81,7 +81,7 @@ export const getGraphStyles = (
 ): IGraphStyles => {
   return mergeStyleSets({
     svg: [
-      "react-flow-editor-svg-container",
+      "react-dag-editor-svg-container",
       classes.svg,
       props.styles?.svg,
       getSvgPaddingStyle(props.padding ?? {}),
@@ -95,7 +95,7 @@ export const getGraphStyles = (
       }
     ],
     container: [
-      "react-flow-editor-container",
+      "react-dag-editor-container",
       classes.container,
       {
         cursor: getCursorStyle({
@@ -114,7 +114,7 @@ export const getGraphStyles = (
         outline: `${theme.focusOutlineColor} solid 1px`
       }
     ],
-    buttonA11y: ["react-flow-editor-a11y-help-button", classes.buttonA11Y],
+    buttonA11y: ["react-dag-editor-a11y-help-button", classes.buttonA11Y],
     node: [classes.node]
   });
 };

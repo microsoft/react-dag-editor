@@ -653,19 +653,20 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     return this.getGraphState().activeKeys;
   }
 
-  public isNodeFullVisible(nodeId: string): boolean {
-    const { viewPort, data } = this.getGraphState();
+  public isNodeFullVisible(nodeId: string, viewPort?: IViewPort): boolean {
+    const { data } = this.getGraphState();
+    const _viewPort = viewPort ? viewPort : this.getViewPort();
     const node = data.present.nodes.get(nodeId);
     const { graphConfig } = this.getInstance();
-    if (!node || !graphConfig || !isViewPortComplete(viewPort)) {
+    if (!node || !graphConfig || !isViewPortComplete(_viewPort)) {
       return false;
     }
     const { x, y, width, height } = getNodeRect(node, graphConfig);
     return (
-      isPointVisible({ x, y }, viewPort) &&
-      isPointVisible({ x: x + width, y }, viewPort) &&
-      isPointVisible({ x: x + width, y: y + height }, viewPort) &&
-      isPointVisible({ x, y: y + height }, viewPort)
+      isPointVisible({ x, y }, _viewPort) &&
+      isPointVisible({ x: x + width, y }, _viewPort) &&
+      isPointVisible({ x: x + width, y: y + height }, _viewPort) &&
+      isPointVisible({ x, y: y + height }, _viewPort)
     );
   }
 

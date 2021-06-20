@@ -219,7 +219,7 @@ export const goToConnectedPort = (
     const onComplete = (nextPort: { nodeId: string; portId: string }) => {
       ReactDOM.unmountComponentAtNode(visitPortHelperContainer);
       if (svgRef.current) {
-        const curEditorContainer = svgRef.current.closest(".react-flow-editor-container");
+        const curEditorContainer = svgRef.current.closest(".react-dag-editor-container");
 
         if (curEditorContainer) {
           curEditorContainer.removeChild(visitPortHelperContainer);
@@ -243,7 +243,7 @@ export const goToConnectedPort = (
 
     const visitPortHelperContainer = document.createElement("div");
 
-    const editorContainer = svgRef.current.closest(".react-flow-editor-container");
+    const editorContainer = svgRef.current.closest(".react-dag-editor-container");
 
     if (editorContainer) {
       editorContainer.appendChild(visitPortHelperContainer);

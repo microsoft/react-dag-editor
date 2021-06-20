@@ -380,5 +380,10 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    */
   getActiveKeys(): Set<string>;
 
-  isNodeFullVisible(nodeId: string): boolean;
+  /**
+   * Check is whole node visible
+   * @param nodeId node id
+   * @param viewPort optional specified viewPort, if not supported will use default viewPort
+   */
+  isNodeFullVisible(nodeId: string, viewPort?: IViewPort): boolean;
 }

@@ -1,4 +1,4 @@
-export * from "./Engine";
+export * from "./ReactDagEditor";
 export * from "./Graph/Graph";
 export * from "./SearchBox";
 export * from "./ItemPanel";

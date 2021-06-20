@@ -118,7 +118,6 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
   const onPointerDown = React.useCallback(
     (evt: React.PointerEvent) => {
       evt.stopPropagation();
-
       if (
         (evt.pointerType === "mouse" && evt.button !== MouseEventButton.Primary) ||
         !graphController.getEnabledFeatures().has(GraphFeatures.addNewNodes)

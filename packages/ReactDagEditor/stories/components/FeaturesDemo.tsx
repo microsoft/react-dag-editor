@@ -3,7 +3,7 @@
 /* eslint-disable react/display-name */
 import * as React from "react";
 import {
-  Engine,
+  ReactDagEditor,
   Graph,
   GraphStateStore,
   GraphModel,
@@ -234,13 +234,13 @@ class MyPortConfig implements IPortConfig {
 
 export const FeaturesDemo: React.FC = () => {
   return (
-    <Engine style={{ width: "900px", height: "600px" }}>
+    <ReactDagEditor style={{ width: "900px", height: "600px" }}>
       <GraphStateStore data={GraphModel.fromJSON(sampleGraphData)}>
         <RegisterNode name="source" config={sourceNodeConfig} />
         <RegisterNode name="step" config={stepNodeConfig} />
         <RegisterPort name="myPort" config={new MyPortConfig()} />
         <Graph />
       </GraphStateStore>
-    </Engine>
+    </ReactDagEditor>
   );
 };

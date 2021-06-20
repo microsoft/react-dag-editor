@@ -5,7 +5,7 @@ import { act } from "react-dom/test-utils";
 import { dataReadonlyMode, GraphModel, GraphNodeEvent, IEvent, IGraphReducer, IPropsAPI, previewMode } from "../../src";
 import { TestComponent } from "../TestComponent";
 import { mockBoundingBox, patchPointerEvent } from "../utils";
-import { sampleData } from "./__data__/sample-data";
+import { getSample1Data } from "./__data__/getSample1Data";
 
 beforeAll(() => {
   patchPointerEvent();
@@ -61,6 +61,11 @@ function simulateNodeMove(
     fireEvent.pointerUp(window, {
       ...eventInit,
       pointerId: 0,
+      clientX: last[0],
+      clientY: last[1]
+    });
+    fireEvent.click(node, {
+      ...eventInit,
       clientX: last[0],
       clientY: last[1]
     });
@@ -130,7 +135,7 @@ describe("test drag and selection", () => {
 
   beforeEach(() => {
     const propsAPIRef = React.createRef<IPropsAPI>();
-    wrapper = render(<TestComponent propsAPIRef={propsAPIRef} data={GraphModel.fromJSON(sampleData)} />);
+    wrapper = render(<TestComponent propsAPIRef={propsAPIRef} data={GraphModel.fromJSON(getSample1Data())} />);
     container = wrapper.container;
     if (!propsAPIRef.current) {
       throw new Error();
@@ -144,7 +149,7 @@ describe("test drag and selection", () => {
       [105, 105]
     ]);
     expect(propsAPI.getData().toJSON()).toEqual(
-      GraphModel.fromJSON(sampleData)
+      GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "47566002")
         .toJSON()
     );
@@ -156,7 +161,7 @@ describe("test drag and selection", () => {
       [110, 110]
     ]);
     expect(propsAPI.getData().toJSON()).toEqual(
-      GraphModel.fromJSON(sampleData)
+      GraphModel.fromJSON(getSample1Data())
         .updateNode("47566002", node => ({
           ...node,
           x: node.x + 10,
@@ -173,7 +178,7 @@ describe("test drag and selection", () => {
       [110, 110]
     ]);
     expect(propsAPI.getData().toJSON()).toEqual(
-      GraphModel.fromJSON(sampleData)
+      GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "fb404f70" || node.id === "4b199015")
         .updateNode("47566002", node => ({
           ...node,
@@ -193,7 +198,7 @@ describe("test drag and selection", () => {
       [110, 110]
     ]);
     expect(propsAPI.getData().toJSON()).toEqual(
-      GraphModel.fromJSON(sampleData)
+      GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015")
         .updateNode("47566002", node => ({
           ...node,
@@ -227,7 +232,7 @@ describe("test drag and selection", () => {
       }
     );
     expect(propsAPI.getData().toJSON()).toEqual(
-      GraphModel.fromJSON(sampleData)
+      GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015")
         .updateNode("47566002", node => ({
           ...node,

@@ -6,7 +6,7 @@ import { Transform } from "../../src/components/Transform";
 import { getRenderedEdges, getRenderedNodes } from "../../src/utils/viewPort";
 import { TestComponent } from "../TestComponent";
 import { getGraphConfig, mockBoundingBox } from "../utils";
-import { sampleData as data } from "./__data__/sample-data";
+import { getSample1Data } from "./__data__/getSample1Data";
 
 describe("viewPort", () => {
   const rect: DOMRect | ClientRect = {
@@ -19,7 +19,7 @@ describe("viewPort", () => {
     x: 316,
     y: 16
   };
-
+  const data = getSample1Data();
   const viewPort = (transformMatrix: ITransformMatrix): Required<IViewPort> => ({
     transformMatrix,
     rect,

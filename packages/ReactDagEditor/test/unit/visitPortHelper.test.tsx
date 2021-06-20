@@ -3,12 +3,12 @@ import { cleanup, render, fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { VisitPortHelper } from "../../src/components/A11yHelpers/VisitPortHelper";
 import { getNeighborPorts, GraphModel } from "../../src";
-import { sampleData } from "./__data__/sample-data-2";
+import { getSample4Data } from "./__data__/getSample4Data";
 
 describe("test VisitPortHelper", () => {
   afterEach(cleanup);
 
-  const data = GraphModel.fromJSON(sampleData);
+  const data = GraphModel.fromJSON(getSample4Data());
   // let onCompleteSpy;
 
   it("the port has no neighbor port", () => {

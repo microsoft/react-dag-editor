@@ -1,20 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`keyboard testing should copy and paste with edge 1`] = `
+exports[`should copy and paste with edge 1`] = `
 <div>
   <div>
     <div
-      class="react-flow-editor-container container container-1"
+      class="react-dag-editor-container container container-1"
       id="graph-mock-uuid"
       role="application"
     >
       <button
         accesskey="f"
-        class="react-flow-editor-a11y-help-button button-a11-y"
+        class="react-dag-editor-a11y-help-button button-a11-y"
         hidden=""
       />
       <svg
-        class="react-flow-editor-svg-container svg svg-0"
+        class="react-dag-editor-svg-container svg svg-0"
         data-graph-id="graph-mock-uuid"
         focusable="true"
         preserveAspectRatio="xMidYMid meet"
@@ -167,7 +167,38 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Select Columns in Dataset-47566002-Dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:47566002:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="618 162, 630 162, 624 170"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Results_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Select Columns in Dataset-47566002-Results_dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:47566002:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="623"
+                cy="312"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Clean Missing Data"
             aria-roledescription="node"
@@ -201,7 +232,54 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Clean Missing Data-f6dc0eb1-Dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:f6dc0eb1:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="618 280, 630 280, 624 288"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Cleaned_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Clean Missing Data-f6dc0eb1-Cleaned_dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:f6dc0eb1:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="598"
+                cy="430"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Cleaning_transformation"
+              aria-roledescription="port"
+              data-automation-id="port-Clean Missing Data-f6dc0eb1-Cleaning_transformation-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:f6dc0eb1:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="648"
+                cy="430"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Split Data"
             aria-roledescription="node"
@@ -235,7 +313,54 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Split Data-d1647408-Dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:d1647408:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="612 386, 624 386, 618 394"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Results_dataset1"
+              aria-roledescription="port"
+              data-automation-id="port-Split Data-d1647408-Results_dataset1-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:d1647408:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="592"
+                cy="536"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Results_dataset2"
+              aria-roledescription="port"
+              data-automation-id="port-Split Data-d1647408-Results_dataset2-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:d1647408:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="642"
+                cy="536"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Linear Regression"
             aria-roledescription="node"
@@ -269,7 +394,24 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Untrained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Linear Regression-4b199015-Untrained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:4b199015:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="248"
+                cy="543.5"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Train Model"
             aria-roledescription="node"
@@ -303,7 +445,52 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Untrained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-fb404f70-Untrained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:fb404f70:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="432 517, 444 517, 438 525"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-fb404f70-Dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:fb404f70:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="482 517, 494 517, 488 525"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Trained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-fb404f70-Trained_model-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:fb404f70:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="462"
+                cy="667"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Score Model"
             aria-roledescription="node"
@@ -337,7 +524,52 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Trained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Score Model-c4ee5025-Trained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:c4ee5025:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="536 630, 548 630, 542 638"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Score Model-c4ee5025-Dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:c4ee5025:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="586 630, 598 630, 592 638"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Scored_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Score Model-c4ee5025-Scored_dataset-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:c4ee5025:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="566"
+                cy="780"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Evaluate Model"
             aria-roledescription="node"
@@ -371,7 +603,54 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Scored_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Evaluate Model-81777c66-Scored_dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:81777c66:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="538 738, 550 738, 544 746"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Scored_dataset_to_compare"
+              aria-roledescription="port"
+              data-automation-id="port-Evaluate Model-81777c66-Scored_dataset_to_compare-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:81777c66:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="593"
+                cy="738"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Evaluation_results"
+              aria-roledescription="port"
+              data-automation-id="port-Evaluate Model-81777c66-Evaluation_results-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:81777c66:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="568"
+                cy="888"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Automobile price data (Raw)"
             aria-roledescription="node"
@@ -405,7 +684,24 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port DatasetOutput"
+              aria-roledescription="port"
+              data-automation-id="port-Automobile price data (Raw)-1fd27f80-DatasetOutput-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:1fd27f80:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="619"
+                cy="199"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
           <g
             aria-label="test aria label for node Train Model"
             aria-roledescription="node"
@@ -437,7 +733,54 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
               </g>
             </g>
           </g>
-          <g />
+          <g>
+            <g
+              aria-label="test aria label for port Untrained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-mock-uuid-Untrained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:mock-uuid:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="482 567, 494 567, 488 575"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-mock-uuid-Dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:mock-uuid:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="537"
+                cy="567"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Trained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-mock-uuid-Trained_model-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:mock-uuid:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="512"
+                cy="717"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+          </g>
         </g>
         <path
           d="m0 0 v 0 h 0 v0 h 0"
@@ -469,4 +812,113 @@ exports[`keyboard testing should copy and paste with edge 1`] = `
     </div>
   </div>
 </div>
+`;
+
+exports[`should copy and paste with edge: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Copy",
+  "[Canvas]KeyDown",
+  "[Canvas]Paste",
+]
+`;
+
+exports[`should delete selected edge: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Delete",
+]
+`;
+
+exports[`should focus first node: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+]
+`;
+
+exports[`should navigate with keyboard: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]Focus",
+  "[Canvas]KeyDown",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Node]KeyDown",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Node]KeyDown",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+]
+`;
+
+exports[`should record keyup and keydown: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]KeyDown",
+  "[Canvas]KeyUp",
+  "[Canvas]KeyDown",
+  "[Canvas]KeyUp",
+  "[Canvas]KeyUp",
+]
+`;
+
+exports[`should select all: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Node]SelectAll",
+]
+`;
+
+exports[`should undo, redo: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Delete",
+  "[Canvas]KeyDown",
+  "[Canvas]Undo",
+  "[Canvas]KeyDown",
+  "[Canvas]Redo",
+]
 `;

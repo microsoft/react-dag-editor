@@ -1,8 +1,8 @@
 import * as React from "react";
 import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphConfig, IGraphReducer } from "../src";
-import { Graph, GraphStateStore, IGraphProps, Engine } from "../src/components";
+import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphConfigContext } from "../src/contexts";
-import Sample0 from "../test/unit/__data__/sampleICanvasData.json";
+import Sample0 from "../test/unit/__data__/sample0.json";
 
 const data: ICanvasData = {
   ...Sample0,
@@ -45,12 +45,12 @@ export const TestComponent = (props: ITestComponentProps) => {
   );
 
   return (
-    <Engine>
+    <ReactDagEditor>
       {props.graphConfig ? (
         <GraphConfigContext.Provider value={props.graphConfig}>{content}</GraphConfigContext.Provider>
       ) : (
         content
       )}
-    </Engine>
+    </ReactDagEditor>
   );
 };

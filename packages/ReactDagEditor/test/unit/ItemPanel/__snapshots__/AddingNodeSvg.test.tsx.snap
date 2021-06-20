@@ -21,6 +21,9 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
     <GraphNode
       eventChannel={
         EventChannel {
+          "externalHandlerRef": Object {
+            "current": null,
+          },
           "listenersRef": Object {
             "current": null,
           },

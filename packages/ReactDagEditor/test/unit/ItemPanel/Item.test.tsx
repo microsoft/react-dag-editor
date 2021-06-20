@@ -77,7 +77,7 @@ describe("ItemPanel - Item", () => {
       }
     };
 
-    (noopInstance.eventChannel.listenersRef as any).current = [dispatch];
+    (noopInstance.eventChannel.listenersRef as any).current = dispatch;
 
     const { container } = renderedWrapper;
 

@@ -3,7 +3,7 @@ import { IDummyNode } from "../../src/components/dummyNodes";
 import { ILine } from "../../src/components/Line";
 import { getAlignmentLines, getAutoAlignDisplacement } from "../../src/utils/autoAlign";
 import { getGraphConfig } from "../utils";
-import { sampleData } from "./__data__/sample-data";
+import { getSample1Data } from "./__data__/getSample1Data";
 
 describe("AutoAlign", () => {
   let graphConfig: IGraphConfig;
@@ -18,7 +18,7 @@ describe("AutoAlign", () => {
    *
    */
   function initData(): void {
-    allNodes = sampleData.nodes.map(node => ({
+    allNodes = getSample1Data().nodes.map(node => ({
       id: node.id,
       x: node.x,
       y: node.y,

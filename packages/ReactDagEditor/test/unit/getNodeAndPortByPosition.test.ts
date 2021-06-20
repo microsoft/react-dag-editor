@@ -1,7 +1,7 @@
 import { GraphModel, IGraphConfig, IPoint, NodeModel } from "../../src";
 import { getNodeAndPortByPosition, getNodeConfig, getPortPosition } from "../../src/utils";
 import { getGraphConfig } from "../utils";
-import { sampleData } from "./__data__/sample-data";
+import { getSample1Data } from "./__data__/getSample1Data";
 
 describe("test getNodeAndPortByPosition", () => {
   let graphConfig: IGraphConfig;
@@ -9,7 +9,7 @@ describe("test getNodeAndPortByPosition", () => {
   let nodes: NodeModel[];
   beforeEach(() => {
     graphConfig = getGraphConfig();
-    data = GraphModel.fromJSON(sampleData);
+    data = GraphModel.fromJSON(getSample1Data());
     nodes = Array.from(data.nodes.values());
   });
 

@@ -11,7 +11,7 @@ const gitIgnorePath = path.resolve(__dirname, '../.gitignore');
 
 async function buildDemo() {
   console.log('Build start');
-  // await execa(`yarn --cwd ${enginePath} build:demo`, [], { stdio: "inherit", shell: true });
+  await execa(`yarn --cwd ${enginePath} build:demo`, [], { stdio: "inherit", shell: true });
   console.log('Build done');
 }
 

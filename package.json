@@ -10,6 +10,7 @@
     "start": "node ./scripts/run-demo.js",
     "updatePackageJson": "node ./scripts/edit-package-json.js",
     "run-demo": "node ./scripts/run-demo.js",
+    "build-pages": "node ./scripts/build-pages.js",
     "new": "node ./scripts/new-package.js",
     "bump": "node ./scripts/bump-version.js"
   },

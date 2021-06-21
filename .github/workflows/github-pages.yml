@@ -1,0 +1,30 @@
+name: Github pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '14.x'
+    - name: yarn install
+      run: yarn --frozen-lockfile
+    - name: lint
+      run: yarn lint
+    - name: build
+      run: yarn build
+    - name: test
+      run: yarn test
+    - name: build pages
+      run: yarn build-pages
+    - name: deploy pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs

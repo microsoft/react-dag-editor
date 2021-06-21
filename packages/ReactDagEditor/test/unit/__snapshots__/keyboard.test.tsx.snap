@@ -1,0 +1,924 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should copy and paste with edge 1`] = `
+<div>
+  <div>
+    <div
+      class="react-dag-editor-container container container-1"
+      id="graph-mock-uuid"
+      role="application"
+    >
+      <button
+        accesskey="f"
+        class="react-dag-editor-a11y-help-button button-a11-y"
+        hidden=""
+      />
+      <svg
+        class="react-dag-editor-svg-container svg svg-0"
+        data-graph-id="graph-mock-uuid"
+        focusable="true"
+        preserveAspectRatio="xMidYMid meet"
+        tabindex="0"
+      >
+        <title />
+        <desc />
+        <g
+          transform="matrix(0.6256517205422315 0 0 0.6256517205422315 -70.69864442127216 6.882168925964547)"
+        >
+          <g />
+          <g
+            class="edge-container-0"
+            data-automation-id="edge-container-0"
+            id="edge:graph-mock-uuid:0"
+          >
+            <path
+              d="M487,517C487,502,592,556,592,541"
+              fill="none"
+              id="edge0"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-1"
+            data-automation-id="edge-container-1"
+            id="edge:graph-mock-uuid:1"
+          >
+            <path
+              d="M623,280C623,261.5,623,335.5,623,317"
+              fill="none"
+              id="edge1"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-2"
+            data-automation-id="edge-container-2"
+            id="edge:graph-mock-uuid:2"
+          >
+            <path
+              d="M617,386C617,361.5,598,459.5,598,435"
+              fill="none"
+              id="edge2"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-3"
+            data-automation-id="edge-container-3"
+            id="edge:graph-mock-uuid:3"
+          >
+            <path
+              d="M437,517C437,501.25,248,564.25,248,548.5"
+              fill="none"
+              id="edge3"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-4"
+            data-automation-id="edge-container-4"
+            id="edge:graph-mock-uuid:4"
+          >
+            <path
+              d="M541,630C541,609,462,693,462,672"
+              fill="none"
+              id="edge4"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-5"
+            data-automation-id="edge-container-5"
+            id="edge:graph-mock-uuid:5"
+          >
+            <path
+              d="M591,630C591,585.5,642,585.5,642,541"
+              fill="none"
+              id="edge5"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-6"
+            data-automation-id="edge-container-6"
+            id="edge:graph-mock-uuid:6"
+          >
+            <path
+              d="M543,738C543,714.5,566,808.5,566,785"
+              fill="none"
+              id="edge6"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-7"
+            data-automation-id="edge-container-7"
+            id="edge:graph-mock-uuid:7"
+          >
+            <path
+              d="M623,162C623,141,619,225,619,204"
+              fill="none"
+              id="edge7"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            class="edge-container-mock-uuid"
+            data-automation-id="edge-container-mock-uuid"
+            id="edge:graph-mock-uuid:mock-uuid"
+          >
+            <path
+              d="M487,567C487,552,487,587,487,572"
+              fill="none"
+              id="edgemock-uuid"
+              style="cursor: crosshair; stroke: #ccc; stroke-width: 2;"
+            />
+          </g>
+          <g
+            aria-label="test aria label for node Select Columns in Dataset"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Select Columns in Dataset-47566002"
+            focusable="true"
+            id="node:graph-mock-uuid:47566002"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; fill-opacity: 0.1; stroke: #cccccc; border-radius: 5;"
+                  width="150"
+                  x="548"
+                  y="162"
+                />
+                <text
+                  font-size="12"
+                  x="548"
+                  y="212"
+                >
+                  Select Columns in Dataset
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Select Columns in Dataset-47566002-Dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:47566002:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="618 162, 630 162, 624 170"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Results_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Select Columns in Dataset-47566002-Results_dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:47566002:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="623"
+                cy="312"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Clean Missing Data"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Clean Missing Data-f6dc0eb1"
+            focusable="true"
+            id="node:graph-mock-uuid:f6dc0eb1"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; fill-opacity: 0.1; stroke: #cccccc; border-radius: 5;"
+                  width="150"
+                  x="548"
+                  y="280"
+                />
+                <text
+                  font-size="12"
+                  x="548"
+                  y="330"
+                >
+                  Clean Missing Data
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Clean Missing Data-f6dc0eb1-Dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:f6dc0eb1:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="618 280, 630 280, 624 288"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Cleaned_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Clean Missing Data-f6dc0eb1-Cleaned_dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:f6dc0eb1:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="598"
+                cy="430"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Cleaning_transformation"
+              aria-roledescription="port"
+              data-automation-id="port-Clean Missing Data-f6dc0eb1-Cleaning_transformation-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:f6dc0eb1:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="648"
+                cy="430"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Split Data"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Split Data-d1647408"
+            focusable="true"
+            id="node:graph-mock-uuid:d1647408"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; fill-opacity: 0.1; stroke: #cccccc; border-radius: 5;"
+                  width="150"
+                  x="542"
+                  y="386"
+                />
+                <text
+                  font-size="12"
+                  x="542"
+                  y="436"
+                >
+                  Split Data
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Split Data-d1647408-Dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:d1647408:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="612 386, 624 386, 618 394"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Results_dataset1"
+              aria-roledescription="port"
+              data-automation-id="port-Split Data-d1647408-Results_dataset1-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:d1647408:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="592"
+                cy="536"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Results_dataset2"
+              aria-roledescription="port"
+              data-automation-id="port-Split Data-d1647408-Results_dataset2-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:d1647408:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="642"
+                cy="536"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Linear Regression"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Linear Regression-4b199015"
+            focusable="true"
+            id="node:graph-mock-uuid:4b199015"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; stroke: #cccccc; fill-opacity: 0.1; border-radius: 5;"
+                  width="150"
+                  x="173"
+                  y="393.5"
+                />
+                <text
+                  font-size="12"
+                  x="173"
+                  y="443.5"
+                >
+                  Linear Regression
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Untrained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Linear Regression-4b199015-Untrained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:4b199015:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="248"
+                cy="543.5"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Train Model"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Train Model-fb404f70"
+            focusable="true"
+            id="node:graph-mock-uuid:fb404f70"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; stroke: #cccccc; fill-opacity: 0.1; border-radius: 5;"
+                  width="150"
+                  x="387"
+                  y="517"
+                />
+                <text
+                  font-size="12"
+                  x="387"
+                  y="567"
+                >
+                  Train Model
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Untrained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-fb404f70-Untrained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:fb404f70:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="432 517, 444 517, 438 525"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-fb404f70-Dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:fb404f70:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="482 517, 494 517, 488 525"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Trained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-fb404f70-Trained_model-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:fb404f70:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="462"
+                cy="667"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Score Model"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Score Model-c4ee5025"
+            focusable="true"
+            id="node:graph-mock-uuid:c4ee5025"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; fill-opacity: 0.1; stroke: #cccccc; border-radius: 5;"
+                  width="150"
+                  x="491"
+                  y="630"
+                />
+                <text
+                  font-size="12"
+                  x="491"
+                  y="680"
+                >
+                  Score Model
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Trained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Score Model-c4ee5025-Trained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:c4ee5025:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="536 630, 548 630, 542 638"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Score Model-c4ee5025-Dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:c4ee5025:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="586 630, 598 630, 592 638"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Scored_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Score Model-c4ee5025-Scored_dataset-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:c4ee5025:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="566"
+                cy="780"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Evaluate Model"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Evaluate Model-81777c66"
+            focusable="true"
+            id="node:graph-mock-uuid:81777c66"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; fill-opacity: 0.1; stroke: #cccccc; border-radius: 5;"
+                  width="150"
+                  x="493"
+                  y="738"
+                />
+                <text
+                  font-size="12"
+                  x="493"
+                  y="788"
+                >
+                  Evaluate Model
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Scored_dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Evaluate Model-81777c66-Scored_dataset-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:81777c66:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="538 738, 550 738, 544 746"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Scored_dataset_to_compare"
+              aria-roledescription="port"
+              data-automation-id="port-Evaluate Model-81777c66-Scored_dataset_to_compare-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:81777c66:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="593"
+                cy="738"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Evaluation_results"
+              aria-roledescription="port"
+              data-automation-id="port-Evaluate Model-81777c66-Evaluation_results-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:81777c66:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="568"
+                cy="888"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Automobile price data (Raw)"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Automobile price data (Raw)-1fd27f80"
+            focusable="true"
+            id="node:graph-mock-uuid:1fd27f80"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  rx="5"
+                  style="fill: #ffffff; fill-opacity: 0.1; stroke: #cccccc; border-radius: 5;"
+                  width="150"
+                  x="544"
+                  y="49"
+                />
+                <text
+                  font-size="12"
+                  x="544"
+                  y="99"
+                >
+                  Automobile price data (Raw)
+                </text>
+                
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port DatasetOutput"
+              aria-roledescription="port"
+              data-automation-id="port-Automobile price data (Raw)-1fd27f80-DatasetOutput-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:1fd27f80:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="619"
+                cy="199"
+                r="5"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+          </g>
+          <g
+            aria-label="test aria label for node Train Model"
+            aria-roledescription="node"
+            class="node"
+            data-automation-id="node-container-Train Model-mock-uuid"
+            focusable="true"
+            id="node:graph-mock-uuid:mock-uuid"
+            role="group"
+            tabindex="0"
+          >
+            <g
+              class="node-box-container"
+            >
+              <g>
+                <rect
+                  height="150"
+                  style="fill: #ffffff; stroke: #0078D4;"
+                  width="150"
+                  x="437"
+                  y="567"
+                />
+                <text
+                  font-size="12"
+                  x="437"
+                  y="617"
+                >
+                  Train Model
+                </text>
+              </g>
+            </g>
+          </g>
+          <g>
+            <g
+              aria-label="test aria label for port Untrained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-mock-uuid-Untrained_model-port-0"
+              focusable="true"
+              id="port:graph-mock-uuid:mock-uuid:port-0"
+              role="group"
+              tabindex="0"
+            >
+              <polygon
+                points="482 567, 494 567, 488 575"
+                style="stroke: #ccc; fill: gray;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Dataset"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-mock-uuid-Dataset-port-1"
+              focusable="true"
+              id="port:graph-mock-uuid:mock-uuid:port-1"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="537"
+                cy="567"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+            <g
+              aria-label="test aria label for port Trained_model"
+              aria-roledescription="port"
+              data-automation-id="port-Train Model-mock-uuid-Trained_model-port-2"
+              focusable="true"
+              id="port:graph-mock-uuid:mock-uuid:port-2"
+              role="group"
+              tabindex="0"
+            >
+              <circle
+                cx="512"
+                cy="717"
+                r="5"
+                style="stroke: #ccc; fill: #fff;"
+              />
+            </g>
+          </g>
+        </g>
+        <path
+          d="m0 0 v 0 h 0 v0 h 0"
+          style="fill: none; stroke: #CCCCCC;"
+        />
+      </svg>
+      <div
+        class="verticalScrollWrapper-0-2-1"
+      >
+        <div
+          aria-label="vertical scrollbar"
+          aria-roledescription="vertical scrollbar"
+          class="verticalScrollStyle-0-2-3 verticalScrollStyle-d8-0-2-13"
+          id="canvas-vertical-scrollbar"
+          role="button"
+        />
+      </div>
+      <div
+        class="horizontalScrollWrapper-0-2-2"
+      >
+        <div
+          aria-label="horizontal scrollbar"
+          aria-roledescription="horizontal scrollbar"
+          class="horizontalScrollStyle-0-2-4 horizontalScrollStyle-d9-0-2-14"
+          id="canvas-horizontal-scrollbar"
+          role="button"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should copy and paste with edge: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Copy",
+  "[Canvas]KeyDown",
+  "[Canvas]Paste",
+]
+`;
+
+exports[`should delete selected edge: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Delete",
+]
+`;
+
+exports[`should focus first node: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+]
+`;
+
+exports[`should navigate with keyboard: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]Focus",
+  "[Canvas]KeyDown",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Node]KeyDown",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Node]KeyDown",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Port]Focus",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+  "[Port]KeyDown",
+  "[Port]Blur",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+  "[Canvas]Navigate",
+]
+`;
+
+exports[`should record keyup and keydown: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]KeyDown",
+  "[Canvas]KeyUp",
+  "[Canvas]KeyDown",
+  "[Canvas]KeyUp",
+  "[Canvas]KeyUp",
+]
+`;
+
+exports[`should select all: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Node]SelectAll",
+]
+`;
+
+exports[`should undo, redo: events 1`] = `
+Array [
+  "[Canvas]ViewPortResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Canvas]KeyDown",
+  "[Canvas]Delete",
+  "[Canvas]KeyDown",
+  "[Canvas]Undo",
+  "[Canvas]KeyDown",
+  "[Canvas]Redo",
+]
+`;

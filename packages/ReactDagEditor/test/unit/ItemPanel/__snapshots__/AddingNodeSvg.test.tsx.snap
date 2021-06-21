@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
+<svg
+  className="adding-node-svg"
+  id="mock-uuid"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <Transform
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+  >
+    <GraphNode
+      eventChannel={
+        EventChannel {
+          "externalHandlerRef": Object {
+            "current": null,
+          },
+          "listenersRef": Object {
+            "current": null,
+          },
+          "queue": Array [],
+          "working": false,
+        }
+      }
+      getNodeAriaLabel={[Function]}
+      graphId="mock-uuid"
+      node={
+        Object {
+          "id": "mock-id",
+          "name": "node1",
+          "shape": "nodeShape",
+          "x": 0,
+          "y": 0,
+        }
+      }
+      viewPort={
+        Object {
+          "rect": Object {
+            "bottom": 900,
+            "height": 800,
+            "left": 100,
+            "right": 900,
+            "top": 100,
+            "width": 800,
+          },
+          "transformMatrix": Array [
+            1,
+            0,
+            0,
+            1,
+            0,
+            0,
+          ],
+          "visibleRect": Object {
+            "bottom": 900,
+            "height": 800,
+            "left": 100,
+            "right": 900,
+            "top": 100,
+            "width": 800,
+          },
+        }
+      }
+    />
+  </Transform>
+</svg>
+`;
+
+exports[`ItemPanel - AddingNodeSvg adding node 1`] = `
+<div>
+  <div
+    class="module-item"
+    role="button"
+  >
+    <p>
+      test item for addingNodeSVG:default
+    </p>
+  </div>
+</div>
+`;
+
+exports[`ItemPanel - AddingNodeSvg not adding node if out of graph 1`] = `
+<div>
+  <div
+    class="module-item"
+    role="button"
+  >
+    <p>
+      test item for addingNodeSVG:default
+    </p>
+  </div>
+</div>
+`;
+
+exports[`ItemPanel - AddingNodeSvg without left mouse down when dragging 1`] = `
+<div>
+  <div
+    class="module-item"
+    role="button"
+  >
+    <p>
+      test item for addingNodeSVG:default
+    </p>
+  </div>
+</div>
+`;

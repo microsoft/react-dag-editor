@@ -13,7 +13,7 @@ React component to create graphic user interface with:
 ## About the name "react-dag-editor"
 
 - react: it is a react component created from scratch.
-- flow: directed acyclic graph editor. Our a11y solution assumes the graph is a DAG. If you intend to turn off the a11y features, it is fine to draw undirected or cyclic graph with this component.
+- dag: directed acyclic graph editor. Our a11y solution assumes the graph is a DAG. If you intend to turn off the a11y features, it is fine to draw undirected or cyclic graph with this component.
 - editor: it supports readonly graphic data visualization. However the reason you choose this library is the highlight in the user interaction to create/edit a graph.
 
 ## Features

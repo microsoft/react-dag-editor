@@ -1,6 +1,6 @@
 const path = require("path");
 const deepmerge = require("deepmerge");
-const { commonConfig, outputConfig } = require("@react-flow-editor-common/builder");
+const { commonConfig, outputConfig } = require("@react-dag-editor-common/builder");
 
 const mainConfig = deepmerge(
   {

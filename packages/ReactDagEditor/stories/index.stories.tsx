@@ -3,7 +3,7 @@ import * as React from "react";
 import { FeaturesDemo } from "./components/FeaturesDemo";
 
 export default {
-  title: "react-flow-editor"
+  title: "react-dag-editor"
 };
 
 export const Features = () => <FeaturesDemo />;

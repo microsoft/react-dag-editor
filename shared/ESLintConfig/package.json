@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@react-flow-editor-common/eslint-config",
+  "name": "@react-dag-editor-common/eslint-config",
   "version": "0.0.1",
   "main": "./eslintrc.json",
   "dependencies": {

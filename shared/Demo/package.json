@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@react-flow-editor-common/demo",
+  "name": "@react-dag-editor-common/demo",
   "version": "0.0.1",
   "main": "./index.js",
   "dependencies": {

@@ -1,6 +1,6 @@
 # Work in progress
 
-# react-flow-editor
+# react-dag-editor
 
 ## Overview
 
@@ -10,7 +10,7 @@ React component to create graphic user interface with:
 - extensibility to customize the widgets or behaviors.
 - accessbility and testability support
 
-## About the name "react-flow-editor"
+## About the name "react-dag-editor"
 
 - react: it is a react component created from scratch.
 - flow: directed acyclic graph editor. Our a11y solution assumes the graph is a DAG. If you intend to turn off the a11y features, it is fine to draw undirected or cyclic graph with this component.
@@ -18,25 +18,25 @@ React component to create graphic user interface with:
 
 ## Features
 
-| Feature                         | Description                                                  | Demo  | Is in default feature set? | Is in read only mode feature set? |
-| ------------------------------- | ------------------------------------------------------------ | ----- | -------------------------- | --------------------------------- |
-| GraphFeatures.nodeDraggable     | Node drag-and-drop to relocate                               | (WIP) | Yes                        | Yes                               |
-| GraphFeatures.nodeResizable     | Double clicking on a node to enable the anchors to resize it | (WIP) | Yes                        | Yes                               |
-| GraphFeatures.clickNodeToSelect | Node click-to-select                                         | (WIP) | Yes                        | Yes                               |
-| GraphFeatures.panCanvas         | Drag-n-drop on canvas to pan                                 | (WIP) | Yes                        | Yes                               |
-| GraphFeatures.multipleSelect    | Ctrl click multi selection                                   | (WIP) | Yes                        | Yes                               |
-| GraphFeatures.lassoSelect       | Lasso select                                                 | (WIP) | Yes                        | Yes                               |
-| GraphFeatures.delete            | Use delete key to delete a node                              | (WIP) | Yes                        | No                                |
-| GraphFeatures.addNewNodes       | Adding new nodes                                             | (WIP) | Yes                        | No                                |
-| GraphFeatures.addNewEdges       | Adding new edges                                             | (WIP) | Yes                        | No                                |
-| GraphFeatures.addNewPorts       | Adding new ports                                             | (WIP) | Yes                        | No                                |
-| GraphFeatures.sidePanel,        | Built-in side panel                                          | (WIP) | Yes                        | Yes                               |
+| Feature                         | Description                                                      | Demo  | Is in default feature set? | Is in read only mode feature set? |
+| ------------------------------- | ---------------------------------------------------------------- | ----- | -------------------------- | --------------------------------- |
+| GraphFeatures.nodeDraggable     | Node drag-and-drop to relocate                                   | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.nodeResizable     | Double clicking on a node to enable the anchors to resize it     | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.clickNodeToSelect | Node click-to-select                                             | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.panCanvas         | Drag-n-drop on canvas to pan                                     | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.multipleSelect    | Ctrl click multi selection                                       | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.lassoSelect       | Lasso select                                                     | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.delete            | Use delete key to delete a node                                  | (WIP) | Yes                        | No                                |
+| GraphFeatures.addNewNodes       | Adding new nodes                                                 | (WIP) | Yes                        | No                                |
+| GraphFeatures.addNewEdges       | Adding new edges                                                 | (WIP) | Yes                        | No                                |
+| GraphFeatures.addNewPorts       | Adding new ports                                                 | (WIP) | Yes                        | No                                |
+| GraphFeatures.sidePanel,        | Built-in side panel                                              | (WIP) | Yes                        | Yes                               |
 | GraphFeatures.autoFit           | Auto pan/zoom the whole canvas to fit the viewport on every move | (WIP) | No                         | No                                |
-| GraphFeatures.editNode          | Node inline editing mode                                     | (WIP) | Yes                        | No                                |
-| GraphFeatures.autoAlign         | Auto aligning hint on node drag-n-drop                       | (WIP) | Yes                        | No                                |
-| GraphFeatures.undoStack         | Undo stack to support undo/redo                              | (WIP) | Yes                        | No                                |
-| GraphFeatures.ctrlKeyZoom       | Zooming by ctrl clicking + mousewheel                        | (WIP) | Yes                        | Yes                               |
-| GraphFeatures.limitBoundary     | Constraint the allowed drag-n-drop area                      | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.editNode          | Node inline editing mode                                         | (WIP) | Yes                        | No                                |
+| GraphFeatures.autoAlign         | Auto aligning hint on node drag-n-drop                           | (WIP) | Yes                        | No                                |
+| GraphFeatures.undoStack         | Undo stack to support undo/redo                                  | (WIP) | Yes                        | No                                |
+| GraphFeatures.ctrlKeyZoom       | Zooming by ctrl clicking + mousewheel                            | (WIP) | Yes                        | Yes                               |
+| GraphFeatures.limitBoundary     | Constraint the allowed drag-n-drop area                          | (WIP) | Yes                        | Yes                               |
 
 
 

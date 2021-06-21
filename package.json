@@ -1,7 +1,6 @@
 {
   "private": true,
   "scripts": {
-    "auth": "npx vsts-npm-auth -config .npmrc",
     "lint": "lerna run lint",
     "lintfix": "lerna run lintfix",
     "build": "lerna run build",

@@ -1,4 +1,4 @@
-const { getStorybookConfig } = require("@react-flow-editor-common/demo");
+const { getStorybookConfig } = require("@react-dag-editor-common/demo");
 const path = require("path");
 
 module.exports = getStorybookConfig({

@@ -1,5 +1,5 @@
 {
-  "name": "react-dag-editor",
+  "private": true,
   "repository": {
     "url": "https://github.com/microsoft/react-dag-editor.git"
   },

@@ -1,8 +1,8 @@
 {
-  "name": "react-flow-editor-engine",
+  "name": "react-dag-editor",
   "license": "MIT",
-  "repository": "git@github.com:AML-StudioUX/react-flow-editor.git",
-  "version": "1.0.0",
+  "repository": "git@github.com:AML-StudioUX/react-dag-editor.git",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "files": [
@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
-    "@react-flow-editor-common/builder": "^0.0.1",
-    "@react-flow-editor-common/demo": "0.0.1",
-    "@react-flow-editor-common/eslint-config": "^0.0.1",
+    "@react-dag-editor-common/builder": "^0.0.1",
+    "@react-dag-editor-common/demo": "0.0.1",
+    "@react-dag-editor-common/eslint-config": "^0.0.1",
     "@fluentui/merge-styles": "^8.0.0-beta.0",
     "@storybook/addon-docs": "^6.0.22",
     "@storybook/addon-storyshots": "^6.0.22",

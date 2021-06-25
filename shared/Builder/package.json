@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@react-flow-editor-common/builder",
+  "name": "@react-dag-editor-common/builder",
   "version": "0.0.1",
   "dependencies": {
     "@rollup/plugin-commonjs": "^15.0.0",

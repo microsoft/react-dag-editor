@@ -24,6 +24,8 @@ import {
 } from "../../src";
 import { sampleGraphData } from "../data/sample-graph-1";
 
+/** How to customize a node by "shape" by data.nodes[].shape */
+
 const stepNodeContainerStyles: React.CSSProperties = {
   flexGrow: 1,
   height: "100%",
@@ -47,8 +49,11 @@ const StepNode: React.FC<{ name: string }> = props => {
 };
 
 const sourceNodeConfig: IRectConfig<NodeModel> = {
+  // min height constraint for node resizing.
   getMinHeight: () => 60,
+  // min width constraint for node resizing.
   getMinWidth: () => 100,
+  // render decides the element to represent a node
   render(args): React.ReactNode {
     const height = getRectHeight(sourceNodeConfig, args.model);
     const width = getRectWidth(sourceNodeConfig, args.model);
@@ -71,6 +76,8 @@ const sourceNodeConfig: IRectConfig<NodeModel> = {
   }
 };
 
+/** Another node config. Use nodes[].shape to specify which one to use */
+
 const stepNodeConfig: IRectConfig<NodeModel> = {
   getMinHeight: () => 64,
   getMinWidth: model => 120 + (model.name?.length ?? 0) * 12,
@@ -78,6 +85,7 @@ const stepNodeConfig: IRectConfig<NodeModel> = {
     const height = getRectHeight(stepNodeConfig, args.model);
     const width = getRectWidth(stepNodeConfig, args.model);
 
+    // Here we are using HTML wrapped by foreignObject.
     return (
       <foreignObject
         transform={`translate(${args.model.x}, ${args.model.y})`}
@@ -90,6 +98,8 @@ const stepNodeConfig: IRectConfig<NodeModel> = {
     );
   }
 };
+
+/** How to customize your port on a node. */
 
 interface IPortProps {
   data: GraphModel;
@@ -183,6 +193,8 @@ class MyPortConfig implements IPortConfig {
     };
   }
 
+  // Where you can figure out your own validators for node connections.
+
   public getIsConnectable({ anotherPort, model }: IGetConnectableParams): boolean | undefined {
     if (!anotherPort) {
       return undefined;
@@ -212,6 +224,7 @@ class MyPortConfig implements IPortConfig {
     );
   }
 
+  // hover view for ports
   public renderTooltips(args: Omit<IPortDrawArgs, "setData">): React.ReactNode {
     const styles: React.CSSProperties = {
       position: "absolute",
@@ -235,6 +248,7 @@ class MyPortConfig implements IPortConfig {
 export const FeaturesDemo: React.FC = () => {
   return (
     <ReactDagEditor style={{ width: "900px", height: "600px" }}>
+      {/** where to initialize your data */}
       <GraphStateStore data={GraphModel.fromJSON(sampleGraphData)}>
         <RegisterNode name="source" config={sourceNodeConfig} />
         <RegisterNode name="step" config={stepNodeConfig} />

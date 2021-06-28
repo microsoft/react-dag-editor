@@ -16,6 +16,20 @@ React component to create graphic user interface with:
 - dag: directed acyclic graph editor. Our a11y solution assumes the graph is a DAG. If you intend to turn off the a11y features, it is fine to draw undirected or cyclic graph with this component.
 - editor: it supports readonly graphic data visualization. However the reason you choose this library is the highlight in the user interaction to create/edit a graph.
 
+## Demo
+
+### Online sample link: WIP
+
+### Local demo
+
+Follow the steps below to run local demo on your machine(MacOS/Linux/Windows):
+
+1. Clone the repository
+2. Run "yarn" to install all dependencies.
+3. Run "yarn start" and select the "react-dag-editor" in prompt selection.
+4. It won't take long to load the sample page. If not, try to open localhost:5000 on your browser or submit an issue.
+5. Checkout ./packages/ReactDagEditor/stories/components/FeatureDemo.tsx for api usage(Detail API Doc WIP)
+
 ## Features
 
 | Feature                         | Description                                                      | Demo  | Is in default feature set? | Is in read only mode feature set? |
@@ -37,8 +51,6 @@ React component to create graphic user interface with:
 | GraphFeatures.undoStack         | Undo stack to support undo/redo                                  | (WIP) | Yes                        | No                                |
 | GraphFeatures.ctrlKeyZoom       | Zooming by ctrl clicking + mousewheel                            | (WIP) | Yes                        | Yes                               |
 | GraphFeatures.limitBoundary     | Constraint the allowed drag-n-drop area                          | (WIP) | Yes                        | Yes                               |
-
-
 
 ## compatibility
 

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { IGraphConfig } from "../contexts";
-import { ITransformMatrix, IViewPort } from "../contexts/GraphStateContext";
+import { ITransformMatrix, IViewport } from "../contexts/GraphStateContext";
 import { IContainerRect } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { IPoint } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize } from "./layout";
-import { getVisibleNodes } from "./viewPort";
+import { getVisibleNodes } from "./viewport";
 
 export type TTransformMatrix = ITransformMatrix;
 
@@ -50,9 +50,9 @@ export interface IZoomFixMatrix extends IZoomFixPublicOption {
 
 export interface IZoomToFit extends IZoomFixMatrix {}
 
-export type IZoomPanSettings = Pick<IViewPort, "transformMatrix">;
+export type IZoomPanSettings = Pick<IViewport, "transformMatrix">;
 
-type Action = (zoomPanSettings: IViewPort) => IViewPort;
+type Action = (zoomPanSettings: IViewport) => IViewport;
 
 /**
  * zoom to [scale]
@@ -387,18 +387,18 @@ export const focusArea = (
   minY: number,
   maxX: number,
   maxY: number,
-  viewPort: Required<IViewPort>
-): IViewPort => {
+  viewport: Required<IViewport>
+): IViewport => {
   const width = maxX - minX;
   const height = maxY - minY;
 
-  const scale = Math.min(viewPort.visibleRect.width / width, viewPort.visibleRect.height / height);
+  const scale = Math.min(viewport.visibleRect.width / width, viewport.visibleRect.height / height);
 
-  const dx = -scale * (minX + width / 2) + viewPort.rect.width / 2;
-  const dy = -scale * (minY + height / 2) + viewPort.rect.height / 2;
+  const dx = -scale * (minX + width / 2) + viewport.rect.width / 2;
+  const dy = -scale * (minY + height / 2) + viewport.rect.height / 2;
 
   return {
-    ...viewPort,
+    ...viewport,
     transformMatrix: [scale, 0, 0, scale, dx, dy]
   };
 };

@@ -1,14 +1,14 @@
 import { render } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
-import { GraphModel, IPropsAPI, ITransformMatrix, IViewPort, ZoomDirection } from "../../src";
+import { GraphModel, IPropsAPI, ITransformMatrix, IViewport, ZoomDirection } from "../../src";
 import { Transform } from "../../src/components/Transform";
-import { getRenderedEdges, getRenderedNodes } from "../../src/utils/viewPort";
+import { getRenderedEdges, getRenderedNodes } from "../../src/utils/viewport";
 import { TestComponent } from "../TestComponent";
 import { getGraphConfig, mockBoundingBox } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";
 
-describe("viewPort", () => {
+describe("viewport", () => {
   const rect: DOMRect | ClientRect = {
     bottom: 816,
     height: 800,
@@ -20,19 +20,19 @@ describe("viewPort", () => {
     y: 16
   };
   const data = getSample1Data();
-  const viewPort = (transformMatrix: ITransformMatrix): Required<IViewPort> => ({
+  const viewport = (transformMatrix: ITransformMatrix): Required<IViewport> => ({
     transformMatrix,
     rect,
     visibleRect: rect
   });
 
   it("getRenderedNodes", () => {
-    const renderedNodes = getRenderedNodes(GraphModel.fromJSON(data).nodes, viewPort([1, 0, 0, 1, 0, 0]));
+    const renderedNodes = getRenderedNodes(GraphModel.fromJSON(data).nodes, viewport([1, 0, 0, 1, 0, 0]));
     expect(renderedNodes.length).toBe(8);
 
     const renderedNodes2 = getRenderedNodes(
       GraphModel.fromJSON(data).nodes,
-      viewPort([4.77, 0, 0, 4.77, -2281.56, -1995.55])
+      viewport([4.77, 0, 0, 4.77, -2281.56, -1995.55])
     );
     expect(renderedNodes2.length).toBe(5);
   });
@@ -41,14 +41,14 @@ describe("viewPort", () => {
     const { nodes, edges } = GraphModel.fromJSON(data);
     const graphConfig = getGraphConfig();
 
-    const renderedEdges = getRenderedEdges(edges, nodes, graphConfig, viewPort([1, 0, 0, 1, 0, 0]));
+    const renderedEdges = getRenderedEdges(edges, nodes, graphConfig, viewport([1, 0, 0, 1, 0, 0]));
     expect(renderedEdges.length).toBe(8);
 
     const renderedEdges2 = getRenderedEdges(
       edges,
       nodes,
       graphConfig,
-      viewPort([4.77, 0, 0, 4.77, -2281.56, -1995.55])
+      viewport([4.77, 0, 0, 4.77, -2281.56, -1995.55])
     );
     expect(renderedEdges2.length).toBe(7);
   });
@@ -71,14 +71,14 @@ describe("test zoom", () => {
     act(() => {
       propsAPI.zoom(2);
     });
-    let transformMatrix = propsAPI.getViewPort().transformMatrix;
+    let transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(2);
     expect(transformMatrix[3]).toBe(2);
 
     act(() => {
       propsAPI.zoomTo(3);
     });
-    transformMatrix = propsAPI.getViewPort().transformMatrix;
+    transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(3);
     expect(transformMatrix[3]).toBe(3);
   });
@@ -87,14 +87,14 @@ describe("test zoom", () => {
     act(() => {
       propsAPI.zoom(2, ZoomDirection.X);
     });
-    let transformMatrix = propsAPI.getViewPort().transformMatrix;
+    let transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(2);
     expect(transformMatrix[3]).toBe(1);
 
     act(() => {
       propsAPI.zoomTo(3, undefined, ZoomDirection.X);
     });
-    transformMatrix = propsAPI.getViewPort().transformMatrix;
+    transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(3);
     expect(transformMatrix[3]).toBe(1);
   });
@@ -103,14 +103,14 @@ describe("test zoom", () => {
     act(() => {
       propsAPI.zoom(2, ZoomDirection.Y);
     });
-    let transformMatrix = propsAPI.getViewPort().transformMatrix;
+    let transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(1);
     expect(transformMatrix[3]).toBe(2);
 
     act(() => {
       propsAPI.zoomTo(3, undefined, ZoomDirection.Y);
     });
-    transformMatrix = propsAPI.getViewPort().transformMatrix;
+    transformMatrix = propsAPI.getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(1);
     expect(transformMatrix[3]).toBe(3);
   });

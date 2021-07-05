@@ -2,7 +2,7 @@
 import * as React from "react";
 import { GraphNodeEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
-import { IViewPort } from "../contexts/GraphStateContext";
+import { IViewport } from "../contexts/GraphStateContext";
 import { INodeCommonEvent, INodeContextMenuEvent } from "../Graph.interface";
 import { useTheme } from "../hooks";
 import { NodeModel } from "../models/NodeModel";
@@ -16,7 +16,7 @@ import { IGraphProps } from "./Graph/IGraphProps";
 export interface IGraphNodeCommonProps {
   isNodeEditDisabled?: boolean;
   eventChannel: EventChannel;
-  viewPort: Required<IViewPort>;
+  viewport: Required<IViewport>;
   getNodeAriaLabel: Required<IGraphProps>["getNodeAriaLabel"];
   graphId: string;
 }
@@ -26,7 +26,7 @@ export interface IGraphNodeProps extends IGraphNodeCommonProps {
 }
 
 const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
-  const { node, eventChannel, getNodeAriaLabel, viewPort, graphId } = props;
+  const { node, eventChannel, getNodeAriaLabel, viewport, graphId } = props;
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
   const shape = node.shape ? node.shape : graphConfig.defaultNodeShape;
   const nodeConfig = getNodeConfig(node, graphConfig);
@@ -96,11 +96,11 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
         {nodeConfig.render({
           model: node,
           theme,
-          viewPort,
+          viewport,
           zoomPanSettings: {
-            transformMatrix: viewPort.transformMatrix
+            transformMatrix: viewport.transformMatrix
           },
-          containerRect: viewPort.rect
+          containerRect: viewport.rect
         })}
       </g>
     </g>

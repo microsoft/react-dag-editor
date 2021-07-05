@@ -23,7 +23,7 @@ const isRectChanged = (a: IContainerRect | undefined, b: IContainerRect | undefi
   return a.top !== b.top || a.left !== b.left || a.width !== b.width || a.height !== b.height;
 };
 
-export const useUpdateViewPortCallback = (
+export const useUpdateViewportCallback = (
   rectRef: MutableRefObject<IContainerRect | undefined>,
   visibleRectRef: MutableRefObject<IContainerRect | undefined>,
   svgRef: RefObject<SVGSVGElement>,
@@ -31,14 +31,14 @@ export const useUpdateViewPortCallback = (
   eventChannel: EventChannel
 ) =>
   useCallback((): void => {
-    const viewPortRect = svgRef.current?.getBoundingClientRect();
+    const viewportRect = svgRef.current?.getBoundingClientRect();
     const visibleRect = containerRef.current?.getBoundingClientRect();
-    if (isRectChanged(rectRef.current, viewPortRect) || isRectChanged(visibleRectRef.current, visibleRect)) {
-      rectRef.current = viewPortRect;
+    if (isRectChanged(rectRef.current, viewportRect) || isRectChanged(visibleRectRef.current, visibleRect)) {
+      rectRef.current = viewportRect;
       visibleRectRef.current = visibleRect;
       eventChannel.trigger({
-        type: GraphCanvasEvent.ViewPortResize,
-        viewPortRect,
+        type: GraphCanvasEvent.ViewportResize,
+        viewportRect,
         visibleRect
       });
     }
@@ -47,9 +47,9 @@ export const useUpdateViewPortCallback = (
 export const useContainerRect = (
   svgRef: RefObject<SVGSVGElement>,
   containerRef: RefObject<HTMLDivElement>,
-  updateViewPort: () => void
+  updateViewport: () => void
 ): void => {
-  useLayoutEffect(updateViewPort, [updateViewPort]);
+  useLayoutEffect(updateViewport, [updateViewport]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -66,7 +66,7 @@ export const useContainerRect = (
          * https://stackoverflow.com/questions/49384120/resizeobserver-loop-limit-exceeded
          */
         nextFrame(() => {
-          updateViewPort();
+          updateViewport();
         }),
       LIMIT
     );
@@ -86,7 +86,7 @@ export const useContainerRect = (
     return () => {
       window.removeEventListener("resize", onResize);
     };
-  }, [containerRef, updateViewPort]);
+  }, [containerRef, updateViewport]);
 
   useEffect(() => {
     const listener = debounce((e: UIEvent) => {
@@ -94,7 +94,7 @@ export const useContainerRect = (
       if (!svg || !(e.target instanceof Element) || !e.target.contains(svg)) {
         return;
       }
-      updateViewPort();
+      updateViewport();
     }, LIMIT);
     const options: AddEventListenerOptions = {
       capture: true,
@@ -104,5 +104,5 @@ export const useContainerRect = (
     return () => {
       document.body.removeEventListener("scroll", listener, options);
     };
-  }, [svgRef, updateViewPort]);
+  }, [svgRef, updateViewport]);
 };

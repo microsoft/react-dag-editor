@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphCanvasEvent } from "../common/GraphEvent.constant";
-import { IViewPort } from "../contexts/GraphStateContext";
+import { IViewport } from "../contexts/GraphStateContext";
 import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
 import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
 import { useRenderedArea } from "../hooks";
@@ -9,21 +9,21 @@ import { getVisibleArea } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 
 export interface IVirtualizationProviderProps {
-  viewPort: Required<IViewPort>;
+  viewport: Required<IViewport>;
   isVirtualizationEnabled: boolean;
   virtualizationDelay: number;
   eventChannel: EventChannel;
 }
 
 export const VirtualizationProvider: React.FunctionComponent<IVirtualizationProviderProps> = ({
-  viewPort,
+  viewport,
   isVirtualizationEnabled,
   virtualizationDelay,
   eventChannel,
   children
 }) => {
-  const renderedArea = useRenderedArea(viewPort, isVirtualizationEnabled);
-  const visibleArea = React.useMemo(() => getVisibleArea(viewPort), [viewPort]);
+  const renderedArea = useRenderedArea(viewport, isVirtualizationEnabled);
+  const visibleArea = React.useMemo(() => getVisibleArea(viewport), [viewport]);
 
   const renderedContext = React.useContext(VirtualizationRenderedContext);
 
@@ -36,11 +36,11 @@ export const VirtualizationProvider: React.FunctionComponent<IVirtualizationProv
 
   const context = React.useMemo<IVirtualizationContext>(
     () => ({
-      viewPort,
+      viewport,
       renderedArea,
       visibleArea
     }),
-    [viewPort, renderedArea, visibleArea]
+    [viewport, renderedArea, visibleArea]
   );
 
   const value = useDeferredValue(context, { timeout: virtualizationDelay });

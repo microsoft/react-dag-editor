@@ -42,7 +42,7 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
           "y": 0,
         }
       }
-      viewPort={
+      viewport={
         Object {
           "rect": Object {
             "bottom": 900,

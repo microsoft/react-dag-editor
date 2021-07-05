@@ -2,14 +2,14 @@
 
 exports[`Wheel should not work with wheel event without focus: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
 
 exports[`Wheel should work with wheel event after focus graph: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]Focus",
   "[Canvas]MouseWheelScroll",

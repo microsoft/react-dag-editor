@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewPort } from "../contexts/GraphStateContext";
+import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
 import {
   GraphPortState,
   ICanvasData,
@@ -308,7 +308,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    * @deprecated
    */
   getZoomPanSettings(): IZoomPanSettings;
-  getViewPort(): IViewPort;
+  getViewport(): IViewport;
   /**
    * get the svg ref object
    */
@@ -325,11 +325,11 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    */
   getClientByPoint(x: number, y: number): IPoint;
   /**
-   * check if the node is in the viewPort
+   * check if the node is in the viewport
    *
    * @param nodeId
    */
-  isNodeInViewPort(nodeId: string): boolean;
+  isNodeInViewport(nodeId: string): boolean;
   /**
    * get selected item(s)
    */
@@ -383,7 +383,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
   /**
    * Check is whole node visible
    * @param nodeId node id
-   * @param viewPort optional specified viewPort, if not supported will use default viewPort
+   * @param viewport optional specified viewport, if not supported will use default viewport
    */
-  isNodeFullVisible(nodeId: string, viewPort?: IViewPort): boolean;
+  isNodeFullVisible(nodeId: string, viewport?: IViewport): boolean;
 }

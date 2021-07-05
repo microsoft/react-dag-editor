@@ -4,7 +4,7 @@ import { INode, NodeType } from "../../collections/b-tree";
 import { NodeModel } from "../../models/NodeModel";
 import { GraphNodeParts, IGraphNodePartsProps } from "../GraphNodeParts";
 
-export interface INodeTreeNodeProps extends Omit<IGraphNodePartsProps, "node" | "viewPort"> {
+export interface INodeTreeNodeProps extends Omit<IGraphNodePartsProps, "node" | "viewport"> {
   node: INode<number, [string, NodeModel]>;
 }
 
@@ -39,9 +39,6 @@ const NodeTreeNode = React.memo<INodeTreeNodeProps>(
 
 NodeTreeNode.displayName = "NodeTreeNode";
 
-export const NodeTree: React.FunctionComponent<INodeTreeProps> = ({
-  tree,
-  ...others
-}) => {
+export const NodeTree: React.FunctionComponent<INodeTreeProps> = ({ tree, ...others }) => {
   return <NodeTreeNode node={tree.sortedRoot} {...others} />;
 };

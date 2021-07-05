@@ -12,25 +12,25 @@ exports[`test Transform should get correct transform: events 1`] = `Array []`;
 
 exports[`test zoom should zoom x only: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
 
 exports[`test zoom should zoom x,y: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
 
 exports[`test zoom should zoom y only: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
 
-exports[`viewPort getRenderedEdges: events 1`] = `Array []`;
+exports[`viewport getRenderedEdges: events 1`] = `Array []`;
 
-exports[`viewPort getRenderedNodes: events 1`] = `Array []`;
+exports[`viewport getRenderedNodes: events 1`] = `Array []`;

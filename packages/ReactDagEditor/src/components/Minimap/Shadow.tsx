@@ -4,7 +4,7 @@ import { stopPropagation } from "../../utils/stopPropagation";
 
 interface IProps {
   containerRect: ClientRect | DOMRect | undefined | null;
-  viewPort: IRect;
+  viewport: IRect;
   shadowPadding: number;
   onClick: React.MouseEventHandler<SVGRectElement>;
 }
@@ -18,7 +18,7 @@ export interface IRect {
 
 export const MiniMapShadow: React.FunctionComponent<IProps> = ({
   containerRect: rect,
-  viewPort,
+  viewport,
   shadowPadding = 0,
   onClick
 }) => {
@@ -38,18 +38,18 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
     strokeWidth: 1
   };
 
-  const viewPortStartX = Math.max(viewPort.startX, shadowPadding);
-  const viewPortStartY = Math.max(viewPort.startY, shadowPadding);
-  const viewPortEndX = Math.min(viewPort.endX, rect.width - shadowPadding);
+  const viewportStartX = Math.max(viewport.startX, shadowPadding);
+  const viewportStartY = Math.max(viewport.startY, shadowPadding);
+  const viewportEndX = Math.min(viewport.endX, rect.width - shadowPadding);
 
-  const viewPortEndY = Math.min(viewPort.endY, rect.height - shadowPadding);
-  const sideShadowHeight = viewPortEndY - viewPortStartY;
-  const rightShadowWidth = rect.width - viewPortEndX;
-  const bottomShadowHeight = rect.height - viewPortEndY;
+  const viewportEndY = Math.min(viewport.endY, rect.height - shadowPadding);
+  const sideShadowHeight = viewportEndY - viewportStartY;
+  const rightShadowWidth = rect.width - viewportEndX;
+  const bottomShadowHeight = rect.height - viewportEndY;
 
   return (
     <>
-      {viewPortStartY > 0 && (
+      {viewportStartY > 0 && (
         <g>
           <rect
             onClick={onClick}
@@ -57,38 +57,26 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
             onPointerDown={stopPropagation}
             x={0}
             y={0}
-            height={viewPortStartY}
+            height={viewportStartY}
             width={rect.width}
             style={shadowStyle}
           />
-          <line
-            x1={viewPortStartX}
-            y1={viewPortStartY}
-            x2={viewPortEndX}
-            y2={viewPortStartY}
-            style={lineStyle}
-          />
+          <line x1={viewportStartX} y1={viewportStartY} x2={viewportEndX} y2={viewportStartY} style={lineStyle} />
         </g>
       )}
-      {viewPortStartX && sideShadowHeight > 0 && (
+      {viewportStartX && sideShadowHeight > 0 && (
         <g>
           <rect
             onClick={onClick}
             onMouseDown={stopPropagation}
             onPointerDown={stopPropagation}
             x={0}
-            y={viewPortStartY}
+            y={viewportStartY}
             height={sideShadowHeight}
-            width={viewPortStartX}
+            width={viewportStartX}
             style={shadowStyle}
           />
-          <line
-            x1={viewPortStartX}
-            y1={viewPortStartY}
-            x2={viewPortStartX}
-            y2={viewPortEndY}
-            style={lineStyle}
-          />
+          <line x1={viewportStartX} y1={viewportStartY} x2={viewportStartX} y2={viewportEndY} style={lineStyle} />
         </g>
       )}
       {rightShadowWidth && sideShadowHeight > 0 && (
@@ -97,19 +85,13 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
             onClick={onClick}
             onMouseDown={stopPropagation}
             onPointerDown={stopPropagation}
-            x={viewPortEndX}
-            y={viewPortStartY}
+            x={viewportEndX}
+            y={viewportStartY}
             height={sideShadowHeight}
             width={rightShadowWidth}
             style={shadowStyle}
           />
-          <line
-            x1={viewPortEndX}
-            y1={viewPortStartY}
-            x2={viewPortEndX}
-            y2={viewPortEndY}
-            style={lineStyle}
-          />
+          <line x1={viewportEndX} y1={viewportStartY} x2={viewportEndX} y2={viewportEndY} style={lineStyle} />
         </g>
       )}
       {bottomShadowHeight > 0 && (
@@ -119,18 +101,12 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
             onMouseDown={stopPropagation}
             onPointerDown={stopPropagation}
             x={0}
-            y={viewPortEndY}
+            y={viewportEndY}
             height={bottomShadowHeight}
             width={rect.width}
             style={shadowStyle}
           />
-          <line
-            x1={viewPortStartX}
-            y1={viewPortEndY}
-            x2={viewPortEndX}
-            y2={viewPortEndY}
-            style={lineStyle}
-          />
+          <line x1={viewportStartX} y1={viewportEndY} x2={viewportEndX} y2={viewportEndY} style={lineStyle} />
         </g>
       )}
     </>

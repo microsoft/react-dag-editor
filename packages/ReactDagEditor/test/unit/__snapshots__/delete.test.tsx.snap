@@ -4,7 +4,7 @@ exports[`should delete related edges: events 1`] = `Array []`;
 
 exports[`should do nothing if delete disabled: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;

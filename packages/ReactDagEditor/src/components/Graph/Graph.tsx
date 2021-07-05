@@ -3,7 +3,7 @@ import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphCanvasEvent, GraphContextMenuEvent } from "../../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig, PanelContext, PropsAPIContext } from "../../contexts";
-import { GraphBehavior, IViewPort } from "../../contexts/GraphStateContext";
+import { GraphBehavior, IViewport } from "../../contexts/GraphStateContext";
 import { VirtualizationRenderedContext } from "../../contexts/VirtualizationRenderedContext";
 import { defaultFeatures } from "../../Features";
 import { ICanvasCommonEvent, ICanvasKeyboardEvent, IContainerRect } from "../../Graph.interface";
@@ -14,7 +14,7 @@ import {
   useSafariScale,
   useSelectBox,
   useTheme,
-  useUpdateViewPortCallback,
+  useUpdateViewportCallback,
   useWheelHandler
 } from "../../hooks";
 import { useConst } from "../../hooks/useConst";
@@ -23,7 +23,7 @@ import { useFeatureControl } from "../../hooks/useFeatureControl";
 import { GraphModel } from "../../models/GraphModel";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { IPropsAPIInstance } from "../../props-api/IPropsAPIInstance";
-import { isSelected, isSupported, isViewPortComplete } from "../../utils";
+import { isSelected, isSupported, isViewportComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";
 import { EventChannel } from "../../utils/eventChannel";
@@ -54,7 +54,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const propsAPI = React.useContext(PropsAPIContext);
   const { state, dispatch } = useGraphState();
   const data = state.data.present;
-  const { viewPort } = state;
+  const { viewport } = state;
 
   const panelContext = React.useContext(PanelContext);
 
@@ -133,7 +133,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
 
   const eventChannel = useConst(() => new EventChannel());
 
-  const updateViewPort = useUpdateViewPortCallback(rectRef, visibleRectRef, svgRef, containerRef, eventChannel);
+  const updateViewport = useUpdateViewportCallback(rectRef, visibleRectRef, svgRef, containerRef, eventChannel);
 
   useEventChannel({
     props,
@@ -147,12 +147,12 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     graphConfig,
     setCurHoverNode,
     setCurHoverPort,
-    updateViewPort,
+    updateViewport,
     canvasBoundaryPadding,
     eventChannel
   });
 
-  useContainerRect(svgRef, containerRef, updateViewPort);
+  useContainerRect(svgRef, containerRef, updateViewport);
 
   const {
     isNodesDraggable,
@@ -262,7 +262,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   );
 
   const renderPortTooltip = () => {
-    if (!curHoverPort || !isViewPortComplete(state.viewPort)) {
+    if (!curHoverPort || !isViewportComplete(state.viewport)) {
       return null;
     }
     const [nodeId, portId] = curHoverPort;
@@ -274,11 +274,11 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     if (!port) {
       return null;
     }
-    return <PortTooltips port={port} parentNode={node} data={data} viewPort={state.viewPort} />;
+    return <PortTooltips port={port} parentNode={node} data={data} viewport={state.viewport} />;
   };
 
   const renderNodeTooltip = () => {
-    if (!curHoverNode || !isViewPortComplete(state.viewPort)) {
+    if (!curHoverNode || !isViewportComplete(state.viewport)) {
       return null;
     }
 
@@ -290,7 +290,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       return null;
     }
 
-    return <NodeTooltips node={data.nodes.get(curHoverNode)} viewPort={state.viewPort} />;
+    return <NodeTooltips node={data.nodes.get(curHoverNode)} viewport={state.viewport} />;
   };
 
   return (
@@ -324,11 +324,11 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       >
         <title>{props.title}</title>
         <desc>{props.desc}</desc>
-        <Transform matrix={viewPort.transformMatrix}>
-          {state.viewPort.rect && (
+        <Transform matrix={viewport.transformMatrix}>
+          {state.viewport.rect && (
             <VirtualizationRenderedContext.Provider value={virtualizationRenderedContextValue}>
               <VirtualizationProvider
-                viewPort={state.viewPort as Required<IViewPort>}
+                viewport={state.viewport as Required<IViewport>}
                 isVirtualizationEnabled={isVirtualizationEnabled}
                 virtualizationDelay={virtualizationDelay}
                 eventChannel={eventChannel}
@@ -366,7 +366,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
           <Connecting
             graphConfig={graphConfig}
             eventChannel={eventChannel}
-            viewPort={state.viewPort}
+            viewport={state.viewport}
             styles={props.styles?.connectingLine}
             movingPoint={state.connectState.movingPoint}
           />
@@ -374,15 +374,15 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       </svg>
       {(!isVerticalScrollDisabled || !isHorizontalScrollDisabled || !isPanDisabled) &&
         isLimitBoundary &&
-        isViewPortComplete(state.viewPort) && (
+        isViewportComplete(state.viewport) && (
           <Scrollbar
-            viewPort={state.viewPort}
+            viewport={state.viewport}
             canvasBoundaryPadding={canvasBoundaryPadding}
             offsetLimit={getOffsetLimit({
               data,
               graphConfig,
-              rect: state.viewPort.rect,
-              transformMatrix: viewPort.transformMatrix,
+              rect: state.viewport.rect,
+              transformMatrix: viewport.transformMatrix,
               canvasBoundaryPadding,
               groupPadding: data.groups[0]?.padding
             })}

@@ -55,7 +55,7 @@ export interface IUseEventChannelParams {
   setFocusedWithoutMouse(value: boolean): void;
   setCurHoverNode(nodeId: string | undefined): void;
   setCurHoverPort(value: [string, string] | undefined): void;
-  updateViewPort(): void;
+  updateViewport(): void;
 }
 
 export function useEventChannel({
@@ -72,7 +72,7 @@ export function useEventChannel({
   setCurHoverPort,
   eventChannel,
   canvasBoundaryPadding,
-  updateViewPort
+  updateViewport
 }: IUseEventChannelParams): void {
   const {
     dragThreshold = 10,
@@ -147,7 +147,7 @@ export function useEventChannel({
   // eslint-disable-next-line complexity
   const handleCanvasEvent = (event: IEvent) => {
     switch (event.type) {
-      case GraphCanvasEvent.ViewPortResize:
+      case GraphCanvasEvent.ViewportResize:
       case GraphCanvasEvent.Drag:
       case GraphCanvasEvent.MouseWheelScroll:
       case GraphCanvasEvent.Zoom:
@@ -198,7 +198,7 @@ export function useEventChannel({
           svgRef.current?.focus({ preventScroll: true });
           setFocusedWithoutMouse(false);
           const evt = event.rawEvent as React.MouseEvent;
-          updateViewPort();
+          updateViewport();
           onContainerMouseDown(evt, {
             state: propsAPI.getState(),
             canvasMouseMode,
@@ -352,7 +352,7 @@ export function useEventChannel({
             return;
           }
           const evt = event.rawEvent as React.PointerEvent;
-          updateViewPort();
+          updateViewport();
           onNodePointerDown(evt, event.node, {
             svgRef,
             visibleRectRef,
@@ -425,7 +425,7 @@ export function useEventChannel({
       if (isConnectDisabled || (evt.pointerType === "mouse" && evt.button !== MouseEventButton.Primary)) {
         return;
       }
-      updateViewPort();
+      updateViewport();
       const globalEventTarget = graphConfig.getGlobalEventTarget();
       const dragging = new DragController<PointerEvent>(
         new PointerEventProvider(globalEventTarget, evt.pointerId),
@@ -473,7 +473,7 @@ export function useEventChannel({
       graphConfig,
       isConnectDisabled,
       setFocusedWithoutMouse,
-      updateViewPort
+      updateViewport
     ]
   );
 

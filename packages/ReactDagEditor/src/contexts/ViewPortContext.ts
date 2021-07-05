@@ -1,4 +1,4 @@
 import { createContext } from "react";
-import { EMPTY_VIEW_PORT, IViewPort } from "./GraphStateContext";
+import { EMPTY_VIEW_PORT, IViewport } from "./GraphStateContext";
 
-export const ViewPortContext = createContext<IViewPort>(EMPTY_VIEW_PORT);
+export const ViewportContext = createContext<IViewport>(EMPTY_VIEW_PORT);

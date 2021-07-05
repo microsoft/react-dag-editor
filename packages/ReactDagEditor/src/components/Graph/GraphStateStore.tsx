@@ -8,7 +8,7 @@ import {
   IGraphReducer,
   IGraphReducerContext,
   ITransformMatrix,
-  ViewPortContext
+  ViewportContext
 } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { AutoZoomFitContext } from "../../contexts/AutoZoomFitContext";
@@ -25,7 +25,7 @@ import { usePropsAPI } from "../../hooks/usePropsAPI";
 import { GraphModel } from "../../models/GraphModel";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { useGraphReducer } from "../../reducers/useGraphReducer";
-import { isViewPortComplete, resetUndoStack } from "../../utils";
+import { isViewportComplete, resetUndoStack } from "../../utils";
 import { batchedUpdates } from "../../utils/batchedUpdates";
 import { graphController } from "../../utils/graphController";
 import { emptyDummyNodes } from "../dummyNodes";
@@ -66,7 +66,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
 
   const [state, dispatchImpl] = React.useReducer(reducer, undefined, () => ({
     data: resetUndoStack(props.data ?? GraphModel.empty()),
-    viewPort: {
+    viewport: {
       rect: undefined,
       transformMatrix: defaultTransformMatrix
     },
@@ -127,7 +127,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
    */
   const shouldAutoZoomToFit = React.useRef(false);
   React.useEffect((): void => {
-    if (!isViewPortComplete(state.viewPort) || !shouldAutoZoomToFit.current) {
+    if (!isViewportComplete(state.viewport) || !shouldAutoZoomToFit.current) {
       return;
     }
     shouldAutoZoomToFit.current = false;
@@ -143,13 +143,13 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     <AutoZoomFitContext.Provider value={shouldAutoZoomToFit}>
       <ConnectingState data={state.data.present} connectState={state.connectState}>
         <GraphStateContext.Provider value={contextValue}>
-          <ViewPortContext.Provider value={state.viewPort}>
+          <ViewportContext.Provider value={state.viewport}>
             <GraphValueContext.Provider value={state.data.present}>
               <AlignmentLinesContext.Provider value={state.alignmentLines}>
                 {props.children}
               </AlignmentLinesContext.Provider>
             </GraphValueContext.Provider>
-          </ViewPortContext.Provider>
+          </ViewportContext.Provider>
         </GraphStateContext.Provider>
       </ConnectingState>
     </AutoZoomFitContext.Provider>

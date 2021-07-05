@@ -142,7 +142,7 @@ interface IEventBase<E = Event | React.SyntheticEvent> {
 export interface ICanvasCommonEvent extends IEventBase {
   type: Exclude<
     GraphCanvasEvent,
-    | GraphCanvasEvent.ViewPortResize
+    | GraphCanvasEvent.ViewportResize
     | GraphCanvasEvent.Navigate
     | GraphCanvasEvent.VirtualizationRecalculated
     | GraphCanvasEvent.Zoom
@@ -163,7 +163,7 @@ export interface ICanvasCommonEvent extends IEventBase {
     | GraphCanvasEvent.DraggingNodeFromItemPanelEnd
     | GraphCanvasEvent.ScrollIntoView
     | GraphCanvasEvent.ResetUndoStack
-    | GraphCanvasEvent.ResetViewPort
+    | GraphCanvasEvent.ResetViewport
     | GraphCanvasEvent.ZoomTo
     | GraphCanvasEvent.ZoomToFit
     | GraphCanvasEvent.SetData
@@ -174,9 +174,9 @@ export interface ICanvasCommonEvent extends IEventBase {
 
 export type IContainerRect = ClientRect | DOMRect;
 
-export interface ICanvasViewPortResizeEvent {
-  type: GraphCanvasEvent.ViewPortResize;
-  viewPortRect: IContainerRect | undefined;
+export interface ICanvasViewportResizeEvent {
+  type: GraphCanvasEvent.ViewportResize;
+  viewportRect: IContainerRect | undefined;
   visibleRect: IContainerRect | undefined;
 }
 
@@ -269,8 +269,8 @@ export interface IScrollIntoViewEvent extends IPoint {
   type: GraphCanvasEvent.ScrollIntoView;
 }
 
-export interface ICanvasResetViewPortEvent {
-  type: GraphCanvasEvent.ResetViewPort;
+export interface ICanvasResetViewportEvent {
+  type: GraphCanvasEvent.ResetViewport;
   ensureNodeVisible: boolean;
 }
 
@@ -302,7 +302,7 @@ export interface ICanvasScrollToEvent extends IPoint {
 
 export type ICanvasEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> =
   | ICanvasCommonEvent
-  | ICanvasViewPortResizeEvent
+  | ICanvasViewportResizeEvent
   | ICanvasNavigateEvent<NodeData, PortData>
   | ICanvasVirtualizationEvent
   | ICanvasZoomEvent
@@ -317,7 +317,7 @@ export type ICanvasEvent<NodeData = unknown, EdgeData = unknown, PortData = unkn
   | ICanvasAddNodeEvent
   | ICanvasAddEndNodeEvent
   | IScrollIntoViewEvent
-  | ICanvasResetViewPortEvent
+  | ICanvasResetViewportEvent
   | ICanvasZoomToEvent
   | ICanvasZoomToFitEvent
   | ICanvasSetDataEvent

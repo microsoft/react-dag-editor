@@ -134,7 +134,7 @@ export const shouldZoomOut = (propsAPI: IPropsAPI, graphConfig: IGraphConfig): b
     }
   });
 
-  const scale = propsAPI.getViewPort().transformMatrix[0];
+  const scale = propsAPI.getViewport().transformMatrix[0];
 
   return !!(minSize * scale > THRESHOLD_DISABLE_ZOOM_OUT);
 };

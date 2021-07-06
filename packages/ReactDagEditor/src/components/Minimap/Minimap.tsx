@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphMinimapEvent } from "../../common/GraphEvent.constant";
-import { GraphConfigContext, IGraphConfig, PropsAPIContext, ViewPortContext } from "../../contexts";
+import { GraphConfigContext, IGraphConfig, PropsAPIContext, ViewportContext } from "../../contexts";
 import { GraphStateContext } from "../../contexts/GraphStateContext";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
 import { TouchDragAdapter } from "../../controllers/TouchDragAdapter";
@@ -12,7 +12,7 @@ import {
   getPointDeltaByClientDelta,
   getVisibleArea,
   getZoomFitMatrix,
-  isViewPortComplete,
+  isViewportComplete,
   IZoomPanSettings,
   reverseTransformPoint,
   transformPoint
@@ -61,7 +61,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
     renderArrow = (arrowDeg: number) => undefined
   } = props;
 
-  const graphViewPort = React.useContext(ViewPortContext);
+  const graphViewport = React.useContext(ViewportContext);
   const propsAPI = React.useContext(PropsAPIContext);
   const { theme } = useTheme();
   const { data: dataState } = React.useContext(GraphStateContext).state;
@@ -85,8 +85,8 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   }, [rect, data.nodes]);
   const miniMapZoomPanSettingRef = useRefValue(miniMapZoomPanSetting);
 
-  const viewPort = React.useMemo<IRect>(() => {
-    if (!rect || !isViewPortComplete(graphViewPort)) {
+  const viewport = React.useMemo<IRect>(() => {
+    if (!rect || !isViewportComplete(graphViewport)) {
       return {
         startX: 0,
         startY: 0,
@@ -95,7 +95,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       };
     }
 
-    const boundaryPoints = getVisibleArea(graphViewPort);
+    const boundaryPoints = getVisibleArea(graphViewport);
 
     const { x: startX, y: startY } = transformPoint(
       boundaryPoints.minX,
@@ -116,7 +116,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       endY
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rect, miniMapZoomPanSetting, graphViewPort.rect, ...graphViewPort.transformMatrix]);
+  }, [rect, miniMapZoomPanSetting, graphViewport.rect, ...graphViewport.transformMatrix]);
 
   const onClick = React.useCallback(
     (evt: React.MouseEvent) => {
@@ -124,17 +124,17 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       if (!rect) {
         return;
       }
-      const viewPortWidth = viewPort.endX - viewPort.startX;
-      const viewPortHeight = viewPort.endY - viewPort.startY;
+      const viewportWidth = viewport.endX - viewport.startX;
+      const viewportHeight = viewport.endY - viewport.startY;
       const point = reverseTransformPoint(
         clamp(
-          shadowPadding + viewPortWidth / 2,
-          rect.width - shadowPadding - viewPortWidth / 2,
+          shadowPadding + viewportWidth / 2,
+          rect.width - shadowPadding - viewportWidth / 2,
           evt.clientX - rect.left
         ),
         clamp(
-          shadowPadding + viewPortHeight / 2,
-          rect.height - shadowPadding - viewPortHeight / 2,
+          shadowPadding + viewportHeight / 2,
+          rect.height - shadowPadding - viewportHeight / 2,
           evt.clientY - rect.top
         ),
         miniMapZoomPanSetting.transformMatrix
@@ -207,17 +207,17 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
     }
 
     const showArrow =
-      viewPort.startX > rect.width - shadowPadding ||
-      viewPort.startY > rect.height - shadowPadding ||
-      viewPort.endX < shadowPadding ||
-      viewPort.endY < shadowPadding;
+      viewport.startX > rect.width - shadowPadding ||
+      viewport.startY > rect.height - shadowPadding ||
+      viewport.endX < shadowPadding ||
+      viewport.endY < shadowPadding;
 
     // arrow rotate center
     const x0 = rect.width / 2;
     const y0 = rect.height / 2;
 
-    const x1 = (viewPort.startX + viewPort.endX) / 2;
-    const y1 = (viewPort.startY + viewPort.endY) / 2;
+    const x1 = (viewport.startX + viewport.endX) / 2;
+    const y1 = (viewport.startY + viewport.endY) / 2;
 
     let arrowDeg = (Math.atan2(y1 - y0, x1 - x0) * 180) / Math.PI;
     if (arrowDeg < 0) {
@@ -228,7 +228,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       showArrow,
       arrowDeg
     };
-  }, [rect, viewPort, shadowPadding]);
+  }, [rect, viewport, shadowPadding]);
 
   const onMouseDown: React.MouseEventHandler = React.useCallback(
     evt => {
@@ -273,7 +273,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
         ref={svgRef}
         data-automation-id="minimap-id"
       >
-        <MiniMapShadow containerRect={rect} viewPort={viewPort} shadowPadding={shadowPadding} onClick={onClick} />
+        <MiniMapShadow containerRect={rect} viewport={viewport} shadowPadding={shadowPadding} onClick={onClick} />
       </svg>
       {arrowParams.showArrow && renderArrow(arrowParams.arrowDeg)}
     </div>

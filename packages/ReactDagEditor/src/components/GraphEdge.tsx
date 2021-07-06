@@ -59,7 +59,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
     const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
 
     const virtualization = React.useContext(VirtualizationContext);
-    const { viewPort, renderedArea, visibleArea } = virtualization;
+    const { viewport, renderedArea, visibleArea } = virtualization;
     const renderedContext = React.useContext(VirtualizationRenderedContext);
 
     const { theme } = useTheme();
@@ -109,9 +109,9 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       x2: target.x,
       y2: target.y,
       theme,
-      containerRect: viewPort.rect,
-      zoomPanSettings: viewPort,
-      viewPort
+      containerRect: viewport.rect,
+      zoomPanSettings: viewport,
+      viewport
     });
 
     if (hasState(GraphEdgeState.connectedToSelected)(edge.state) && (!isSourceVisible || !isTargetVisible)) {
@@ -141,9 +141,9 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
           x2: hintPoint.x,
           y2: hintPoint.y,
           theme,
-          containerRect: viewPort.rect,
-          zoomPanSettings: viewPort,
-          viewPort
+          containerRect: viewport.rect,
+          zoomPanSettings: viewport,
+          viewport
         });
       } else if (isTargetVisible && edgeConfig.renderWithSourceHint) {
         edgeNode = edgeConfig.renderWithSourceHint({
@@ -154,9 +154,9 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
           x2: target.x,
           y2: target.y,
           theme,
-          containerRect: viewPort.rect,
-          zoomPanSettings: viewPort,
-          viewPort
+          containerRect: viewport.rect,
+          zoomPanSettings: viewport,
+          viewport
         });
       }
     }

@@ -10,7 +10,7 @@ import { PointerEventProvider } from "../../event-provider/PointerEventProvider"
 import { GraphFeatures } from "../../Features";
 import { ICanvasNode, IContainerRect } from "../../Graph.interface";
 import { useRefValue } from "../../hooks/useRefValue";
-import { deepClone, getRectHeight, getRectWidth, IPoint, isViewPortComplete, reverseTransformPoint } from "../../utils";
+import { deepClone, getRectHeight, getRectWidth, IPoint, isViewportComplete, reverseTransformPoint } from "../../utils";
 import { graphController } from "../../utils/graphController";
 import { identical } from "../../utils/identical";
 import { noop } from "../../utils/noop";
@@ -133,7 +133,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
           evt.clientX,
           evt.clientY,
           undefined,
-          propsAPI.getViewPort().transformMatrix,
+          propsAPI.getViewport().transformMatrix,
           model,
           nodeConfig
         ),
@@ -163,7 +163,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
               e.clientX,
               e.clientY,
               undefined,
-              propsAPI.getViewPort().transformMatrix,
+              propsAPI.getViewport().transformMatrix,
               model,
               nodeConfig
             )
@@ -171,9 +171,9 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
         });
       };
       drag.onEnd = ({ e }) => {
-        const viewPort = propsAPI.getViewPort();
+        const viewport = propsAPI.getViewport();
         let nextNode = nextNodeRef.current;
-        if (!isViewPortComplete(viewPort) || !nextNode || !isWithInBound(viewPort.visibleRect, e.clientX, e.clientY)) {
+        if (!isViewportComplete(viewport) || !nextNode || !isWithInBound(viewport.visibleRect, e.clientX, e.clientY)) {
           setWorkingModel(null);
           eventChannel.trigger({
             type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,
@@ -184,7 +184,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
         nextNodeRef.current = null;
         nextNode = {
           ...nextNode,
-          ...adjustPosition(e.clientX, e.clientY, viewPort.rect, viewPort.transformMatrix, model, nodeConfig)
+          ...adjustPosition(e.clientX, e.clientY, viewport.rect, viewport.transformMatrix, model, nodeConfig)
         };
         nextNode = nodeWillAdd(nextNode);
         eventChannel.trigger({

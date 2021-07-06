@@ -34,7 +34,7 @@ export const SearchBox: React.FunctionComponent<ISearchBoxProps> = props => {
     (nodeId: string): void => {
       propsApi.selectNodeById(nodeId);
 
-      if (!propsApi.isNodeInViewPort(nodeId)) {
+      if (!propsApi.isNodeInViewport(nodeId)) {
         propsApi.centralizeNode(nodeId);
       }
     },
@@ -66,11 +66,7 @@ export const SearchBox: React.FunctionComponent<ISearchBoxProps> = props => {
   const updateSearchResult = React.useCallback(
     (value: string): void => {
       const { nodes } = propsApi.getData();
-      const results = value
-        ? Array.from(nodes.values()).filter(n =>
-            props.nodeSearchCriteria(value, n)
-          )
-        : [];
+      const results = value ? Array.from(nodes.values()).filter(n => props.nodeSearchCriteria(value, n)) : [];
 
       propsApi.markSearchResults(results.map(r => r.id));
 
@@ -113,10 +109,7 @@ export const SearchBox: React.FunctionComponent<ISearchBoxProps> = props => {
 
       if (evt.key === "ArrowDown") {
         setState(prevState => {
-          const selectedIndex = Math.min(
-            prevState.results.length - 1,
-            prevState.selectedIndex + 1
-          );
+          const selectedIndex = Math.min(prevState.results.length - 1, prevState.selectedIndex + 1);
 
           highlightSelectedNode(prevState.results[selectedIndex].id);
 
@@ -143,18 +136,13 @@ export const SearchBox: React.FunctionComponent<ISearchBoxProps> = props => {
 
   const renderResult = props.renderResult
     ? props.renderResult.bind(null)
-    : (result: ICanvasNode) => (
-        <div className="search-result-item">{result.name || ""}</div>
-      );
+    : (result: ICanvasNode) => <div className="search-result-item">{result.name || ""}</div>;
 
-  const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = React.useCallback(
-    evt => {
-      if (evt.key === "ArrowUp" || evt.key === "ArrowDown") {
-        evt.preventDefault();
-      }
-    },
-    []
-  );
+  const onInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = React.useCallback(evt => {
+    if (evt.key === "ArrowUp" || evt.key === "ArrowDown") {
+      evt.preventDefault();
+    }
+  }, []);
 
   const searchInput = props.customerSearchRender ? (
     props.customerSearchRender({
@@ -175,22 +163,11 @@ export const SearchBox: React.FunctionComponent<ISearchBoxProps> = props => {
   );
 
   return (
-    <div
-      onKeyDown={onKeyDown}
-      role="application"
-      style={props.style}
-      className={props.className}
-    >
-      <div
-        className="search-text-input-container"
-        style={props.inputContainerStyle}
-      >
+    <div onKeyDown={onKeyDown} role="application" style={props.style} className={props.className}>
+      <div className="search-text-input-container" style={props.inputContainerStyle}>
         {searchInput}
       </div>
-      <ul
-        style={props.resultContainerStyle}
-        className={`${classes.searchResultContainer} search-result-container`}
-      >
+      <ul style={props.resultContainerStyle} className={`${classes.searchResultContainer} search-result-container`}>
         {state.results.map((result, index) => {
           const onLIClick: React.MouseEventHandler = evt => {
             evt.stopPropagation();

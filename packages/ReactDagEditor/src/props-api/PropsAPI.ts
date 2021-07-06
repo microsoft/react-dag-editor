@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphCanvasEvent, GraphContextMenuEvent, GraphEdgeEvent, GraphNodeEvent } from "../common/GraphEvent.constant";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewPort } from "../contexts/GraphStateContext";
+import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
 import {
   GraphPortState,
@@ -30,7 +30,7 @@ import {
   resetState,
   updateState,
   ZoomDirection,
-  isViewPortComplete,
+  isViewportComplete,
   transformPoint
 } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
@@ -347,7 +347,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
 
   public resetZoom(ensureNodeVisible = false): void {
     this.dispatch({
-      type: GraphCanvasEvent.ResetViewPort,
+      type: GraphCanvasEvent.ResetViewport,
       ensureNodeVisible
     });
   }
@@ -539,11 +539,11 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
    * @deprecated
    */
   public getZoomPanSettings(): IZoomPanSettings {
-    return this.getViewPort();
+    return this.getViewport();
   }
 
-  public getViewPort(): IViewPort {
-    return this.getGraphState().viewPort;
+  public getViewport(): IViewport {
+    return this.getGraphState().viewport;
   }
 
   public getGraphSvgRef(): React.RefObject<SVGSVGElement> {
@@ -564,10 +564,10 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
    * @param y
    */
   public getClientByPoint(x: number, y: number): IPoint {
-    return transformPoint(x, y, this.getViewPort().transformMatrix);
+    return transformPoint(x, y, this.getViewport().transformMatrix);
   }
 
-  public isNodeInViewPort(nodeId: string): boolean {
+  public isNodeInViewport(nodeId: string): boolean {
     const { graphConfig } = this.getInstance();
     if (!graphConfig) {
       return false;
@@ -579,12 +579,12 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
       return false;
     }
 
-    const viewPort = this.getViewPort();
-    if (!isViewPortComplete(viewPort)) {
+    const viewport = this.getViewport();
+    if (!isViewportComplete(viewport)) {
       return false;
     }
 
-    return isNodeVisible(node, viewPort, graphConfig);
+    return isNodeVisible(node, viewport, graphConfig);
   }
 
   public getSelectedItems(): ICanvasData<NodeData, EdgeData, PortData> {
@@ -605,16 +605,16 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
       return [];
     }
 
-    const viewPort = this.getViewPort();
-    if (!isViewPortComplete(viewPort)) {
+    const viewport = this.getViewport();
+    if (!isViewportComplete(viewport)) {
       return [];
     }
 
-    return getVisibleNodes(this.getData().nodes, viewPort, graphConfig);
+    return getVisibleNodes(this.getData().nodes, viewport, graphConfig);
   }
 
   public getRenderedNodes(): ICanvasNode[] {
-    return getRenderedNodes(this.getData().nodes, this.getViewPort());
+    return getRenderedNodes(this.getData().nodes, this.getViewport());
   }
 
   public getRenderedEdges(): ICanvasEdge[] {
@@ -624,7 +624,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     }
     const { edges, nodes } = this.getData();
 
-    return getRenderedEdges(edges, nodes, graphConfig, this.getViewPort());
+    return getRenderedEdges(edges, nodes, graphConfig, this.getViewport());
   }
 
   public setData(data: GraphModel<NodeData, EdgeData, PortData>): void {
@@ -653,20 +653,20 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     return this.getGraphState().activeKeys;
   }
 
-  public isNodeFullVisible(nodeId: string, viewPort?: IViewPort): boolean {
+  public isNodeFullVisible(nodeId: string, viewport?: IViewport): boolean {
     const { data } = this.getGraphState();
-    const _viewPort = viewPort ? viewPort : this.getViewPort();
+    const _viewport = viewport ? viewport : this.getViewport();
     const node = data.present.nodes.get(nodeId);
     const { graphConfig } = this.getInstance();
-    if (!node || !graphConfig || !isViewPortComplete(_viewPort)) {
+    if (!node || !graphConfig || !isViewportComplete(_viewport)) {
       return false;
     }
     const { x, y, width, height } = getNodeRect(node, graphConfig);
     return (
-      isPointVisible({ x, y }, _viewPort) &&
-      isPointVisible({ x: x + width, y }, _viewPort) &&
-      isPointVisible({ x: x + width, y: y + height }, _viewPort) &&
-      isPointVisible({ x, y: y + height }, _viewPort)
+      isPointVisible({ x, y }, _viewport) &&
+      isPointVisible({ x: x + width, y }, _viewport) &&
+      isPointVisible({ x: x + width, y: y + height }, _viewport) &&
+      isPointVisible({ x, y: y + height }, _viewport)
     );
   }
 

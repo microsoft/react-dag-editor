@@ -28,7 +28,7 @@ const rect = {
 const propsAPI = {
   ...mockPropsAPI,
   getEventChannel: () => new EventChannel(),
-  getViewPort() {
+  getViewport() {
     return {
       transformMatrix: [1, 0, 0, 1, 0, 0],
       visibleRect: rect,

@@ -19,7 +19,7 @@ export interface IGraphOneNodePortsProps
 }
 
 export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps> = props => {
-  const { data, node, getPortAriaLabel, eventChannel, viewPort, graphId } = props;
+  const { data, node, getPortAriaLabel, eventChannel, viewport, graphId } = props;
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
   const { theme } = useTheme();
 
@@ -94,9 +94,9 @@ export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps>
                   theme,
                   anotherNode: sourceNode,
                   anotherPort: sourcePort,
-                  zoomPanSettings: viewPort,
-                  containerRect: viewPort.rect,
-                  viewPort,
+                  zoomPanSettings: viewport,
+                  containerRect: viewport.rect,
+                  viewport,
                   ...pos
                 })
               }

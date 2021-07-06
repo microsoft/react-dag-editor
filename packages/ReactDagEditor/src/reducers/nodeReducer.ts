@@ -23,7 +23,7 @@ import {
   getRelativePoint,
   getRenderedNodes,
   isSelected,
-  isViewPortComplete,
+  isViewportComplete,
   pan,
   pushHistory,
   removeState,
@@ -65,26 +65,26 @@ function getSelectedNodes(data: GraphModel, graphConfig: IGraphConfig): IDummyNo
 }
 
 function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGraphReducerContext): IGraphState {
-  if (!isViewPortComplete(state.viewPort)) {
+  if (!isViewportComplete(state.viewport)) {
     return state;
   }
   const e = event.rawEvent as MouseEvent;
-  const { visibleRect, rect } = state.viewPort;
+  const { visibleRect, rect } = state.viewport;
   const nextState = {
     ...state
   };
   const data = state.data.present;
-  const viewPortDx = getDelta(visibleRect.left, visibleRect.right, e.clientX);
-  const viewPortDy = getDelta(visibleRect.top, visibleRect.bottom, e.clientY);
-  const scale = viewPortDx !== 0 || viewPortDy !== 0 ? 0.999 : 1;
-  const viewPort =
-    viewPortDx !== 0 || viewPortDx !== 0
-      ? pipe(pan(-viewPortDx, -viewPortDy), zoom(scale, getRelativePoint(rect, e)))(state.viewPort)
-      : state.viewPort;
+  const viewportDx = getDelta(visibleRect.left, visibleRect.right, e.clientX);
+  const viewportDy = getDelta(visibleRect.top, visibleRect.bottom, e.clientY);
+  const scale = viewportDx !== 0 || viewportDy !== 0 ? 0.999 : 1;
+  const viewport =
+    viewportDx !== 0 || viewportDx !== 0
+      ? pipe(pan(-viewportDx, -viewportDy), zoom(scale, getRelativePoint(rect, e)))(state.viewport)
+      : state.viewport;
   const delta = getPointDeltaByClientDelta(
-    event.dx + viewPortDx * scale,
-    event.dy + viewPortDy * scale,
-    viewPort.transformMatrix
+    event.dx + viewportDx * scale,
+    event.dy + viewportDy * scale,
+    viewport.transformMatrix
   );
   const dummyNodes: IDummyNodes = {
     ...state.dummyNodes,
@@ -93,7 +93,7 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGr
     isVisible: event.isVisible
   };
   if (event.isAutoAlignEnable) {
-    const renderedNodes = getRenderedNodes(data.nodes, state.viewPort);
+    const renderedNodes = getRenderedNodes(data.nodes, state.viewport);
     if (renderedNodes.length < event.autoAlignThreshold) {
       const nodes = dummyNodes.nodes.map(it => ({
         ...it,
@@ -104,7 +104,7 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGr
         nodes,
         renderedNodes,
         context.graphConfig,
-        state.viewPort.transformMatrix[0] > 0.3 ? 2 : 5
+        state.viewport.transformMatrix[0] > 0.3 ? 2 : 5
       );
       if (alignmentLines.length) {
         const dxAligned = getAutoAlignDisplacement(alignmentLines, nodes, context.graphConfig, "x");
@@ -122,7 +122,7 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGr
     }
   }
   nextState.dummyNodes = dummyNodes;
-  nextState.viewPort = viewPort;
+  nextState.viewport = viewport;
   return nextState;
 }
 
@@ -135,12 +135,12 @@ function handleDraggingNewNode(
     return state;
   }
   const data = state.data.present;
-  const renderedNodes = getRenderedNodes(data.nodes, state.viewPort);
+  const renderedNodes = getRenderedNodes(data.nodes, state.viewport);
   const alignmentLines = getAlignmentLines(
     [action.node],
     renderedNodes,
     context.graphConfig,
-    state.viewPort.transformMatrix[0] > 0.3 ? 2 : 5
+    state.viewport.transformMatrix[0] > 0.3 ? 2 : 5
   );
   return {
     ...state,
@@ -218,7 +218,7 @@ function locateNode(
   graphConfig: IGraphConfig
 ): IGraphState {
   const data = state.data.present;
-  if (!isViewPortComplete(state.viewPort) || !action.nodes.length) {
+  if (!isViewportComplete(state.viewport) || !action.nodes.length) {
     return state;
   }
   if (action.nodes.length === 1) {
@@ -232,18 +232,18 @@ function locateNode(
     const nodeX = action.type === GraphNodeEvent.Centralize ? node.x + width / 2 : node.x;
     const nodeY = action.type === GraphNodeEvent.Centralize ? node.y + height / 2 : node.y;
 
-    const { x: clientX, y: clientY } = transformPoint(nodeX, nodeY, state.viewPort.transformMatrix);
+    const { x: clientX, y: clientY } = transformPoint(nodeX, nodeY, state.viewport.transformMatrix);
     const position = action.type === GraphNodeEvent.Locate ? action.position : undefined;
 
     return {
       ...state,
-      viewPort: scrollIntoView(clientX, clientY, state.viewPort.rect, true, position)(state.viewPort)
+      viewport: scrollIntoView(clientX, clientY, state.viewport.rect, true, position)(state.viewport)
     };
   }
   const { minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(data, graphConfig, new Set(action.nodes));
   return {
     ...state,
-    viewPort: focusArea(minNodeX, minNodeY, maxNodeX, maxNodeY, state.viewPort)
+    viewport: focusArea(minNodeX, minNodeY, maxNodeX, maxNodeY, state.viewport)
   };
 }
 

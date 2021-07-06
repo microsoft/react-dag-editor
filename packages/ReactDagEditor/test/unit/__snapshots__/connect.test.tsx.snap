@@ -4,9 +4,9 @@ exports[`test Connecting should add edge 1`] = `undefined`;
 
 exports[`test Connecting should add edge: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Edge]ConnectStart",
   "[Port]PointerEnter",
   "[Edge]ConnectEnd",
@@ -15,9 +15,9 @@ Array [
 
 exports[`test Connecting should attach nearest port by mouse, should not add edge after mouse leave: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Edge]ConnectStart",
   "[Node]PointerEnter",
   "[Node]PointerLeave",
@@ -291,9 +291,9 @@ exports[`test Connecting should attach to port when mouse enter a connectable po
 
 exports[`test Connecting should attach to port when mouse enter a connectable port, should not add edge after mouse leave: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Edge]ConnectStart",
   "[Port]PointerEnter",
   "[Port]PointerLeave",
@@ -305,9 +305,9 @@ Array [
 
 exports[`test Connecting should attach to port: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Edge]ConnectStart",
   "[Port]PointerEnter",
   "[Port]PointerLeave",
@@ -316,9 +316,9 @@ Array [
 
 exports[`test Connecting should not connect: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Edge]ConnectStart",
   "[Edge]ConnectEnd",
 ]
@@ -328,9 +328,9 @@ exports[`test Connecting should render invisible lines 1`] = `undefined`;
 
 exports[`test Connecting should render invisible lines: events 1`] = `
 Array [
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
-  "[Canvas]ViewPortResize",
+  "[Canvas]ViewportResize",
 ]
 `;
 

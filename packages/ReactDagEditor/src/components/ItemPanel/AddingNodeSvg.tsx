@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphCanvasEvent } from "../../common/GraphEvent.constant";
-import { GraphConfigContext, PropsAPIContext, ViewPortContext } from "../../contexts";
+import { GraphConfigContext, PropsAPIContext, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { ICanvasNode } from "../../Graph.interface";
 import { useConst } from "../../hooks/useConst";
@@ -30,14 +30,14 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
   const graphConfig = React.useContext(GraphConfigContext);
   const propsAPI = React.useContext(PropsAPIContext);
   const alignmentLines = React.useContext(AlignmentLinesContext);
-  const viewPort = React.useContext(ViewPortContext);
+  const viewport = React.useContext(ViewportContext);
 
   const dummyNode = React.useMemo(() => {
-    if (!model || !viewPort.rect) {
+    if (!model || !viewport.rect) {
       return null;
     }
-    const { transformMatrix } = viewPort;
-    const { left, top } = viewPort.rect;
+    const { transformMatrix } = viewport;
+    const { left, top } = viewport.rect;
     const diffLeft = left / transformMatrix[0];
     const diffTop = top / transformMatrix[3];
     return {
@@ -46,7 +46,7 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
       y: model.y - diffTop,
       ...getNodeSize(model, graphConfig)
     };
-  }, [graphConfig, viewPort, model]);
+  }, [graphConfig, viewport, model]);
 
   React.useLayoutEffect((): void => {
     if (!dummyNode) {
@@ -89,15 +89,15 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
 
   return (
     <svg id={tempGraphId} ref={svgRef} className={classes.addingNodeSvg} preserveAspectRatio="xMidYMid meet">
-      <Transform matrix={viewPort.transformMatrix}>
+      <Transform matrix={viewport.transformMatrix}>
         {rect && (
           <GraphNode
             graphId={tempGraphId}
             node={node}
-            viewPort={{
+            viewport={{
               rect,
               visibleRect: rect,
-              transformMatrix: viewPort.transformMatrix
+              transformMatrix: viewport.transformMatrix
             }}
             eventChannel={eventChannel}
             getNodeAriaLabel={defaultGetNodeAriaLabel}

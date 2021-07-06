@@ -1,6 +1,6 @@
 import { HashMap, OrderedMap } from "../collections";
 import { IGraphConfig } from "../contexts";
-import { IViewPort } from "../contexts/GraphStateContext";
+import { IViewport } from "../contexts/GraphStateContext";
 import { ICanvasEdge, ICanvasNode } from "../Graph.interface";
 import { EdgeModel } from "../models/EdgeModel";
 import { NodeModel } from "../models/NodeModel";
@@ -8,8 +8,8 @@ import { IPoint, IRectShape, isPointInRect } from "./geometric";
 import { getNodeSize, IShapeRect } from "./layout";
 import { getContainerClientPoint, reverseTransformPoint } from "./transformMatrix";
 
-export const isViewPortComplete = (viewPort: IViewPort): viewPort is Required<IViewPort> => {
-  return !!(viewPort.rect && viewPort.visibleRect);
+export const isViewportComplete = (viewport: IViewport): viewport is Required<IViewport> => {
+  return !!(viewport.rect && viewport.visibleRect);
 };
 
 export const getNodeRect = (node: ICanvasNode, graphConfig: IGraphConfig): IShapeRect => {
@@ -23,37 +23,37 @@ export const getNodeRect = (node: ICanvasNode, graphConfig: IGraphConfig): IShap
   };
 };
 
-export const isNodeVisible = (node: ICanvasNode, viewPort: Required<IViewPort>, graphConfig: IGraphConfig): boolean => {
-  return isRectVisible(getNodeRect(node, graphConfig), viewPort);
+export const isNodeVisible = (node: ICanvasNode, viewport: Required<IViewport>, graphConfig: IGraphConfig): boolean => {
+  return isRectVisible(getNodeRect(node, graphConfig), viewport);
 };
 
-export const isRectVisible = (shapeRect: IShapeRect, viewPort: Required<IViewPort>) => {
+export const isRectVisible = (shapeRect: IShapeRect, viewport: Required<IViewport>) => {
   const { x, y, width, height } = shapeRect;
   return (
-    isPointVisible({ x, y }, viewPort) ||
-    isPointVisible({ x: x + width, y }, viewPort) ||
-    isPointVisible({ x: x + width, y: y + height }, viewPort) ||
-    isPointVisible({ x, y: y + height }, viewPort)
+    isPointVisible({ x, y }, viewport) ||
+    isPointVisible({ x: x + width, y }, viewport) ||
+    isPointVisible({ x: x + width, y: y + height }, viewport) ||
+    isPointVisible({ x, y: y + height }, viewport)
   );
 };
 
-export const isPointVisible = (point: IPoint, viewPort: Required<IViewPort>): boolean => {
-  const { x, y } = getContainerClientPoint(point.x, point.y, viewPort);
+export const isPointVisible = (point: IPoint, viewport: Required<IViewport>): boolean => {
+  const { x, y } = getContainerClientPoint(point.x, point.y, viewport);
 
-  const { height, width } = viewPort.visibleRect;
+  const { height, width } = viewport.visibleRect;
 
   return x > 0 && x < width && y > 0 && y < height;
 };
 
 export const getVisibleNodes = <NodeData, PortData>(
   nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
-  viewPort: Required<IViewPort>,
+  viewport: Required<IViewport>,
   graphConfig: IGraphConfig
 ): ICanvasNode[] => {
   const result: ICanvasNode[] = [];
 
   nodes.forEach(n => {
-    if (isNodeVisible(n, viewPort, graphConfig)) {
+    if (isNodeVisible(n, viewport, graphConfig)) {
       result.push(n.inner);
     }
   });
@@ -64,11 +64,11 @@ export const getVisibleNodes = <NodeData, PortData>(
 // Get rendered nodes count
 export const getRenderedNodes = <NodeData, PortData>(
   nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
-  viewPort: IViewPort
+  viewport: IViewport
 ): ICanvasNode[] => {
   const result: ICanvasNode[] = [];
 
-  const renderedArea = getRenderedArea(viewPort);
+  const renderedArea = getRenderedArea(viewport);
 
   nodes.forEach(n => {
     if (isNodeInRenderedArea(n, renderedArea)) {
@@ -88,10 +88,10 @@ export const getRenderedEdges = (
   edges: HashMap<string, EdgeModel>,
   nodes: OrderedMap<string, NodeModel>,
   graphConfig: IGraphConfig,
-  viewPort: IViewPort
+  viewport: IViewport
 ) => {
   const result: ICanvasEdge[] = [];
-  const renderedArea = getRenderedArea(viewPort);
+  const renderedArea = getRenderedArea(viewport);
 
   edges.forEach(e => {
     const edgeCoordinate = getEdgeSourceTargetCoordinate(e, nodes, graphConfig);
@@ -114,8 +114,8 @@ const isEdgeInRenderedArea = (source: IPoint, target: IPoint, renderedArea: IRec
   return isSourceVisible || isTargetVisible;
 };
 
-export const getVisibleArea = (viewPort: IViewPort): IRectShape => {
-  if (!isViewPortComplete(viewPort)) {
+export const getVisibleArea = (viewport: IViewport): IRectShape => {
+  if (!isViewportComplete(viewport)) {
     return {
       minX: 0,
       minY: 0,
@@ -124,7 +124,7 @@ export const getVisibleArea = (viewPort: IViewPort): IRectShape => {
     };
   }
 
-  const { rect, visibleRect, transformMatrix } = viewPort;
+  const { rect, visibleRect, transformMatrix } = viewport;
   const minX = visibleRect.left - rect.left;
   const minY = visibleRect.top - rect.top;
   const maxX = visibleRect.width + minX; // visibleRect.width + visibleRect.left - rect.left
@@ -140,8 +140,8 @@ export const getVisibleArea = (viewPort: IViewPort): IRectShape => {
   };
 };
 
-export const getRenderedArea = (viewPort: IViewPort): IRectShape => {
-  if (!isViewPortComplete(viewPort)) {
+export const getRenderedArea = (viewport: IViewport): IRectShape => {
+  if (!isViewportComplete(viewport)) {
     return {
       minX: 0,
       minY: 0,
@@ -150,7 +150,7 @@ export const getRenderedArea = (viewPort: IViewPort): IRectShape => {
     };
   }
 
-  const { rect, visibleRect, transformMatrix } = viewPort;
+  const { rect, visibleRect, transformMatrix } = viewport;
   const minX = visibleRect.left - rect.left;
   const minY = visibleRect.top - rect.top;
   const maxX = visibleRect.width + minX; // visibleRect.width + visibleRect.left - rect.left

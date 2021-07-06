@@ -6,13 +6,13 @@ import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { IZoomPanSettings } from "../utils";
-import { IViewPort } from "./GraphStateContext";
+import { IViewport } from "./GraphStateContext";
 import { ITheme } from "./ThemeContext";
 
 export interface IItemConfigArgs<T> {
   model: T;
   theme: ITheme;
-  viewPort: Required<IViewPort>;
+  viewport: Required<IViewport>;
   /**
    * @deprecated
    */
@@ -31,7 +31,7 @@ export interface IRectConfig<T> {
   render(args: IItemConfigArgs<T>): React.ReactNode;
   renderDummy?(rect: T, theme: ITheme): React.ReactNode;
   renderStatic?(
-    args: Omit<IItemConfigArgs<T>, "setData" | "containerRect" | "zoomPanSettings" | "viewPort">
+    args: Omit<IItemConfigArgs<T>, "setData" | "containerRect" | "zoomPanSettings" | "viewport">
   ): React.ReactNode;
   getStyle?(rect: T, theme: ITheme): React.CSSProperties;
   getMinWidth(rect: T): number;

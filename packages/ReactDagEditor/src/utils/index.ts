@@ -12,7 +12,7 @@ export * from "./deepClone";
 export * from "./diffGraphNode";
 export * from "./diffGraphEdge";
 export * from "./diffGraphPort";
-export * from "./viewPort";
+export * from "./viewport";
 export * from "./state";
 export * from "./Writable";
 export * from "./gantt/getCriticalPath";

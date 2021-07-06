@@ -1,7 +1,7 @@
 import { GraphCanvasEvent, GraphMinimapEvent, GraphScrollBarEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
-import { EMPTY_TRANSFORM_MATRIX, IViewPort } from "../contexts/GraphStateContext";
-import { ICanvasResetViewPortEvent, ICanvasZoomToFitEvent, IContainerRect, IEvent } from "../Graph.interface";
+import { EMPTY_TRANSFORM_MATRIX, IViewport } from "../contexts/GraphStateContext";
+import { ICanvasResetViewportEvent, ICanvasZoomToFitEvent, IContainerRect, IEvent } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
 import {
   clamp,
@@ -13,7 +13,7 @@ import {
   IShapePosition,
   IShapeRect,
   isRectVisible,
-  isViewPortComplete,
+  isViewportComplete,
   minimapPan,
   pan,
   scrollIntoView,
@@ -34,19 +34,19 @@ function getRectCenter(rect: IContainerRect | undefined): IPoint | undefined {
   };
 }
 
-function resetViewPort(
-  viewPort: IViewPort,
+function resetViewport(
+  viewport: IViewport,
   data: GraphModel,
   graphConfig: IGraphConfig,
-  action: ICanvasResetViewPortEvent
-): IViewPort {
-  if (!isViewPortComplete(viewPort)) {
-    return viewPort;
+  action: ICanvasResetViewportEvent
+): IViewport {
+  if (!isViewportComplete(viewport)) {
+    return viewport;
   }
 
   if (!action.ensureNodeVisible) {
     return {
-      ...viewPort,
+      ...viewport,
       transformMatrix: EMPTY_TRANSFORM_MATRIX
     };
   }
@@ -55,30 +55,30 @@ function resetViewPort(
 
   if (nodes.size === 0) {
     return {
-      ...viewPort,
+      ...viewport,
       transformMatrix: EMPTY_TRANSFORM_MATRIX
     };
   }
 
-  const isShapeRectInViewPort = (r: IShapeRect) => {
-    return isRectVisible(r, viewPort);
+  const isShapeRectInViewport = (r: IShapeRect) => {
+    return isRectVisible(r, viewport);
   };
 
   const nodeRects = nodes.map(n => getNodeRect(n, graphConfig));
-  const hasVisibleNode = nodeRects.find(isShapeRectInViewPort);
+  const hasVisibleNode = nodeRects.find(isShapeRectInViewport);
 
   if (hasVisibleNode) {
     return {
-      ...viewPort,
+      ...viewport,
       transformMatrix: EMPTY_TRANSFORM_MATRIX
     };
   }
 
   const groupRects = groups.map(g => getGroupRect(g, nodes, graphConfig));
-  const hasVisibleGroup = groupRects.find(isShapeRectInViewPort);
+  const hasVisibleGroup = groupRects.find(isShapeRectInViewport);
   if (hasVisibleGroup) {
     return {
-      ...viewPort,
+      ...viewport,
       transformMatrix: EMPTY_TRANSFORM_MATRIX
     };
   }
@@ -93,20 +93,20 @@ function resetViewPort(
   groupRects.forEach(findTopMostRect);
 
   return {
-    ...viewPort,
+    ...viewport,
     transformMatrix: [1, 0, 0, 1, -focusNode.x, -focusNode.y]
   };
 }
 
 function zoomToFit(
-  viewPort: IViewPort,
+  viewport: IViewport,
   data: GraphModel,
   graphConfig: IGraphConfig,
   action: ICanvasZoomToFitEvent
-): IViewPort {
-  const { rect } = viewPort;
+): IViewport {
+  const { rect } = viewport;
   if (!rect) {
-    return viewPort;
+    return viewport;
   }
   const transformMatrix = getZoomFitMatrix({
     ...action,
@@ -115,29 +115,29 @@ function zoomToFit(
     rect
   });
   return {
-    ...viewPort,
+    ...viewport,
     transformMatrix
   };
 }
 
-const reducer = (viewPort: IViewPort, action: IEvent, context: IGraphReducerContext, data: GraphModel): IViewPort => {
+const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerContext, data: GraphModel): IViewport => {
   switch (action.type) {
-    case GraphCanvasEvent.ViewPortResize:
+    case GraphCanvasEvent.ViewportResize:
       return {
-        ...viewPort,
-        rect: action.viewPortRect,
+        ...viewport,
+        rect: action.viewportRect,
         visibleRect: action.visibleRect
       };
     case GraphCanvasEvent.Zoom:
-      return zoom(action.scale, action.anchor ?? getRectCenter(viewPort.rect), undefined, action.direction)(viewPort);
+      return zoom(action.scale, action.anchor ?? getRectCenter(viewport.rect), undefined, action.direction)(viewport);
     case GraphScrollBarEvent.Scroll:
     case GraphCanvasEvent.MouseWheelScroll:
     case GraphCanvasEvent.Pan:
     case GraphCanvasEvent.Drag: {
-      if (!isViewPortComplete(viewPort)) {
-        return viewPort;
+      if (!isViewportComplete(viewport)) {
+        return viewport;
       }
-      const { transformMatrix, rect } = viewPort;
+      const { transformMatrix, rect } = viewport;
       let { dx, dy } = action;
       const { limitBoundary, groupPadding, canvasBoundaryPadding } = action;
       if (limitBoundary) {
@@ -152,37 +152,37 @@ const reducer = (viewPort: IViewPort, action: IEvent, context: IGraphReducerCont
         dx = clamp(minX - transformMatrix[4], maxX - transformMatrix[4], dx);
         dy = clamp(minY - transformMatrix[5], maxY - transformMatrix[5], dy);
       }
-      return pan(dx, dy)(viewPort);
+      return pan(dx, dy)(viewport);
     }
     case GraphCanvasEvent.Pinch: {
       const { dx, dy, scale, anchor } = action;
-      return pipe(pan(dx, dy), zoom(scale, anchor))(viewPort);
+      return pipe(pan(dx, dy), zoom(scale, anchor))(viewport);
     }
     case GraphMinimapEvent.Pan:
-      return minimapPan(action.dx, action.dy)(viewPort);
-    case GraphCanvasEvent.ResetViewPort:
-      return resetViewPort(viewPort, data, context.graphConfig, action);
+      return minimapPan(action.dx, action.dy)(viewport);
+    case GraphCanvasEvent.ResetViewport:
+      return resetViewport(viewport, data, context.graphConfig, action);
     case GraphCanvasEvent.ZoomTo:
-      return zoomTo(action.scale, action.anchor ?? getRectCenter(viewPort.rect), action.direction)(viewPort);
+      return zoomTo(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
     case GraphCanvasEvent.ZoomToFit:
-      return zoomToFit(viewPort, data, context.graphConfig, action);
+      return zoomToFit(viewport, data, context.graphConfig, action);
     case GraphCanvasEvent.ScrollIntoView:
-      if (viewPort.rect) {
-        const { x, y } = transformPoint(action.x, action.y, viewPort.transformMatrix);
-        return scrollIntoView(x, y, viewPort.rect, true)(viewPort);
+      if (viewport.rect) {
+        const { x, y } = transformPoint(action.x, action.y, viewport.transformMatrix);
+        return scrollIntoView(x, y, viewport.rect, true)(viewport);
       }
-      return viewPort;
+      return viewport;
     default:
-      return viewPort;
+      return viewport;
   }
 };
 
-export const viewPortReducer: IBuiltinReducer = (state, action, context) => {
-  const viewPort = reducer(state.viewPort, action, context, state.data.present);
-  return viewPort === state.viewPort
+export const viewportReducer: IBuiltinReducer = (state, action, context) => {
+  const viewport = reducer(state.viewport, action, context, state.data.present);
+  return viewport === state.viewport
     ? state
     : {
         ...state,
-        viewPort
+        viewport
       };
 };

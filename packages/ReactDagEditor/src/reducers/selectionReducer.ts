@@ -49,7 +49,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
         }
       };
     case GraphCanvasEvent.SelectStart: {
-      const point = getRelativePoint(state.viewPort.rect, action.rawEvent);
+      const point = getRelativePoint(state.viewport.rect, action.rawEvent);
       if (!point) {
         return state;
       }
@@ -78,7 +78,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
           width: state.selectBoxPosition.width + action.dx,
           height: !isLassoSelectEnable
             ? state.selectBoxPosition.height + action.dy
-            : state.viewPort.rect?.height ?? state.selectBoxPosition.height
+            : state.viewport.rect?.height ?? state.selectBoxPosition.height
         }
       };
     case GraphCanvasEvent.SelectEnd:
@@ -89,7 +89,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
           ...state.data,
           present: selectNodeBySelectBox(
             context.graphConfig,
-            state.viewPort.transformMatrix,
+            state.viewport.transformMatrix,
             state.selectBoxPosition,
             data
           )
@@ -105,7 +105,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
           ...state.data,
           present: selectNodeBySelectBox(
             context.graphConfig,
-            state.viewPort.transformMatrix,
+            state.viewport.transformMatrix,
             state.selectBoxPosition,
             data
           )

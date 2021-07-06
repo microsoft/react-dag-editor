@@ -12,7 +12,7 @@
     "start": "node ./scripts/run-demo.js",
     "updatePackageJson": "node ./scripts/edit-package-json.js",
     "run-demo": "node ./scripts/run-demo.js",
-    "publish-pages": "gh-pages -d ./packages/ReactDagEditor/.static-demo",
+    "build-demo": "lerna run build:demo",
     "new": "node ./scripts/new-package.js",
     "bump": "node ./scripts/bump-version.js"
   },
@@ -26,8 +26,7 @@
     "prompts": "^2.4.1",
     "semver": "^7.3.5",
     "yeoman-environment": "^3.2.0",
-    "yo": "^3.1.1",
-    "gh-pages": "^3.2.3"
+    "yo": "^3.1.1"
   },
   "workspaces": [
     "packages/*",

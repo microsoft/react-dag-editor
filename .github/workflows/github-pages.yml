@@ -5,26 +5,31 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy:
-    runs-on: ubuntu-18.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '14.x'
-    - name: yarn install
-      run: yarn --frozen-lockfile
-    - name: lint
-      run: yarn lint
-    - name: build
-      run: yarn build
-    - name: test
-      run: yarn test
-    - name: build pages
-      run: yarn build-pages
-    - name: publish pages
-      if: github.ref == 'refs/heads/main'
-      run: yarn publish-pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      uses: peaceiris/actions-gh-pages@v3
+      - uses: actions/checkout@v2
+
+      - name: Yarn install
+        run: yarn --frozen-lockfile
+
+      - name: Yarn lint
+        run: yarn lint
+
+      - name: Yarn build
+        run: yarn build
+
+      - name: Test
+        run: yarn test
+
+      - name: Build demo
+        run: yarn build-demo
+
+      - name: Release pages
+        if: github.ref == 'refs/heads/main'
+        uses: crazy-max/ghaction-github-pages@v2.5.0
+        with:
+          build_dir: ./packages/ReactDagEditor/.static-demo
+          commit_message: Update pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,8 +1,8 @@
-import { GraphCanvasEvent, GraphNodeEvent } from "../common/GraphEvent.constant";
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
-import { GraphBehavior, IGraphState } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
-import { GraphPortState, ICanvasNavigateEvent } from "../Graph.interface";
+import { GraphCanvasEvent, GraphNodeEvent, ICanvasNavigateEvent } from "../models/event";
+import { GraphPortState } from "../models/element-state";
+import { GraphBehavior, IGraphState } from "../models/state";
 import { addState, getRelativePoint, nodeSelection, unSelectAllEntity, updateState } from "../utils";
 import { selectNodeBySelectBox } from "../utils/updateNodeBySelectBox";
 import { IBuiltinReducer } from "./builtinReducer.type";

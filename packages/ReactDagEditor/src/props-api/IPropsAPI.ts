@@ -1,17 +1,16 @@
 import * as React from "react";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
-import {
-  GraphPortState,
-  ICanvasData,
-  ICanvasEdge,
-  ICanvasNode,
-  ICanvasPort,
-  IContainerRect,
-  IEvent
-} from "../Graph.interface";
+import { IDispatchCallback} from "../contexts/GraphStateContext";
+import { IEvent } from "../models/event";
+import { ICanvasData } from "../models/canvas";
+import { ICanvasEdge } from "../models/edge";
+import { IContainerRect, IPoint, IViewport, Direction } from "../models/geometry";
+import { ICanvasNode } from "../models/node";
+import { ICanvasPort } from "../models/port";
+import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
-import { IPoint, IZoomFixPublicOption, IZoomPanSettings, ZoomDirection } from "../utils";
+import { GraphBehavior, IGraphState } from "../models/state";
+import { IZoomFixPublicOption, IZoomPanSettings} from "../utils";
 
 import { IAutoLayout } from "../libs";
 import { GraphFeatures } from "../Features";
@@ -220,7 +219,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    * @param scale zoom by multiple [scale]
    * @param direction X: zoom horizontal, Y: zoom vertical
    */
-  zoom(scale: number, direction?: ZoomDirection): void;
+  zoom(scale: number, direction?: Direction): void;
   /**
    * reset zoom
    *
@@ -234,7 +233,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    * @param anchor zoom anchor
    * @param direction X: zoom horizontal, Y: zoom vertical
    */
-  zoomTo(scale: number, anchor?: IPoint | undefined, direction?: ZoomDirection): void;
+  zoomTo(scale: number, anchor?: IPoint | undefined, direction?: Direction): void;
   /**
    * Set zoom to fit the container or the given size.
    *

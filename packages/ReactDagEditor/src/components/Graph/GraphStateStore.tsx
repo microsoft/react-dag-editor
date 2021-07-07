@@ -1,19 +1,16 @@
 /* eslint-disable import/no-deprecated */
 import * as React from "react";
-import { GraphCanvasEvent } from "../../common/GraphEvent.constant";
 import { ConnectingState } from "../../ConnectingState";
 import {
   EMPTY_TRANSFORM_MATRIX,
   GraphConfigContext,
   IGraphReducer,
   IGraphReducerContext,
-  ITransformMatrix,
   ViewportContext
 } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { AutoZoomFitContext } from "../../contexts/AutoZoomFitContext";
 import {
-  GraphBehavior,
   GraphStateContext,
   GraphValueContext,
   IDispatch,
@@ -22,7 +19,10 @@ import {
 import { GraphFeatures } from "../../Features";
 
 import { usePropsAPI } from "../../hooks/usePropsAPI";
+import { GraphCanvasEvent } from "../../models/event";
+import { ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
+import { GraphBehavior } from "../../models/state";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { useGraphReducer } from "../../reducers/useGraphReducer";
 import { isViewportComplete, resetUndoStack } from "../../utils";

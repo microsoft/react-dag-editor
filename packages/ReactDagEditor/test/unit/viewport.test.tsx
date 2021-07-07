@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
-import { GraphModel, IPropsAPI, ITransformMatrix, IViewport, ZoomDirection } from "../../src";
+import { GraphModel, IPropsAPI} from "../../src";
 import { Transform } from "../../src/components/Transform";
 import { getRenderedEdges, getRenderedNodes } from "../../src/utils/viewport";
 import { TestComponent } from "../TestComponent";

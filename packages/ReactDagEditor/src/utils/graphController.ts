@@ -1,7 +1,7 @@
-import { GraphBehavior } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
+import { IPoint } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
-import { IPoint } from "./geometric";
+import { GraphBehavior } from "../models/state";
 
 /**
  * event handlers must get/set GraphBehavior immediately

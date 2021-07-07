@@ -1,20 +1,16 @@
 import type * as React from "react";
 import { HashMapBuilder } from "../collections";
 import { MouseEventButton } from "../common/constants";
-import { IGetConnectableParams, IGraphConfig, IViewport } from "../contexts";
-import {
-  GraphEdgeState,
-  GraphNodeState,
-  GraphPortState,
-  ICanvasData,
-  ICanvasEdge,
-  ICanvasNode,
-  ICanvasPort
-} from "../Graph.interface";
+import { IGetConnectableParams, IGraphConfig} from "../contexts";
+import { ICanvasData } from "../models/canvas";
+import { ICanvasEdge } from "../models/edge";
+import { IPoint, IViewport } from "../models/geometry";
+import { ICanvasNode } from "../models/node";
+import { ICanvasPort } from "../models/port";
+import { GraphEdgeState, GraphNodeState, GraphPortState } from "../models/element-state";
 import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
-import { IPoint } from "./geometric";
 import { getNodeConfig } from "./getNodeConfig";
 import { getPortPosition, getPortPositionByPortId } from "./getPortPosition";
 import { identical } from "./identical";

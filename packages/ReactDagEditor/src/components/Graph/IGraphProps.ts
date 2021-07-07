@@ -1,9 +1,14 @@
 import * as React from "react";
 import { TGetPositionFromEvent } from "../../controllers";
 import { GraphFeatures } from "../../Features";
-import { CanvasMouseMode, ICanvasEdge, ICanvasNode, ICanvasPort, IEvent, IGap } from "../../Graph.interface";
+import { IEvent } from "../../models/event";
+import { ICanvasEdge } from "../../models/edge";
+import { IGap } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
+import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
+import { ICanvasPort } from "../../models/port";
+import { CanvasMouseMode } from "../../models/state";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 
 export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = unknown> {

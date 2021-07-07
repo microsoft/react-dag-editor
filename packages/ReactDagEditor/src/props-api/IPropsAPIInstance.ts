@@ -1,8 +1,9 @@
 import * as React from "react";
-import { IContainerRect } from "../Graph.interface";
+import { IContainerRect } from "../models/geometry";
+import { IGraphState } from "../models/state";
 import { EventChannel } from "../utils/eventChannel";
 import { IGraphConfig, IPanelContext } from "../contexts";
-import { EMPTY_GRAPH_STATE, IGraphState, IDispatch } from "../contexts/GraphStateContext";
+import { EMPTY_GRAPH_STATE, IDispatch } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
 import { GraphModel } from "../models/GraphModel";
 import { noop } from "../utils/noop";

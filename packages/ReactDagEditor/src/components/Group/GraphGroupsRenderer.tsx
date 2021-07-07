@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ICanvasGroup } from "../../Graph.interface";
+import { ICanvasGroup } from "../../models/canvas";
 import { GraphModel } from "../../models/GraphModel";
 import { Group } from "./Group";
 

@@ -1,5 +1,6 @@
-import { ICanvasEdge, ICanvasNode } from "../../Graph.interface";
 import { ICanvasData } from "../../index";
+import { ICanvasEdge } from "../../models/edge";
+import { ICanvasNode } from "../../models/node";
 import { criticalPath, Task } from "./cpm";
 import { getTopoSortingNodes } from "./getTopoSortingNodes";
 

@@ -1,6 +1,6 @@
 import { COPIED_NODE_SPACING } from "../common/constants";
-import { GraphCanvasEvent } from "../common/GraphEvent.constant";
-import { GraphNodeState } from "../Graph.interface";
+import { GraphNodeState } from "../models/element-state";
+import { GraphCanvasEvent } from "../models/event";
 import {
   getRealPointFromClientPoint,
   isViewportComplete,

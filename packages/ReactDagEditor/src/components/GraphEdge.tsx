@@ -1,13 +1,14 @@
 import * as React from "react";
-import { GraphEdgeEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { VirtualizationContext } from "../contexts/VirtualizationContext";
 import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
-import { GraphEdgeState, IEdgeCommonEvent } from "../Graph.interface";
+import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
+import { IPoint, IRectShape } from "../models/geometry";
+import { GraphEdgeState } from "../models/element-state";
 import { useTheme } from "../hooks";
 import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
-import { getEdgeUid, getLinearFunction, hasState, IPoint, IRectShape, isPointInRect } from "../utils";
+import { getEdgeUid, getLinearFunction, hasState, isPointInRect } from "../utils";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
 

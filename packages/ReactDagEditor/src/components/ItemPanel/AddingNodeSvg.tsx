@@ -1,10 +1,10 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
-import { GraphCanvasEvent } from "../../common/GraphEvent.constant";
 import { GraphConfigContext, PropsAPIContext, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
-import { ICanvasNode } from "../../Graph.interface";
 import { useConst } from "../../hooks/useConst";
+import { GraphCanvasEvent } from "../../models/event";
+import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
 import { getNodeSize } from "../../utils";
 import { defaultGetNodeAriaLabel } from "../../utils/a11yUtils";

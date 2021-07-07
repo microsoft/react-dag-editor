@@ -1,24 +1,13 @@
 import * as React from "react";
 import { IGraphConfig } from "../contexts";
-import { ITransformMatrix, IViewport } from "../contexts/GraphStateContext";
-import { IContainerRect } from "../Graph.interface";
+import { IContainerRect, IPoint, ITransformMatrix, IViewport, Direction } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
-import { IPoint } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize } from "./layout";
 import { getVisibleNodes } from "./viewport";
 
 export type TTransformMatrix = ITransformMatrix;
-
-export enum ZoomDirection {
-  X,
-  Y,
-  /**
-   * zoom to fit in the X and Y directions, maybe the scaleX and the scaleY will different
-   */
-  XY
-}
 
 export interface IZoomFixPublicOption {
   /**
@@ -28,7 +17,7 @@ export interface IZoomFixPublicOption {
   /**
    * zoom vertical
    */
-  direction?: ZoomDirection;
+  direction?: Direction;
   /**
    * margin of the graph in the canvas, default is 60px
    */
@@ -63,7 +52,7 @@ type Action = (zoomPanSettings: IViewport) => IViewport;
  *
  * @returns GraphAction the GraphAction for zooming
  */
-export const zoomTo = (scale: number, anchor: IPoint | undefined, direction?: ZoomDirection): Action => {
+export const zoomTo = (scale: number, anchor: IPoint | undefined, direction?: Direction): Action => {
   // istanbul ignore next
   if (!anchor) {
     return identical;
@@ -77,7 +66,7 @@ export const zoomTo = (scale: number, anchor: IPoint | undefined, direction?: Zo
     const dy = y * (1 - scaleY);
 
     const transformMatrix: TTransformMatrix =
-      direction === ZoomDirection.X
+      direction === Direction.X
         ? [
             scale,
             0,
@@ -86,7 +75,7 @@ export const zoomTo = (scale: number, anchor: IPoint | undefined, direction?: Zo
             prevState.transformMatrix[4] * scaleX + dx,
             prevState.transformMatrix[5]
           ]
-        : direction === ZoomDirection.Y
+        : direction === Direction.Y
         ? [
             prevState.transformMatrix[0],
             0,
@@ -110,7 +99,7 @@ export const zoom = (
   scale: number,
   anchor: IPoint | undefined,
   sideEffect?: TZoomSideEffect,
-  direction?: ZoomDirection
+  direction?: Direction
 ): Action => {
   if (scale === 1 || !anchor) {
     return identical;
@@ -122,7 +111,7 @@ export const zoom = (
 
   return prevState => {
     const transformMatrix: TTransformMatrix =
-      direction === ZoomDirection.X
+      direction === Direction.X
         ? [
             prevState.transformMatrix[0] * scale,
             prevState.transformMatrix[1],
@@ -131,7 +120,7 @@ export const zoom = (
             prevState.transformMatrix[4] * scale + dx,
             prevState.transformMatrix[5]
           ]
-        : direction === ZoomDirection.Y
+        : direction === Direction.Y
         ? [
             prevState.transformMatrix[0],
             prevState.transformMatrix[1],
@@ -316,12 +305,12 @@ export const getZoomFitMatrix = (args: IZoomFixMatrix): TTransformMatrix => {
   const scaleY = height / (maxNodeY - minNodeY + marginGraph * 2);
 
   const scaleCommon =
-    direction === ZoomDirection.Y
+    direction === Direction.Y
       ? Math.min(Math.max(minScaleX, minScaleY, scaleY), maxScaleX, maxScaleY)
       : Math.min(Math.max(minScaleX, minScaleY, Math.min(scaleX, scaleY)), maxScaleY, maxScaleY);
 
-  const newScaleX = direction === ZoomDirection.XY ? Math.min(Math.max(minScaleX, scaleX), maxScaleX) : scaleCommon;
-  const newScaleY = direction === ZoomDirection.XY ? Math.min(Math.max(minScaleY, scaleY), maxScaleY) : scaleCommon;
+  const newScaleX = direction === Direction.XY ? Math.min(Math.max(minScaleX, scaleX), maxScaleX) : scaleCommon;
+  const newScaleY = direction === Direction.XY ? Math.min(Math.max(minScaleY, scaleY), maxScaleY) : scaleCommon;
 
   if (disablePan) {
     return [newScaleX, 0, 0, newScaleY, 0, 0];

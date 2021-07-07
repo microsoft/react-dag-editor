@@ -1,11 +1,13 @@
 import { IGraphConfig } from "../contexts";
-import { GraphNodeState, ICanvasNode, ICanvasPort } from "../Graph.interface";
 import { mapCow } from "../utils/array";
 import { $Complete } from "../utils/complete";
-import { IPoint } from "../utils/geometric";
 import { getPortPositionByPortId } from "../utils/getPortPosition";
 import { preventSpread } from "../utils/preventSpread";
 import { updateState } from "../utils/state";
+import { IPoint } from "./geometry";
+import { ICanvasNode } from "./node";
+import { ICanvasPort } from "./port";
+import { GraphNodeState } from "./element-state";
 
 export class NodeModel<NodeData = unknown, PortData = unknown>
   implements $Complete<ICanvasNode<NodeData, PortData>> {

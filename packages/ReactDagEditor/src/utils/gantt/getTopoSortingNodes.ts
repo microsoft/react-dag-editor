@@ -1,5 +1,6 @@
 import * as toposort from "toposort";
-import { ICanvasData, ICanvasNode } from "../../Graph.interface";
+import { ICanvasData } from "../../models/canvas";
+import { ICanvasNode } from "../../models/node";
 
 export const getTopoSortingNodes = (canvasData: ICanvasData): ICanvasNode[] => {
   const { edges, nodes } = canvasData;

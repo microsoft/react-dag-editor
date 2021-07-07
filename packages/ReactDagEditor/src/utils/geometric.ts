@@ -1,14 +1,4 @@
-export interface IRectShape {
-  minX: number;
-  minY: number;
-  maxX: number;
-  maxY: number;
-}
-
-export interface IPoint {
-  x: number;
-  y: number;
-}
+import { IPoint, IRectShape } from "../models/geometry";
 
 export const checkRectIntersect = (rectA: IRectShape, rectB: IRectShape): boolean => {
   const isALeftOfB = rectA.maxX < rectB.minX;

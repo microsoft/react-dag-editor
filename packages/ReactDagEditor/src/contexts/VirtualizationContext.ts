@@ -1,7 +1,6 @@
 import { createContext } from "react";
-import { IContainerRect } from "../Graph.interface";
-import { IRectShape } from "../utils";
-import { EMPTY_TRANSFORM_MATRIX, IViewport } from "./GraphStateContext";
+import { IContainerRect, IRectShape, IViewport } from "../models/geometry";
+import { EMPTY_TRANSFORM_MATRIX} from "./GraphStateContext";
 
 export interface IVirtualizationContext {
   viewport: Required<IViewport>;

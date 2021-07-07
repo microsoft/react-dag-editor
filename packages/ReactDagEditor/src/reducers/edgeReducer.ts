@@ -1,6 +1,6 @@
-import { GraphEdgeEvent } from "../common/GraphEvent.constant";
 import { GraphFeatures } from "../Features";
-import { GraphEdgeState } from "../Graph.interface";
+import { GraphEdgeState } from "../models/element-state";
+import { GraphEdgeEvent } from "../models/event";
 import { addState, pushHistory, removeState, resetState, unSelectAllEntity, updateState } from "../utils";
 import { graphController } from "../utils/graphController";
 import { IBuiltinReducer } from "./builtinReducer.type";

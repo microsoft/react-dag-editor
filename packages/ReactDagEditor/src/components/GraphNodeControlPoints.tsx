@@ -1,9 +1,9 @@
 import * as React from "react";
-import { GraphNodeEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig, ITheme } from "../contexts";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { useTheme } from "../hooks";
+import { GraphNodeEvent } from "../models/event";
 import { INodeGeometryDelta } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { getNodeConfig, getRectHeight, getRectWidth } from "../utils";

@@ -1,4 +1,6 @@
-import { ICanvasData, ICanvasNode, ICanvasPort } from "../Graph.interface";
+import { ICanvasData } from "../models/canvas";
+import { ICanvasNode } from "../models/node";
+import { ICanvasPort } from "../models/port";
 
 export interface IDiffPort {
   node: ICanvasNode;

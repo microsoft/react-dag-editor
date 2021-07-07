@@ -1,6 +1,8 @@
 import * as React from "react";
 import { IPortConfig, IPortDrawArgs, ITheme } from "../contexts";
-import { GraphPortState, ICanvasNode, ICanvasPort } from "../Graph.interface";
+import { ICanvasNode } from "../models/node";
+import { ICanvasPort } from "../models/port";
+import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { hasState } from "../utils";
 

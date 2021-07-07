@@ -1,6 +1,6 @@
 import { getNodeSize, IGraphConfig } from "../../src";
-import { IDummyNode } from "../../src/components/dummyNodes";
 import { ILine } from "../../src/components/Line";
+import { IDummyNode } from "../../src/models/dummy-node";
 import { getAlignmentLines, getAutoAlignDisplacement } from "../../src/utils/autoAlign";
 import { getGraphConfig } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";

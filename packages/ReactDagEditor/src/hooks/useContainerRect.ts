@@ -1,6 +1,6 @@
 import { MutableRefObject, RefObject, useCallback, useEffect, useLayoutEffect } from "react";
-import { GraphCanvasEvent } from "../common/GraphEvent.constant";
-import { IContainerRect } from "../Graph.interface";
+import { GraphCanvasEvent } from "../models/event";
+import { IContainerRect } from "../models/geometry";
 import { debounce } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { nextFrame } from "../utils/nextFrame";

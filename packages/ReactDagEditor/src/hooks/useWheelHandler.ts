@@ -1,7 +1,7 @@
 import { RefObject, useLayoutEffect } from "react";
-import { GraphCanvasEvent } from "../common/GraphEvent.constant";
 import { IDispatch, IGraphConfig } from "../contexts";
-import { IContainerRect, IGap } from "../Graph.interface";
+import { GraphCanvasEvent } from "../models/event";
+import { IContainerRect, IGap } from "../models/geometry";
 import { IPropsAPI } from "../props-api/IPropsAPI";
 import { getNodeSize, getRelativePoint } from "../utils";
 import { EventChannel } from "../utils/eventChannel";

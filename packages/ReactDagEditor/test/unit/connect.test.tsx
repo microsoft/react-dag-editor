@@ -16,9 +16,7 @@ import {
   ICanvasData,
   ICanvasNode,
   ICanvasPort,
-  IConnectingState,
   IGraphProps,
-  IGraphState,
   NodeModel
 } from "../../src";
 import { PropsAPI } from "../../src/props-api/PropsAPI";

@@ -5,7 +5,7 @@ import {
   GraphEdgeEvent,
   GraphNodeEvent,
   GraphPortEvent
-} from "../common/GraphEvent.constant";
+} from "../models/event";
 import { IBuiltinReducer } from "./builtinReducer.type";
 
 export const contextMenuReducer: IBuiltinReducer = (prevState, action) => {

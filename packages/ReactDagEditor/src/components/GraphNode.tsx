@@ -1,10 +1,9 @@
 /* eslint-disable react/jsx-no-bind */
 import * as React from "react";
-import { GraphNodeEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
-import { IViewport } from "../contexts/GraphStateContext";
-import { INodeCommonEvent, INodeContextMenuEvent } from "../Graph.interface";
 import { useTheme } from "../hooks";
+import { GraphNodeEvent, INodeCommonEvent, INodeContextMenuEvent } from "../models/event";
+import { IViewport } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { getNodeAutomationId, getNodeConfig, getNodeUid } from "../utils";
 import { Debug } from "../utils/debug";

@@ -1,4 +1,4 @@
-import { GraphModel, IGraphConfig, IPoint, NodeModel } from "../../src";
+import { GraphModel, IGraphConfig, NodeModel } from "../../src";
 import { getNodeAndPortByPosition, getNodeConfig, getPortPosition } from "../../src/utils";
 import { getGraphConfig } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";

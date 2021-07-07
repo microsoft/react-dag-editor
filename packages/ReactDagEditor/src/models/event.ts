@@ -1,147 +1,170 @@
 import * as React from "react";
-import {
-  GraphCanvasEvent,
-  GraphContextMenuEvent,
-  GraphEdgeEvent,
-  GraphMinimapEvent,
-  GraphNodeEvent,
-  GraphPortEvent,
-  GraphScrollBarEvent
-} from "./common/GraphEvent.constant";
-import { IDummyNode } from "./components/dummyNodes";
-import { EdgeModel } from "./models/EdgeModel";
-import { GraphModel } from "./models/GraphModel";
-import { NodeModel } from "./models/NodeModel";
-import { IPoint, IZoomFixPublicOption, ZoomDirection } from "./utils";
-
-export interface ICanvasNode<T = unknown, P = unknown> {
-  readonly shape?: string;
-  readonly x: number;
-  readonly y: number;
-  readonly name?: string;
-  readonly id: string;
-  readonly state?: GraphNodeState;
-  readonly height?: number;
-  readonly width?: number;
-  readonly automationId?: string;
-  readonly isInSearchResults?: boolean;
-  readonly isCurrentSearchResult?: boolean;
-  readonly ports?: ReadonlyArray<ICanvasPort<P>>;
-  readonly ariaLabel?: string;
-  readonly data?: Readonly<T>;
-}
-
-export interface ICanvasGroup {
-  id: string;
-  name: string;
-  nodeIds: string[];
-  padding?: IGap;
-  fill?: string;
-  stroke?: string;
-  shape?: string;
-}
-
-export const SELECTED = 0b0001;
-
-// prettier-ignore
-export enum GraphEdgeState {
-  default = 0b00000000,
-  selected = SELECTED,
-  activated = 0b00000010,
-  connectedToSelected = 0b00000100,
-  unconnectedToSelected = 0b00001000,
-  editing = 0b00010000
-}
-
-export enum CanvasMouseMode {
-  pan = "pan",
-  select = "select"
-}
-
-export interface ICanvasEdge<T = unknown> {
-  readonly shape?: string;
-  /**
-   * source node id
-   */
-  readonly source: string;
-  /**
-   * target node id
-   */
-  readonly target: string;
-  readonly sourcePortId: string;
-  readonly targetPortId: string;
-  readonly id: string;
-  readonly state?: GraphEdgeState;
-  readonly data?: Readonly<T>;
-  readonly automationId?: string;
-}
-
-export interface ICanvasPort<T = unknown> {
-  readonly id: string;
-  readonly name: string;
-  readonly shape?: string;
-  /**
-   * relative position to node
-   */
-  readonly position: readonly [number, number];
-  readonly state?: GraphPortState;
-  readonly isInputDisabled?: boolean;
-  readonly isOutputDisabled?: boolean;
-  readonly ariaLabel?: string;
-  readonly data?: Readonly<T>;
-  readonly automationId?: string;
-}
-
-export type ICanvasPortInit<T = unknown> = Omit<ICanvasPort<T>, "position"> & Partial<Pick<ICanvasPort<T>, "position">>;
-
-// prettier-ignore
-export enum GraphNodeState {
-  default = 0b00000000,
-  selected = SELECTED,
-  activated = 0b00000010,
-  editing = 0b00000100,
-  connectedToSelected = 0b00001000,
-  unconnectedToSelected = 0b00010000,
-}
-
-export enum GraphNodeStateConst {
-  default = "default",
-  selected = "selected",
-  activated = "activated",
-  editing = "editing",
-  connectedToSelected = "connectedToSelected",
-  unconnectedToSelected = "unconnectedToSelected"
-}
-
-// prettier-ignore
-export enum GraphPortState {
-  default = 0b0000,
-  selected = SELECTED,
-  activated = 0b0010,
-  connecting = 0b0100,
-  connectingAsTarget = 0b1000
-}
-
-export interface ICanvasData<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
-  readonly nodes: ReadonlyArray<ICanvasNode<NodeData, PortData>>;
-  readonly edges: ReadonlyArray<ICanvasEdge<EdgeData>>;
-  readonly groups?: ICanvasGroup[];
-}
-
-export interface IGap {
-  readonly top?: number;
-  readonly bottom?: number;
-  readonly left?: number;
-  readonly right?: number;
-}
+import { IZoomFixPublicOption} from "../utils";
+import { ICanvasData } from "./canvas";
+import { IDummyNode } from "./dummy-node";
+import { ICanvasEdge } from "./edge";
+import { EdgeModel } from "./EdgeModel";
+import { IContainerRect, IGap, IPoint, Direction } from "./geometry";
+import { GraphModel } from "./GraphModel";
+import { ICanvasNode } from "./node";
+import { NodeModel } from "./NodeModel";
+import { ICanvasPort } from "./port";
 
 interface IEventBase<E = Event | React.SyntheticEvent> {
   rawEvent: E;
 }
 
+export enum GraphNodeEvent {
+  Click = "[Node]Click",
+  DoubleClick = "[Node]DoubleClick",
+  MouseDown = "[Node]MouseDown",
+  MouseUp = "[Node]MouseUp",
+  MouseEnter = "[Node]MouseEnter",
+  MouseLeave = "[Node]MouseLeave",
+  MouseOver = "[Node]MouseOver",
+  MouseOut = "[Node]MouseOut",
+  MouseMove = "[Node]MouseMove",
+  ContextMenu = "[Node]ContextMenu",
+  Drag = "[Node]Drag",
+  DragStart = "[Node]DragStart",
+  DragEnd = "[Node]DragEnd",
+  PointerDown = "[Node]PointerDown",
+  PointerEnter = "[Node]PointerEnter",
+  PointerMove = "[Node]PointerMove",
+  PointerLeave = "[Node]PointerLeave",
+  PointerUp = "[Node]PointerUp",
+  Resizing = "[Node]Resizing",
+  ResizingStart = "[Node]ResizingStart",
+  ResizingEnd = "[Node]ResizingEnd",
+  KeyDown = "[Node]KeyDown",
+  SelectAll = "[Node]SelectAll",
+  Centralize = "[Node]Centralize",
+  Locate = "[Node]Locate",
+  Add = "[Node]Add"
+}
+
+export enum GraphEdgeEvent {
+  Click = "[Edge]Click",
+  DoubleClick = "[Edge]DoubleClick",
+  MouseEnter = "[Edge]MouseEnter",
+  MouseLeave = "[Edge]MouseLeave",
+  MouseOver = "[Edge]MouseOver",
+  MouseOut = "[Edge]MouseOut",
+  MouseMove = "[Edge]MouseMove",
+  MouseDown = "[Edge]MouseDown",
+  MouseUp = "[Edge]MouseUp",
+  ContextMenu = "[Edge]ContextMenu",
+  ConnectStart = "[Edge]ConnectStart",
+  ConnectMove = "[Edge]ConnectMove",
+  ConnectEnd = "[Edge]ConnectEnd",
+  ConnectNavigate = "[Edge]ConnectNavigate",
+  Add = "[Edge]Add"
+}
+
+export enum GraphPortEvent {
+  Click = "[Port]Click",
+  DoubleClick = "[Port]DoubleClick",
+  MouseDown = "[Port]MouseDown",
+  PointerDown = "[Port]PointerDown",
+  PointerUp = "[Port]PointerUp",
+  PointerEnter = "[Port]PointerEnter",
+  PointerLeave = "[Port]PointerLeave",
+  MouseUp = "[Port]MouseUp",
+  MouseEnter = "[Port]MouseEnter",
+  MouseLeave = "[Port]MouseLeave",
+  MouseOver = "[Port]MouseOver",
+  MouseOut = "[Port]MouseOut",
+  MouseMove = "[Port]MouseMove",
+  ContextMenu = "[Port]ContextMenu",
+  KeyDown = "[Port]KeyDown",
+  Focus = "[Port]Focus",
+  Blur = "[Port]Blur"
+}
+
+export enum GraphCanvasEvent {
+  Click = "[Canvas]Click",
+  DoubleClick = "[Canvas]DoubleClick",
+  MouseDown = "[Canvas]MouseDown",
+  MouseUp = "[Canvas]MouseUp",
+  MouseEnter = "[Canvas]MouseEnter",
+  MouseLeave = "[Canvas]MouseLeave",
+  MouseOver = "[Canvas]MouseOver",
+  MouseOut = "[Canvas]MouseOut",
+  MouseMove = "[Canvas]MouseMove",
+  ContextMenu = "[Canvas]ContextMenu",
+  DragStart = "[Canvas]DragStart",
+  Drag = "[Canvas]Drag",
+  DragEnd = "[Canvas]DragEnd",
+  Pan = "[Canvas]Pan",
+  Focus = "[Canvas]Focus",
+  Blur = "[Canvas]Blur",
+  Zoom = "[Canvas]Zoom",
+  Pinch = "[Canvas]Pinch",
+  KeyDown = "[Canvas]KeyDown",
+  KeyUp = "[Canvas]KeyUp",
+  SelectStart = "[Canvas]SelectStart",
+  SelectMove = "[Canvas]SelectMove",
+  SelectEnd = "[Canvas]SelectEnd",
+  UpdateNodeSelectionBySelectBox = "[Canvas]UpdateNodeSelectionBySelectBox",
+  MouseWheelScroll = "[Canvas]MouseWheelScroll",
+  DraggingNodeFromItemPanel = "[Canvas]DraggingNodeFromItemPanel",
+  DraggingNodeFromItemPanelStart = "[Canvas]DraggingNodeFromItemPanelStart",
+  DraggingNodeFromItemPanelEnd = "[Canvas]DraggingNodeFromItemPanelEnd",
+  ViewportResize = "[Canvas]ViewportResize",
+  Navigate = "[Canvas]Navigate",
+  VirtualizationRecalculated = "[Canvas]VirtualizationRecalculated",
+  ResetSelection = "[Canvas]ResetSelection",
+  Copy = "[Canvas]Copy",
+  Paste = "[Canvas]Paste",
+  Delete = "[Canvas]Delete",
+  Undo = "[Canvas]Undo",
+  Redo = "[Canvas]Redo",
+  ScrollIntoView = "[Canvas]ScrollIntoView",
+  ResetUndoStack = "[Canvas]ResetUndoStack",
+  ResetViewport = "[Canvas]ResetViewport",
+  ZoomTo = "[Canvas]ZoomTo",
+  ZoomToFit = "[Canvas]ZoomToFit",
+  SetData = "[Canvas]SetData",
+  UpdateData = "[Canvas]UpdateData",
+  ScrollTo = "[Canvas]ScrollTo"
+}
+
+export enum GraphScrollBarEvent {
+  ScrollStart = "[ScrollBar]ScrollStart",
+  Scroll = "[ScrollBar]Scroll",
+  ScrollEnd = "[ScrollBar]ScrollEnd",
+  /**
+   * @deprecated
+   */
+  ScrollLeft = "[ScrollBar]ScrollToLeft",
+  /**
+   * @deprecated
+   */
+  ScrollRight = "[ScrollBar]ScrollToRight",
+  /**
+   * @deprecated
+   */
+  ScrollTop = "[ScrollBar]ScrollToTop",
+  /**
+   * @deprecated
+   */
+  ScrollBottom = "[ScrollBar]ScrollToBottom"
+}
+
+export enum GraphMinimapEvent {
+  PanStart = "[Minimap]PanStart",
+  Pan = "[Minimap]Pan",
+  PanEnd = "[Minimap]PanEnd",
+  Click = "[Minimap]Click"
+}
+
+export enum GraphContextMenuEvent {
+  Open = "[ContextMenu]Open",
+  Close = "[ContextMenu]Close"
+}
+
 export interface ICanvasCommonEvent extends IEventBase {
-  type: Exclude<
-    GraphCanvasEvent,
+  type: Exclude<GraphCanvasEvent,
     | GraphCanvasEvent.ViewportResize
     | GraphCanvasEvent.Navigate
     | GraphCanvasEvent.VirtualizationRecalculated
@@ -168,11 +191,8 @@ export interface ICanvasCommonEvent extends IEventBase {
     | GraphCanvasEvent.ZoomToFit
     | GraphCanvasEvent.SetData
     | GraphCanvasEvent.UpdateData
-    | GraphCanvasEvent.Pan
-  >;
+    | GraphCanvasEvent.Pan>;
 }
-
-export type IContainerRect = ClientRect | DOMRect;
 
 export interface ICanvasViewportResizeEvent {
   type: GraphCanvasEvent.ViewportResize;
@@ -200,7 +220,7 @@ export interface ICanvasZoomEvent extends IEventBase {
    * graph client point
    */
   anchor?: IPoint;
-  direction?: ZoomDirection;
+  direction?: Direction;
 }
 
 export interface ICanvasPanEvent extends IEventBase {
@@ -278,7 +298,7 @@ export interface ICanvasZoomToEvent {
   type: GraphCanvasEvent.ZoomTo;
   scale: number;
   anchor?: IPoint;
-  direction?: ZoomDirection;
+  direction?: Direction;
 }
 
 export interface ICanvasZoomToFitEvent extends Omit<IZoomFixPublicOption, "rect"> {
@@ -293,6 +313,7 @@ export interface ICanvasSetDataEvent<NodeData = unknown, EdgeData = unknown, Por
 export interface ICanvasUpdateDataEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   type: GraphCanvasEvent.UpdateData;
   shouldRecord: boolean;
+
   updater(prevData: GraphModel<NodeData, EdgeData, PortData>): GraphModel<NodeData, EdgeData, PortData>;
 }
 
@@ -325,8 +346,7 @@ export type ICanvasEvent<NodeData = unknown, EdgeData = unknown, PortData = unkn
   | ICanvasScrollToEvent;
 
 export interface INodeCommonEvent<NodeData = unknown, PortData = unknown> extends IEventBase {
-  type: Exclude<
-    GraphNodeEvent,
+  type: Exclude<GraphNodeEvent,
     | GraphNodeEvent.Resizing
     | GraphNodeEvent.DragStart
     | GraphNodeEvent.Drag
@@ -336,8 +356,7 @@ export interface INodeCommonEvent<NodeData = unknown, PortData = unknown> extend
     | GraphNodeEvent.Centralize
     | GraphNodeEvent.Locate
     | GraphNodeEvent.Add
-    | GraphNodeEvent.ContextMenu
-  >;
+    | GraphNodeEvent.ContextMenu>;
   node: NodeModel<NodeData, PortData>;
 }
 
@@ -418,14 +437,12 @@ export type INodeEvent<NodeData = unknown, PortData = unknown> =
   | INodeAddEvent<NodeData, PortData>;
 
 export interface IEdgeCommonEvent<T = unknown> extends IEventBase {
-  type: Exclude<
-    GraphEdgeEvent,
+  type: Exclude<GraphEdgeEvent,
     | GraphEdgeEvent.ConnectStart
     | GraphEdgeEvent.ConnectMove
     | GraphEdgeEvent.ConnectEnd
     | GraphEdgeEvent.ConnectNavigate
-    | GraphEdgeEvent.Add
-  >;
+    | GraphEdgeEvent.Add>;
   edge: EdgeModel<T>;
 }
 
@@ -514,7 +531,6 @@ export interface IContextMenuCloseEvent {
 }
 
 export type IContextMenuEvent = IContextMenuOpenEvent | IContextMenuCloseEvent;
-
 export type IEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> = (
   | ICanvasEvent<NodeData, EdgeData, PortData>
   | INodeEvent<NodeData, PortData>
@@ -523,4 +539,5 @@ export type IEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> =
   | IScrollBarEvent
   | IMinimapEvent
   | IContextMenuEvent
-) & { intercepted?: boolean };
+  ) & { intercepted?: boolean };
+

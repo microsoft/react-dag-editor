@@ -1,7 +1,7 @@
 import * as React from "react";
 import { MenuType } from "../contexts/ContextMenuConfigContext";
-import { IGraphState } from "../contexts/GraphStateContext";
 import { useContextMenuConfigContext } from "../hooks/useContextMenuConfigContext";
+import { IGraphState } from "../models/state";
 import { isSelected } from "../utils/state";
 
 const defaultStyle: React.CSSProperties = {

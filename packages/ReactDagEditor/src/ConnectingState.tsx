@@ -1,9 +1,9 @@
 import * as React from "react";
 import { ConnectingStateContext, IConnectingStateContext } from "./contexts/ConnectingStateContext";
-import { IConnectingState } from "./contexts/GraphStateContext";
-import { ICanvasPort } from "./Graph.interface";
 import { GraphModel } from "./models/GraphModel";
 import { NodeModel } from "./models/NodeModel";
+import { ICanvasPort } from "./models/port";
+import { IConnectingState } from "./models/state";
 
 interface IProps {
   data: GraphModel;

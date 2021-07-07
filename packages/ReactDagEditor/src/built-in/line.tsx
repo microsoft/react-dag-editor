@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IEdgeConfig, ITheme } from "../contexts";
-import { GraphEdgeState, ICanvasEdge } from "../Graph.interface";
+import { ICanvasEdge } from "../models/edge";
+import { GraphEdgeState } from "../models/element-state";
 import { getCurvePathD, hasState } from "../utils";
 
 export const line: IEdgeConfig = {

@@ -2,6 +2,8 @@
 
 # react-dag-editor
 
+[Try it out!]( https://microsoft.github.io/react-dag-editor/)
+
 ## Overview
 
 React component to create graphic user interface with:

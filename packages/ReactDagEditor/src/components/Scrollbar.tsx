@@ -27,7 +27,7 @@ interface IProps {
   viewport: Required<IViewport>;
   horizontal?: boolean;
   vertical?: boolean;
-  canvasBoundaryPadding: IGap | undefined;
+  canvasBoundaryPadding?: IGap | undefined;
   offsetLimit: IOffsetLimit;
   eventChannel: EventChannel;
   dispatch: IDispatch;
@@ -91,7 +91,7 @@ export const Scrollbar: React.FC<IProps> = props => {
   function onVerticalScrollMouseDown(e: React.MouseEvent): void {
     e.preventDefault();
     e.stopPropagation();
-    const { height: containerHeight } = viewport.visibleRect;
+    const { height: containerHeight } = viewport.rect;
 
     const dragging = new DragController(
       new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
@@ -136,7 +136,7 @@ export const Scrollbar: React.FC<IProps> = props => {
   function onHorizontalScrollMouseDown(e: React.MouseEvent): void {
     e.preventDefault();
     e.stopPropagation();
-    const { width: containerWidth } = viewport.visibleRect;
+    const { width: containerWidth } = viewport.rect;
 
     const dragging = new DragController(
       new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
@@ -179,7 +179,7 @@ export const Scrollbar: React.FC<IProps> = props => {
 
   return (
     <>
-      {vertical && scrollbarLayout.verticalScrollHeight < viewport.visibleRect.height && (
+      {vertical && scrollbarLayout.verticalScrollHeight < viewport.rect.height && (
         <div className={classes.verticalScrollWrapper}>
           <div
             className={classes.verticalScrollStyle}
@@ -191,7 +191,7 @@ export const Scrollbar: React.FC<IProps> = props => {
           />
         </div>
       )}
-      {horizontal && scrollbarLayout.horizontalScrollWidth < viewport.visibleRect.width && (
+      {horizontal && scrollbarLayout.horizontalScrollWidth < viewport.rect.width && (
         <div className={classes.horizontalScrollWrapper}>
           <div
             className={classes.horizontalScrollStyle}
@@ -242,16 +242,16 @@ function getTotalContentWidth(containerWidth: number, offsetLimit: IOffsetLimit)
  * @returns
  */
 function getScrollbarLayout(viewport: Required<IViewport>, offsetLimit: IOffsetLimit): IScrollbarLayout {
-  const { visibleRect, transformMatrix } = viewport;
-  const totalContentHeight = getTotalContentHeight(visibleRect.height, offsetLimit);
-  const totalContentWidth = getTotalContentWidth(visibleRect.width, offsetLimit);
+  const { rect, transformMatrix } = viewport;
+  const totalContentHeight = getTotalContentHeight(rect.height, offsetLimit);
+  const totalContentWidth = getTotalContentWidth(rect.width, offsetLimit);
 
   return {
     totalContentHeight,
     totalContentWidth,
-    verticalScrollHeight: (visibleRect.height * visibleRect.height) / totalContentHeight,
-    horizontalScrollWidth: (visibleRect.width * visibleRect.width) / totalContentWidth,
-    verticalScrollTop: ((offsetLimit.maxY - transformMatrix[5]) * visibleRect.height) / totalContentHeight,
-    horizontalScrollLeft: ((offsetLimit.maxX - transformMatrix[4]) * visibleRect.width) / totalContentWidth
+    verticalScrollHeight: (rect.height * rect.height) / totalContentHeight,
+    horizontalScrollWidth: (rect.width * rect.width) / totalContentWidth,
+    verticalScrollTop: ((offsetLimit.maxY - transformMatrix[5]) * rect.height) / totalContentHeight,
+    horizontalScrollLeft: ((offsetLimit.maxX - transformMatrix[4]) * rect.width) / totalContentWidth
   };
 }

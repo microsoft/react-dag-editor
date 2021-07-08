@@ -323,8 +323,7 @@ export const getZoomFitMatrix = (args: IZoomFixMatrix): TTransformMatrix => {
     data.nodes,
     {
       transformMatrix: [newScaleX, 0, 0, newScaleY, dx, dy],
-      rect,
-      visibleRect: rect
+      rect
     },
     graphConfig
   );
@@ -381,7 +380,7 @@ export const focusArea = (
   const width = maxX - minX;
   const height = maxY - minY;
 
-  const scale = Math.min(viewport.visibleRect.width / width, viewport.visibleRect.height / height);
+  const scale = Math.min(viewport.rect.width / width, viewport.rect.height / height);
 
   const dx = -scale * (minX + width / 2) + viewport.rect.width / 2;
   const dy = -scale * (minY + height / 2) + viewport.rect.height / 2;

@@ -10,7 +10,7 @@ import { getNodeSize, IShapeRect } from "./layout";
 import { getContainerClientPoint, reverseTransformPoint } from "./transformMatrix";
 
 export const isViewportComplete = (viewport: IViewport): viewport is Required<IViewport> => {
-  return !!(viewport.rect && viewport.visibleRect);
+  return !!viewport.rect;
 };
 
 export const getNodeRect = (node: ICanvasNode, graphConfig: IGraphConfig): IShapeRect => {
@@ -41,7 +41,7 @@ export const isRectVisible = (shapeRect: IShapeRect, viewport: Required<IViewpor
 export const isPointVisible = (point: IPoint, viewport: Required<IViewport>): boolean => {
   const { x, y } = getContainerClientPoint(point.x, point.y, viewport);
 
-  const { height, width } = viewport.visibleRect;
+  const { height, width } = viewport.rect;
 
   return x > 0 && x < width && y > 0 && y < height;
 };
@@ -125,11 +125,11 @@ export const getVisibleArea = (viewport: IViewport): IRectShape => {
     };
   }
 
-  const { rect, visibleRect, transformMatrix } = viewport;
-  const minX = visibleRect.left - rect.left;
-  const minY = visibleRect.top - rect.top;
-  const maxX = visibleRect.width + minX; // visibleRect.width + visibleRect.left - rect.left
-  const maxY = visibleRect.height + minY; // visibleRect.height + visibleRect.top - rect.top
+  const { rect, transformMatrix } = viewport;
+  const minX = 0;
+  const minY = 0;
+  const maxX = rect.width;
+  const maxY = rect.height;
   const min = reverseTransformPoint(minX, minY, transformMatrix);
   const max = reverseTransformPoint(maxX, maxY, transformMatrix);
 
@@ -151,13 +151,13 @@ export const getRenderedArea = (viewport: IViewport): IRectShape => {
     };
   }
 
-  const { rect, visibleRect, transformMatrix } = viewport;
-  const minX = visibleRect.left - rect.left;
-  const minY = visibleRect.top - rect.top;
-  const maxX = visibleRect.width + minX; // visibleRect.width + visibleRect.left - rect.left
-  const maxY = visibleRect.height + minY; // visibleRect.height + visibleRect.top - rect.top
-  const min = reverseTransformPoint(minX - visibleRect.width, minY - visibleRect.height, transformMatrix);
-  const max = reverseTransformPoint(maxX + visibleRect.width, maxY + visibleRect.height, transformMatrix);
+  const { rect, transformMatrix } = viewport;
+  const minX = 0;
+  const minY = 0;
+  const maxX = rect.width;
+  const maxY = rect.height;
+  const min = reverseTransformPoint(minX - rect.width, minY - rect.height, transformMatrix);
+  const max = reverseTransformPoint(maxX + rect.width, maxY + rect.height, transformMatrix);
 
   return {
     minX: min.x,

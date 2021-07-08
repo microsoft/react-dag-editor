@@ -16,7 +16,9 @@ import {
   ICanvasData,
   ICanvasNode,
   ICanvasPort,
+  IConnectingState,
   IGraphProps,
+  IGraphState,
   NodeModel
 } from "../../src";
 import { PropsAPI } from "../../src/props-api/PropsAPI";
@@ -58,7 +60,6 @@ describe("test getNearestConnectablePort", () => {
       data,
       viewport: {
         rect: mockViewport,
-        visibleRect: mockViewport,
         transformMatrix: [1, 0, 0, 1, 0, 0]
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -123,7 +124,6 @@ describe("test getNearestConnectablePort", () => {
       data,
       viewport: {
         rect: mockViewport,
-        visibleRect: mockViewport,
         transformMatrix: [1, 0, 0, 1, 0, 0]
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -298,8 +298,7 @@ describe("test Connecting", () => {
     connecting = new Connecting();
     eventChannel.trigger({
       type: GraphCanvasEvent.ViewportResize,
-      viewportRect: mockViewport,
-      visibleRect: mockViewport
+      viewportRect: mockViewport
     });
   });
 

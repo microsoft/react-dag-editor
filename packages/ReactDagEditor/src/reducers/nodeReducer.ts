@@ -1,10 +1,11 @@
 import * as React from "react";
-import { emptyDummyNodes} from "../components/dummyNodes";
+import { emptyDummyNodes } from "../components/dummyNodes";
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { IDummyNode, IDummyNodes } from "../models/dummy-node";
 import {
-  GraphCanvasEvent, GraphNodeEvent,
+  GraphCanvasEvent,
+  GraphNodeEvent,
   ICanvasAddNodeEvent,
   INodeCentralizeEvent,
   INodeDragEndEvent,
@@ -70,13 +71,13 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGr
     return state;
   }
   const e = event.rawEvent as MouseEvent;
-  const { visibleRect, rect } = state.viewport;
+  const { rect } = state.viewport;
   const nextState = {
     ...state
   };
   const data = state.data.present;
-  const viewportDx = getDelta(visibleRect.left, visibleRect.right, e.clientX);
-  const viewportDy = getDelta(visibleRect.top, visibleRect.bottom, e.clientY);
+  const viewportDx = getDelta(rect.left, rect.right, e.clientX);
+  const viewportDy = getDelta(rect.top, rect.bottom, e.clientY);
   const scale = viewportDx !== 0 || viewportDy !== 0 ? 0.999 : 1;
   const viewport =
     viewportDx !== 0 || viewportDx !== 0

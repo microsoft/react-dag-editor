@@ -96,10 +96,10 @@ export const getClientPointFromRealPoint = (realX: number, realY: number, viewpo
  */
 export const getContainerClientPoint = (realX: number, realY: number, viewport: Required<IViewport>) => {
   const client = getClientPointFromRealPoint(realX, realY, viewport);
-  const { visibleRect } = viewport;
+  const { rect } = viewport;
   return {
-    x: client.x - visibleRect.left,
-    y: client.y - visibleRect.top
+    x: client.x - rect.left,
+    y: client.y - rect.top
   };
 };
 

@@ -22,8 +22,7 @@ describe("viewport", () => {
   const data = getSample1Data();
   const viewport = (transformMatrix: ITransformMatrix): Required<IViewport> => ({
     transformMatrix,
-    rect,
-    visibleRect: rect
+    rect
   });
 
   it("getRenderedNodes", () => {

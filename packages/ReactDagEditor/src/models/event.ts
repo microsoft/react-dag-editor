@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IZoomFixPublicOption} from "../utils";
+import { IZoomFixPublicOption } from "../utils";
 import { ICanvasData } from "./canvas";
 import { IDummyNode } from "./dummy-node";
 import { ICanvasEdge } from "./edge";
@@ -164,7 +164,8 @@ export enum GraphContextMenuEvent {
 }
 
 export interface ICanvasCommonEvent extends IEventBase {
-  type: Exclude<GraphCanvasEvent,
+  type: Exclude<
+    GraphCanvasEvent,
     | GraphCanvasEvent.ViewportResize
     | GraphCanvasEvent.Navigate
     | GraphCanvasEvent.VirtualizationRecalculated
@@ -191,13 +192,13 @@ export interface ICanvasCommonEvent extends IEventBase {
     | GraphCanvasEvent.ZoomToFit
     | GraphCanvasEvent.SetData
     | GraphCanvasEvent.UpdateData
-    | GraphCanvasEvent.Pan>;
+    | GraphCanvasEvent.Pan
+  >;
 }
 
 export interface ICanvasViewportResizeEvent {
   type: GraphCanvasEvent.ViewportResize;
   viewportRect: IContainerRect | undefined;
-  visibleRect: IContainerRect | undefined;
 }
 
 export interface ICanvasVirtualizationEvent {
@@ -346,7 +347,8 @@ export type ICanvasEvent<NodeData = unknown, EdgeData = unknown, PortData = unkn
   | ICanvasScrollToEvent;
 
 export interface INodeCommonEvent<NodeData = unknown, PortData = unknown> extends IEventBase {
-  type: Exclude<GraphNodeEvent,
+  type: Exclude<
+    GraphNodeEvent,
     | GraphNodeEvent.Resizing
     | GraphNodeEvent.DragStart
     | GraphNodeEvent.Drag
@@ -356,7 +358,8 @@ export interface INodeCommonEvent<NodeData = unknown, PortData = unknown> extend
     | GraphNodeEvent.Centralize
     | GraphNodeEvent.Locate
     | GraphNodeEvent.Add
-    | GraphNodeEvent.ContextMenu>;
+    | GraphNodeEvent.ContextMenu
+  >;
   node: NodeModel<NodeData, PortData>;
 }
 
@@ -437,12 +440,14 @@ export type INodeEvent<NodeData = unknown, PortData = unknown> =
   | INodeAddEvent<NodeData, PortData>;
 
 export interface IEdgeCommonEvent<T = unknown> extends IEventBase {
-  type: Exclude<GraphEdgeEvent,
+  type: Exclude<
+    GraphEdgeEvent,
     | GraphEdgeEvent.ConnectStart
     | GraphEdgeEvent.ConnectMove
     | GraphEdgeEvent.ConnectEnd
     | GraphEdgeEvent.ConnectNavigate
-    | GraphEdgeEvent.Add>;
+    | GraphEdgeEvent.Add
+  >;
   edge: EdgeModel<T>;
 }
 
@@ -539,5 +544,4 @@ export type IEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> =
   | IScrollBarEvent
   | IMinimapEvent
   | IContextMenuEvent
-  ) & { intercepted?: boolean };
-
+) & { intercepted?: boolean };

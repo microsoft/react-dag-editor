@@ -31,7 +31,6 @@ const propsAPI = {
   getViewport() {
     return {
       transformMatrix: [1, 0, 0, 1, 0, 0],
-      visibleRect: rect,
       rect
     };
   }

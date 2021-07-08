@@ -96,7 +96,6 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
             node={node}
             viewport={{
               rect,
-              visibleRect: rect,
               transformMatrix: viewport.transformMatrix
             }}
             eventChannel={eventChannel}

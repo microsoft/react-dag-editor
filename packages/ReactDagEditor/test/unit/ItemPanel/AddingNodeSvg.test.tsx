@@ -23,21 +23,6 @@ const rect = {
   bottom: 900
 };
 
-const propsAPI = {
-  ...mockPropsAPI,
-  getEventChannel: () => new EventChannel(),
-  getViewport() {
-    return {
-      transformMatrix: [1, 0, 0, 1, 0, 0],
-      rect
-    };
-  }
-} as PropsAPI<any, any, any>;
-
-jest.mock("../../../src/hooks/usePropsAPI", () => ({
-  usePropsAPI: () => propsAPI
-}));
-
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
   useSvgRect: () => {
     return rect;
@@ -78,9 +63,11 @@ describe("ItemPanel - AddingNodeSvg", () => {
     );
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();
-    graphController.dispatch({
-      type: GraphCanvasEvent.ViewportResize,
-      viewportRect: rect
+    act(() => {
+      graphController.dispatch({
+        type: GraphCanvasEvent.ViewportResize,
+        viewportRect: rect
+      });
     });
   });
 

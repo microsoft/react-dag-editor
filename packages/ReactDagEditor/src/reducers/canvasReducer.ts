@@ -1,5 +1,6 @@
 import { COPIED_NODE_SPACING } from "../common/constants";
 import { IGraphReactReducer } from "../contexts";
+import { GraphFeatures } from "../Features";
 import { GraphNodeState } from "../models/element-state";
 import { GraphCanvasEvent } from "../models/event";
 import {
@@ -56,6 +57,9 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
       };
     }
     case GraphCanvasEvent.Delete:
+      if (!state.settings.features.has(GraphFeatures.delete)) {
+        return state;
+      }
       return {
         ...state,
         data: pushHistory(

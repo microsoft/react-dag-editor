@@ -151,7 +151,7 @@ const reducer = (
       const { transformMatrix, rect } = viewport;
       let { dx, dy } = action;
       const limitBoundary = features.has(GraphFeatures.limitBoundary);
-      const groupPadding = data.groups?.[0].padding; // TODO: this is not precise
+      const groupPadding = data.groups?.[0]?.padding; // TODO: this is not precise
       if (limitBoundary) {
         const { minX, maxX, minY, maxY } = getOffsetLimit({
           data,

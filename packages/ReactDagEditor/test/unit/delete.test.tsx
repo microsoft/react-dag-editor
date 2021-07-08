@@ -2,14 +2,15 @@ import { act, render } from "@testing-library/react";
 import * as React from "react";
 import {
   dataReadonlyMode,
+  GraphCanvasEvent,
   GraphEdgeState,
   GraphModel,
   GraphNodeState,
   GraphPortState,
-  IPropsAPI,
   notSelected
 } from "../../src";
-import { TestComponent } from "../TestComponent";
+import { GraphController } from "../../src/controllers/GraphController";
+import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { makeEdge, makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 
 const ports = makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default]);
@@ -33,14 +34,28 @@ it("should do nothing if delete disabled", () => {
     )
   });
 
-  const propsAPIRef = React.createRef<IPropsAPI>();
-  render(<TestComponent propsAPIRef={propsAPIRef} data={data} features={dataReadonlyMode} />);
+  const graphControllerRef = React.createRef<GraphController>();
+  render(
+    <TestComponent
+      data={data}
+      stateProps={{
+        features: dataReadonlyMode
+      }}
+    >
+      <GraphControllerRef ref={graphControllerRef} />
+    </TestComponent>
+  );
+
+  const graphController = graphControllerRef.current!;
+  expect(graphController).toBeDefined();
 
   act(() => {
-    propsAPIRef.current?.delete();
+    graphController.dispatch({
+      type: GraphCanvasEvent.Delete
+    });
   });
 
-  expect(propsAPIRef.current?.getData().toJSON()).toEqual({
+  expect(graphController.state.data.present.toJSON()).toEqual({
     edges: makeEdges([
       [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
       [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]]

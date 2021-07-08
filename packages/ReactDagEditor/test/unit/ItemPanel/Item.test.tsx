@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
-import { defaultFeatures, GraphModel, GraphStateStore, IGraphAction, useGraphState } from "../../../src";
+import { GraphCanvasEvent, GraphModel, GraphStateStore } from "../../../src";
 import { Item } from "../../../src/components/ItemPanel";
-import { noopInstance } from "../../../src/props-api/IPropsAPIInstance";
-import { graphController } from "../../../src/controllers/GraphController";
+import { GraphController } from "../../../src/controllers/GraphController";
+import { GraphControllerRef } from "../../TestComponent";
 import { patchPointerEvent } from "../../utils";
 import { withGraphConfigContext } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";
@@ -13,7 +13,9 @@ const rect = {
   left: 100,
   top: 100,
   width: 800,
-  height: 800
+  height: 800,
+  right: 900,
+  bottom: 900
 };
 
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
@@ -25,13 +27,7 @@ jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
 describe("ItemPanel - Item", () => {
   let dragWillStart: () => void;
   let renderedWrapper: RenderResult;
-  let dispatch: React.Dispatch<IGraphAction>;
-
-  const HackDispatch = () => {
-    const stateContext = useGraphState();
-    dispatch = stateContext.dispatch;
-    return null;
-  };
+  let graphController: GraphController;
 
   beforeAll(() => {
     jest.useFakeTimers();
@@ -42,12 +38,11 @@ describe("ItemPanel - Item", () => {
   });
 
   beforeEach(() => {
-    jest.spyOn(graphController, "getEnabledFeatures").mockReturnValue(defaultFeatures);
     dragWillStart = jest.fn();
+    const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
       withGraphConfigContext(
         <GraphStateStore data={GraphModel.empty()}>
-          <HackDispatch />
           <Item
             model={{ name: "node1", shape: "nodeShape" }}
             dragWillStart={dragWillStart}
@@ -56,29 +51,24 @@ describe("ItemPanel - Item", () => {
           >
             <TestItemContent text="test item" />
           </Item>
+          <GraphControllerRef ref={graphControllerRef} />
         </GraphStateStore>
       )
     );
+    graphController = graphControllerRef.current!;
+    expect(graphController).toBeDefined();
+    act(() => {
+      graphController.dispatch({
+        type: GraphCanvasEvent.ViewportResize,
+        viewportRect: rect
+      });
+    });
+    (graphController.eventChannel.listenersRef as any).current = graphController.dispatch;
   });
 
   afterEach(cleanup);
 
   it("Should work well when mousedown and mouseup", () => {
-    noopInstance.containerRectRef = {
-      current: {
-        top: 50,
-        right: 200,
-        bottom: 200,
-        left: 50,
-        width: 150,
-        height: 150,
-        x: 50,
-        y: 50
-      }
-    };
-
-    (noopInstance.eventChannel.listenersRef as any).current = dispatch;
-
     const { container } = renderedWrapper;
 
     expect(container).toMatchSnapshot();

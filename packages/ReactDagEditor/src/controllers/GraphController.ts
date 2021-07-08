@@ -27,7 +27,6 @@ export class GraphController {
   public UNSAFE_latestState: IGraphState;
   public readonly dispatch: IDispatch;
   private mouseClientPoint?: IPoint;
-  private enabledFeatures: Set<GraphFeatures>;
   private behavior = GraphBehavior.default;
 
   public constructor(state: IGraphState, dispatch: IDispatch) {
@@ -48,12 +47,8 @@ export class GraphController {
     return this.mouseClientPoint;
   }
 
-  public setEnabledFeatures(features: Set<GraphFeatures>): void {
-    this.enabledFeatures = new Set(features);
-  }
-
-  public getEnabledFeatures(): Set<GraphFeatures> {
-    return this.enabledFeatures;
+  public getEnabledFeatures(): ReadonlySet<GraphFeatures> {
+    return this.state.settings.features;
   }
 
   public getBehavior(): GraphBehavior {

@@ -11,7 +11,7 @@ import { useGraphReducer } from "../../hooks/useGraphReducer";
 
 import { usePropsAPI } from "../../hooks/usePropsAPI";
 import { GraphCanvasEvent } from "../../models/event";
-import { ITransformMatrix } from "../../models/geometry";
+import { IGap, ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { isViewportComplete } from "../../utils";
@@ -28,12 +28,19 @@ export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, P
   data?: GraphModel<NodeData, EdgeData, PortData>;
   defaultTransformMatrix?: ITransformMatrix;
   middleware?: IGraphReducer<NodeData, EdgeData, PortData, Action>;
+  features?: ReadonlySet<GraphFeatures>;
+  canvasBoundaryPadding?: IGap;
 }
 
 export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
   props: React.PropsWithChildren<IGraphStateStoreProps<NodeData, EdgeData, PortData, Action>>
 ): React.ReactElement {
-  const { defaultTransformMatrix = EMPTY_TRANSFORM_MATRIX, middleware } = props;
+  const {
+    defaultTransformMatrix = EMPTY_TRANSFORM_MATRIX,
+    middleware,
+    features = defaultFeatures,
+    canvasBoundaryPadding = EMPTY_GAP
+  } = props;
 
   const propsAPI = usePropsAPI<NodeData, EdgeData, PortData>();
   React.useImperativeHandle(props.propsAPIRef, () => propsAPI, [propsAPI]);
@@ -45,8 +52,8 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
       data: props.data,
       transformMatrix: defaultTransformMatrix,
       graphConfig,
-      features: defaultFeatures,
-      canvasBoundaryPadding: EMPTY_GAP
+      features,
+      canvasBoundaryPadding
     },
     middleware
   );

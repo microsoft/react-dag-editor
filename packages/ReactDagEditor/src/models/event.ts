@@ -217,7 +217,7 @@ export interface ICanvasNavigateEvent<NodeData = unknown, PortData = unknown> ex
   port?: ICanvasPort<PortData>;
 }
 
-export interface ICanvasZoomEvent extends IEventBase {
+export interface ICanvasZoomEvent extends Partial<IEventBase> {
   type: GraphCanvasEvent.Zoom;
   scale: number;
   /**

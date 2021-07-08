@@ -2,8 +2,17 @@ import { cleanup, fireEvent, render, RenderResult } from "@testing-library/react
 import * as React from "react";
 
 import { act } from "react-dom/test-utils";
-import { dataReadonlyMode, GraphModel, GraphNodeEvent, IEvent, IGraphReducer, IPropsAPI, previewMode } from "../../src";
-import { TestComponent } from "../TestComponent";
+import {
+  dataReadonlyMode,
+  GraphCanvasEvent,
+  GraphModel,
+  GraphNodeEvent,
+  IEvent,
+  IGraphReducer,
+  previewMode
+} from "../../src";
+import { GraphController } from "../../src/controllers/GraphController";
+import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { mockBoundingBox, patchPointerEvent } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";
 
@@ -86,7 +95,13 @@ beforeEach(() => {
 describe("drag node", () => {
   it("should receive drag event", () => {
     const onEvent = jest.fn();
-    const { container } = render(<TestComponent onEvent={onEvent} />);
+    const { container } = render(
+      <TestComponent
+        graphProps={{
+          onEvent
+        }}
+      />
+    );
     simulateNodeMove(container, [
       [100, 100],
       [150, 150]
@@ -99,7 +114,7 @@ describe("drag node", () => {
   });
 
   it("should not drag when dragging is disabled", () => {
-    const { container } = render(<TestComponent features={previewMode} middleware={middleware} />);
+    const { container } = render(<TestComponent stateProps={{ features: previewMode }} middleware={middleware} />);
     simulateNodeMove(container, [
       [100, 100],
       [150, 150]
@@ -109,7 +124,7 @@ describe("drag node", () => {
   });
 
   it("should receive click event", () => {
-    const { container } = render(<TestComponent features={dataReadonlyMode} middleware={middleware} />);
+    const { container } = render(<TestComponent stateProps={{ features: dataReadonlyMode }} middleware={middleware} />);
     simulateNodeMove(container, [
       [100, 100],
       [105, 105]
@@ -118,7 +133,7 @@ describe("drag node", () => {
   });
 
   it("should not receive click event", () => {
-    const { container } = render(<TestComponent features={previewMode} middleware={middleware} />);
+    const { container } = render(<TestComponent stateProps={{ features: previewMode }} middleware={middleware} />);
     simulateNodeMove(container, [
       [100, 100],
       [105, 105]
@@ -131,16 +146,25 @@ describe("drag node", () => {
 describe("test drag and selection", () => {
   let wrapper: RenderResult;
   let container: HTMLElement;
-  let propsAPI: IPropsAPI;
+  let graphController: GraphController;
+  const getData = () => graphController.state.data.present;
+  const updateData = (f: (prev: GraphModel) => GraphModel) =>
+    graphController.dispatch({
+      type: GraphCanvasEvent.UpdateData,
+      updater: f,
+      shouldRecord: false
+    });
 
   beforeEach(() => {
-    const propsAPIRef = React.createRef<IPropsAPI>();
-    wrapper = render(<TestComponent propsAPIRef={propsAPIRef} data={GraphModel.fromJSON(getSample1Data())} />);
+    const graphControllerRef = React.createRef<GraphController>();
+    wrapper = render(
+      <TestComponent data={GraphModel.fromJSON(getSample1Data())}>
+        <GraphControllerRef ref={graphControllerRef} />
+      </TestComponent>
+    );
     container = wrapper.container;
-    if (!propsAPIRef.current) {
-      throw new Error();
-    }
-    propsAPI = propsAPIRef.current;
+    graphController = graphControllerRef.current!;
+    expect(graphController).toBeDefined();
   });
 
   it("should select one node", () => {
@@ -148,7 +172,7 @@ describe("test drag and selection", () => {
       [100, 100],
       [105, 105]
     ]);
-    expect(propsAPI.getData().toJSON()).toEqual(
+    expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "47566002")
         .toJSON()
@@ -160,7 +184,7 @@ describe("test drag and selection", () => {
       [100, 100],
       [110, 110]
     ]);
-    expect(propsAPI.getData().toJSON()).toEqual(
+    expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
         .updateNode("47566002", node => ({
           ...node,
@@ -172,12 +196,12 @@ describe("test drag and selection", () => {
   });
 
   it("should drag one node when multiple nodes selected", () => {
-    propsAPI.updateData(data => data.selectNodes(node => node.id === "fb404f70" || node.id === "4b199015"));
+    updateData(data => data.selectNodes(node => node.id === "fb404f70" || node.id === "4b199015"));
     simulateNodeMove(container, [
       [100, 100],
       [110, 110]
     ]);
-    expect(propsAPI.getData().toJSON()).toEqual(
+    expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "fb404f70" || node.id === "4b199015")
         .updateNode("47566002", node => ({
@@ -190,14 +214,14 @@ describe("test drag and selection", () => {
   });
 
   it("should drag multiple nodes", () => {
-    propsAPI.updateData(data =>
+    updateData(data =>
       data.selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015")
     );
     simulateNodeMove(container, [
       [100, 100],
       [110, 110]
     ]);
-    expect(propsAPI.getData().toJSON()).toEqual(
+    expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015")
         .updateNode("47566002", node => ({
@@ -220,7 +244,7 @@ describe("test drag and selection", () => {
   });
 
   it("should select one more node and drag multiple nodes", () => {
-    propsAPI.updateData(data => data.selectNodes(node => node.id === "fb404f70" || node.id === "4b199015"));
+    updateData(data => data.selectNodes(node => node.id === "fb404f70" || node.id === "4b199015"));
     simulateNodeMove(
       container,
       [
@@ -231,7 +255,7 @@ describe("test drag and selection", () => {
         shiftKey: true
       }
     );
-    expect(propsAPI.getData().toJSON()).toEqual(
+    expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
         .selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015")
         .updateNode("47566002", node => ({

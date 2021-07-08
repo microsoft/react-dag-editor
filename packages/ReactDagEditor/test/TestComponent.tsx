@@ -1,5 +1,13 @@
 import * as React from "react";
-import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphConfig, IGraphReducer } from "../src";
+import {
+  applyDefaultPortsPosition,
+  GraphModel,
+  ICanvasData,
+  IEvent,
+  IGraphConfig,
+  IGraphReducer,
+  IGraphStateStoreProps
+} from "../src";
 import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphConfigContext } from "../src/contexts";
 import { GraphControllerContext } from "../src/contexts/GraphControllerContext";
@@ -14,10 +22,12 @@ const data: ICanvasData = {
   }))
 };
 
-export interface ITestComponentProps extends Partial<IGraphProps> {
+export interface ITestComponentProps {
   data?: GraphModel;
   graphConfig?: IGraphConfig;
   middleware?: IGraphReducer;
+  graphProps?: Partial<IGraphProps>;
+  stateProps?: Partial<IGraphStateStoreProps>;
 }
 
 let events: string[];
@@ -37,18 +47,20 @@ export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => 
 });
 
 export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps>) => {
+  const { graphProps, stateProps } = props;
   const onEvent = React.useCallback(
     (event: IEvent) => {
-      props.onEvent?.(event);
+      graphProps?.onEvent?.(event);
       events.push(event.type);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.onEvent]
+    [graphProps?.onEvent]
   );
+  const {} = props;
 
   const content = (
-    <GraphStateStore data={props.data ?? GraphModel.fromJSON(data)} middleware={props.middleware}>
-      <Graph {...props} onEvent={onEvent} />
+    <GraphStateStore {...stateProps} data={props.data ?? GraphModel.fromJSON(data)} middleware={props.middleware}>
+      <Graph {...graphProps} onEvent={onEvent} />
       {props.children}
     </GraphStateStore>
   );

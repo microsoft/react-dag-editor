@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { GraphFeatures } from "../Features";
 
-export const useFeatureControl = (features: Set<GraphFeatures>) => {
+export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
   return React.useMemo(() => {
     const isNodesDraggable = features.has(GraphFeatures.nodeDraggable);
     const isNodeResizable = features.has(GraphFeatures.nodeResizable);

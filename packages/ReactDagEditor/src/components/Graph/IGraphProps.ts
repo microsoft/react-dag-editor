@@ -1,6 +1,5 @@
 import * as React from "react";
 import { TGetPositionFromEvent } from "../../controllers";
-import { GraphFeatures } from "../../Features";
 import { IEvent } from "../../models/event";
 import { ICanvasEdge } from "../../models/edge";
 import { IGap } from "../../models/geometry";
@@ -102,10 +101,6 @@ export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = 
    * @default "(e: MouseEvent) => ({ x: e.clientX, y: e.clientY })"
    */
   getPositionFromEvent?: TGetPositionFromEvent;
-  /**
-   * Enabled features.
-   */
-  features?: Set<GraphFeatures>;
   /**
    * Port circle radius.
    */

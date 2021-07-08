@@ -3,7 +3,6 @@ import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphConfigContext, IGraphConfig, PanelContext, PropsAPIContext } from "../../contexts";
 import { VirtualizationRenderedContext } from "../../contexts/VirtualizationRenderedContext";
-import { defaultFeatures } from "../../Features";
 import {
   useContainerRect,
   useGraphState,
@@ -28,7 +27,6 @@ import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a1
 import { constantEmptyArray } from "../../utils/empty";
 import { EventChannel } from "../../utils/eventChannel";
 import { getOffsetLimit } from "../../utils/getOffsetLimit";
-import { graphController } from "../../utils/graphController";
 import { AlignmentLines } from "../AlignmentLines";
 import { AnimatingNodeGroup } from "../AnimatingNodeGroup";
 import { Connecting } from "../Connecting";
@@ -67,7 +65,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   React.useLayoutEffect(() => {
     (propsAPI.instanceRef as React.MutableRefObject<IPropsAPIInstance<NodeData, EdgeData, PortData> | null>).current = {
       state,
-      enabledFeatures: features,
       dispatch,
       getData: () => data as GraphModel<NodeData, EdgeData, PortData>,
       svgRef,
@@ -93,7 +90,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const defaultSVGRef = React.useRef<SVGSVGElement>(null);
 
   const {
-    features = defaultFeatures,
     defaultNodeShape = "default",
     defaultEdgeShape = "default",
     defaultPortShape = "default",
@@ -106,11 +102,9 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     canvasBoundaryPadding
   } = props;
 
-  graphController.setEnabledFeatures(features);
-
   const { theme } = useTheme();
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
-  const featureControl = useFeatureControl(features);
+  const featureControl = useFeatureControl(state.settings.features);
 
   graphConfig.defaultNodeShape = defaultNodeShape;
   graphConfig.defaultEdgeShape = defaultEdgeShape;

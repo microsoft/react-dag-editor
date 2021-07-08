@@ -25,8 +25,10 @@ export const EMPTY_VIEW_PORT: IViewport = {
 };
 
 export const EMPTY_GRAPH_STATE: IGraphState = {
-  features: defaultFeatures,
-  graphConfig: new GraphConfig(window),
+  settings: {
+    features: defaultFeatures,
+    graphConfig: new GraphConfig(window)
+  },
   behavior: GraphBehavior.default,
   data: resetUndoStack(GraphModel.empty()),
   viewport: {

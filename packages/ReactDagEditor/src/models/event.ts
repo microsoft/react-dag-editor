@@ -9,6 +9,7 @@ import { GraphModel } from "./GraphModel";
 import { ICanvasNode } from "./node";
 import { NodeModel } from "./NodeModel";
 import { ICanvasPort } from "./port";
+import { IGraphSettings } from "./state";
 
 interface IEventBase<E = Event | React.SyntheticEvent> {
   rawEvent: E;
@@ -126,7 +127,8 @@ export enum GraphCanvasEvent {
   ZoomToFit = "[Canvas]ZoomToFit",
   SetData = "[Canvas]SetData",
   UpdateData = "[Canvas]UpdateData",
-  ScrollTo = "[Canvas]ScrollTo"
+  ScrollTo = "[Canvas]ScrollTo",
+  UpdateSettings = "[Canvas]UpdateSettings"
 }
 
 export enum GraphScrollBarEvent {
@@ -193,6 +195,7 @@ export interface ICanvasCommonEvent extends IEventBase {
     | GraphCanvasEvent.SetData
     | GraphCanvasEvent.UpdateData
     | GraphCanvasEvent.Pan
+    | GraphCanvasEvent.UpdateSettings
   >;
 }
 
@@ -535,6 +538,11 @@ export interface IContextMenuCloseEvent {
   type: GraphContextMenuEvent.Close;
 }
 
+export interface ICanvasUpdateSettingsEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown>
+  extends Partial<IGraphSettings<NodeData, EdgeData, PortData>> {
+  type: GraphCanvasEvent.UpdateSettings;
+}
+
 export type IContextMenuEvent = IContextMenuOpenEvent | IContextMenuCloseEvent;
 export type IEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> = (
   | ICanvasEvent<NodeData, EdgeData, PortData>
@@ -544,4 +552,5 @@ export type IEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> =
   | IScrollBarEvent
   | IMinimapEvent
   | IContextMenuEvent
+  | ICanvasUpdateSettingsEvent<NodeData, EdgeData, PortData>
 ) & { intercepted?: boolean };

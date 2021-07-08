@@ -1,4 +1,5 @@
 import { MouseEventButton } from "../common/constants";
+import { IGraphReactReducer } from "../contexts";
 import {
   GraphCanvasEvent,
   GraphContextMenuEvent,
@@ -6,9 +7,8 @@ import {
   GraphNodeEvent,
   GraphPortEvent
 } from "../models/event";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
-export const contextMenuReducer: IBuiltinReducer = (prevState, action) => {
+export const contextMenuReducer: IGraphReactReducer = (prevState, action) => {
   let nextContextMenuPosition = prevState.contextMenuPosition;
 
   switch (action.type) {

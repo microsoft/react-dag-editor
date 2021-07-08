@@ -4,13 +4,11 @@ import { IGraphState } from "../models/state";
 import { EventChannel } from "../utils/eventChannel";
 import { IGraphConfig, IPanelContext } from "../contexts";
 import { EMPTY_GRAPH_STATE, IDispatch } from "../contexts/GraphStateContext";
-import { GraphFeatures } from "../Features";
 import { GraphModel } from "../models/GraphModel";
 import { noop } from "../utils/noop";
 
 export interface IPropsAPIInstance<NodeData, EdgeData, PortData> {
   state: IGraphState;
-  enabledFeatures: Set<GraphFeatures>;
   dispatch: IDispatch;
   svgRef: React.RefObject<SVGSVGElement>;
   graphConfig?: IGraphConfig;
@@ -24,7 +22,6 @@ export interface IPropsAPIInstance<NodeData, EdgeData, PortData> {
 export const noopInstance: IPropsAPIInstance<unknown, unknown, unknown> = new Proxy(
   {
     state: EMPTY_GRAPH_STATE,
-    enabledFeatures: new Set(),
     dispatch: noop,
     svgRef: React.createRef(),
     graphConfig: undefined,

@@ -53,8 +53,10 @@ export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData
     reducer,
     params,
     ({ data, transformMatrix, features, graphConfig }) => ({
-      features,
-      graphConfig,
+      settings: {
+        features,
+        graphConfig
+      },
       data: resetUndoStack(data ?? GraphModel.empty()),
       viewport: {
         rect: undefined,

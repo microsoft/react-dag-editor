@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IDispatchCallback} from "../contexts/GraphStateContext";
+import { IDispatchCallback } from "../contexts/GraphStateContext";
 import { IEvent } from "../models/event";
 import { ICanvasData } from "../models/canvas";
 import { ICanvasEdge } from "../models/edge";
@@ -10,7 +10,7 @@ import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { GraphBehavior, IGraphState } from "../models/state";
-import { IZoomFixPublicOption, IZoomPanSettings} from "../utils";
+import { IZoomFixPublicOption, IZoomPanSettings } from "../utils";
 
 import { IAutoLayout } from "../libs";
 import { GraphFeatures } from "../Features";
@@ -44,7 +44,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
   /**
    * get enabled features of the graph
    */
-  getEnabledFeatures(): Set<GraphFeatures>;
+  getEnabledFeatures(): ReadonlySet<GraphFeatures>;
   openContextMenu(position?: IPoint): void;
   closeContextMenu(): void;
   /**

@@ -1,4 +1,5 @@
 import { COPIED_NODE_SPACING } from "../common/constants";
+import { IGraphReactReducer } from "../contexts";
 import { GraphNodeState } from "../models/element-state";
 import { GraphCanvasEvent } from "../models/event";
 import {
@@ -9,9 +10,8 @@ import {
   unSelectAllEntity
 } from "../utils";
 import { pushHistory, redo, undo } from "../utils/history";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
-export const canvasReducer: IBuiltinReducer = (state, action) => {
+export const canvasReducer: IGraphReactReducer = (state, action) => {
   switch (action.type) {
     case GraphCanvasEvent.Paste: {
       const { position } = action;
@@ -121,6 +121,16 @@ export const canvasReducer: IBuiltinReducer = (state, action) => {
         ...state,
         data: resetUndoStack(state.data.present)
       };
+    case GraphCanvasEvent.UpdateSettings: {
+      const { type, ...settings } = action;
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          ...settings
+        }
+      };
+    }
     default:
       return state;
   }

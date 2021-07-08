@@ -1,9 +1,9 @@
+import { IGraphReactReducer } from "../contexts";
 import { GraphPortState } from "../models/element-state";
 import { GraphPortEvent } from "../models/event";
 import { addState, removeState, unSelectAllEntity, updateState } from "../utils";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
-export const portReducer: IBuiltinReducer = (state, action) => {
+export const portReducer: IGraphReactReducer = (state, action) => {
   switch (action.type) {
     case GraphPortEvent.Focus:
     case GraphPortEvent.PointerEnter:

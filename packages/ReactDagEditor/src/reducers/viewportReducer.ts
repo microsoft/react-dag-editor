@@ -182,7 +182,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, graphCon
 };
 
 export const viewportReducer: IGraphReactReducer = (state, action) => {
-  const viewport = reducer(state.viewport, action, state.data.present, state.graphConfig);
+  const viewport = reducer(state.viewport, action, state.data.present, state.settings.graphConfig);
   return viewport === state.viewport
     ? state
     : {

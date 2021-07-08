@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { EMPTY_CONNECT_STATE} from "../contexts/GraphStateContext";
+import { EMPTY_CONNECT_STATE, IGraphReactReducer } from "../contexts/GraphStateContext";
 import { ICanvasEdge } from "../models/edge";
 import { GraphEdgeState, GraphPortState } from "../models/element-state";
 import { GraphEdgeEvent, GraphNodeEvent, GraphPortEvent } from "../models/event";
@@ -17,7 +17,6 @@ import {
 } from "../utils";
 import { nextConnectablePort } from "../utils/a11yUtils";
 import { graphController } from "../utils/graphController";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
 function attachPort(state: IGraphState, nodeId: string, portId: string): IGraphState {
   if (!state.connectState) {
@@ -70,7 +69,7 @@ function clearAttach(state: IGraphState): IGraphState {
 }
 
 // eslint-disable-next-line complexity
-export const connectingReducer: IBuiltinReducer = (state, action, context): IGraphState => {
+export const connectingReducer: IGraphReactReducer = (state, action): IGraphState => {
   if (!isViewportComplete(state.viewport)) {
     return state;
   }
@@ -163,7 +162,7 @@ export const connectingReducer: IBuiltinReducer = (state, action, context): IGra
         if (!sourceNode || !sourcePort) {
           return state;
         }
-        const next = nextConnectablePort(context.graphConfig, {
+        const next = nextConnectablePort(state.settings.graphConfig, {
           anotherNode: sourceNode,
           anotherPort: sourcePort
         })(data, targetNode || sourceNode, targetPort);
@@ -186,7 +185,7 @@ export const connectingReducer: IBuiltinReducer = (state, action, context): IGra
           port &&
           anotherNode &&
           anotherPort &&
-          isConnectable(context.graphConfig, {
+          isConnectable(state.settings.graphConfig, {
             parentNode: node,
             model: port,
             data,
@@ -212,7 +211,7 @@ export const connectingReducer: IBuiltinReducer = (state, action, context): IGra
             parentNode: node,
             clientX,
             clientY,
-            graphConfig: context.graphConfig,
+            graphConfig: state.settings.graphConfig,
             data: state.data.present,
             viewport: state.viewport,
             anotherPort,

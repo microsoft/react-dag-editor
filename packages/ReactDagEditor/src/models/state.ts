@@ -37,8 +37,8 @@ export interface IGraphSettings<NodeData = unknown, EdgeData = unknown, PortData
   features: ReadonlySet<GraphFeatures>;
 }
 
-export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  extends IGraphSettings<NodeData, EdgeData, PortData> {
+export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+  settings: IGraphSettings<NodeData, EdgeData, PortData>;
   data: IGraphDataState<NodeData, EdgeData, PortData>;
   viewport: IViewport;
   behavior: GraphBehavior;

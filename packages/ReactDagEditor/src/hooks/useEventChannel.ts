@@ -38,7 +38,7 @@ import {
   goToConnectedPort
 } from "../utils/a11yUtils";
 import { EventChannel } from "../utils/eventChannel";
-import { GraphController } from "../utils/graphController";
+import { GraphController } from "../controllers/GraphController";
 import { animationFramed } from "../utils/scheduling";
 import { useCanvasKeyboardEventHandlers } from "./useCanvasKeyboardEventHandlers";
 import { useFeatureControl } from "./useFeatureControl";

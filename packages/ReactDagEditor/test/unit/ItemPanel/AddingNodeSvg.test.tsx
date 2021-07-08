@@ -8,7 +8,7 @@ import { Item } from "../../../src/components/ItemPanel";
 import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
 import { ICanvasNode } from "../../../src/models/node";
 import { noopInstance } from "../../../src/props-api/IPropsAPIInstance";
-import { GraphController } from "../../../src/utils/graphController";
+import { GraphController } from "../../../src/controllers/GraphController";
 import { GraphControllerRef } from "../../TestComponent";
 import { patchPointerEvent } from "../../utils";
 import { withGraphConfigContext } from "../__mocks__/mockContext";

@@ -4,7 +4,7 @@ import * as React from "react";
 import { defaultFeatures, GraphModel, GraphStateStore, IGraphAction, useGraphState } from "../../../src";
 import { Item } from "../../../src/components/ItemPanel";
 import { noopInstance } from "../../../src/props-api/IPropsAPIInstance";
-import { graphController } from "../../../src/utils/graphController";
+import { graphController } from "../../../src/controllers/GraphController";
 import { patchPointerEvent } from "../../utils";
 import { withGraphConfigContext } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";

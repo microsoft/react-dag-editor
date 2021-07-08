@@ -23,7 +23,7 @@ import {
 } from "../../src";
 import { getNearestConnectablePort } from "../../src/utils";
 import { EventChannel } from "../../src/utils/eventChannel";
-import { GraphController } from "../../src/utils/graphController";
+import { GraphController } from "../../src/controllers/GraphController";
 import { identical } from "../../src/utils/identical";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { getGraphConfig, patchPointerEvent } from "../utils";

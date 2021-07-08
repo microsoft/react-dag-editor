@@ -15,7 +15,7 @@ import { ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { isViewportComplete } from "../../utils";
-import { GraphController } from "../../utils/graphController";
+import { GraphController } from "../../controllers/GraphController";
 
 export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> {
   /**

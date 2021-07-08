@@ -8,7 +8,7 @@ import { IContainerRect } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { isWithinThreshold } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
-import { GraphController } from "../utils/graphController";
+import { GraphController } from "../controllers/GraphController";
 import { checkIsMultiSelect } from "../utils/keyboard";
 
 export interface INodePointerDownParams {

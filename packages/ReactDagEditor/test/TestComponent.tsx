@@ -3,7 +3,7 @@ import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphConfi
 import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphConfigContext } from "../src/contexts";
 import { GraphControllerContext } from "../src/contexts/GraphControllerContext";
-import { GraphController } from "../src/utils/graphController";
+import { GraphController } from "../src/controllers/GraphController";
 import Sample0 from "../test/unit/__data__/sample0.json";
 
 const data: ICanvasData = {

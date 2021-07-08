@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { GraphController } from "../utils/graphController";
+import { GraphController } from "../controllers/GraphController";
 import { noop } from "../utils/noop";
 import { EMPTY_GRAPH_STATE } from "./GraphStateContext";
 

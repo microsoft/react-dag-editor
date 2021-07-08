@@ -2,18 +2,16 @@
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
-import { defaultFeatures, EMPTY_VIEW_PORT, PropsAPIContext } from "../../../src";
+import { EMPTY_VIEW_PORT, GraphCanvasEvent, GraphStateStore } from "../../../src";
 import { MouseEventButton } from "../../../src/common/constants";
 import { Item } from "../../../src/components/ItemPanel";
 import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
 import { ICanvasNode } from "../../../src/models/node";
 import { noopInstance } from "../../../src/props-api/IPropsAPIInstance";
-import { PropsAPI } from "../../../src/props-api/PropsAPI";
-import { EventChannel } from "../../../src/utils/eventChannel";
-import { graphController } from "../../../src/utils/graphController";
+import { GraphController } from "../../../src/utils/graphController";
+import { GraphControllerRef } from "../../TestComponent";
 import { patchPointerEvent } from "../../utils";
 import { withGraphConfigContext } from "../__mocks__/mockContext";
-import { mockPropsAPI } from "../__mocks__/mockPropsAPI";
 import { TestItemContent } from "./TestItemContent";
 
 const rect = {
@@ -50,12 +48,9 @@ describe("ItemPanel - AddingNodeSvg", () => {
   let nodeWillAdd: () => ICanvasNode;
   let nodeDidAdd: () => void;
   let renderedWrapper: RenderResult;
+  let graphController: GraphController;
   beforeAll(() => {
     patchPointerEvent();
-    jest.spyOn(PropsAPI.prototype, "getGraphSvgRef").mockReturnValue({
-      current: document.createElementNS("http://www.w3.org/2000/svg", "svg")
-    });
-    jest.spyOn(graphController, "getEnabledFeatures").mockReturnValue(defaultFeatures);
     jest.useFakeTimers();
   });
   afterAll(() => {
@@ -65,10 +60,10 @@ describe("ItemPanel - AddingNodeSvg", () => {
   beforeEach(() => {
     nodeWillAdd = jest.fn();
     nodeDidAdd = jest.fn();
-
+    const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
       withGraphConfigContext(
-        <PropsAPIContext.Provider value={propsAPI}>
+        <GraphStateStore>
           <Item
             model={{ name: "node1", shape: "nodeShape" }}
             dragWillStart={jest.fn()}
@@ -77,9 +72,16 @@ describe("ItemPanel - AddingNodeSvg", () => {
           >
             <TestItemContent text="test item for addingNodeSVG" />
           </Item>
-        </PropsAPIContext.Provider>
+          <GraphControllerRef ref={graphControllerRef} />
+        </GraphStateStore>
       )
     );
+    graphController = graphControllerRef.current!;
+    expect(graphController).toBeDefined();
+    graphController.dispatch({
+      type: GraphCanvasEvent.ViewportResize,
+      viewportRect: rect
+    });
   });
 
   afterEach(cleanup);

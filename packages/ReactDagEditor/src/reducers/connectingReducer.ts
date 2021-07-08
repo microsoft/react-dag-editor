@@ -16,7 +16,6 @@ import {
   updateState
 } from "../utils";
 import { nextConnectablePort } from "../utils/a11yUtils";
-import { graphController } from "../utils/graphController";
 
 function attachPort(state: IGraphState, nodeId: string, portId: string): IGraphState {
   if (!state.connectState) {
@@ -173,7 +172,7 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
       }
       return state;
     case GraphPortEvent.PointerEnter:
-      if (state.connectState && (action.rawEvent as PointerEvent).pointerId === graphController.pointerId) {
+      if (state.connectState) {
         const { sourceNode, sourcePort } = state.connectState;
         const data = state.data.present;
         const node = data.nodes.get(action.node.id);
@@ -199,7 +198,7 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
       return state;
     case GraphNodeEvent.PointerEnter:
     case GraphNodeEvent.PointerMove:
-      if (state.connectState && (action.rawEvent as PointerEvent).pointerId === graphController.pointerId) {
+      if (state.connectState) {
         const { clientX, clientY } = action.rawEvent as PointerEvent;
         const { sourceNode, sourcePort } = state.connectState;
         const data = state.data.present;

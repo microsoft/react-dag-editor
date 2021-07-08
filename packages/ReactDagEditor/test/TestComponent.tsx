@@ -2,6 +2,8 @@ import * as React from "react";
 import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphConfig, IGraphReducer } from "../src";
 import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphConfigContext } from "../src/contexts";
+import { GraphControllerContext } from "../src/contexts/GraphControllerContext";
+import { GraphController } from "../src/utils/graphController";
 import Sample0 from "../test/unit/__data__/sample0.json";
 
 const data: ICanvasData = {
@@ -28,7 +30,13 @@ afterEach(() => {
   expect(events).toMatchSnapshot("events");
 });
 
-export const TestComponent = (props: ITestComponentProps) => {
+export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => {
+  const graphController = React.useContext(GraphControllerContext);
+  React.useImperativeHandle(ref, () => graphController, [graphController]);
+  return null;
+});
+
+export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps>) => {
   const onEvent = React.useCallback(
     (event: IEvent) => {
       props.onEvent?.(event);
@@ -41,6 +49,7 @@ export const TestComponent = (props: ITestComponentProps) => {
   const content = (
     <GraphStateStore data={props.data ?? GraphModel.fromJSON(data)} middleware={props.middleware}>
       <Graph {...props} onEvent={onEvent} />
+      {props.children}
     </GraphStateStore>
   );
 

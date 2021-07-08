@@ -52,10 +52,11 @@ export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData
   const [state, dispatchImpl] = React.useReducer(
     reducer,
     params,
-    ({ data, transformMatrix, features, graphConfig }) => ({
+    ({ data, transformMatrix, features, graphConfig, canvasBoundaryPadding }) => ({
       settings: {
         features,
-        graphConfig
+        graphConfig,
+        canvasBoundaryPadding
       },
       data: resetUndoStack(data ?? GraphModel.empty()),
       viewport: {

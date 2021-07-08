@@ -4,7 +4,7 @@ import { ICanvasData } from "./canvas";
 import { IDummyNode } from "./dummy-node";
 import { ICanvasEdge } from "./edge";
 import { EdgeModel } from "./EdgeModel";
-import { IContainerRect, IGap, IPoint, Direction } from "./geometry";
+import { IContainerRect, IPoint, Direction } from "./geometry";
 import { GraphModel } from "./GraphModel";
 import { ICanvasNode } from "./node";
 import { NodeModel } from "./NodeModel";
@@ -231,9 +231,6 @@ export interface ICanvasPanEvent extends IEventBase {
   type: GraphCanvasEvent.Drag | GraphCanvasEvent.MouseWheelScroll | GraphCanvasEvent.Pan;
   dx: number;
   dy: number;
-  limitBoundary: boolean;
-  canvasBoundaryPadding?: IGap;
-  groupPadding?: IGap;
 }
 
 export interface ICanvasPinchEvent extends IEventBase {

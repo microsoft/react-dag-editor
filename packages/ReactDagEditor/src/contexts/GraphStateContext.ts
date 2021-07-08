@@ -3,7 +3,7 @@ import { emptyDummyNodes } from "../components/dummyNodes";
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
 import { defaultFeatures } from "../Features";
 import { IEvent } from "../models/event";
-import { ITransformMatrix, IViewport } from "../models/geometry";
+import { IGap, ITransformMatrix, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { Debug } from "../utils/debug";
@@ -24,10 +24,18 @@ export const EMPTY_VIEW_PORT: IViewport = {
   transformMatrix: EMPTY_TRANSFORM_MATRIX
 };
 
+export const EMPTY_GAP: IGap = {
+  top: 0,
+  right: 0,
+  bottom: 0,
+  left: 0
+};
+
 export const EMPTY_GRAPH_STATE: IGraphState = {
   settings: {
     features: defaultFeatures,
-    graphConfig: new GraphConfig(window)
+    graphConfig: new GraphConfig(window),
+    canvasBoundaryPadding: EMPTY_GAP
   },
   behavior: GraphBehavior.default,
   data: resetUndoStack(GraphModel.empty()),

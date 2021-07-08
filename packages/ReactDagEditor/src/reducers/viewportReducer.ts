@@ -1,5 +1,6 @@
 import { IGraphConfig, IGraphReactReducer } from "../contexts";
 import { EMPTY_TRANSFORM_MATRIX } from "../contexts/GraphStateContext";
+import { GraphFeatures } from "../Features";
 import {
   GraphCanvasEvent,
   GraphMinimapEvent,
@@ -10,6 +11,7 @@ import {
 } from "../models/event";
 import { IContainerRect, IPoint, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
+import { IGraphSettings } from "../models/state";
 import {
   clamp,
   getGroupRect,
@@ -125,7 +127,12 @@ function zoomToFit(
   };
 }
 
-const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, graphConfig: IGraphConfig): IViewport => {
+const reducer = (
+  viewport: IViewport,
+  action: IEvent,
+  data: GraphModel,
+  { graphConfig, canvasBoundaryPadding, features }: IGraphSettings
+): IViewport => {
   switch (action.type) {
     case GraphCanvasEvent.ViewportResize:
       return {
@@ -143,7 +150,8 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, graphCon
       }
       const { transformMatrix, rect } = viewport;
       let { dx, dy } = action;
-      const { limitBoundary, groupPadding, canvasBoundaryPadding } = action;
+      const limitBoundary = features.has(GraphFeatures.limitBoundary);
+      const groupPadding = data.groups?.[0].padding; // TODO: this is not precise
       if (limitBoundary) {
         const { minX, maxX, minY, maxY } = getOffsetLimit({
           data,
@@ -182,7 +190,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, graphCon
 };
 
 export const viewportReducer: IGraphReactReducer = (state, action) => {
-  const viewport = reducer(state.viewport, action, state.data.present, state.settings.graphConfig);
+  const viewport = reducer(state.viewport, action, state.data.present, state.settings);
   return viewport === state.viewport
     ? state
     : {

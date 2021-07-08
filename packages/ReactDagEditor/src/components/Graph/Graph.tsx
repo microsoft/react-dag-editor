@@ -2,6 +2,7 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphConfigContext, IGraphConfig, PanelContext, PropsAPIContext } from "../../contexts";
+import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { VirtualizationRenderedContext } from "../../contexts/VirtualizationRenderedContext";
 import {
   useContainerRect,
@@ -25,7 +26,6 @@ import { IPropsAPIInstance } from "../../props-api/IPropsAPIInstance";
 import { isSelected, isSupported, isViewportComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";
-import { EventChannel } from "../../utils/eventChannel";
 import { getOffsetLimit } from "../../utils/getOffsetLimit";
 import { AlignmentLines } from "../AlignmentLines";
 import { AnimatingNodeGroup } from "../AnimatingNodeGroup";
@@ -50,11 +50,14 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const [focusedWithoutMouse, setFocusedWithoutMouse] = React.useState<boolean>(false);
 
   const propsAPI = React.useContext(PropsAPIContext);
+  const graphController = React.useContext(GraphControllerContext);
   const { state, dispatch } = useGraphState();
   const data = state.data.present;
   const { viewport } = state;
 
   const panelContext = React.useContext(PanelContext);
+
+  const { eventChannel } = graphController;
 
   /**
    * temporary workaround for a corner case
@@ -98,8 +101,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     zoomSensitivity = 0.1,
     scrollSensitivity = 0.5,
     svgRef = defaultSVGRef,
-    virtualizationDelay = 500,
-    canvasBoundaryPadding
+    virtualizationDelay = 500
   } = props;
 
   const { theme } = useTheme();
@@ -124,8 +126,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const containerRef = React.useRef<HTMLDivElement>(null);
   const rectRef = React.useRef<IContainerRect | undefined>(undefined);
 
-  const eventChannel = useConst(() => new EventChannel());
-
   const updateViewport = useUpdateViewportCallback(rectRef, svgRef, eventChannel);
 
   useEventChannel({
@@ -141,8 +141,8 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     setCurHoverNode,
     setCurHoverPort,
     updateViewport,
-    canvasBoundaryPadding,
-    eventChannel
+    eventChannel,
+    graphController
   });
 
   useContainerRect(svgRef, containerRef, updateViewport);
@@ -197,10 +197,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     isCtrlKeyZoomEnable,
     eventChannel,
     graphConfig,
-    propsAPI,
-    limitBoundary: isLimitBoundary,
-    canvasBoundaryPadding,
-    groupPadding: data.groups?.[0]?.padding
+    propsAPI
   });
 
   const onContextMenuClick = React.useCallback(
@@ -370,13 +367,12 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
         isViewportComplete(state.viewport) && (
           <Scrollbar
             viewport={state.viewport}
-            canvasBoundaryPadding={canvasBoundaryPadding}
             offsetLimit={getOffsetLimit({
               data,
               graphConfig,
               rect: state.viewport.rect,
               transformMatrix: viewport.transformMatrix,
-              canvasBoundaryPadding,
+              canvasBoundaryPadding: state.settings.canvasBoundaryPadding,
               groupPadding: data.groups[0]?.padding
             })}
             dispatch={dispatch}

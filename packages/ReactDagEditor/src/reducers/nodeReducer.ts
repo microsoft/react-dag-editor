@@ -1,4 +1,3 @@
-import * as React from "react";
 import { emptyDummyNodes } from "../components/dummyNodes";
 import { IGraphConfig, IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
@@ -36,7 +35,6 @@ import {
   zoom
 } from "../utils";
 import { getAlignmentLines, getAutoAlignDisplacement } from "../utils/autoAlign";
-import { graphController } from "../utils/graphController";
 import { pipe } from "../utils/pipe";
 
 const getDelta = (start: number, end: number, value: number): number => {
@@ -301,11 +299,6 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
 
     case GraphNodeEvent.PointerEnter:
       switch (state.behavior) {
-        case GraphBehavior.connecting:
-          if ((action.rawEvent as React.PointerEvent).pointerId !== graphController.pointerId) {
-            return state;
-          }
-        // eslint-disable-next-line no-fallthrough
         case GraphBehavior.default:
           return {
             ...state,

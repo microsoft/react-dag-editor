@@ -4,7 +4,7 @@ import { IGraphConfig } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { IHistory } from "../utils";
 import { IDummyNodes } from "./dummy-node";
-import { IPoint, IViewport } from "./geometry";
+import { IGap, IPoint, IViewport } from "./geometry";
 import { GraphModel } from "./GraphModel";
 
 export enum CanvasMouseMode {
@@ -35,6 +35,7 @@ export interface IConnectingState {
 export interface IGraphSettings<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   graphConfig: IGraphConfig<NodeData, EdgeData, PortData>;
   features: ReadonlySet<GraphFeatures>;
+  canvasBoundaryPadding: IGap;
 }
 
 export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {

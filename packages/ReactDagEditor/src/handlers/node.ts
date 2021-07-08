@@ -8,7 +8,7 @@ import { IContainerRect } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { isWithinThreshold } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
-import { graphController } from "../utils/graphController";
+import { GraphController } from "../utils/graphController";
 import { checkIsMultiSelect } from "../utils/keyboard";
 
 export interface INodePointerDownParams {
@@ -22,6 +22,7 @@ export interface INodePointerDownParams {
   graphConfig: IGraphConfig;
   autoAlignThreshold: number;
   eventChannel: EventChannel;
+  graphController: GraphController;
 }
 
 export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, params: INodePointerDownParams) => {
@@ -37,7 +38,8 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
     dragThreshold,
     rectRef,
     isAutoAlignEnable,
-    autoAlignThreshold
+    autoAlignThreshold,
+    graphController
   } = params;
 
   if (isNodesDraggable) {

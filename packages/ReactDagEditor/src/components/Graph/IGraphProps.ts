@@ -2,7 +2,6 @@ import * as React from "react";
 import { TGetPositionFromEvent } from "../../controllers";
 import { IEvent } from "../../models/event";
 import { ICanvasEdge } from "../../models/edge";
-import { IGap } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
 import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
@@ -105,10 +104,6 @@ export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = 
    * Port circle radius.
    */
   portRadius?: number;
-  /**
-   * The padding between the boundary of the canvas and the graph when scrolling/panning
-   */
-  canvasBoundaryPadding?: IGap;
   /**
    * Delay time of virtualization calculation in ms
    *

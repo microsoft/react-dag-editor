@@ -7,8 +7,11 @@ import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
 import {
   GraphCanvasEvent,
-  GraphContextMenuEvent, GraphEdgeEvent,
-  GraphMinimapEvent, GraphNodeEvent, GraphPortEvent,
+  GraphContextMenuEvent,
+  GraphEdgeEvent,
+  GraphMinimapEvent,
+  GraphNodeEvent,
+  GraphPortEvent,
   GraphScrollBarEvent,
   IEvent,
   INodeCommonEvent,
@@ -46,9 +49,9 @@ let prevMouseDownPortTime: number | undefined;
 export interface IUseEventChannelParams {
   props: IGraphProps;
   dispatch: IDispatch;
+  rectRef: React.RefObject<IContainerRect | undefined>;
   svgRef: React.RefObject<SVGSVGElement>;
   containerRef: React.RefObject<HTMLDivElement>;
-  visibleRectRef: React.RefObject<IContainerRect | undefined>;
   propsAPI: PropsAPI<unknown, unknown, unknown>;
   featureControl: ReturnType<typeof useFeatureControl>;
   graphConfig: IGraphConfig;
@@ -63,10 +66,10 @@ export interface IUseEventChannelParams {
 export function useEventChannel({
   props,
   dispatch,
+  rectRef,
   svgRef,
   propsAPI,
   containerRef,
-  visibleRectRef,
   featureControl,
   graphConfig,
   setFocusedWithoutMouse,
@@ -357,7 +360,7 @@ export function useEventChannel({
           updateViewport();
           onNodePointerDown(evt, event.node, {
             svgRef,
-            visibleRectRef,
+            rectRef,
             isNodesDraggable,
             isAutoAlignEnable,
             dragThreshold,

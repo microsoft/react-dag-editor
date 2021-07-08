@@ -2,7 +2,7 @@ import * as React from "react";
 import { render } from "@testing-library/react";
 import { allFeatures, IEvent, IGraphConfig, IGraphState, IViewport } from "../../src";
 import { Scrollbar } from "../../src/components/Scrollbar";
-import { EMPTY_GRAPH_STATE} from "../../src/contexts/GraphStateContext";
+import { EMPTY_GRAPH_STATE } from "../../src/contexts/GraphStateContext";
 import { viewportReducer } from "../../src/reducers/viewportReducer";
 import { EventChannel } from "../../src/utils/eventChannel";
 import { getGraphConfig } from "../utils";
@@ -31,7 +31,6 @@ describe("Scrollbar", () => {
 
     const viewport: Required<IViewport> = {
       rect,
-      visibleRect: rect,
       transformMatrix: [1, 0, 0, 1, 0, 0]
     };
 

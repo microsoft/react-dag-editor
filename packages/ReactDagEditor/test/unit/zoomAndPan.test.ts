@@ -1,4 +1,4 @@
-import { EMPTY_TRANSFORM_MATRIX, IPoint, Direction } from "../../src";
+import { EMPTY_TRANSFORM_MATRIX, IPoint, Direction, IViewport } from "../../src";
 import { focusArea, pan, scrollIntoView, zoom, zoomTo } from "../../src/utils";
 
 describe("test zoomTo", () => {
@@ -127,14 +127,12 @@ describe("test focusArea", () => {
 
   const viewport: Required<IViewport> = {
     rect,
-    visibleRect: rect,
     transformMatrix: EMPTY_TRANSFORM_MATRIX
   };
 
   it("should focus", () => {
     expect(focusArea(100, 100, 150, 150, viewport)).toEqual({
       rect,
-      visibleRect: rect,
       transformMatrix: [4, 0, 0, 4, -400, -400]
     });
   });

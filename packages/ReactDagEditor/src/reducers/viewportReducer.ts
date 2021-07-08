@@ -1,5 +1,5 @@
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
-import { EMPTY_TRANSFORM_MATRIX} from "../contexts/GraphStateContext";
+import { EMPTY_TRANSFORM_MATRIX } from "../contexts/GraphStateContext";
 import {
   GraphCanvasEvent,
   GraphMinimapEvent,
@@ -131,8 +131,7 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
     case GraphCanvasEvent.ViewportResize:
       return {
         ...viewport,
-        rect: action.viewportRect,
-        visibleRect: action.visibleRect
+        rect: action.viewportRect
       };
     case GraphCanvasEvent.Zoom:
       return zoom(action.scale, action.anchor ?? getRectCenter(viewport.rect), undefined, action.direction)(viewport);

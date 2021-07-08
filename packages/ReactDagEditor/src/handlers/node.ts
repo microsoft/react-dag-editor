@@ -13,7 +13,7 @@ import { checkIsMultiSelect } from "../utils/keyboard";
 
 export interface INodePointerDownParams {
   svgRef: React.RefObject<SVGSVGElement>;
-  visibleRectRef: React.RefObject<IContainerRect | undefined>;
+  rectRef: React.RefObject<IContainerRect | undefined>;
   isNodesDraggable: boolean;
   isAutoAlignEnable: boolean;
   dragThreshold: number;
@@ -35,7 +35,7 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
     isClickNodeToSelectDisabled,
     eventChannel,
     dragThreshold,
-    visibleRectRef,
+    rectRef,
     isAutoAlignEnable,
     autoAlignThreshold
   } = params;
@@ -59,7 +59,7 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
   const dragging = new DragNodeController(
     new PointerEventProvider(graphConfig.getGlobalEventTarget(), evt.pointerId),
     getPositionFromEvent,
-    visibleRectRef
+    rectRef
   );
 
   dragging.onMove = ({ dx, dy, totalDX, totalDY, e }) => {

@@ -115,10 +115,6 @@ export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = 
    */
   canvasBoundaryPadding?: IGap;
   /**
-   * Padding of graph.
-   */
-  padding?: IGap;
-  /**
    * Delay time of virtualization calculation in ms
    *
    * @default 500

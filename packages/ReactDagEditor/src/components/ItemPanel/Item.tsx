@@ -174,7 +174,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
       drag.onEnd = ({ e }) => {
         const viewport = propsAPI.getViewport();
         let nextNode = nextNodeRef.current;
-        if (!isViewportComplete(viewport) || !nextNode || !isWithInBound(viewport.visibleRect, e.clientX, e.clientY)) {
+        if (!isViewportComplete(viewport) || !nextNode || !isWithInBound(viewport.rect, e.clientX, e.clientY)) {
           setWorkingModel(null);
           eventChannel.trigger({
             type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,

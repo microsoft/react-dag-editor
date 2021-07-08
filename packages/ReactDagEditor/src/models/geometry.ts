@@ -23,7 +23,6 @@ export type IContainerRect = ClientRect | DOMRect;
 
 export interface IViewport {
   rect?: IContainerRect;
-  visibleRect?: IContainerRect;
   transformMatrix: ITransformMatrix;
 }
 

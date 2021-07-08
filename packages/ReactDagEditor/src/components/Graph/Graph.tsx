@@ -129,20 +129,19 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
 
   const containerRef = React.useRef<HTMLDivElement>(null);
   const rectRef = React.useRef<IContainerRect | undefined>(undefined);
-  const visibleRectRef = React.useRef<IContainerRect | undefined>(undefined);
 
   const eventChannel = useConst(() => new EventChannel());
 
-  const updateViewport = useUpdateViewportCallback(rectRef, visibleRectRef, svgRef, containerRef, eventChannel);
+  const updateViewport = useUpdateViewportCallback(rectRef, svgRef, eventChannel);
 
   useEventChannel({
     props,
     dispatch,
+    rectRef,
     svgRef,
     setFocusedWithoutMouse,
     propsAPI,
     containerRef,
-    visibleRectRef,
     featureControl,
     graphConfig,
     setCurHoverNode,

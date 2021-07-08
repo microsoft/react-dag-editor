@@ -1,7 +1,5 @@
 import { mergeStyleSets } from "@fluentui/merge-styles";
-import * as React from "react";
 import { ITheme } from "../../contexts";
-import { IGap } from "../../models/geometry";
 import { CanvasMouseMode, GraphBehavior, IGraphState } from "../../models/state";
 import classes from "../Graph.styles.m.scss";
 import { IGraphProps } from "./IGraphProps";
@@ -54,15 +52,6 @@ function getNodeCursor(isNodeDraggable: boolean): string {
   return isNodeDraggable ? "move" : "initial";
 }
 
-function getSvgPaddingStyle({ top = 0, right = 0, left = 0, bottom = 0 }: IGap): React.CSSProperties {
-  return {
-    top,
-    left,
-    width: `calc(100% - ${left}px - ${right}px)`,
-    height: `calc(100% - ${top}px - ${bottom}px)`
-  };
-}
-
 interface IGraphStyles {
   svg: string;
   container: string;
@@ -84,7 +73,6 @@ export const getGraphStyles = (
       "react-dag-editor-svg-container",
       classes.svg,
       props.styles?.svg,
-      getSvgPaddingStyle(props.padding ?? {}),
       {
         "& *:focus": {
           outline: theme.outlineStyle

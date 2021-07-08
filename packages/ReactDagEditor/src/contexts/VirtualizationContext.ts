@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { IContainerRect, IRectShape, IViewport } from "../models/geometry";
-import { EMPTY_TRANSFORM_MATRIX} from "./GraphStateContext";
+import { EMPTY_TRANSFORM_MATRIX } from "./GraphStateContext";
 
 export interface IVirtualizationContext {
   viewport: Required<IViewport>;
@@ -25,7 +25,6 @@ const EMPTY_RECT = {
 export const VirtualizationContext = createContext<IVirtualizationContext>({
   viewport: {
     rect: EMPTY_RECT,
-    visibleRect: EMPTY_RECT,
     transformMatrix: EMPTY_TRANSFORM_MATRIX
   },
   renderedArea: {

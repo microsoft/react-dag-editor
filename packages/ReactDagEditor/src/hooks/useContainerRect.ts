@@ -25,24 +25,19 @@ const isRectChanged = (a: IContainerRect | undefined, b: IContainerRect | undefi
 
 export const useUpdateViewportCallback = (
   rectRef: MutableRefObject<IContainerRect | undefined>,
-  visibleRectRef: MutableRefObject<IContainerRect | undefined>,
   svgRef: RefObject<SVGSVGElement>,
-  containerRef: RefObject<HTMLDivElement>,
   eventChannel: EventChannel
 ) =>
   useCallback((): void => {
     const viewportRect = svgRef.current?.getBoundingClientRect();
-    const visibleRect = containerRef.current?.getBoundingClientRect();
-    if (isRectChanged(rectRef.current, viewportRect) || isRectChanged(visibleRectRef.current, visibleRect)) {
+    if (isRectChanged(rectRef.current, viewportRect)) {
       rectRef.current = viewportRect;
-      visibleRectRef.current = visibleRect;
       eventChannel.trigger({
         type: GraphCanvasEvent.ViewportResize,
-        viewportRect,
-        visibleRect
+        viewportRect
       });
     }
-  }, [containerRef, eventChannel, rectRef, svgRef, visibleRectRef]);
+  }, [eventChannel, rectRef, svgRef]);
 
 export const useContainerRect = (
   svgRef: RefObject<SVGSVGElement>,

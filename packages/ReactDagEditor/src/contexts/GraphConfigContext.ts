@@ -93,16 +93,21 @@ export interface IGraphConfig<NodeData = unknown, EdgeData = unknown, PortData =
   defaultEdgeShape: string;
   defaultPortShape: string;
   defaultGroupShape: string;
-  registerNode(name: string, config: IRectConfig<ICanvasNode<NodeData>>): void;
+  registerNode(name: string, config: IRectConfig<ICanvasNode<NodeData>>): IGraphConfig<NodeData, EdgeData, PortData>;
   getNodeConfigByName(name?: string): IRectConfig<ICanvasNode<NodeData>> | undefined;
-  registerEdge(name: string, config: IEdgeConfig<EdgeData>): void;
+  registerEdge(name: string, config: IEdgeConfig<EdgeData>): IGraphConfig<NodeData, EdgeData, PortData>;
   getEdgeConfigByName(name?: string): IEdgeConfig<EdgeData> | undefined;
-  registerPort(name: string, config: IPortConfig<NodeData, EdgeData, PortData>): void;
+  registerPort(
+    name: string,
+    config: IPortConfig<NodeData, EdgeData, PortData>
+  ): IGraphConfig<NodeData, EdgeData, PortData>;
   getPortConfigByName(name?: string): IPortConfig<NodeData, EdgeData, PortData> | undefined;
-  registerClipboard(clipboard: IGraphClipBoard<NodeData, EdgeData, PortData>): void;
+  registerClipboard(
+    clipboard: IGraphClipBoard<NodeData, EdgeData, PortData>
+  ): IGraphConfig<NodeData, EdgeData, PortData>;
   getClipboard(): IGraphClipBoard<NodeData, EdgeData, PortData>;
   getGlobalEventTarget(): Window | Element;
-  registerGroup(name: string, config: IGroupConfig): void;
+  registerGroup(name: string, config: IGroupConfig): IGraphConfig<NodeData, EdgeData, PortData>;
   getGroupConfigByName(name?: string): IGroupConfig | undefined;
 }
 
@@ -123,32 +128,41 @@ export class GraphConfig<NodeData = unknown, EdgeData = unknown, PortData = unkn
     this.globalEventTarget = globalEventTarget;
   }
 
-  public registerNode(name: string, config: IRectConfig<ICanvasNode>): void {
+  public registerNode(name: string, config: IRectConfig<ICanvasNode>): GraphConfig<NodeData, EdgeData, PortData> {
     this.nodeConfigMap.set(name, config);
+    return this;
   }
 
   public getNodeConfigByName(name?: string): IRectConfig<ICanvasNode> | undefined {
     return this.nodeConfigMap.get(name || this.defaultNodeShape);
   }
 
-  public registerEdge(name: string, config: IEdgeConfig<EdgeData>): void {
+  public registerEdge(name: string, config: IEdgeConfig<EdgeData>): GraphConfig<NodeData, EdgeData, PortData> {
     this.edgeConfigMap.set(name, config);
+    return this;
   }
 
   public getEdgeConfigByName(name?: string): IEdgeConfig<EdgeData> | undefined {
     return this.edgeConfigMap.get(name || this.defaultEdgeShape);
   }
 
-  public registerPort(name: string, config: IPortConfig<NodeData, EdgeData, PortData>): void {
+  public registerPort(
+    name: string,
+    config: IPortConfig<NodeData, EdgeData, PortData>
+  ): GraphConfig<NodeData, EdgeData, PortData> {
     this.portConfigMap.set(name, config);
+    return this;
   }
 
   public getPortConfigByName(name?: string): IPortConfig<NodeData, EdgeData, PortData> | undefined {
     return this.portConfigMap.get(name || this.defaultPortShape);
   }
 
-  public registerClipboard(clipboard: IGraphClipBoard<NodeData, EdgeData, PortData>): void {
+  public registerClipboard(
+    clipboard: IGraphClipBoard<NodeData, EdgeData, PortData>
+  ): GraphConfig<NodeData, EdgeData, PortData> {
     this.clipboard = clipboard;
+    return this;
   }
 
   public getClipboard(): IGraphClipBoard<NodeData, EdgeData, PortData> {
@@ -163,8 +177,9 @@ export class GraphConfig<NodeData = unknown, EdgeData = unknown, PortData = unkn
     return this.globalEventTarget;
   }
 
-  public registerGroup(name: string, config: IGroupConfig): void {
+  public registerGroup(name: string, config: IGroupConfig): GraphConfig<NodeData, EdgeData, PortData> {
     this.groupConfigMap.set(name, config);
+    return this;
   }
 
   public getGroupConfigByName(name?: string): IGroupConfig | undefined {
@@ -205,24 +220,28 @@ export const defaultGraphConfigContext: IGraphConfig = {
     console.warn(
       "registerNode is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
+    return defaultGraphConfigContext;
   },
   getNodeConfigByName: () => undefined,
   registerEdge: () => {
     console.warn(
       "registerEdge is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
+    return defaultGraphConfigContext;
   },
   getEdgeConfigByName: () => undefined,
   registerPort: () => {
     console.warn(
       "registerPort is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
+    return defaultGraphConfigContext;
   },
   getPortConfigByName: () => undefined,
   registerClipboard: () => {
     console.warn(
       "registerClipboard is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
+    return defaultGraphConfigContext;
   },
   getClipboard: () => (({} as unknown) as IGraphClipBoard),
   getGlobalEventTarget: () => window,
@@ -230,6 +249,7 @@ export const defaultGraphConfigContext: IGraphConfig = {
     console.warn(
       "registerGroup is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"
     );
+    return defaultGraphConfigContext;
   },
   getGroupConfigByName: () => undefined
 };

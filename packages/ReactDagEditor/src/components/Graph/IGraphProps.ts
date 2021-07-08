@@ -101,10 +101,6 @@ export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = 
    */
   getPositionFromEvent?: TGetPositionFromEvent;
   /**
-   * Port circle radius.
-   */
-  portRadius?: number;
-  /**
    * Delay time of virtualization calculation in ms
    *
    * @default 500

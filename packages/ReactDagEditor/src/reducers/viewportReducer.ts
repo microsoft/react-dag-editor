@@ -1,4 +1,4 @@
-import { IGraphConfig, IGraphReducerContext } from "../contexts";
+import { IGraphConfig, IGraphReactReducer } from "../contexts";
 import { EMPTY_TRANSFORM_MATRIX } from "../contexts/GraphStateContext";
 import {
   GraphCanvasEvent,
@@ -28,7 +28,6 @@ import {
   zoomTo
 } from "../utils";
 import { pipe } from "../utils/pipe";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
 function getRectCenter(rect: IContainerRect | undefined): IPoint | undefined {
   if (!rect) {
@@ -126,7 +125,7 @@ function zoomToFit(
   };
 }
 
-const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerContext, data: GraphModel): IViewport => {
+const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, graphConfig: IGraphConfig): IViewport => {
   switch (action.type) {
     case GraphCanvasEvent.ViewportResize:
       return {
@@ -148,7 +147,7 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
       if (limitBoundary) {
         const { minX, maxX, minY, maxY } = getOffsetLimit({
           data,
-          graphConfig: context.graphConfig,
+          graphConfig,
           rect,
           transformMatrix,
           canvasBoundaryPadding,
@@ -166,11 +165,11 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
     case GraphMinimapEvent.Pan:
       return minimapPan(action.dx, action.dy)(viewport);
     case GraphCanvasEvent.ResetViewport:
-      return resetViewport(viewport, data, context.graphConfig, action);
+      return resetViewport(viewport, data, graphConfig, action);
     case GraphCanvasEvent.ZoomTo:
       return zoomTo(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
     case GraphCanvasEvent.ZoomToFit:
-      return zoomToFit(viewport, data, context.graphConfig, action);
+      return zoomToFit(viewport, data, graphConfig, action);
     case GraphCanvasEvent.ScrollIntoView:
       if (viewport.rect) {
         const { x, y } = transformPoint(action.x, action.y, viewport.transformMatrix);
@@ -182,8 +181,8 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
   }
 };
 
-export const viewportReducer: IBuiltinReducer = (state, action, context) => {
-  const viewport = reducer(state.viewport, action, context, state.data.present);
+export const viewportReducer: IGraphReactReducer = (state, action) => {
+  const viewport = reducer(state.viewport, action, state.data.present, state.graphConfig);
   return viewport === state.viewport
     ? state
     : {

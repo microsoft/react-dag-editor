@@ -1,14 +1,14 @@
 import * as React from "react";
 import { emptyDummyNodes } from "../components/dummyNodes";
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
-import { GraphFeatures } from "../Features";
+import { defaultFeatures } from "../Features";
 import { IEvent } from "../models/event";
 import { ITransformMatrix, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { Debug } from "../utils/debug";
 import { resetUndoStack } from "../utils/history";
-import { IGraphConfig } from "./GraphConfigContext";
+import { GraphConfig } from "./GraphConfigContext";
 
 export const EMPTY_TRANSFORM_MATRIX: ITransformMatrix = [1, 0, 0, 1, 0, 0];
 
@@ -25,6 +25,8 @@ export const EMPTY_VIEW_PORT: IViewport = {
 };
 
 export const EMPTY_GRAPH_STATE: IGraphState = {
+  features: defaultFeatures,
+  graphConfig: new GraphConfig(window),
   behavior: GraphBehavior.default,
   data: resetUndoStack(GraphModel.empty()),
   viewport: {
@@ -114,11 +116,6 @@ export const GraphValueContext = React.createContext<GraphModel>(
 
 export const GraphStateContext = React.createContext<IGraphStateContext>(defaultGraphStateContext);
 
-export interface IGraphReducerContext {
-  graphConfig: IGraphConfig;
-  features: Set<GraphFeatures>;
-}
-
 export type IGraphReactReducer<
   NodeData = unknown,
   EdgeData = unknown,
@@ -127,8 +124,7 @@ export type IGraphReactReducer<
 > = React.Reducer<IGraphState<NodeData, EdgeData, PortData>, IEvent<NodeData, EdgeData, PortData> | Action>;
 
 export type IGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> = (
-  next: IGraphReactReducer<NodeData, EdgeData, PortData, Action>,
-  context: IGraphReducerContext
+  next: IGraphReactReducer<NodeData, EdgeData, PortData, Action>
 ) => IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
 
 export const setData = <NodeData = unknown, EdgeData = unknown, PortData = unknown>(

@@ -1,17 +1,11 @@
 /* eslint-disable import/no-deprecated */
 import * as React from "react";
 import { ConnectingState } from "../../ConnectingState";
-import {
-  EMPTY_TRANSFORM_MATRIX,
-  GraphConfigContext,
-  IGraphReducer,
-  IGraphReducerContext,
-  ViewportContext
-} from "../../contexts";
+import { EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphReducer, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { AutoZoomFitContext } from "../../contexts/AutoZoomFitContext";
 import { GraphStateContext, GraphValueContext } from "../../contexts/GraphStateContext";
-import { GraphFeatures } from "../../Features";
+import { defaultFeatures, GraphFeatures } from "../../Features";
 import { useGraphReducer } from "../../hooks/useGraphReducer";
 
 import { usePropsAPI } from "../../hooks/usePropsAPI";
@@ -44,21 +38,14 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
   React.useImperativeHandle(props.propsAPIRef, () => propsAPI, [propsAPI]);
 
   const graphConfig = React.useContext(GraphConfigContext);
-  const enabledFeatures = propsAPI.getEnabledFeatures();
-  const reducerContext: IGraphReducerContext = React.useMemo(
-    () => ({
-      graphConfig,
-      features: enabledFeatures
-    }),
-    [enabledFeatures, graphConfig]
-  );
 
   const [state, dispatch] = useGraphReducer(
     {
       data: props.data,
-      transformMatrix: defaultTransformMatrix
+      transformMatrix: defaultTransformMatrix,
+      graphConfig,
+      features: defaultFeatures
     },
-    reducerContext,
     middleware
   );
 

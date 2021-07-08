@@ -1,19 +1,17 @@
 import * as React from "react";
-import { GraphCanvasEvent, GraphContextMenuEvent, GraphEdgeEvent, GraphNodeEvent } from "../common/GraphEvent.constant";
-import { GraphBehavior, IDispatchCallback, IGraphState, IViewport } from "../contexts/GraphStateContext";
+import { IDispatchCallback} from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
-import {
-  GraphPortState,
-  ICanvasData,
-  ICanvasEdge,
-  ICanvasNode,
-  ICanvasPort,
-  IContainerRect,
-  IEvent
-} from "../Graph.interface";
+import { GraphCanvasEvent, GraphContextMenuEvent, GraphEdgeEvent, GraphNodeEvent, IEvent } from "../models/event";
+import { ICanvasData } from "../models/canvas";
+import { ICanvasEdge } from "../models/edge";
+import { IContainerRect, IPoint, IViewport, Direction } from "../models/geometry";
+import { ICanvasNode } from "../models/node";
+import { ICanvasPort } from "../models/port";
+import { GraphPortState } from "../models/element-state";
 import { autoLayout, IAutoLayout } from "../libs";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { GraphBehavior, IGraphState } from "../models/state";
 import { IPosition } from "../testAPI";
 import {
   filterSelectedItems,
@@ -22,14 +20,12 @@ import {
   getVisibleNodes,
   getRenderedEdges,
   getRenderedNodes,
-  IPoint,
   isNodeVisible,
   isPointVisible,
   IZoomFixPublicOption,
   IZoomPanSettings,
   resetState,
   updateState,
-  ZoomDirection,
   isViewportComplete,
   transformPoint
 } from "../utils";
@@ -329,7 +325,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     return true;
   }
 
-  public zoom(scale: number, direction?: ZoomDirection): void {
+  public zoom(scale: number, direction?: Direction): void {
     return this.dispatch({
       type: GraphCanvasEvent.Zoom,
       scale,
@@ -352,7 +348,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     });
   }
 
-  public zoomTo(scale: number, anchor?: IPoint | undefined, direction?: ZoomDirection): void {
+  public zoomTo(scale: number, anchor?: IPoint | undefined, direction?: Direction): void {
     this.dispatch({
       type: GraphCanvasEvent.ZoomTo,
       scale,

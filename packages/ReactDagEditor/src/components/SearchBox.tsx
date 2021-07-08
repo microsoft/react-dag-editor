@@ -1,7 +1,7 @@
 import { mergeStyleSets } from "@fluentui/merge-styles";
 import * as React from "react";
-import { ICanvasNode } from "../Graph.interface";
 import { usePropsAPI } from "../hooks";
+import { ICanvasNode } from "../models/node";
 
 export interface ICustomerSearch {
   onSearchTextChange(value: string): void;

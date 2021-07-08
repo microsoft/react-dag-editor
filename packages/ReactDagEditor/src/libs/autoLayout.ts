@@ -5,8 +5,9 @@ import ElkConstructor, {
   LayoutOptions
 } from "elkjs/lib/elk-api";
 import { IGraphConfig } from "../contexts";
-import { ICanvasNode, ICanvasPort } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
+import { ICanvasNode } from "../models/node";
+import { ICanvasPort } from "../models/port";
 import { getPortPositionByPortId } from "../utils/getPortPosition";
 import { getNodeSize } from "../utils/layout";
 

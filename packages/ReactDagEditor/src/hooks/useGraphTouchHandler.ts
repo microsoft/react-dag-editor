@@ -1,6 +1,6 @@
 import * as React from "react";
 import { TouchController, TwoFingerHandler } from "../controllers";
-import { IContainerRect } from "../Graph.interface";
+import { IContainerRect } from "../models/geometry";
 import { EventChannel } from "../utils/eventChannel";
 
 export const useGraphTouchHandler = (

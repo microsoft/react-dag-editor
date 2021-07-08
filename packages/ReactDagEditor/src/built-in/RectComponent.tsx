@@ -1,6 +1,6 @@
 import * as React from "react";
-import { ICanvasNode } from "../Graph.interface";
 import { usePropsAPI } from "../hooks/usePropsAPI";
+import { ICanvasNode } from "../models/node";
 import { IPropsAPI } from "../props-api/IPropsAPI";
 import { isNodeEditing } from "../utils/state";
 

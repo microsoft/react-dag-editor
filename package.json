@@ -1,5 +1,8 @@
 {
   "private": true,
+  "repository": {
+    "url": "https://github.com/microsoft/react-dag-editor.git"
+  },
   "scripts": {
     "lint": "lerna run lint",
     "lintfix": "lerna run lintfix",
@@ -9,6 +12,7 @@
     "start": "node ./scripts/run-demo.js",
     "updatePackageJson": "node ./scripts/edit-package-json.js",
     "run-demo": "node ./scripts/run-demo.js",
+    "build-demo": "lerna run build:demo",
     "new": "node ./scripts/new-package.js",
     "bump": "node ./scripts/bump-version.js"
   },

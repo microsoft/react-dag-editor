@@ -1,12 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { GraphCanvasEvent } from "../common/GraphEvent.constant";
 import { VisitPortHelper } from "../components/A11yHelpers/VisitPortHelper";
 import { IGetConnectableParams, IGraphConfig } from "../contexts";
+import { GraphCanvasEvent } from "../models/event";
 
-import { ICanvasNode, ICanvasPort } from "../Graph.interface";
 import { GraphModel } from "../models/GraphModel";
+import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
+import { ICanvasPort } from "../models/port";
 import { IPropsAPI } from "../props-api/IPropsAPI";
 import { EventChannel } from "./eventChannel";
 import { getNeighborPorts, getNodeUid, getPortUid } from "./graphDataUtils";

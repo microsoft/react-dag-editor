@@ -1,10 +1,10 @@
 import * as React from "react";
 import { MouseEventButton } from "../common/constants";
-import { GraphNodeEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig } from "../contexts";
 import { DragNodeController, TGetPositionFromEvent } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
-import { IContainerRect, IEvent } from "../Graph.interface";
+import { GraphNodeEvent, IEvent } from "../models/event";
+import { IContainerRect } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { isWithinThreshold } from "../utils";
 import { EventChannel } from "../utils/eventChannel";

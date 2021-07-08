@@ -1,7 +1,8 @@
-import { GraphEdgeState, ICanvasEdge } from "../Graph.interface";
 import { $Complete } from "../utils/complete";
 import { preventSpread } from "../utils/preventSpread";
 import { updateState } from "../utils/state";
+import { ICanvasEdge } from "./edge";
+import { GraphEdgeState } from "./element-state";
 
 export class EdgeModel<T = unknown> implements $Complete<ICanvasEdge> {
   public readonly inner: ICanvasEdge<T>;

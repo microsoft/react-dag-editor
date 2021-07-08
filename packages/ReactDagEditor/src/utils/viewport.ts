@@ -1,10 +1,11 @@
 import { HashMap, OrderedMap } from "../collections";
 import { IGraphConfig } from "../contexts";
-import { IViewport } from "../contexts/GraphStateContext";
-import { ICanvasEdge, ICanvasNode } from "../Graph.interface";
+import { ICanvasEdge } from "../models/edge";
 import { EdgeModel } from "../models/EdgeModel";
+import { IPoint, IRectShape, IViewport } from "../models/geometry";
+import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
-import { IPoint, IRectShape, isPointInRect } from "./geometric";
+import { isPointInRect } from "./geometric";
 import { getNodeSize, IShapeRect } from "./layout";
 import { getContainerClientPoint, reverseTransformPoint } from "./transformMatrix";
 

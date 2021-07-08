@@ -1,23 +1,14 @@
 import * as React from "react";
-import { emptyDummyNodes, IDummyNodes } from "../components/dummyNodes";
-import { emptySelectBoxPosition, ISelectBoxPosition } from "../components/Graph/SelectBox";
-import { ILine } from "../components/Line";
+import { emptyDummyNodes } from "../components/dummyNodes";
+import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
 import { GraphFeatures } from "../Features";
-import { IContainerRect, IEvent } from "../Graph.interface";
+import { IEvent } from "../models/event";
+import { ITransformMatrix, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
+import { GraphBehavior, IGraphState } from "../models/state";
 import { Debug } from "../utils/debug";
-import { IPoint } from "../utils/geometric";
-import { IHistory, resetUndoStack } from "../utils/history";
+import { resetUndoStack } from "../utils/history";
 import { IGraphConfig } from "./GraphConfigContext";
-
-export enum GraphBehavior {
-  default = "default",
-  dragging = "dragging",
-  panning = "panning",
-  multiSelect = "multiSelect",
-  connecting = "connecting",
-  addingNode = "addingNode"
-}
 
 export const EMPTY_TRANSFORM_MATRIX: ITransformMatrix = [1, 0, 0, 1, 0, 0];
 
@@ -69,25 +60,6 @@ export type TDataComposer<NodeData = unknown, EdgeData = unknown, PortData = unk
   prevState: IGraphState<NodeData, EdgeData, PortData>
 ) => GraphModel<NodeData, EdgeData, PortData>;
 
-export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  extends IHistory<GraphModel<NodeData, EdgeData, PortData>> {}
-
-export type ITransformMatrix = [number, number, number, number, number, number];
-
-export interface IViewport {
-  rect?: IContainerRect;
-  visibleRect?: IContainerRect;
-  transformMatrix: ITransformMatrix;
-}
-
-export interface IConnectingState {
-  sourceNode: string;
-  sourcePort: string;
-  targetNode: string | undefined;
-  targetPort: string | undefined;
-  movingPoint: IPoint | undefined;
-}
-
 export const EMPTY_CONNECT_STATE = {
   sourceNode: undefined,
   sourcePort: undefined,
@@ -98,18 +70,6 @@ export const EMPTY_CONNECT_STATE = {
     y: 0
   }
 };
-
-export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
-  data: IGraphDataState<NodeData, EdgeData, PortData>;
-  viewport: IViewport;
-  behavior: GraphBehavior;
-  dummyNodes: IDummyNodes;
-  alignmentLines: ILine[];
-  activeKeys: Set<string>;
-  contextMenuPosition?: IPoint;
-  selectBoxPosition: ISelectBoxPosition;
-  connectState: IConnectingState | undefined;
-}
 
 export type IGraphAction<NodeData = unknown, EdgeData = unknown, PortData = unknown> = IEvent<
   NodeData,

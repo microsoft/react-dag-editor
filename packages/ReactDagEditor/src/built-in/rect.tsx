@@ -1,6 +1,7 @@
 import * as React from "react";
 import { INodeDrawArgs, IRectConfig, ITheme } from "../contexts";
-import { GraphNodeState, ICanvasNode } from "../Graph.interface";
+import { ICanvasNode } from "../models/node";
+import { GraphNodeState } from "../models/element-state";
 import { hasState } from "../utils";
 import { getRectHeight, getRectWidth } from "../utils/layout";
 import { RectComponent } from "./RectComponent";

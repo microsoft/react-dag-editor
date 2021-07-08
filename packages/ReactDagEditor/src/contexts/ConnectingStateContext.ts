@@ -1,6 +1,6 @@
 import { createContext } from "react";
-import { ICanvasPort } from "../Graph.interface";
 import { NodeModel } from "../models/NodeModel";
+import { ICanvasPort } from "../models/port";
 
 export interface IConnectingStateContext {
   sourceNode: NodeModel | undefined;

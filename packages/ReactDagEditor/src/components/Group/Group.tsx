@@ -4,7 +4,7 @@ import {
   GraphConfigContext,
   IGraphConfig
 } from "../../contexts/GraphConfigContext";
-import { ICanvasGroup } from "../../Graph.interface";
+import { ICanvasGroup } from "../../models/canvas";
 import { GraphModel } from "../../models/GraphModel";
 import { getGroupRect } from "../../utils/layout";
 

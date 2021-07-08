@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useLayoutEffect, useState } from "react";
-import { IContainerRect } from "../Graph.interface";
+import { IContainerRect } from "../models/geometry";
 import { throttle } from "../utils/scheduling";
 
 export const getMinimapRect = (

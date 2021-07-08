@@ -1,6 +1,6 @@
 import * as uuid from "uuid";
 import { COPIED_NODE_SPACING } from "../common/constants";
-import { ICanvasData } from "../Graph.interface";
+import { ICanvasData } from "../models/canvas";
 
 export interface IGraphClipBoard<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   write(data: ICanvasData<NodeData, EdgeData, PortData>): void;

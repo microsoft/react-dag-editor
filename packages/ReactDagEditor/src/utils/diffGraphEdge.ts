@@ -1,4 +1,5 @@
-import { ICanvasData, ICanvasEdge } from "../Graph.interface";
+import { ICanvasData } from "../models/canvas";
+import { ICanvasEdge } from "../models/edge";
 
 /**
  *

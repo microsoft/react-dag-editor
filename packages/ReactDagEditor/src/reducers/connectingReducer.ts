@@ -1,7 +1,9 @@
 import { v4 as uuid } from "uuid";
-import { GraphEdgeEvent, GraphNodeEvent, GraphPortEvent } from "../common/GraphEvent.constant";
-import { EMPTY_CONNECT_STATE, IGraphState } from "../contexts/GraphStateContext";
-import { GraphEdgeState, GraphPortState, ICanvasEdge } from "../Graph.interface";
+import { EMPTY_CONNECT_STATE} from "../contexts/GraphStateContext";
+import { ICanvasEdge } from "../models/edge";
+import { GraphEdgeState, GraphPortState } from "../models/element-state";
+import { GraphEdgeEvent, GraphNodeEvent, GraphPortEvent } from "../models/event";
+import { IGraphState } from "../models/state";
 import {
   addState,
   getNearestConnectablePort,

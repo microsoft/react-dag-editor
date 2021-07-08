@@ -1,5 +1,5 @@
-import { GraphPortEvent } from "../common/GraphEvent.constant";
-import { GraphPortState } from "../Graph.interface";
+import { GraphPortState } from "../models/element-state";
+import { GraphPortEvent } from "../models/event";
 import { addState, removeState, unSelectAllEntity, updateState } from "../utils";
 import { IBuiltinReducer } from "./builtinReducer.type";
 

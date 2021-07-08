@@ -1,5 +1,5 @@
 import { createRef } from "react";
-import { IEvent } from "../Graph.interface";
+import { IEvent } from "../models/event";
 import { batchedUpdates } from "./batchedUpdates";
 
 export type IGraphEventHandler<T = unknown, P = unknown, U = unknown> = (event: IEvent<T, P, U>) => void;

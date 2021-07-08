@@ -1,10 +1,4 @@
-import {
-  ICanvasEvent,
-  IEdgeEvent,
-  IEvent,
-  INodeEvent,
-  IPortEvent
-} from "../Graph.interface";
+import { ICanvasEvent, IEdgeEvent, IEvent, INodeEvent, IPortEvent } from "../models/event";
 
 export function isEdgeEvent<
   NodeData = unknown,

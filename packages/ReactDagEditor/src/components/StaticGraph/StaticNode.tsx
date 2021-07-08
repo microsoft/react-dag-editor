@@ -1,7 +1,7 @@
 import * as React from "react";
 import { GraphConfigContext, IGraphConfig } from "../../contexts";
-import { ICanvasNode } from "../../Graph.interface";
 import { useTheme } from "../../hooks";
+import { ICanvasNode } from "../../models/node";
 import { getNodeConfig, getRectHeight, getRectWidth } from "../../utils";
 
 interface IStaticNodeProps {

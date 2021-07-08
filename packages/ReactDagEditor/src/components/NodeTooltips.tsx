@@ -1,8 +1,8 @@
 import * as React from "react";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
-import { IViewport } from "../contexts/GraphStateContext";
-import { GraphNodeState } from "../Graph.interface";
+import { GraphNodeState } from "../models/element-state";
 import { useTheme } from "../hooks";
+import { IViewport } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { getNodeConfig, hasState } from "../utils";
 

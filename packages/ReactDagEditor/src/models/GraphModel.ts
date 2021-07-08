@@ -1,20 +1,14 @@
-import {
-  GraphEdgeState,
-  GraphNodeState,
-  GraphPortState,
-  ICanvasData,
-  ICanvasEdge,
-  ICanvasGroup,
-  ICanvasNode,
-  ICanvasPort
-} from "../Graph.interface";
 import { HashMap, HashMapBuilder, OrderedMap } from "../collections";
-
 import { markEdgeDirty } from "../utils/graphDataUtils";
 import { preventSpread } from "../utils/preventSpread";
 import { hasState, isSelected, resetConnectState, resetState, updateState } from "../utils/state";
+import { ICanvasData, ICanvasGroup } from "./canvas";
+import { ICanvasEdge } from "./edge";
 import { EdgeModel } from "./EdgeModel";
+import { GraphEdgeState, GraphNodeState, GraphPortState } from "./element-state";
+import { ICanvasNode } from "./node";
 import { NodeModel } from "./NodeModel";
+import { ICanvasPort } from "./port";
 
 export interface IDeleteItemPredicates<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   node?(node: ICanvasNode<NodeData, PortData>): boolean;

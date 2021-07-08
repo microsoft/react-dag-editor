@@ -1,5 +1,4 @@
 import * as React from "react";
-import { GraphMinimapEvent } from "../../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig, PropsAPIContext, ViewportContext } from "../../contexts";
 import { GraphStateContext } from "../../contexts/GraphStateContext";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
@@ -8,6 +7,7 @@ import { MouseMoveEventProvider } from "../../event-provider/MouseMoveEventProvi
 import { IEventProvider, IGlobalMoveEventTypes } from "../../event-provider/types";
 import { useMinimapRect, useTheme } from "../../hooks";
 import { useRefValue } from "../../hooks/useRefValue";
+import { GraphMinimapEvent } from "../../models/event";
 import {
   getPointDeltaByClientDelta,
   getVisibleArea,

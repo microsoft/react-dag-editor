@@ -1,19 +1,20 @@
 import * as React from "react";
-import { GraphCanvasEvent, GraphNodeEvent } from "../common/GraphEvent.constant";
-import { emptyDummyNodes, IDummyNode, IDummyNodes } from "../components/dummyNodes";
+import { emptyDummyNodes} from "../components/dummyNodes";
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
-import { GraphBehavior, IGraphState } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
+import { IDummyNode, IDummyNodes } from "../models/dummy-node";
 import {
-  GraphNodeState,
+  GraphCanvasEvent, GraphNodeEvent,
   ICanvasAddNodeEvent,
   INodeCentralizeEvent,
   INodeDragEndEvent,
   INodeDragEvent,
   INodeDragStartEvent,
   INodeLocateEvent
-} from "../Graph.interface";
+} from "../models/event";
+import { GraphNodeState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
+import { GraphBehavior, IGraphState } from "../models/state";
 import {
   addState,
   focusArea,

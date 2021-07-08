@@ -1,4 +1,4 @@
-import { ICanvasPort, ICanvasPortInit } from "../Graph.interface";
+import { ICanvasPort, ICanvasPortInit } from "../models/port";
 
 export function applyHorizontalGraphPortsPosition<T>(
   list: ReadonlyArray<ICanvasPortInit<T>>

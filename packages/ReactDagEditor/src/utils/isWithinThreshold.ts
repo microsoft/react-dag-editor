@@ -1,4 +1,4 @@
-import { IPoint } from "./geometric";
+import { IPoint } from "../models/geometry";
 
 export const isWithinThreshold = (
   dx: number,

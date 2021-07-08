@@ -1,6 +1,6 @@
 /* eslint-disable no-invalid-this */
 import { IEventProvider, IGlobalMoveEventTypes } from "../event-provider/types";
-import { IPoint } from "../utils";
+import { IPoint } from "../models/geometry";
 import { noop } from "../utils/noop";
 import { animationFramed, IScheduledCallback } from "../utils/scheduling";
 

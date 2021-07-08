@@ -3,7 +3,7 @@ import {
   IGraphConfig,
   IRectConfig
 } from "../contexts/GraphConfigContext";
-import { ICanvasNode } from "../Graph.interface";
+import { ICanvasNode } from "../models/node";
 import { Debug } from "./debug";
 
 export const getNodeConfig = (

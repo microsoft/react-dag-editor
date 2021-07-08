@@ -1,7 +1,8 @@
 import { OrderedMap } from "../collections";
 
 import { IGraphConfig, IRectConfig } from "../contexts";
-import { ICanvasNode, ICanvasGroup } from "../Graph.interface";
+import { ICanvasGroup } from "../models/canvas";
+import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
 import { getNodeConfig } from "./getNodeConfig";
 

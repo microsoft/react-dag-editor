@@ -6,7 +6,7 @@ import { defaultFeatures, EMPTY_VIEW_PORT, PropsAPIContext } from "../../../src"
 import { MouseEventButton } from "../../../src/common/constants";
 import { Item } from "../../../src/components/ItemPanel";
 import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
-import { ICanvasNode } from "../../../src/Graph.interface";
+import { ICanvasNode } from "../../../src/models/node";
 import { noopInstance } from "../../../src/props-api/IPropsAPIInstance";
 import { PropsAPI } from "../../../src/props-api/PropsAPI";
 import { EventChannel } from "../../../src/utils/eventChannel";

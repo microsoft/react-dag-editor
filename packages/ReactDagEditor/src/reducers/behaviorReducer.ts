@@ -1,6 +1,5 @@
-import { GraphCanvasEvent, GraphEdgeEvent, GraphNodeEvent } from "../common/GraphEvent.constant";
-import { GraphBehavior } from "../contexts/GraphStateContext";
-import { IEvent } from "../Graph.interface";
+import { GraphCanvasEvent, GraphEdgeEvent, GraphNodeEvent, IEvent } from "../models/event";
+import { GraphBehavior } from "../models/state";
 import { IBuiltinReducer } from "./builtinReducer.type";
 
 /**

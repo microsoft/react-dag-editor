@@ -1,7 +1,7 @@
 import * as React from "react";
-import { GraphCanvasEvent } from "../common/GraphEvent.constant";
 import { ISelectBoxPosition } from "../components/Graph/SelectBox";
 import { IDispatch } from "../contexts/GraphStateContext";
+import { GraphCanvasEvent } from "../models/event";
 import { useDeferredValue } from "./useDeferredValue";
 
 export const useSelectBox = (dispatch: IDispatch, selectBoxPositionState: ISelectBoxPosition) => {

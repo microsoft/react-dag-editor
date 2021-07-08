@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphConfigContext, IRectConfig } from "../../contexts";
-import { ICanvasNode } from "../../Graph.interface";
+import { ICanvasNode } from "../../models/node";
 
 export interface IRegisterNodeProps {
   /**

@@ -1,4 +1,5 @@
-import { GraphNodeState, ICanvasNode, SELECTED } from "../Graph.interface";
+import { ICanvasNode } from "../models/node";
+import { GraphNodeState, SELECTED } from "../models/element-state";
 
 export const hasState = (mask: number) => (state: number | undefined) => Boolean(pickState(mask)(state));
 

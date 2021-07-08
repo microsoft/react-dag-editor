@@ -1,21 +1,23 @@
 import * as React from "react";
 import { DEFAULT_AUTO_ALIGN_THRESHOLD, MouseEventButton } from "../common/constants";
-import {
-  GraphCanvasEvent,
-  GraphContextMenuEvent,
-  GraphEdgeEvent,
-  GraphMinimapEvent,
-  GraphNodeEvent,
-  GraphPortEvent,
-  GraphScrollBarEvent
-} from "../common/GraphEvent.constant";
 import { IGraphProps } from "../components/Graph/IGraphProps";
 import { IGraphConfig } from "../contexts";
-import { GraphBehavior, IDispatch } from "../contexts/GraphStateContext";
+import { IDispatch } from "../contexts/GraphStateContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
-import { GraphNodeState, IContainerRect, IEvent, IGap, INodeCommonEvent, IPortEvent } from "../Graph.interface";
+import {
+  GraphCanvasEvent,
+  GraphContextMenuEvent, GraphEdgeEvent,
+  GraphMinimapEvent, GraphNodeEvent, GraphPortEvent,
+  GraphScrollBarEvent,
+  IEvent,
+  INodeCommonEvent,
+  IPortEvent
+} from "../models/event";
+import { GraphNodeState } from "../models/element-state";
 import { onContainerMouseDown, onNodePointerDown } from "../handlers";
+import { IContainerRect, IGap } from "../models/geometry";
+import { GraphBehavior } from "../models/state";
 import { PropsAPI } from "../props-api/PropsAPI";
 import { handleBehaviorChange } from "../reducers/behaviorReducer";
 import { addState, filterSelectedItems } from "../utils";

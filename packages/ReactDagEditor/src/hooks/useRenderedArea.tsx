@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { IViewport } from "../contexts";
-import { getRenderedArea, IRectShape } from "../utils";
+import { IRectShape, IViewport } from "../models/geometry";
+import { getRenderedArea} from "../utils";
 
 export const useRenderedArea = (viewport: IViewport, isVirtualizationEnabled: boolean): IRectShape => {
   return useMemo<IRectShape>(() => {

@@ -1,7 +1,14 @@
-import { GraphCanvasEvent, GraphMinimapEvent, GraphScrollBarEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig, IGraphReducerContext } from "../contexts";
-import { EMPTY_TRANSFORM_MATRIX, IViewport } from "../contexts/GraphStateContext";
-import { ICanvasResetViewportEvent, ICanvasZoomToFitEvent, IContainerRect, IEvent } from "../Graph.interface";
+import { EMPTY_TRANSFORM_MATRIX} from "../contexts/GraphStateContext";
+import {
+  GraphCanvasEvent,
+  GraphMinimapEvent,
+  GraphScrollBarEvent,
+  ICanvasResetViewportEvent,
+  ICanvasZoomToFitEvent,
+  IEvent
+} from "../models/event";
+import { IContainerRect, IPoint, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import {
   clamp,
@@ -9,7 +16,6 @@ import {
   getNodeRect,
   getOffsetLimit,
   getZoomFitMatrix,
-  IPoint,
   IShapePosition,
   IShapeRect,
   isRectVisible,

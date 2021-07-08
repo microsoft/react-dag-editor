@@ -1,8 +1,8 @@
 import { mergeStyleSets } from "@fluentui/merge-styles";
 import * as React from "react";
 import { ITheme } from "../../contexts";
-import { GraphBehavior, IGraphState } from "../../contexts/GraphStateContext";
-import { CanvasMouseMode, IGap } from "../../Graph.interface";
+import { IGap } from "../../models/geometry";
+import { CanvasMouseMode, GraphBehavior, IGraphState } from "../../models/state";
 import classes from "../Graph.styles.m.scss";
 import { IGraphProps } from "./IGraphProps";
 

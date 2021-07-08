@@ -1,8 +1,8 @@
 import { RefObject, useEffect } from "react";
-import { GraphCanvasEvent } from "../common/GraphEvent.constant";
 import { IGraphConfig } from "../contexts";
 import { IDispatch } from "../contexts/GraphStateContext";
-import { IContainerRect } from "../Graph.interface";
+import { GraphCanvasEvent } from "../models/event";
+import { IContainerRect } from "../models/geometry";
 import { IPropsAPI } from "../props-api/IPropsAPI";
 import { BrowserType, getBrowser, getContainerCenter, isMobile } from "../utils";
 import { EventChannel } from "../utils/eventChannel";

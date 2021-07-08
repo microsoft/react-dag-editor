@@ -1,8 +1,8 @@
 import * as React from "react";
 import { render } from "@testing-library/react";
-import { allFeatures, IEvent, IGraphConfig } from "../../src";
+import { allFeatures, IEvent, IGraphConfig, IGraphState, IViewport } from "../../src";
 import { Scrollbar } from "../../src/components/Scrollbar";
-import { EMPTY_GRAPH_STATE, IGraphState, IViewport } from "../../src/contexts/GraphStateContext";
+import { EMPTY_GRAPH_STATE} from "../../src/contexts/GraphStateContext";
 import { viewportReducer } from "../../src/reducers/viewportReducer";
 import { EventChannel } from "../../src/utils/eventChannel";
 import { getGraphConfig } from "../utils";

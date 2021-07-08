@@ -1,7 +1,8 @@
 import { IGraphConfig, IRectConfig } from "../contexts";
-import { ICanvasNode, ICanvasPort } from "../Graph.interface";
+import { IPoint } from "../models/geometry";
+import { ICanvasNode } from "../models/node";
+import { ICanvasPort } from "../models/port";
 import { Debug } from "./debug";
-import { IPoint } from "./geometric";
 import { getNodeConfig } from "./getNodeConfig";
 import { getRectHeight, getRectWidth } from "./layout";
 

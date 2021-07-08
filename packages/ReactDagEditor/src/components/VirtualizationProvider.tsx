@@ -1,10 +1,10 @@
 import * as React from "react";
-import { GraphCanvasEvent } from "../common/GraphEvent.constant";
-import { IViewport } from "../contexts/GraphStateContext";
 import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
 import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
 import { useRenderedArea } from "../hooks";
 import { useDeferredValue } from "../hooks/useDeferredValue";
+import { GraphCanvasEvent } from "../models/event";
+import { IViewport } from "../models/geometry";
 import { getVisibleArea } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 

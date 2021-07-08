@@ -1,11 +1,11 @@
 import * as React from "react";
-import { GraphPortEvent } from "../common/GraphEvent.constant";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
-import { ICanvasPort } from "../Graph.interface";
 import { useTheme } from "../hooks";
+import { GraphPortEvent } from "../models/event";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { ICanvasPort } from "../models/port";
 import { getPortAutomationId, getPortUid } from "../utils";
 import { Debug } from "../utils/debug";
 import { IGraphProps } from "./Graph/IGraphProps";

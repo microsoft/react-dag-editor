@@ -19,7 +19,7 @@ import {
 } from "../models/event";
 import { GraphNodeState } from "../models/element-state";
 import { onContainerMouseDown, onNodePointerDown } from "../handlers";
-import { IContainerRect, IGap } from "../models/geometry";
+import { IContainerRect } from "../models/geometry";
 import { GraphBehavior } from "../models/state";
 import { PropsAPI } from "../props-api/PropsAPI";
 import { handleBehaviorChange } from "../reducers/behaviorReducer";
@@ -38,7 +38,7 @@ import {
   goToConnectedPort
 } from "../utils/a11yUtils";
 import { EventChannel } from "../utils/eventChannel";
-import { graphController } from "../utils/graphController";
+import { GraphController } from "../controllers/GraphController";
 import { animationFramed } from "../utils/scheduling";
 import { useCanvasKeyboardEventHandlers } from "./useCanvasKeyboardEventHandlers";
 import { useFeatureControl } from "./useFeatureControl";
@@ -56,7 +56,7 @@ export interface IUseEventChannelParams {
   featureControl: ReturnType<typeof useFeatureControl>;
   graphConfig: IGraphConfig;
   eventChannel: EventChannel;
-  canvasBoundaryPadding: IGap | undefined;
+  graphController: GraphController;
   setFocusedWithoutMouse(value: boolean): void;
   setCurHoverNode(nodeId: string | undefined): void;
   setCurHoverPort(value: [string, string] | undefined): void;
@@ -76,8 +76,8 @@ export function useEventChannel({
   setCurHoverNode,
   setCurHoverPort,
   eventChannel,
-  canvasBoundaryPadding,
-  updateViewport
+  updateViewport,
+  graphController
 }: IUseEventChannelParams): void {
   const {
     dragThreshold = 10,
@@ -94,7 +94,6 @@ export function useEventChannel({
     isPanDisabled,
     isMultiSelectDisabled,
     isLassoSelectEnable,
-    isLimitBoundary,
     isConnectDisabled,
     isPortHoverViewEnable,
     isNodeEditDisabled,
@@ -214,9 +213,8 @@ export function useEventChannel({
             containerRef,
             getPositionFromEvent: defaultGetPositionFromEvent,
             graphConfig,
-            canvasBoundaryPadding,
-            limitBoundary: isLimitBoundary,
-            eventChannel
+            eventChannel,
+            graphController
           });
         }
         break;
@@ -348,7 +346,9 @@ export function useEventChannel({
         dispatch(event);
         break;
       case GraphNodeEvent.PointerMove:
-        animationFramedDispatch(event);
+        if ((event.rawEvent as PointerEvent).pointerId === graphController.pointerId) {
+          animationFramedDispatch(event);
+        }
         break;
       case GraphNodeEvent.PointerDown:
         {
@@ -368,7 +368,8 @@ export function useEventChannel({
             isClickNodeToSelectDisabled,
             graphConfig,
             autoAlignThreshold,
-            eventChannel
+            eventChannel,
+            graphController
           });
         }
         break;
@@ -476,6 +477,7 @@ export function useEventChannel({
       eventChannel,
       getPositionFromEvent,
       graphConfig,
+      graphController,
       isConnectDisabled,
       setFocusedWithoutMouse,
       updateViewport
@@ -513,7 +515,9 @@ export function useEventChannel({
     if (isPortHoverViewEnable) {
       setCurHoverPort([event.node.id, event.port.id]);
     }
-    dispatch(event);
+    if ((event.rawEvent as PointerEvent).pointerId === graphController.pointerId) {
+      dispatch(event);
+    }
   };
 
   const onPortPointerLeave = (event: IPortEvent) => {

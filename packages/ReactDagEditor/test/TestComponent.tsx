@@ -1,7 +1,17 @@
 import * as React from "react";
-import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphConfig, IGraphReducer } from "../src";
+import {
+  applyDefaultPortsPosition,
+  GraphModel,
+  ICanvasData,
+  IEvent,
+  IGraphConfig,
+  IGraphReducer,
+  IGraphStateStoreProps
+} from "../src";
 import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphConfigContext } from "../src/contexts";
+import { GraphControllerContext } from "../src/contexts/GraphControllerContext";
+import { GraphController } from "../src/controllers/GraphController";
 import Sample0 from "../test/unit/__data__/sample0.json";
 
 const data: ICanvasData = {
@@ -12,10 +22,12 @@ const data: ICanvasData = {
   }))
 };
 
-export interface ITestComponentProps extends Partial<IGraphProps> {
+export interface ITestComponentProps {
   data?: GraphModel;
   graphConfig?: IGraphConfig;
   middleware?: IGraphReducer;
+  graphProps?: Partial<IGraphProps>;
+  stateProps?: Partial<IGraphStateStoreProps>;
 }
 
 let events: string[];
@@ -28,19 +40,28 @@ afterEach(() => {
   expect(events).toMatchSnapshot("events");
 });
 
-export const TestComponent = (props: ITestComponentProps) => {
+export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => {
+  const graphController = React.useContext(GraphControllerContext);
+  React.useImperativeHandle(ref, () => graphController, [graphController]);
+  return null;
+});
+
+export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps>) => {
+  const { graphProps, stateProps } = props;
   const onEvent = React.useCallback(
     (event: IEvent) => {
-      props.onEvent?.(event);
+      graphProps?.onEvent?.(event);
       events.push(event.type);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.onEvent]
+    [graphProps?.onEvent]
   );
+  const {} = props;
 
   const content = (
-    <GraphStateStore data={props.data ?? GraphModel.fromJSON(data)} middleware={props.middleware}>
-      <Graph {...props} onEvent={onEvent} />
+    <GraphStateStore {...stateProps} data={props.data ?? GraphModel.fromJSON(data)} middleware={props.middleware}>
+      <Graph {...graphProps} onEvent={onEvent} />
+      {props.children}
     </GraphStateStore>
   );
 

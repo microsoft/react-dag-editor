@@ -1,10 +1,11 @@
 import { render } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
-import { Direction, GraphModel, IPropsAPI, ITransformMatrix, IViewport } from "../../src";
+import { Direction, GraphCanvasEvent, GraphModel, IPoint, ITransformMatrix, IViewport } from "../../src";
 import { Transform } from "../../src/components/Transform";
+import { GraphController } from "../../src/controllers/GraphController";
 import { getRenderedEdges, getRenderedNodes } from "../../src/utils/viewport";
-import { TestComponent } from "../TestComponent";
+import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { getGraphConfig, mockBoundingBox } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";
 
@@ -54,62 +55,80 @@ describe("viewport", () => {
 });
 
 describe("test zoom", () => {
-  let propsAPI: IPropsAPI;
+  let graphController: GraphController;
+  function zoom(scale: number, direction?: Direction): void {
+    return graphController.dispatch({
+      type: GraphCanvasEvent.Zoom,
+      scale,
+      direction
+    });
+  }
+  function zoomTo(scale: number, anchor?: IPoint | undefined, direction?: Direction): void {
+    graphController.dispatch({
+      type: GraphCanvasEvent.ZoomTo,
+      scale,
+      anchor,
+      direction
+    });
+  }
+  const getViewport = () => graphController.state.viewport;
 
   beforeEach(() => {
     mockBoundingBox();
-    const propsAPIRef = React.createRef<IPropsAPI>();
-    render(<TestComponent propsAPIRef={propsAPIRef} />);
-    if (!propsAPIRef.current) {
-      throw new Error();
-    }
-    propsAPI = propsAPIRef.current;
+    const graphControllerRef = React.createRef<GraphController>();
+    render(
+      <TestComponent>
+        <GraphControllerRef ref={graphControllerRef} />
+      </TestComponent>
+    );
+    graphController = graphControllerRef.current!;
+    expect(graphController).toBeDefined();
   });
 
   it("should zoom x,y", () => {
     act(() => {
-      propsAPI.zoom(2);
+      zoom(2);
     });
-    let transformMatrix = propsAPI.getViewport().transformMatrix;
+    let transformMatrix = getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(2);
     expect(transformMatrix[3]).toBe(2);
 
     act(() => {
-      propsAPI.zoomTo(3);
+      zoomTo(3);
     });
-    transformMatrix = propsAPI.getViewport().transformMatrix;
+    transformMatrix = getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(3);
     expect(transformMatrix[3]).toBe(3);
   });
 
   it("should zoom x only", () => {
     act(() => {
-      propsAPI.zoom(2, Direction.X);
+      zoom(2, Direction.X);
     });
-    let transformMatrix = propsAPI.getViewport().transformMatrix;
+    let transformMatrix = getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(2);
     expect(transformMatrix[3]).toBe(1);
 
     act(() => {
-      propsAPI.zoomTo(3, undefined, Direction.X);
+      zoomTo(3, undefined, Direction.X);
     });
-    transformMatrix = propsAPI.getViewport().transformMatrix;
+    transformMatrix = getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(3);
     expect(transformMatrix[3]).toBe(1);
   });
 
   it("should zoom y only", () => {
     act(() => {
-      propsAPI.zoom(2, Direction.Y);
+      zoom(2, Direction.Y);
     });
-    let transformMatrix = propsAPI.getViewport().transformMatrix;
+    let transformMatrix = getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(1);
     expect(transformMatrix[3]).toBe(2);
 
     act(() => {
-      propsAPI.zoomTo(3, undefined, Direction.Y);
+      zoomTo(3, undefined, Direction.Y);
     });
-    transformMatrix = propsAPI.getViewport().transformMatrix;
+    transformMatrix = getViewport().transformMatrix;
     expect(transformMatrix[0]).toBe(1);
     expect(transformMatrix[3]).toBe(3);
   });

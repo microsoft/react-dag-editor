@@ -1,35 +1,21 @@
-/* eslint-disable import/no-deprecated */
 import * as React from "react";
 import { ConnectingState } from "../../ConnectingState";
-import {
-  EMPTY_TRANSFORM_MATRIX,
-  GraphConfigContext,
-  IGraphReducer,
-  IGraphReducerContext,
-  ViewportContext
-} from "../../contexts";
+import { EMPTY_GAP, EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphReducer, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { AutoZoomFitContext } from "../../contexts/AutoZoomFitContext";
-import {
-  GraphStateContext,
-  GraphValueContext,
-  IDispatch,
-  IDispatchCallback
-} from "../../contexts/GraphStateContext";
-import { GraphFeatures } from "../../Features";
+import { GraphControllerContext } from "../../contexts/GraphControllerContext";
+import { GraphStateContext, GraphValueContext } from "../../contexts/GraphStateContext";
+import { defaultFeatures, GraphFeatures } from "../../Features";
+import { useConst } from "../../hooks/useConst";
+import { useGraphReducer } from "../../hooks/useGraphReducer";
 
 import { usePropsAPI } from "../../hooks/usePropsAPI";
 import { GraphCanvasEvent } from "../../models/event";
-import { ITransformMatrix } from "../../models/geometry";
+import { IGap, ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
-import { GraphBehavior } from "../../models/state";
 import { IPropsAPI } from "../../props-api/IPropsAPI";
-import { useGraphReducer } from "../../reducers/useGraphReducer";
-import { isViewportComplete, resetUndoStack } from "../../utils";
-import { batchedUpdates } from "../../utils/batchedUpdates";
-import { graphController } from "../../utils/graphController";
-import { emptyDummyNodes } from "../dummyNodes";
-import { emptySelectBoxPosition } from "./SelectBox";
+import { isViewportComplete } from "../../utils";
+import { GraphController } from "../../controllers/GraphController";
 
 export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> {
   /**
@@ -42,76 +28,41 @@ export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, P
   data?: GraphModel<NodeData, EdgeData, PortData>;
   defaultTransformMatrix?: ITransformMatrix;
   middleware?: IGraphReducer<NodeData, EdgeData, PortData, Action>;
-  onStateChanged?: IDispatchCallback<NodeData, EdgeData, PortData>;
+  features?: ReadonlySet<GraphFeatures>;
+  canvasBoundaryPadding?: IGap;
 }
 
 export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
   props: React.PropsWithChildren<IGraphStateStoreProps<NodeData, EdgeData, PortData, Action>>
 ): React.ReactElement {
-  const { defaultTransformMatrix = EMPTY_TRANSFORM_MATRIX, middleware, onStateChanged } = props;
+  const {
+    defaultTransformMatrix = EMPTY_TRANSFORM_MATRIX,
+    middleware,
+    features = defaultFeatures,
+    canvasBoundaryPadding = EMPTY_GAP
+  } = props;
 
   const propsAPI = usePropsAPI<NodeData, EdgeData, PortData>();
   React.useImperativeHandle(props.propsAPIRef, () => propsAPI, [propsAPI]);
 
   const graphConfig = React.useContext(GraphConfigContext);
-  const enabledFeatures = propsAPI.getEnabledFeatures();
-  const reducerContext: IGraphReducerContext = React.useMemo(
-    () => ({
+
+  const [state, dispatch] = useGraphReducer(
+    {
+      data: props.data,
+      transformMatrix: defaultTransformMatrix,
       graphConfig,
-      features: enabledFeatures
-    }),
-    [enabledFeatures, graphConfig]
-  );
-  const reducer = useGraphReducer(reducerContext, middleware as IGraphReducer);
-
-  const [state, dispatchImpl] = React.useReducer(reducer, undefined, () => ({
-    data: resetUndoStack(props.data ?? GraphModel.empty()),
-    viewport: {
-      rect: undefined,
-      transformMatrix: defaultTransformMatrix
+      features,
+      canvasBoundaryPadding
     },
-    behavior: GraphBehavior.default,
-    dummyNodes: emptyDummyNodes(),
-    alignmentLines: [],
-    activeKeys: new Set<string>(),
-    selectBoxPosition: emptySelectBoxPosition(),
-    connectState: undefined
-  }));
-
-  const sideEffects = React.useMemo<IDispatchCallback[]>(() => [], []);
-  const prevStateRef = React.useRef(state);
-
-  const dispatch: IDispatch = React.useCallback(
-    (action, callback) => {
-      if (callback) {
-        sideEffects.push(callback);
-      }
-      dispatchImpl(action);
-    },
-    [sideEffects]
+    middleware
   );
 
-  React.useEffect((): void => {
-    const prevState = prevStateRef.current;
-    if (prevState === state) {
-      return;
-    }
-    prevStateRef.current = state;
-    if (onStateChanged) {
-      sideEffects.unshift(onStateChanged);
-    }
-    batchedUpdates(() => {
-      sideEffects.forEach(callback => {
-        try {
-          callback(state, prevState);
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error(e);
-        }
-      });
-      sideEffects.length = 0;
-    });
-  });
+  const graphController = useConst(() => new GraphController(state, dispatch));
+  graphController.UNSAFE_latestState = state;
+  React.useEffect(() => {
+    graphController.state = state;
+  }, [graphController, state]);
 
   const contextValue = React.useMemo(
     () => ({
@@ -131,7 +82,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
       return;
     }
     shouldAutoZoomToFit.current = false;
-    if (!graphController.getEnabledFeatures().has(GraphFeatures.autoFit)) {
+    if (!state.settings.features.has(GraphFeatures.autoFit)) {
       return;
     }
     dispatch({
@@ -140,18 +91,20 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
   });
 
   return (
-    <AutoZoomFitContext.Provider value={shouldAutoZoomToFit}>
-      <ConnectingState data={state.data.present} connectState={state.connectState}>
-        <GraphStateContext.Provider value={contextValue}>
-          <ViewportContext.Provider value={state.viewport}>
-            <GraphValueContext.Provider value={state.data.present}>
-              <AlignmentLinesContext.Provider value={state.alignmentLines}>
-                {props.children}
-              </AlignmentLinesContext.Provider>
-            </GraphValueContext.Provider>
-          </ViewportContext.Provider>
-        </GraphStateContext.Provider>
-      </ConnectingState>
-    </AutoZoomFitContext.Provider>
+    <GraphControllerContext.Provider value={graphController}>
+      <AutoZoomFitContext.Provider value={shouldAutoZoomToFit}>
+        <ConnectingState data={state.data.present} connectState={state.connectState}>
+          <GraphStateContext.Provider value={contextValue}>
+            <ViewportContext.Provider value={state.viewport}>
+              <GraphValueContext.Provider value={state.data.present}>
+                <AlignmentLinesContext.Provider value={state.alignmentLines}>
+                  {props.children}
+                </AlignmentLinesContext.Provider>
+              </GraphValueContext.Provider>
+            </ViewportContext.Provider>
+          </GraphStateContext.Provider>
+        </ConnectingState>
+      </AutoZoomFitContext.Provider>
+    </GraphControllerContext.Provider>
   );
 }

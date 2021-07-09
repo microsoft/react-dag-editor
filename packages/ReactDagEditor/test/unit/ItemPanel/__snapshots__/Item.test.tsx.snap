@@ -38,3 +38,5 @@ exports[`ItemPanel - Item Should work well when mousedown and mouseup 3`] = `
   </div>
 </div>
 `;
+
+exports[`ItemPanel - Item Should work well when mousedown and mouseup: events 1`] = `Array []`;

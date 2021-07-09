@@ -8,7 +8,7 @@ import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider
 import { useRefValue } from "../hooks/useRefValue";
 import { useTheme } from "../hooks/useTheme";
 import { GraphScrollBarEvent } from "../models/event";
-import { IGap, IViewport } from "../models/geometry";
+import { IViewport } from "../models/geometry";
 import { EventChannel } from "../utils/eventChannel";
 import { IOffsetLimit } from "../utils/getOffsetLimit";
 
@@ -27,7 +27,6 @@ interface IProps {
   viewport: Required<IViewport>;
   horizontal?: boolean;
   vertical?: boolean;
-  canvasBoundaryPadding?: IGap | undefined;
   offsetLimit: IOffsetLimit;
   eventChannel: EventChannel;
   dispatch: IDispatch;
@@ -74,7 +73,7 @@ const useStyles = createUseStyles({
 });
 
 export const Scrollbar: React.FC<IProps> = props => {
-  const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewport, canvasBoundaryPadding } = props;
+  const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewport } = props;
 
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
   const { theme } = useTheme();
@@ -104,8 +103,7 @@ export const Scrollbar: React.FC<IProps> = props => {
         type: GraphScrollBarEvent.Scroll,
         rawEvent,
         dx: 0,
-        dy,
-        limitBoundary: true
+        dy
       });
 
       if (scrollbarDy < 0) {
@@ -149,9 +147,7 @@ export const Scrollbar: React.FC<IProps> = props => {
         type: GraphScrollBarEvent.Scroll,
         rawEvent,
         dx,
-        dy: 0,
-        limitBoundary: true,
-        canvasBoundaryPadding
+        dy: 0
       });
 
       if (scrollbarDx < 0) {

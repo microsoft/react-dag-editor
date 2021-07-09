@@ -4,10 +4,10 @@ import { IGraphConfig } from "../contexts";
 import { DragController, IOnDragEnd } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { GraphCanvasEvent, ICanvasCommonEvent, IEvent } from "../models/event";
-import { IGap, IPoint } from "../models/geometry";
+import { IPoint } from "../models/geometry";
 import { CanvasMouseMode, IGraphState } from "../models/state";
 import { EventChannel } from "../utils/eventChannel";
-import { graphController } from "../utils/graphController";
+import { GraphController } from "../controllers/GraphController";
 import { isWithinThreshold } from "../utils/isWithinThreshold";
 
 export interface IContainerMouseDownParams {
@@ -17,11 +17,10 @@ export interface IContainerMouseDownParams {
   isMultiSelectDisabled: boolean;
   isLassoSelectEnable: boolean;
   dragThreshold: number;
-  limitBoundary: boolean;
   containerRef: React.RefObject<HTMLDivElement>;
   eventChannel: EventChannel;
   graphConfig: IGraphConfig;
-  canvasBoundaryPadding?: IGap;
+  graphController: GraphController;
   getPositionFromEvent(e: MouseEvent): IPoint;
 }
 
@@ -74,7 +73,7 @@ const dragMultiSelect = (e: MouseEvent, params: IContainerMouseDownParams): void
 };
 
 const dragPan = (e: MouseEvent, params: IContainerMouseDownParams): void => {
-  const { getPositionFromEvent, graphConfig, limitBoundary, eventChannel, canvasBoundaryPadding } = params;
+  const { getPositionFromEvent, graphConfig, eventChannel } = params;
 
   const dragging = new DragController(
     new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
@@ -85,9 +84,7 @@ const dragPan = (e: MouseEvent, params: IContainerMouseDownParams): void => {
       type: GraphCanvasEvent.Drag,
       rawEvent,
       dx,
-      dy,
-      limitBoundary,
-      canvasBoundaryPadding
+      dy
     });
   };
   dragging.onEnd = withSimulatedClick(params, GraphCanvasEvent.DragEnd);
@@ -106,7 +103,7 @@ export const onContainerMouseDown = (e: React.MouseEvent, params: IContainerMous
     return;
   }
 
-  const { canvasMouseMode, isPanDisabled, isMultiSelectDisabled, state, isLassoSelectEnable } = params;
+  const { canvasMouseMode, isPanDisabled, isMultiSelectDisabled, state, isLassoSelectEnable, graphController } = params;
   // in pan mode, hold ctrl or shift to perform select.
   // in select mode, hold space to perform pan
   const isPanMode =

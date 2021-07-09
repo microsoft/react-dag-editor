@@ -1,7 +1,7 @@
 import { RefObject, useLayoutEffect } from "react";
 import { IDispatch, IGraphConfig } from "../contexts";
 import { GraphCanvasEvent } from "../models/event";
-import { IContainerRect, IGap } from "../models/geometry";
+import { IContainerRect } from "../models/geometry";
 import { IPropsAPI } from "../props-api/IPropsAPI";
 import { getNodeSize, getRelativePoint } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
@@ -21,9 +21,6 @@ export interface IWheelOptions {
   graphConfig: IGraphConfig;
   propsAPI: IPropsAPI;
   dispatch: IDispatch;
-  limitBoundary: boolean;
-  canvasBoundaryPadding: IGap | undefined;
-  groupPadding?: IGap;
 }
 
 const THRESHOLD_DISABLE_ZOOM_OUT = 5;
@@ -41,10 +38,7 @@ export const useWheelHandler = (args: IWheelOptions) => {
     eventChannel,
     graphConfig,
     propsAPI,
-    dispatch,
-    limitBoundary,
-    canvasBoundaryPadding,
-    groupPadding
+    dispatch
   } = args;
 
   useLayoutEffect(() => {
@@ -88,10 +82,7 @@ export const useWheelHandler = (args: IWheelOptions) => {
         type: GraphCanvasEvent.MouseWheelScroll,
         dx,
         dy,
-        rawEvent: e,
-        groupPadding,
-        canvasBoundaryPadding,
-        limitBoundary
+        rawEvent: e
       });
     };
 
@@ -111,9 +102,7 @@ export const useWheelHandler = (args: IWheelOptions) => {
     graphConfig,
     eventChannel,
     propsAPI,
-    isCtrlKeyZoomEnable,
-    limitBoundary,
-    groupPadding
+    isCtrlKeyZoomEnable
   ]);
 };
 

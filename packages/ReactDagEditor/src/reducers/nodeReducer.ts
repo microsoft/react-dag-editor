@@ -1,6 +1,5 @@
-import * as React from "react";
 import { emptyDummyNodes } from "../components/dummyNodes";
-import { IGraphConfig, IGraphReducerContext } from "../contexts";
+import { IGraphConfig, IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { IDummyNode, IDummyNodes } from "../models/dummy-node";
 import {
@@ -36,9 +35,7 @@ import {
   zoom
 } from "../utils";
 import { getAlignmentLines, getAutoAlignDisplacement } from "../utils/autoAlign";
-import { graphController } from "../utils/graphController";
 import { pipe } from "../utils/pipe";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
 const getDelta = (start: number, end: number, value: number): number => {
   if (value < start) {
@@ -66,7 +63,7 @@ function getSelectedNodes(data: GraphModel, graphConfig: IGraphConfig): IDummyNo
   return nodes;
 }
 
-function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGraphReducerContext): IGraphState {
+function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState {
   if (!isViewportComplete(state.viewport)) {
     return state;
   }
@@ -105,12 +102,12 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGr
       const alignmentLines = getAlignmentLines(
         nodes,
         renderedNodes,
-        context.graphConfig,
+        state.settings.graphConfig,
         state.viewport.transformMatrix[0] > 0.3 ? 2 : 5
       );
       if (alignmentLines.length) {
-        const dxAligned = getAutoAlignDisplacement(alignmentLines, nodes, context.graphConfig, "x");
-        const dyAligned = getAutoAlignDisplacement(alignmentLines, nodes, context.graphConfig, "y");
+        const dxAligned = getAutoAlignDisplacement(alignmentLines, nodes, state.settings.graphConfig, "x");
+        const dyAligned = getAutoAlignDisplacement(alignmentLines, nodes, state.settings.graphConfig, "y");
         dummyNodes.alignedDX = dummyNodes.dx + dxAligned;
         dummyNodes.alignedDY = dummyNodes.dy + dyAligned;
       } else {
@@ -128,12 +125,8 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent, context: IGr
   return nextState;
 }
 
-function handleDraggingNewNode(
-  state: IGraphState,
-  action: ICanvasAddNodeEvent,
-  context: IGraphReducerContext
-): IGraphState {
-  if (!context.features.has(GraphFeatures.autoAlign)) {
+function handleDraggingNewNode(state: IGraphState, action: ICanvasAddNodeEvent): IGraphState {
+  if (!state.settings.features.has(GraphFeatures.autoAlign)) {
     return state;
   }
   const data = state.data.present;
@@ -141,7 +134,7 @@ function handleDraggingNewNode(
   const alignmentLines = getAlignmentLines(
     [action.node],
     renderedNodes,
-    context.graphConfig,
+    state.settings.graphConfig,
     state.viewport.transformMatrix[0] > 0.3 ? 2 : 5
   );
   return {
@@ -150,7 +143,7 @@ function handleDraggingNewNode(
   };
 }
 
-function dragStart(state: IGraphState, action: INodeDragStartEvent, context: IGraphReducerContext): IGraphState {
+function dragStart(state: IGraphState, action: INodeDragStartEvent): IGraphState {
   let data = state.data.present;
   const targetNode = data.nodes.get(action.node.id);
   if (!targetNode) {
@@ -159,18 +152,18 @@ function dragStart(state: IGraphState, action: INodeDragStartEvent, context: IGr
   let selectedNodes: IDummyNode[];
   if (action.isMultiSelect) {
     data = data.selectNodes(node => node.id === action.node.id || isSelected(node));
-    selectedNodes = getSelectedNodes(data, context.graphConfig);
+    selectedNodes = getSelectedNodes(data, state.settings.graphConfig);
   } else if (!isSelected(targetNode)) {
     selectedNodes = [
       {
         id: action.node.id,
         x: action.node.x,
         y: action.node.y,
-        ...getNodeSize(action.node, context.graphConfig)
+        ...getNodeSize(action.node, state.settings.graphConfig)
       }
     ];
   } else {
-    selectedNodes = getSelectedNodes(data, context.graphConfig);
+    selectedNodes = getSelectedNodes(data, state.settings.graphConfig);
   }
   return {
     ...state,
@@ -214,11 +207,7 @@ function dragEnd(state: IGraphState, action: INodeDragEndEvent): IGraphState {
 }
 
 // centralize node or locate node to the specific position
-function locateNode(
-  action: INodeCentralizeEvent | INodeLocateEvent,
-  state: IGraphState,
-  graphConfig: IGraphConfig
-): IGraphState {
+function locateNode(action: INodeCentralizeEvent | INodeLocateEvent, state: IGraphState): IGraphState {
   const data = state.data.present;
   if (!isViewportComplete(state.viewport) || !action.nodes.length) {
     return state;
@@ -230,7 +219,7 @@ function locateNode(
       return state;
     }
 
-    const { width, height } = getNodeSize(node, graphConfig);
+    const { width, height } = getNodeSize(node, state.settings.graphConfig);
     const nodeX = action.type === GraphNodeEvent.Centralize ? node.x + width / 2 : node.x;
     const nodeY = action.type === GraphNodeEvent.Centralize ? node.y + height / 2 : node.y;
 
@@ -242,14 +231,18 @@ function locateNode(
       viewport: scrollIntoView(clientX, clientY, state.viewport.rect, true, position)(state.viewport)
     };
   }
-  const { minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(data, graphConfig, new Set(action.nodes));
+  const { minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(
+    data,
+    state.settings.graphConfig,
+    new Set(action.nodes)
+  );
   return {
     ...state,
     viewport: focusArea(minNodeX, minNodeY, maxNodeX, maxNodeY, state.viewport)
   };
 }
 
-export const nodeReducer: IBuiltinReducer = (state, action, context) => {
+export const nodeReducer: IGraphReactReducer = (state, action) => {
   const data = state.data.present;
   switch (action.type) {
     //#region resize
@@ -259,7 +252,7 @@ export const nodeReducer: IBuiltinReducer = (state, action, context) => {
         dummyNodes: {
           ...emptyDummyNodes(),
           isVisible: true,
-          nodes: getSelectedNodes(data, context.graphConfig)
+          nodes: getSelectedNodes(data, state.settings.graphConfig)
         }
       };
     case GraphNodeEvent.Resizing:
@@ -297,20 +290,15 @@ export const nodeReducer: IBuiltinReducer = (state, action, context) => {
 
     //#region drag
     case GraphNodeEvent.DragStart:
-      return dragStart(state, action, context);
+      return dragStart(state, action);
     case GraphNodeEvent.Drag:
-      return dragNodeHandler(state, action, context);
+      return dragNodeHandler(state, action);
     case GraphNodeEvent.DragEnd:
       return dragEnd(state, action);
     //#endregion drag
 
     case GraphNodeEvent.PointerEnter:
       switch (state.behavior) {
-        case GraphBehavior.connecting:
-          if ((action.rawEvent as React.PointerEvent).pointerId !== graphController.pointerId) {
-            return state;
-          }
-        // eslint-disable-next-line no-fallthrough
         case GraphBehavior.default:
           return {
             ...state,
@@ -337,7 +325,7 @@ export const nodeReducer: IBuiltinReducer = (state, action, context) => {
           return state;
       }
     case GraphCanvasEvent.DraggingNodeFromItemPanel:
-      return handleDraggingNewNode(state, action, context);
+      return handleDraggingNewNode(state, action);
     case GraphCanvasEvent.DraggingNodeFromItemPanelEnd: {
       if (action.node) {
         return {
@@ -360,7 +348,7 @@ export const nodeReducer: IBuiltinReducer = (state, action, context) => {
     }
     case GraphNodeEvent.Centralize:
     case GraphNodeEvent.Locate:
-      return locateNode(action, state, context.graphConfig);
+      return locateNode(action, state);
     case GraphNodeEvent.Add:
       return {
         ...state,

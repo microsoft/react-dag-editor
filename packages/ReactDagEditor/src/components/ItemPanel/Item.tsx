@@ -3,7 +3,8 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { v4 as uuid } from "uuid";
 import { MouseEventButton } from "../../common/constants";
-import { emptyNodeConfig, GraphConfigContext, IRectConfig, PropsAPIContext } from "../../contexts";
+import { emptyNodeConfig, GraphConfigContext, IRectConfig } from "../../contexts";
+import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { defaultGetPositionFromEvent, DragController } from "../../controllers";
 import { PointerEventProvider } from "../../event-provider/PointerEventProvider";
 import { GraphFeatures } from "../../Features";
@@ -12,7 +13,6 @@ import { GraphCanvasEvent } from "../../models/event";
 import { IContainerRect, IPoint, ITransformMatrix } from "../../models/geometry";
 import { ICanvasNode } from "../../models/node";
 import { deepClone, getRectHeight, getRectWidth, isViewportComplete, reverseTransformPoint } from "../../utils";
-import { graphController } from "../../utils/graphController";
 import { identical } from "../../utils/identical";
 import { noop } from "../../utils/noop";
 import classes from "../Graph.styles.m.scss";
@@ -109,7 +109,7 @@ const adjustPosition = <T extends { width?: number; height?: number }>(
  */
 export const Item: React.FunctionComponent<IItemProps> = props => {
   const graphConfig = React.useContext(GraphConfigContext);
-  const propsAPI = React.useContext(PropsAPIContext);
+  const graphController = React.useContext(GraphControllerContext);
   const [workingModel, setWorkingModel] = React.useState<ICanvasNode | null>(null);
   const nextNodeRef = useRefValue(workingModel);
   const svgRef = React.useRef<SVGSVGElement>(null);
@@ -134,7 +134,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
           evt.clientX,
           evt.clientY,
           undefined,
-          propsAPI.getViewport().transformMatrix,
+          graphController.state.viewport.transformMatrix,
           model,
           nodeConfig
         ),
@@ -146,7 +146,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
         defaultGetPositionFromEvent
       );
 
-      const eventChannel = propsAPI.getEventChannel();
+      const eventChannel = graphController.eventChannel;
 
       eventChannel.trigger({
         type: GraphCanvasEvent.DraggingNodeFromItemPanelStart,
@@ -164,7 +164,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
               e.clientX,
               e.clientY,
               undefined,
-              propsAPI.getViewport().transformMatrix,
+              graphController.state.viewport.transformMatrix,
               model,
               nodeConfig
             )
@@ -172,7 +172,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
         });
       };
       drag.onEnd = ({ e }) => {
-        const viewport = propsAPI.getViewport();
+        const viewport = graphController.state.viewport;
         let nextNode = nextNodeRef.current;
         if (!isViewportComplete(viewport) || !nextNode || !isWithInBound(viewport.rect, e.clientX, e.clientY)) {
           setWorkingModel(null);
@@ -199,7 +199,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
       setWorkingModel(node);
       drag.start(evt.nativeEvent);
     },
-    [props.shape, model, graphConfig, propsAPI, dragWillStart, nextNodeRef, nodeWillAdd, nodeDidAdd]
+    [graphController, props.shape, model, graphConfig, dragWillStart, nextNodeRef, nodeWillAdd, nodeDidAdd]
   );
 
   const className = mergeStyles(classes.moduleItem, props.className);

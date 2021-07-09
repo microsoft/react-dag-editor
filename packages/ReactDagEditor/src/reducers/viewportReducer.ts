@@ -1,5 +1,6 @@
-import { IGraphConfig, IGraphReducerContext } from "../contexts";
+import { IGraphConfig, IGraphReactReducer } from "../contexts";
 import { EMPTY_TRANSFORM_MATRIX } from "../contexts/GraphStateContext";
+import { GraphFeatures } from "../Features";
 import {
   GraphCanvasEvent,
   GraphMinimapEvent,
@@ -10,6 +11,7 @@ import {
 } from "../models/event";
 import { IContainerRect, IPoint, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
+import { IGraphSettings } from "../models/state";
 import {
   clamp,
   getGroupRect,
@@ -28,7 +30,6 @@ import {
   zoomTo
 } from "../utils";
 import { pipe } from "../utils/pipe";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
 function getRectCenter(rect: IContainerRect | undefined): IPoint | undefined {
   if (!rect) {
@@ -126,7 +127,12 @@ function zoomToFit(
   };
 }
 
-const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerContext, data: GraphModel): IViewport => {
+const reducer = (
+  viewport: IViewport,
+  action: IEvent,
+  data: GraphModel,
+  { graphConfig, canvasBoundaryPadding, features }: IGraphSettings
+): IViewport => {
   switch (action.type) {
     case GraphCanvasEvent.ViewportResize:
       return {
@@ -144,11 +150,12 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
       }
       const { transformMatrix, rect } = viewport;
       let { dx, dy } = action;
-      const { limitBoundary, groupPadding, canvasBoundaryPadding } = action;
+      const limitBoundary = features.has(GraphFeatures.limitBoundary);
+      const groupPadding = data.groups?.[0]?.padding; // TODO: this is not precise
       if (limitBoundary) {
         const { minX, maxX, minY, maxY } = getOffsetLimit({
           data,
-          graphConfig: context.graphConfig,
+          graphConfig,
           rect,
           transformMatrix,
           canvasBoundaryPadding,
@@ -166,11 +173,11 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
     case GraphMinimapEvent.Pan:
       return minimapPan(action.dx, action.dy)(viewport);
     case GraphCanvasEvent.ResetViewport:
-      return resetViewport(viewport, data, context.graphConfig, action);
+      return resetViewport(viewport, data, graphConfig, action);
     case GraphCanvasEvent.ZoomTo:
       return zoomTo(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
     case GraphCanvasEvent.ZoomToFit:
-      return zoomToFit(viewport, data, context.graphConfig, action);
+      return zoomToFit(viewport, data, graphConfig, action);
     case GraphCanvasEvent.ScrollIntoView:
       if (viewport.rect) {
         const { x, y } = transformPoint(action.x, action.y, viewport.transformMatrix);
@@ -182,8 +189,8 @@ const reducer = (viewport: IViewport, action: IEvent, context: IGraphReducerCont
   }
 };
 
-export const viewportReducer: IBuiltinReducer = (state, action, context) => {
-  const viewport = reducer(state.viewport, action, context, state.data.present);
+export const viewportReducer: IGraphReactReducer = (state, action) => {
+  const viewport = reducer(state.viewport, action, state.data.present, state.settings);
   return viewport === state.viewport
     ? state
     : {

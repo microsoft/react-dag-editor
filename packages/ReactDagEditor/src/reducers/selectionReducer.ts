@@ -1,11 +1,11 @@
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
+import { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { GraphCanvasEvent, GraphNodeEvent, ICanvasNavigateEvent } from "../models/event";
 import { GraphPortState } from "../models/element-state";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { addState, getRelativePoint, nodeSelection, unSelectAllEntity, updateState } from "../utils";
 import { selectNodeBySelectBox } from "../utils/updateNodeBySelectBox";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
 function handleNavigate(state: IGraphState, action: ICanvasNavigateEvent): IGraphState {
   let data = unSelectAllEntity()(state.data.present);
@@ -24,9 +24,9 @@ function handleNavigate(state: IGraphState, action: ICanvasNavigateEvent): IGrap
   };
 }
 
-export const selectionReducer: IBuiltinReducer = (state, action, context) => {
+export const selectionReducer: IGraphReactReducer = (state, action) => {
   const data = state.data.present;
-  const isLassoSelectEnable = context.features.has(GraphFeatures.lassoSelect);
+  const isLassoSelectEnable = state.settings.features.has(GraphFeatures.lassoSelect);
 
   switch (action.type) {
     case GraphCanvasEvent.Click:
@@ -88,7 +88,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
         data: {
           ...state.data,
           present: selectNodeBySelectBox(
-            context.graphConfig,
+            state.settings.graphConfig,
             state.viewport.transformMatrix,
             state.selectBoxPosition,
             data
@@ -104,7 +104,7 @@ export const selectionReducer: IBuiltinReducer = (state, action, context) => {
         data: {
           ...state.data,
           present: selectNodeBySelectBox(
-            context.graphConfig,
+            state.settings.graphConfig,
             state.viewport.transformMatrix,
             state.selectBoxPosition,
             data

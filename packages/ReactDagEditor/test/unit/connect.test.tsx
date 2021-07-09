@@ -21,12 +21,11 @@ import {
   IGraphState,
   NodeModel
 } from "../../src";
-import { PropsAPI } from "../../src/props-api/PropsAPI";
 import { getNearestConnectablePort } from "../../src/utils";
 import { EventChannel } from "../../src/utils/eventChannel";
-import { graphController } from "../../src/utils/graphController";
+import { GraphController } from "../../src/controllers/GraphController";
 import { identical } from "../../src/utils/identical";
-import { TestComponent } from "../TestComponent";
+import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { getGraphConfig, patchPointerEvent } from "../utils";
 
 const mockViewport = {
@@ -148,11 +147,15 @@ describe("test Connecting", () => {
 
   let container: RenderResult;
   let edgeWillAdd: Required<IGraphProps>["edgeWillAdd"];
-  let propsAPIRef: React.RefObject<PropsAPI<any, any, any>>;
+  let graphController: GraphController;
   let eventChannel: EventChannel;
   let mockData: GraphModel;
   let ports: ICanvasPort[];
   let connecting: Connecting;
+
+  const getData = () => {
+    return graphController.state.data.present;
+  };
 
   class Connecting {
     public start(node: NodeModel, port: ICanvasPort): void {
@@ -199,11 +202,11 @@ describe("test Connecting", () => {
     }
 
     public get state(): IGraphState | undefined {
-      return propsAPIRef.current?.getState();
+      return graphController.state;
     }
 
     public get connectState(): IConnectingState | undefined {
-      return propsAPIRef.current?.getState().connectState;
+      return graphController.state.connectState;
     }
 
     public get data(): GraphModel | undefined {
@@ -282,19 +285,16 @@ describe("test Connecting", () => {
     });
 
     edgeWillAdd = jest.fn(identical);
-    propsAPIRef = React.createRef();
+    const graphControllerRef = React.createRef<GraphController>();
     container = render(
-      <TestComponent
-        graphConfig={getGraphConfig()}
-        data={mockData}
-        edgeWillAdd={edgeWillAdd}
-        propsAPIRef={propsAPIRef}
-      />
+      <TestComponent graphConfig={getGraphConfig()} data={mockData} edgeWillAdd={edgeWillAdd}>
+        <GraphControllerRef ref={graphControllerRef} />
+      </TestComponent>
     );
-    eventChannel = propsAPIRef.current?.getEventChannel()!;
-    if (!eventChannel) {
-      throw new Error();
-    }
+    graphController = graphControllerRef.current!;
+    expect(graphController).toBeDefined();
+    eventChannel = graphController.eventChannel;
+    expect(eventChannel).toBeDefined();
     connecting = new Connecting();
     eventChannel.trigger({
       type: GraphCanvasEvent.ViewportResize,
@@ -314,14 +314,14 @@ describe("test Connecting", () => {
     act(() => {
       connecting.start(mockData.nodes.get(mockData.head!)!, ports[0]);
     });
-    const port = propsAPIRef.current?.getData().nodes.get(mockData.head!)?.ports?.[0];
+    const port = getData().nodes.get(mockData.head!)?.ports?.[0];
     expect(hasState(GraphPortState.connecting)(port?.state)).toBe(true);
     expect(connecting.sourceNode).toBe("0");
     expect(connecting.sourcePort).toBe("0");
     act(() => {
       connecting.finish();
     });
-    expect(propsAPIRef.current?.getData().toJSON()).toEqual(mockData.toJSON());
+    expect(getData().toJSON()).toEqual(mockData.toJSON());
     expect(connecting.sourceNode).toBeUndefined();
     expect(connecting.sourcePort).toBeUndefined();
     expect(edgeWillAdd).not.toBeCalled();
@@ -341,7 +341,7 @@ describe("test Connecting", () => {
     act(() => {
       connecting.clearAttach(mockData.nodes.get("1")!, mockData.nodes.get("1")!.ports![1]);
     });
-    expect(propsAPIRef.current?.getData().toJSON()).toEqual({
+    expect(getData().toJSON()).toEqual({
       edges: [],
       nodes: [
         {
@@ -582,7 +582,10 @@ describe("test Connecting", () => {
       ]
     };
     act(() => {
-      propsAPIRef.current?.setData(GraphModel.fromJSON(data));
+      graphController.dispatch({
+        type: GraphCanvasEvent.SetData,
+        data: GraphModel.fromJSON(data)
+      });
     });
     act(() => {
       connecting.start(NodeModel.fromJSON(data.nodes[0], undefined, "1"), data.nodes[0].ports![1]);

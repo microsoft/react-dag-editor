@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IDispatchCallback} from "../contexts/GraphStateContext";
+import { IDispatchCallback } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
 import { GraphCanvasEvent, GraphContextMenuEvent, GraphEdgeEvent, GraphNodeEvent, IEvent } from "../models/event";
 import { ICanvasData } from "../models/canvas";
@@ -37,8 +37,8 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
   /**
    * @internal
    */
-  public get _enabledFeatures(): Set<GraphFeatures> {
-    return this.getInstance().enabledFeatures;
+  public get _enabledFeatures(): ReadonlySet<GraphFeatures> {
+    return this.getState().settings.features;
   }
 
   /**
@@ -79,9 +79,9 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     return this.getInstance().state.behavior;
   }
 
-  public getEnabledFeatures(): Set<GraphFeatures> {
+  public getEnabledFeatures(): ReadonlySet<GraphFeatures> {
     if (this.isGraphReady()) {
-      return this.getInstance().enabledFeatures;
+      return this.getState().settings.features;
     }
     return new Set<GraphFeatures>();
   }

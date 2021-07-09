@@ -1,6 +1,6 @@
+import { IGraphReactReducer } from "../contexts";
 import { GraphCanvasEvent, GraphEdgeEvent, GraphNodeEvent, IEvent } from "../models/event";
 import { GraphBehavior } from "../models/state";
-import { IBuiltinReducer } from "./builtinReducer.type";
 
 /**
  * this function is used both in useEventChannel and behaviorReducer to share the same logic
@@ -28,7 +28,7 @@ export const handleBehaviorChange = (prevBehavior: GraphBehavior, event: IEvent)
   }
 };
 
-export const behaviorReducer: IBuiltinReducer = (prevState, action) => {
+export const behaviorReducer: IGraphReactReducer = (prevState, action) => {
   const nextBehavior = handleBehaviorChange(prevState.behavior, action);
 
   if (nextBehavior === prevState.behavior) {

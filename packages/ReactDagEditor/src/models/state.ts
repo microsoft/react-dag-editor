@@ -1,8 +1,10 @@
 import { ISelectBoxPosition } from "../components/Graph/SelectBox";
 import { ILine } from "../components/Line";
+import { IGraphConfig } from "../contexts";
+import { GraphFeatures } from "../Features";
 import { IHistory } from "../utils";
 import { IDummyNodes } from "./dummy-node";
-import { IPoint, IViewport } from "./geometry";
+import { IGap, IPoint, IViewport } from "./geometry";
 import { GraphModel } from "./GraphModel";
 
 export enum CanvasMouseMode {
@@ -20,8 +22,7 @@ export enum GraphBehavior {
 }
 
 export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  extends IHistory<GraphModel<NodeData, EdgeData, PortData>> {
-}
+  extends IHistory<GraphModel<NodeData, EdgeData, PortData>> {}
 
 export interface IConnectingState {
   sourceNode: string;
@@ -31,7 +32,14 @@ export interface IConnectingState {
   movingPoint: IPoint | undefined;
 }
 
+export interface IGraphSettings<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+  graphConfig: IGraphConfig<NodeData, EdgeData, PortData>;
+  features: ReadonlySet<GraphFeatures>;
+  canvasBoundaryPadding: IGap;
+}
+
 export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+  settings: IGraphSettings<NodeData, EdgeData, PortData>;
   data: IGraphDataState<NodeData, EdgeData, PortData>;
   viewport: IViewport;
   behavior: GraphBehavior;

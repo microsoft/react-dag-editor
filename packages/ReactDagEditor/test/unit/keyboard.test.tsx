@@ -4,36 +4,50 @@ import { act } from "react-dom/test-utils";
 import {
   addState,
   allFeatures,
+  GraphCanvasEvent,
   GraphEdgeState,
   GraphFeatures,
   GraphModel,
   GraphNodeState,
-  IPropsAPI,
   updateState
 } from "../../src";
+import { GraphController } from "../../src/controllers/GraphController";
 import { findDOMElement } from "../../src/utils/a11yUtils";
-import { TestComponent } from "../TestComponent";
+import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { mockBoundingBox } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";
 
 let wrapper: RenderResult;
 let element: HTMLDivElement;
 let svg: SVGSVGElement;
-let propsAPI: IPropsAPI;
+let graphController: GraphController;
+
+const getData = () => graphController.state.data.present;
+const updateData = (f: (prev: GraphModel) => GraphModel) =>
+  graphController.dispatch({
+    type: GraphCanvasEvent.UpdateData,
+    updater: f,
+    shouldRecord: false
+  });
 
 beforeEach(() => {
-  const propsAPIRef = React.createRef<IPropsAPI>();
+  const graphControllerRef = React.createRef<GraphController>();
   const features = new Set(allFeatures);
   features.add(GraphFeatures.autoFit); // disable virtualization
   wrapper = render(
-    <TestComponent propsAPIRef={propsAPIRef} data={GraphModel.fromJSON(getSample1Data())} features={features} />
+    <TestComponent
+      data={GraphModel.fromJSON(getSample1Data())}
+      stateProps={{
+        features
+      }}
+    >
+      <GraphControllerRef ref={graphControllerRef} />
+    </TestComponent>
   );
   element = wrapper.container.querySelector(".react-dag-editor-container") as HTMLDivElement;
   svg = element.querySelector("svg") as SVGSVGElement;
-  if (!propsAPIRef.current) {
-    throw new Error();
-  }
-  propsAPI = propsAPIRef.current;
+  graphController = graphControllerRef.current!;
+  expect(graphController).toBeDefined();
   mockBoundingBox();
 });
 
@@ -43,7 +57,7 @@ it("should focus first node", () => {
       key: "Tab"
     });
   });
-  const data = propsAPI.getData();
+  const data = getData();
   const id = data.head;
   if (!id) {
     throw new Error();
@@ -54,13 +68,13 @@ it("should focus first node", () => {
 
 it("should delete selected edge", () => {
   const id = "0";
-  propsAPI.updateData(data => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
+  updateData(data => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete"
     });
   });
-  expect(propsAPI.getData().toJSON()).toEqual(
+  expect(getData().toJSON()).toEqual(
     GraphModel.fromJSON(getSample1Data())
       .deleteEdge(id)
       .toJSON()
@@ -69,13 +83,13 @@ it("should delete selected edge", () => {
 
 it("should undo, redo", () => {
   const id = "0";
-  propsAPI.updateData(data => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
+  updateData(data => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete"
     });
   });
-  expect(propsAPI.getData().toJSON()).toEqual(
+  expect(getData().toJSON()).toEqual(
     GraphModel.fromJSON(getSample1Data())
       .deleteEdge(id)
       .toJSON()
@@ -87,7 +101,7 @@ it("should undo, redo", () => {
       key: "z"
     });
   });
-  expect(propsAPI.getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).toJSON());
+  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).toJSON());
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
@@ -95,7 +109,7 @@ it("should undo, redo", () => {
       key: "y"
     });
   });
-  expect(propsAPI.getData().toJSON()).toEqual(
+  expect(getData().toJSON()).toEqual(
     GraphModel.fromJSON(getSample1Data())
       .deleteEdge(id)
       .toJSON()
@@ -110,7 +124,7 @@ it("should select all", () => {
       key: "a"
     });
   });
-  expect(propsAPI.getData().toJSON()).toEqual(
+  expect(getData().toJSON()).toEqual(
     GraphModel.fromJSON(getSample1Data())
       .selectNodes(() => true)
       .toJSON()
@@ -118,7 +132,7 @@ it("should select all", () => {
 });
 
 it("should copy and paste with edge", () => {
-  propsAPI.updateData(data => data.selectNodes(node => node.id === "4b199015" || node.id === "fb404f70"));
+  updateData(data => data.selectNodes(node => node.id === "4b199015" || node.id === "fb404f70"));
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
@@ -146,7 +160,7 @@ it("should navigate with keyboard", () => {
       });
     });
   svg.focus();
-  const data = propsAPI.getData();
+  const data = getData();
   const nodes = Array.from(data.nodes.values());
   tab();
   expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port: undefined }));
@@ -169,7 +183,7 @@ it("should navigate with keyboard", () => {
 });
 
 it("should record keyup and keydown", () => {
-  const getActiveKey = () => propsAPI.getGraphState().activeKeys;
+  const getActiveKey = () => graphController.state.activeKeys;
   expect(getActiveKey().size).toBe(0);
   fireEvent.keyDown(element, {
     key: "a"

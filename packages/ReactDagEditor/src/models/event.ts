@@ -134,23 +134,7 @@ export enum GraphCanvasEvent {
 export enum GraphScrollBarEvent {
   ScrollStart = "[ScrollBar]ScrollStart",
   Scroll = "[ScrollBar]Scroll",
-  ScrollEnd = "[ScrollBar]ScrollEnd",
-  /**
-   * @deprecated
-   */
-  ScrollLeft = "[ScrollBar]ScrollToLeft",
-  /**
-   * @deprecated
-   */
-  ScrollRight = "[ScrollBar]ScrollToRight",
-  /**
-   * @deprecated
-   */
-  ScrollTop = "[ScrollBar]ScrollToTop",
-  /**
-   * @deprecated
-   */
-  ScrollBottom = "[ScrollBar]ScrollToBottom"
+  ScrollEnd = "[ScrollBar]ScrollEnd"
 }
 
 export enum GraphMinimapEvent {

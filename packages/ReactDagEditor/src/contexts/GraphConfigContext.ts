@@ -4,26 +4,17 @@ import { IGraphClipBoard } from "../built-in/defaultClipboard";
 import { ICanvasGroup } from "../models/canvas";
 import { ICanvasEdge } from "../models/edge";
 import { EdgeModel } from "../models/EdgeModel";
-import { IContainerRect, IViewport } from "../models/geometry";
+import { IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
 import { ICanvasPort } from "../models/port";
-import { IZoomPanSettings } from "../utils";
 import { ITheme } from "./ThemeContext";
 
 export interface IItemConfigArgs<T> {
   model: T;
   theme: ITheme;
   viewport: Required<IViewport>;
-  /**
-   * @deprecated
-   */
-  containerRect: IContainerRect;
-  /**
-   * @deprecated
-   */
-  zoomPanSettings: IZoomPanSettings;
 }
 
 export interface INodeDrawArgs<NodeData = unknown, PortData = unknown>

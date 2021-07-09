@@ -1,29 +1,6 @@
 import { IPoint, ITransformMatrix, IViewport } from "../models/geometry";
 
 /**
- * @deprecated use transformPoint instead
- * @param x
- * @param y
- * @param transformMatrix
- */
-export const getClientByPoint = (x: number, y: number, transformMatrix?: ITransformMatrix) => {
-  if (!transformMatrix) {
-    return {
-      x,
-      y
-    };
-  }
-
-  const realX = transformMatrix[0] * x + transformMatrix[2] * y + transformMatrix[4];
-  const realY = transformMatrix[1] * x + transformMatrix[3] * y + transformMatrix[5];
-
-  return {
-    x: realX,
-    y: realY
-  };
-};
-
-/**
  * get transformed point
  * @param x
  * @param y
@@ -101,20 +78,4 @@ export const getContainerClientPoint = (realX: number, realY: number, viewport: 
     x: client.x - rect.left,
     y: client.y - rect.top
   };
-};
-
-/**
- * @deprecated use reverseTransformPoint instead
- * @param realX
- * @param realY
- * @param transformMatrix
- */
-export const getTransformedPointByRealPoint = (realX: number, realY: number, transformMatrix?: ITransformMatrix) => {
-  if (!transformMatrix) {
-    return {
-      x: realX,
-      y: realY
-    };
-  }
-  return reverseTransformPoint(realX, realY, transformMatrix);
 };

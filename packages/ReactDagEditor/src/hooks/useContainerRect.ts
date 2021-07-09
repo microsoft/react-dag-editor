@@ -8,11 +8,6 @@ import { noop } from "../utils/noop";
 
 const LIMIT = 20;
 
-/**
- * @deprecated use IContainerRect instead
- */
-export type TContainerRect = IContainerRect;
-
 const isRectChanged = (a: IContainerRect | undefined, b: IContainerRect | undefined): boolean => {
   if (!a || !b) {
     return true;

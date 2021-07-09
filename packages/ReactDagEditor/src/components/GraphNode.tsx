@@ -95,11 +95,7 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
         {nodeConfig.render({
           model: node,
           theme,
-          viewport,
-          zoomPanSettings: {
-            transformMatrix: viewport.transformMatrix
-          },
-          containerRect: viewport.rect
+          viewport
         })}
       </g>
     </g>

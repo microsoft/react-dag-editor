@@ -10,7 +10,7 @@ import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { GraphBehavior, IGraphState } from "../models/state";
-import { IZoomFixPublicOption, IZoomPanSettings } from "../utils";
+import { IZoomFixPublicOption } from "../utils";
 
 import { IAutoLayout } from "../libs";
 import { GraphFeatures } from "../Features";
@@ -301,12 +301,6 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    * @param y
    */
   scrollIntoView(x: number, y: number): void;
-  /**
-   * get zoomPanSettings (transformMatrix)
-   *
-   * @deprecated
-   */
-  getZoomPanSettings(): IZoomPanSettings;
   getViewport(): IViewport;
   /**
    * get the svg ref object

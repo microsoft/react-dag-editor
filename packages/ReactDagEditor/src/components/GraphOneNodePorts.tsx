@@ -94,8 +94,6 @@ export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps>
                   theme,
                   anotherNode: sourceNode,
                   anotherPort: sourcePort,
-                  zoomPanSettings: viewport,
-                  containerRect: viewport.rect,
                   viewport,
                   ...pos
                 })

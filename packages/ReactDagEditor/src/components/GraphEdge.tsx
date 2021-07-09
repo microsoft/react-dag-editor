@@ -110,8 +110,6 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       x2: target.x,
       y2: target.y,
       theme,
-      containerRect: viewport.rect,
-      zoomPanSettings: viewport,
       viewport
     });
 
@@ -142,8 +140,6 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
           x2: hintPoint.x,
           y2: hintPoint.y,
           theme,
-          containerRect: viewport.rect,
-          zoomPanSettings: viewport,
           viewport
         });
       } else if (isTargetVisible && edgeConfig.renderWithSourceHint) {
@@ -155,8 +151,6 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
           x2: target.x,
           y2: target.y,
           theme,
-          containerRect: viewport.rect,
-          zoomPanSettings: viewport,
           viewport
         });
       }

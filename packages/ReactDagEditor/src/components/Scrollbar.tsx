@@ -105,16 +105,6 @@ export const Scrollbar: React.FC<IProps> = props => {
         dx: 0,
         dy
       });
-
-      if (scrollbarDy < 0) {
-        eventChannel.trigger({
-          type: GraphScrollBarEvent.ScrollTop
-        });
-      } else if (scrollbarDy > 0) {
-        eventChannel.trigger({
-          type: GraphScrollBarEvent.ScrollBottom
-        });
-      }
     };
     dragging.onEnd = () => {
       eventChannel.trigger({
@@ -149,16 +139,6 @@ export const Scrollbar: React.FC<IProps> = props => {
         dx,
         dy: 0
       });
-
-      if (scrollbarDx < 0) {
-        eventChannel.trigger({
-          type: GraphScrollBarEvent.ScrollLeft
-        });
-      } else if (scrollbarDx > 0) {
-        eventChannel.trigger({
-          type: GraphScrollBarEvent.ScrollRight
-        });
-      }
     };
     dragging.onEnd = () => {
       eventChannel.trigger({

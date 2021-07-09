@@ -140,7 +140,7 @@ const reducer = (
         rect: action.viewportRect
       };
     case GraphCanvasEvent.Zoom:
-      return zoom(action.scale, action.anchor ?? getRectCenter(viewport.rect), undefined, action.direction)(viewport);
+      return zoom(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
     case GraphScrollBarEvent.Scroll:
     case GraphCanvasEvent.MouseWheelScroll:
     case GraphCanvasEvent.Pan:

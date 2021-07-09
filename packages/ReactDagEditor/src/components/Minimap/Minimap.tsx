@@ -8,12 +8,12 @@ import { IEventProvider, IGlobalMoveEventTypes } from "../../event-provider/type
 import { useMinimapRect, useTheme } from "../../hooks";
 import { useRefValue } from "../../hooks/useRefValue";
 import { GraphMinimapEvent } from "../../models/event";
+import { ITransformMatrix } from "../../models/geometry";
 import {
   getPointDeltaByClientDelta,
   getVisibleArea,
   getZoomFitMatrix,
   isViewportComplete,
-  IZoomPanSettings,
   reverseTransformPoint,
   transformPoint
 } from "../../utils";
@@ -77,13 +77,11 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   const rect = useMinimapRect(svgRef);
   const rectRef = useRefValue(rect);
 
-  const miniMapZoomPanSetting = React.useMemo<IZoomPanSettings>(() => {
-    return {
-      transformMatrix: getZoomFitMatrix({ data, rect, graphConfig })
-    };
+  const minimapTransformMatrix = React.useMemo<ITransformMatrix>(() => {
+    return getZoomFitMatrix({ data, rect, graphConfig });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rect, data.nodes]);
-  const miniMapZoomPanSettingRef = useRefValue(miniMapZoomPanSetting);
+  const minimapTransformMatrixRef = useRefValue(minimapTransformMatrix);
 
   const viewport = React.useMemo<IRect>(() => {
     if (!rect || !isViewportComplete(graphViewport)) {
@@ -97,17 +95,9 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
 
     const boundaryPoints = getVisibleArea(graphViewport);
 
-    const { x: startX, y: startY } = transformPoint(
-      boundaryPoints.minX,
-      boundaryPoints.minY,
-      miniMapZoomPanSetting.transformMatrix
-    );
+    const { x: startX, y: startY } = transformPoint(boundaryPoints.minX, boundaryPoints.minY, minimapTransformMatrix);
 
-    const { x: endX, y: endY } = transformPoint(
-      boundaryPoints.maxX,
-      boundaryPoints.maxY,
-      miniMapZoomPanSetting.transformMatrix
-    );
+    const { x: endX, y: endY } = transformPoint(boundaryPoints.maxX, boundaryPoints.maxY, minimapTransformMatrix);
 
     return {
       startX,
@@ -116,7 +106,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       endY
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rect, miniMapZoomPanSetting, graphViewport.rect, ...graphViewport.transformMatrix]);
+  }, [rect, minimapTransformMatrix, graphViewport.rect, ...graphViewport.transformMatrix]);
 
   const onClick = React.useCallback(
     (evt: React.MouseEvent) => {
@@ -137,7 +127,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
           rect.height - shadowPadding - viewportHeight / 2,
           evt.clientY - rect.top
         ),
-        miniMapZoomPanSetting.transformMatrix
+        minimapTransformMatrix
       );
 
       propsAPI.scrollIntoView(point.x, point.y);
@@ -177,7 +167,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
         };
       });
       drag.onMove = ({ dx, dy, e }) => {
-        const { x, y } = getPointDeltaByClientDelta(-dx, -dy, miniMapZoomPanSettingRef.current.transformMatrix);
+        const { x, y } = getPointDeltaByClientDelta(-dx, -dy, minimapTransformMatrixRef.current);
         propsAPI.getEventChannel()?.trigger({
           type: GraphMinimapEvent.Pan,
           dx: x,
@@ -250,9 +240,9 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   }, [onStartDrag, rect]);
 
   const staticGraphEl = React.useMemo(
-    () => <StaticGraph data={data} zoomPanSettings={miniMapZoomPanSetting} />,
+    () => <StaticGraph data={data} transformMatrix={minimapTransformMatrix} />,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data.nodes, ...miniMapZoomPanSetting.transformMatrix]
+    [data.nodes, ...minimapTransformMatrix]
   );
 
   if (data.nodes.size > maxNodesCountAllowed) {

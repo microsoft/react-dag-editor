@@ -1,11 +1,4 @@
-import {
-  filterSelectedItems,
-  GraphEdgeState,
-  GraphModel,
-  GraphNodeState,
-  GraphPortState,
-  IZoomPanSettings
-} from "../../src";
+import { filterSelectedItems, GraphEdgeState, GraphModel, GraphNodeState, GraphPortState } from "../../src";
 import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
 import { getNeighborPorts } from "../../src/utils";
 import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
@@ -140,11 +133,9 @@ describe("test updateNodeBySelectBox", () => {
       }
     ]
   });
-  const zoomPanSettings: IZoomPanSettings = {
-    transformMatrix: [1, 0, 0, 1, 0, 0]
-  };
+  const transformMatrix = [1, 0, 0, 1, 0, 0] as const;
   const select = (selectBox: ISelectBoxPosition) => {
-    return selectNodeBySelectBox(getGraphConfig(), zoomPanSettings.transformMatrix, selectBox, mockData).toJSON();
+    return selectNodeBySelectBox(getGraphConfig(), transformMatrix, selectBox, mockData).toJSON();
   };
   it("should select nothing", () => {
     expect(

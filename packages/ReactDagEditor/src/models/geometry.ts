@@ -17,7 +17,7 @@ export interface IGap {
   readonly right?: number;
 }
 
-export type ITransformMatrix = [number, number, number, number, number, number];
+export type ITransformMatrix = readonly [number, number, number, number, number, number];
 
 export type IContainerRect = ClientRect | DOMRect;
 

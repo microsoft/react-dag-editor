@@ -74,13 +74,13 @@ describe("test zoom", () => {
   });
 
   it("should zoom x", () => {
-    expect(zoom(0.5, anchor, undefined, Direction.X)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoom(0.5, anchor, Direction.X)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
       transformMatrix: [0.5, 0, 0, 1, 75, 50]
     });
   });
 
   it("should zoom y", () => {
-    expect(zoom(0.5, anchor, undefined, Direction.Y)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoom(0.5, anchor, Direction.Y)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
       transformMatrix: [1, 0, 0, 0.5, 50, 75]
     });
   });

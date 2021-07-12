@@ -33,3 +33,5 @@ export enum MouseEventButtons {
 
 export const DEFAULT_AUTO_ALIGN_THRESHOLD = 50;
 export const COPIED_NODE_SPACING = 50;
+export const NODE_MIN_VISIBLE_LENGTH = 5;
+export const NODE_MAX_VISIBLE_LENGTH = 500;

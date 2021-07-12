@@ -1,7 +1,8 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
-import { GraphConfigContext, PropsAPIContext, ViewportContext } from "../../contexts";
+import { GraphConfigContext, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
+import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { useConst } from "../../hooks/useConst";
 import { GraphCanvasEvent } from "../../models/event";
 import { ICanvasNode } from "../../models/node";
@@ -28,7 +29,7 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
 }) => {
   const rect = useSvgRect(svgRef);
   const graphConfig = React.useContext(GraphConfigContext);
-  const propsAPI = React.useContext(PropsAPIContext);
+  const graphController = React.useContext(GraphControllerContext);
   const alignmentLines = React.useContext(AlignmentLinesContext);
   const viewport = React.useContext(ViewportContext);
 
@@ -52,7 +53,7 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
     if (!dummyNode) {
       return;
     }
-    propsAPI.getEventChannel().trigger({
+    graphController.eventChannel.trigger({
       type: GraphCanvasEvent.DraggingNodeFromItemPanel,
       node: dummyNode
     });

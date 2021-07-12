@@ -122,6 +122,16 @@ export const selectionReducer: IGraphReactReducer = (state, action) => {
           present: data.selectNodes(() => true)
         }
       };
+    case GraphNodeEvent.Select: {
+      const nodes = new Set(action.nodes);
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          present: data.selectNodes(node => nodes.has(node.id))
+        }
+      };
+    }
     default:
       return state;
   }

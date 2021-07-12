@@ -17,13 +17,11 @@ import {
   INodeCommonEvent,
   IPortEvent
 } from "../models/event";
-import { GraphNodeState } from "../models/element-state";
 import { onContainerMouseDown, onNodePointerDown } from "../handlers";
 import { IContainerRect } from "../models/geometry";
 import { GraphBehavior } from "../models/state";
-import { PropsAPI } from "../props-api/PropsAPI";
 import { handleBehaviorChange } from "../reducers/behaviorReducer";
-import { addState, filterSelectedItems } from "../utils";
+import { filterSelectedItems } from "../utils";
 import {
   findDOMElement,
   focusDownNode,
@@ -52,7 +50,6 @@ export interface IUseEventChannelParams {
   rectRef: React.RefObject<IContainerRect | undefined>;
   svgRef: React.RefObject<SVGSVGElement>;
   containerRef: React.RefObject<HTMLDivElement>;
-  propsAPI: PropsAPI<unknown, unknown, unknown>;
   featureControl: ReturnType<typeof useFeatureControl>;
   graphConfig: IGraphConfig;
   eventChannel: EventChannel;
@@ -68,7 +65,6 @@ export function useEventChannel({
   dispatch,
   rectRef,
   svgRef,
-  propsAPI,
   containerRef,
   featureControl,
   graphConfig,
@@ -103,7 +99,6 @@ export function useEventChannel({
   const animationFramedDispatch = React.useMemo(() => animationFramed(dispatch), [dispatch]);
 
   const keyDownHandler = useCanvasKeyboardEventHandlers({
-    propsAPI,
     featureControl,
     eventChannel,
     graphConfig,
@@ -112,7 +107,7 @@ export function useEventChannel({
   });
 
   const focusFirstNode = (e: React.KeyboardEvent) => {
-    const data = propsAPI.getData();
+    const data = graphController.getData();
     if (data.nodes.size > 0 && svgRef.current) {
       const firstNode = data.head && data.nodes.get(data.head);
       if (firstNode) {
@@ -174,7 +169,7 @@ export function useEventChannel({
         break;
       case GraphCanvasEvent.Copy:
         {
-          const selectedData = filterSelectedItems(propsAPI.getData());
+          const selectedData = filterSelectedItems(graphController.getData());
           const clipboard = graphConfig.getClipboard();
 
           clipboard.write(selectedData);
@@ -204,7 +199,7 @@ export function useEventChannel({
           const evt = event.rawEvent as React.MouseEvent;
           updateViewport();
           onContainerMouseDown(evt, {
-            state: propsAPI.getState(),
+            state: graphController.state,
             canvasMouseMode,
             isPanDisabled,
             isMultiSelectDisabled,
@@ -286,18 +281,14 @@ export function useEventChannel({
     }
 
     event.rawEvent.stopPropagation();
-    const { node } = event;
-
-    propsAPI.updateNode(node.id, {
-      state: addState(GraphNodeState.editing)(node.state)
-    });
+    dispatch(event);
   };
 
   const onNodeKeyDown = (event: INodeCommonEvent) => {
     if (!svgRef || !isA11yEnable) {
       return;
     }
-    const data = propsAPI.getData();
+    const data = graphController.getData();
     const { node } = event;
     const evt = event.rawEvent as React.KeyboardEvent;
     switch (evt.key) {
@@ -312,22 +303,22 @@ export function useEventChannel({
       case "ArrowUp":
         evt.preventDefault();
         evt.stopPropagation();
-        focusUpNode(data, node.id, svgRef, propsAPI, evt, eventChannel);
+        focusUpNode(data, node.id, svgRef, graphController, evt, eventChannel);
         break;
       case "ArrowDown":
         evt.preventDefault();
         evt.stopPropagation();
-        focusDownNode(data, node.id, svgRef, propsAPI, evt, eventChannel);
+        focusDownNode(data, node.id, svgRef, graphController, evt, eventChannel);
         break;
       case "ArrowLeft":
         evt.preventDefault();
         evt.stopPropagation();
-        focusLeftNode(data, node.id, svgRef, propsAPI, evt, eventChannel);
+        focusLeftNode(data, node.id, svgRef, graphController, evt, eventChannel);
         break;
       case "ArrowRight":
         evt.preventDefault();
         evt.stopPropagation();
-        focusRightNode(data, node.id, svgRef, propsAPI, evt, eventChannel);
+        focusRightNode(data, node.id, svgRef, graphController, evt, eventChannel);
         break;
       default:
     }
@@ -542,11 +533,11 @@ export function useEventChannel({
       });
       return;
     }
-    const data = propsAPI.getData();
+    const data = graphController.getData();
     const { node, port } = event;
     switch (evt.key) {
       case "Tab":
-        if (isA11yEnable && propsAPI.getGraphBehavior() === GraphBehavior.connecting) {
+        if (isA11yEnable && graphController.getBehavior() === GraphBehavior.connecting) {
           evt.preventDefault();
           evt.stopPropagation();
           eventChannel.trigger({
@@ -576,7 +567,7 @@ export function useEventChannel({
         goToConnectedPort(data, node, port, svgRef, evt, eventChannel);
         break;
       case "Escape":
-        if (propsAPI.getGraphBehavior() === GraphBehavior.connecting) {
+        if (graphController.getBehavior() === GraphBehavior.connecting) {
           evt.preventDefault();
           evt.stopPropagation();
           if (svgRef.current) {

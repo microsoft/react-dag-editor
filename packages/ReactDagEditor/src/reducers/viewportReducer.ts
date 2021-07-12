@@ -108,18 +108,20 @@ function resetViewport(
 function zoomToFit(
   viewport: IViewport,
   data: GraphModel,
-  graphConfig: IGraphConfig,
+  settings: IGraphSettings,
   action: ICanvasZoomToFitEvent
 ): IViewport {
-  const { rect } = viewport;
-  if (!rect) {
+  if (!isViewportComplete(viewport)) {
     return viewport;
   }
+  const { graphConfig, nodeMaxVisibleSize, nodeMinVisibleSize } = settings;
   const transformMatrix = getZoomFitMatrix({
     ...action,
     data,
     graphConfig,
-    rect
+    viewport,
+    nodeMaxVisibleSize,
+    nodeMinVisibleSize
   });
   return {
     ...viewport,
@@ -127,12 +129,8 @@ function zoomToFit(
   };
 }
 
-const reducer = (
-  viewport: IViewport,
-  action: IEvent,
-  data: GraphModel,
-  { graphConfig, canvasBoundaryPadding, features }: IGraphSettings
-): IViewport => {
+const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings: IGraphSettings): IViewport => {
+  const { graphConfig, canvasBoundaryPadding, features } = settings;
   switch (action.type) {
     case GraphCanvasEvent.ViewportResize:
       return {
@@ -177,7 +175,7 @@ const reducer = (
     case GraphCanvasEvent.ZoomTo:
       return zoomTo(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
     case GraphCanvasEvent.ZoomToFit:
-      return zoomToFit(viewport, data, graphConfig, action);
+      return zoomToFit(viewport, data, settings, action);
     case GraphCanvasEvent.ScrollIntoView:
       if (viewport.rect) {
         const { x, y } = transformPoint(action.x, action.y, viewport.transformMatrix);

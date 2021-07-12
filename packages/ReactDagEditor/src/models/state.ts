@@ -2,7 +2,7 @@ import { ISelectBoxPosition } from "../components/Graph/SelectBox";
 import { ILine } from "../components/Line";
 import { IGraphConfig } from "../contexts";
 import { GraphFeatures } from "../Features";
-import { IHistory } from "../utils";
+import { IHistory, IZoomCommonParams } from "../utils";
 import { IDummyNodes } from "./dummy-node";
 import { IGap, IPoint, IViewport } from "./geometry";
 import { GraphModel } from "./GraphModel";
@@ -32,10 +32,10 @@ export interface IConnectingState {
   movingPoint: IPoint | undefined;
 }
 
-export interface IGraphSettings<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+export interface IGraphSettings<NodeData = unknown, EdgeData = unknown, PortData = unknown> extends IZoomCommonParams {
+  canvasBoundaryPadding: IGap;
   graphConfig: IGraphConfig<NodeData, EdgeData, PortData>;
   features: ReadonlySet<GraphFeatures>;
-  canvasBoundaryPadding: IGap;
 }
 
 export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {

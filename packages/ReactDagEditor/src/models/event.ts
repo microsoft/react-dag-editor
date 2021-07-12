@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IZoomFixPublicOption } from "../utils";
+import { IZoomFixPublicParams } from "../utils";
 import { ICanvasData } from "./canvas";
 import { IDummyNode } from "./dummy-node";
 import { ICanvasEdge } from "./edge";
@@ -38,6 +38,7 @@ export enum GraphNodeEvent {
   ResizingStart = "[Node]ResizingStart",
   ResizingEnd = "[Node]ResizingEnd",
   KeyDown = "[Node]KeyDown",
+  Select = "[Node]Select",
   SelectAll = "[Node]SelectAll",
   Centralize = "[Node]Centralize",
   Locate = "[Node]Locate",
@@ -286,7 +287,7 @@ export interface ICanvasZoomToEvent {
   direction?: Direction;
 }
 
-export interface ICanvasZoomToFitEvent extends Omit<IZoomFixPublicOption, "rect"> {
+export interface ICanvasZoomToFitEvent extends Omit<IZoomFixPublicParams, "rect"> {
   type: GraphCanvasEvent.ZoomToFit;
 }
 
@@ -343,6 +344,7 @@ export interface INodeCommonEvent<NodeData = unknown, PortData = unknown> extend
     | GraphNodeEvent.Locate
     | GraphNodeEvent.Add
     | GraphNodeEvent.ContextMenu
+    | GraphNodeEvent.Select
   >;
   node: NodeModel<NodeData, PortData>;
 }
@@ -410,6 +412,11 @@ export interface INodeAddEvent<NodeData = unknown, PortData = unknown> {
   node: ICanvasNode<NodeData, PortData>;
 }
 
+export interface INodeSelectEvent {
+  type: GraphNodeEvent.Select;
+  nodes: string[];
+}
+
 export type INodeEvent<NodeData = unknown, PortData = unknown> =
   | INodeCommonEvent<NodeData, PortData>
   | INodeResizeEvent<NodeData, PortData>
@@ -421,7 +428,8 @@ export type INodeEvent<NodeData = unknown, PortData = unknown> =
   | INodeLocateEvent<NodeData, PortData>
   | INodeContextMenuEvent<NodeData, PortData>
   | INodeClickEvent<NodeData, PortData>
-  | INodeAddEvent<NodeData, PortData>;
+  | INodeAddEvent<NodeData, PortData>
+  | INodeSelectEvent;
 
 export interface IEdgeCommonEvent<T = unknown> extends IEventBase {
   type: Exclude<

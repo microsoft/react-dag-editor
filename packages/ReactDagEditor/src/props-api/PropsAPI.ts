@@ -23,7 +23,6 @@ import {
   isNodeVisible,
   isPointVisible,
   IZoomFixPublicOption,
-  IZoomPanSettings,
   resetState,
   updateState,
   isViewportComplete,
@@ -529,13 +528,6 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
       x,
       y
     });
-  }
-
-  /**
-   * @deprecated
-   */
-  public getZoomPanSettings(): IZoomPanSettings {
-    return this.getViewport();
   }
 
   public getViewport(): IViewport {

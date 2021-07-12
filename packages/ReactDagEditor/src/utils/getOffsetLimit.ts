@@ -1,9 +1,9 @@
-import { IContainerRect, IGap } from "../models/geometry";
+import { IContainerRect, IGap, ITransformMatrix } from "../models/geometry";
 import { getClientDeltaByPointDelta } from "../utils/transformMatrix";
 import { GraphModel } from "../models/GraphModel";
 import { memoize } from "../utils/memoize";
 import { IGraphConfig } from "../contexts/GraphConfigContext";
-import { TTransformMatrix, getContentArea as getContentAreaRaw } from "./zoomAndPan";
+import { getContentArea as getContentAreaRaw } from "./viewport";
 
 export interface IOffsetLimit {
   minX: number;
@@ -18,7 +18,7 @@ export interface IOffsetLimitParams {
   data: GraphModel;
   graphConfig: IGraphConfig;
   rect: IContainerRect;
-  transformMatrix: TTransformMatrix;
+  transformMatrix: ITransformMatrix;
   canvasBoundaryPadding?: IGap;
   groupPadding?: IGap;
 }

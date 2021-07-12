@@ -9,7 +9,6 @@ import {
   pan
 } from "../../src";
 import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
-import { IZoomPanSettings } from "../../src/utils";
 import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
 import { getGraphConfig, makeEdges, makeNodesWithPosition, makePorts } from "../utils";
 
@@ -17,7 +16,7 @@ describe("test updateNodeBySelectBox", () => {
   let graphConfig: IGraphConfig;
   let initNodes: ICanvasNode[];
   let ports: ICanvasPort[];
-  let initZoomPanSettings: IZoomPanSettings;
+  const transformMatrix = [1, 0, 0, 1, 0, 0] as const;
   beforeEach(() => {
     graphConfig = getGraphConfig();
     ports = makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default]);
@@ -41,9 +40,6 @@ describe("test updateNodeBySelectBox", () => {
       ],
       ports
     );
-    initZoomPanSettings = {
-      transformMatrix: [1, 0, 0, 1, 0, 0]
-    };
   });
 
   it("test empty selection box no interaction", () => {
@@ -61,9 +57,9 @@ describe("test updateNodeBySelectBox", () => {
         [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
       ])
     });
-    expect(
-      selectNodeBySelectBox(graphConfig, initZoomPanSettings.transformMatrix, selectBoxPosition, data).toJSON()
-    ).toEqual(data.toJSON());
+    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(
+      data.toJSON()
+    );
   });
 
   it("test select position (100,100) node", () => {
@@ -101,9 +97,7 @@ describe("test updateNodeBySelectBox", () => {
       }))
     };
 
-    expect(
-      selectNodeBySelectBox(graphConfig, initZoomPanSettings.transformMatrix, selectBoxPosition, data).toJSON()
-    ).toEqual(nextData);
+    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
   });
 
   it("test select position (100,100) node with pan", () => {
@@ -144,7 +138,7 @@ describe("test updateNodeBySelectBox", () => {
     expect(
       selectNodeBySelectBox(
         graphConfig,
-        pan(-22, -42)(initZoomPanSettings).transformMatrix,
+        pan(-22, -42)({ transformMatrix }).transformMatrix,
         selectBoxPosition,
         data
       ).toJSON()
@@ -190,9 +184,7 @@ describe("test updateNodeBySelectBox", () => {
       }))
     };
 
-    expect(
-      selectNodeBySelectBox(graphConfig, initZoomPanSettings.transformMatrix, selectBoxPosition, data).toJSON()
-    ).toEqual(nextData);
+    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
   });
 
   it("test select position all nodes", () => {
@@ -223,8 +215,6 @@ describe("test updateNodeBySelectBox", () => {
       }))
     };
 
-    expect(
-      selectNodeBySelectBox(graphConfig, initZoomPanSettings.transformMatrix, selectBoxPosition, data).toJSON()
-    ).toEqual(nextData);
+    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
   });
 });

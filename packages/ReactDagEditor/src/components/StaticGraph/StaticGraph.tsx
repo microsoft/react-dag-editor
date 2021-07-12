@@ -1,12 +1,12 @@
 import * as React from "react";
-import { GraphModel } from "../..";
-import { IZoomPanSettings } from "../../utils";
+import { ITransformMatrix } from "../../models/geometry";
+import { GraphModel } from "../../models/GraphModel";
 import { Transform } from "../Transform";
 import { ReadonlyNodeTree } from "../tree/ReadonlyNodeTree";
 
 export interface IReadonlyGraphProps {
   data: GraphModel;
-  zoomPanSettings: IZoomPanSettings;
+  transformMatrix: ITransformMatrix;
   style?: React.CSSProperties;
 }
 
@@ -24,7 +24,7 @@ export const StaticGraph: React.FunctionComponent<IReadonlyGraphProps> = props =
 
   return (
     <svg style={style}>
-      <Transform matrix={props.zoomPanSettings.transformMatrix}>
+      <Transform matrix={props.transformMatrix}>
         <ReadonlyNodeTree tree={nodes} />
       </Transform>
     </svg>

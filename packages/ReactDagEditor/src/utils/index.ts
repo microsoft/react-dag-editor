@@ -2,7 +2,6 @@ export * from "./getPortPosition";
 export * from "./getNodeConfig";
 export * from "./graphDataUtils";
 export * from "./transformMatrix";
-export * from "./zoomAndPan";
 export * from "./getCurvePathD";
 export * from "./layout";
 export * from "./browsers";

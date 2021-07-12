@@ -34,8 +34,6 @@ export const NodeTooltips: React.FunctionComponent<IProps> = props => {
     <div className="node-tooltips">
       {nodeConfig.renderTooltips({
         model: node,
-        containerRect: viewport.rect,
-        zoomPanSettings: viewport,
         theme,
         viewport
       })}

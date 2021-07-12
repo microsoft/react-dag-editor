@@ -12,13 +12,6 @@ import { GraphConfig } from "./GraphConfigContext";
 
 export const EMPTY_TRANSFORM_MATRIX: ITransformMatrix = [1, 0, 0, 1, 0, 0];
 
-/**
- * @deprecated
- */
-export const EMPTY_ZOOM_PAN: Pick<IViewport, "transformMatrix"> = {
-  transformMatrix: EMPTY_TRANSFORM_MATRIX
-};
-
 export const EMPTY_VIEW_PORT: IViewport = {
   rect: undefined,
   transformMatrix: EMPTY_TRANSFORM_MATRIX
@@ -98,11 +91,6 @@ export type IDispatch<NodeData = unknown, EdgeData = unknown, PortData = unknown
   action: IEvent<NodeData, EdgeData, PortData> | Action,
   callback?: IDispatchCallback<NodeData, EdgeData, PortData>
 ) => void;
-
-/**
- * @deprecated
- */
-export type TDispatch<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> = IDispatch;
 
 export interface IGraphStateContext<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> {
   state: IGraphState<NodeData, EdgeData, PortData>;

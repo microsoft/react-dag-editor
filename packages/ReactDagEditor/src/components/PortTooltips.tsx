@@ -52,8 +52,6 @@ export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = props =
             theme,
             anotherNode: sourceNode,
             anotherPort: sourcePort,
-            containerRect: viewport.rect,
-            zoomPanSettings: viewport,
             viewport,
             ...pos
           })

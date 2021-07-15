@@ -264,10 +264,10 @@ export interface IZoomParams {
 /**
  * zoom to [scale]
  */
-export const zoomTo = ({ scale, anchor, direction }: IZoomParams): Action => {
+export const zoomTo = ({ scale, anchor, direction, limitScale }: IZoomParams): Action => {
   return prevState => {
-    const scaleX = scale / prevState.transformMatrix[0];
-    const scaleY = scale / prevState.transformMatrix[3];
+    const scaleX = limitScale(scale / prevState.transformMatrix[0]);
+    const scaleY = limitScale(scale / prevState.transformMatrix[3]);
     const { x, y } = anchor;
     const dx = x * (1 - scaleX);
     const dy = y * (1 - scaleY);
@@ -300,11 +300,12 @@ export const zoomTo = ({ scale, anchor, direction }: IZoomParams): Action => {
   };
 };
 
-export const zoom = ({ scale, anchor, direction }: IZoomParams): Action => {
-  if (scale === 1) {
+export const zoom = (params: IZoomParams): Action => {
+  if (params.scale === 1) {
     return identical;
   }
-
+  const { anchor, direction, limitScale } = params;
+  const scale = limitScale(params.scale);
   const { x, y } = anchor;
   const dx = x * (1 - scale);
   const dy = y * (1 - scale);

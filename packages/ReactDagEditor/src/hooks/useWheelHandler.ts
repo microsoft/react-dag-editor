@@ -2,8 +2,7 @@ import { RefObject, useLayoutEffect } from "react";
 import { IDispatch, IGraphConfig } from "../contexts";
 import { GraphCanvasEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
-import { IPropsAPI } from "../props-api/IPropsAPI";
-import { getNodeSize, getRelativePoint } from "../utils";
+import { getRelativePoint } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { noop } from "../utils/noop";
 import { normalizeWheelDelta } from "../utils/wheel-delta";
@@ -19,11 +18,8 @@ export interface IWheelOptions {
   isCtrlKeyZoomEnable: boolean;
   eventChannel: EventChannel;
   graphConfig: IGraphConfig;
-  propsAPI: IPropsAPI;
   dispatch: IDispatch;
 }
-
-const THRESHOLD_DISABLE_ZOOM_OUT = 5;
 
 export const useWheelHandler = (args: IWheelOptions) => {
   const {
@@ -37,7 +33,6 @@ export const useWheelHandler = (args: IWheelOptions) => {
     isCtrlKeyZoomEnable,
     eventChannel,
     graphConfig,
-    propsAPI,
     dispatch
   } = args;
 
@@ -48,6 +43,10 @@ export const useWheelHandler = (args: IWheelOptions) => {
       return noop;
     }
     const onWheel = (e: WheelEvent) => {
+      const rect = rectRef.current;
+      if (!rect) {
+        return;
+      }
       if (!svg.contains(document.activeElement)) {
         return;
       }
@@ -57,21 +56,17 @@ export const useWheelHandler = (args: IWheelOptions) => {
       if (e.ctrlKey && isCtrlKeyZoomEnable) {
         const deltaY = normalizeWheelDelta(e.deltaMode, e.deltaY);
         const scale = (deltaY > 0 ? -zoomSensitivity : zoomSensitivity) + 1;
-        if (scale >= 1 || shouldZoomOut(propsAPI, graphConfig)) {
+        if (scale >= 1) {
           eventChannel.trigger({
             type: GraphCanvasEvent.Zoom,
             rawEvent: e,
             scale,
-            anchor: getRelativePoint(rectRef.current, e)
+            anchor: getRelativePoint(rect, e)
           });
         }
         return;
       }
 
-      const rect = rectRef.current;
-      if (!rect) {
-        return;
-      }
       const dx = isHorizontalScrollDisabled
         ? 0
         : -normalizeWheelDelta(e.deltaMode, e.shiftKey ? e.deltaY : e.deltaX) * scrollSensitivity;
@@ -101,29 +96,6 @@ export const useWheelHandler = (args: IWheelOptions) => {
     isVerticalScrollDisabled,
     graphConfig,
     eventChannel,
-    propsAPI,
     isCtrlKeyZoomEnable
   ]);
-};
-
-export const shouldZoomOut = (propsAPI: IPropsAPI, graphConfig: IGraphConfig): boolean => {
-  const visibleNodes = propsAPI.getVisibleNodes();
-  if (!visibleNodes.length) {
-    return true;
-  }
-
-  let minSize = Infinity;
-  visibleNodes.forEach(node => {
-    const { width, height } = getNodeSize(node, graphConfig);
-    if (height < minSize) {
-      minSize = height;
-    }
-    if (width < minSize) {
-      minSize = width;
-    }
-  });
-
-  const scale = propsAPI.getViewport().transformMatrix[0];
-
-  return !!(minSize * scale > THRESHOLD_DISABLE_ZOOM_OUT);
 };

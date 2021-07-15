@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig, ViewportContext } from "../../contexts";
+import { EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphConfig, ViewportContext } from "../../contexts";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { GraphStateContext } from "../../contexts/GraphStateContext";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
@@ -79,7 +79,22 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   const rectRef = useRefValue(rect);
 
   const minimapTransformMatrix = React.useMemo<ITransformMatrix>(() => {
-    return getZoomFitMatrix({ data, rect, graphConfig });
+    if (!rect) {
+      return EMPTY_TRANSFORM_MATRIX;
+    }
+    return getZoomFitMatrix({
+      data,
+      rect,
+      graphConfig,
+      nodeMaxVisibleSize: {
+        width: 0,
+        height: 0
+      },
+      nodeMinVisibleSize: {
+        width: Infinity,
+        height: Infinity
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rect, data.nodes]);
   const minimapTransformMatrixRef = useRefValue(minimapTransformMatrix);

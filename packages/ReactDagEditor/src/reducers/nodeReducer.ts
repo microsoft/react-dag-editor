@@ -24,6 +24,7 @@ import {
   getPointDeltaByClientDelta,
   getRelativePoint,
   getRenderedNodes,
+  getScaleLimit,
   isSelected,
   isViewportComplete,
   pan,
@@ -68,6 +69,9 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
   if (!isViewportComplete(state.viewport)) {
     return state;
   }
+  const limitScale = (scale: number) => {
+    return Math.max(scale, getScaleLimit(data, state.settings));
+  };
   const e = event.rawEvent as MouseEvent;
   const { rect } = state.viewport;
   const nextState = {
@@ -79,7 +83,15 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
   const scale = viewportDx !== 0 || viewportDy !== 0 ? 0.999 : 1;
   const viewport =
     viewportDx !== 0 || viewportDx !== 0
-      ? pipe(pan(-viewportDx, -viewportDy), zoom(scale, getRelativePoint(rect, e), Direction.XY))(state.viewport)
+      ? pipe(
+          pan(-viewportDx, -viewportDy),
+          zoom({
+            scale,
+            anchor: getRelativePoint(rect, e),
+            direction: Direction.XY,
+            limitScale
+          })
+        )(state.viewport)
       : state.viewport;
   const delta = getPointDeltaByClientDelta(
     event.dx + viewportDx * scale,

@@ -53,7 +53,15 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
       transformMatrix: defaultTransformMatrix,
       graphConfig,
       features,
-      canvasBoundaryPadding
+      canvasBoundaryPadding,
+      nodeMinVisibleSize: {
+        width: 5,
+        height: 5
+      },
+      nodeMaxVisibleSize: {
+        width: Infinity,
+        height: Infinity
+      }
     },
     middleware
   );

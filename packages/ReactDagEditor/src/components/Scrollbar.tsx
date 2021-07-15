@@ -155,7 +155,7 @@ export const Scrollbar: React.FC<IProps> = props => {
 
   return (
     <>
-      {vertical && scrollbarLayout.verticalScrollHeight < viewport.rect.height && (
+      {vertical && (
         <div className={classes.verticalScrollWrapper}>
           <div
             className={classes.verticalScrollStyle}
@@ -167,7 +167,7 @@ export const Scrollbar: React.FC<IProps> = props => {
           />
         </div>
       )}
-      {horizontal && scrollbarLayout.horizontalScrollWidth < viewport.rect.width && (
+      {horizontal && (
         <div className={classes.horizontalScrollWrapper}>
           <div
             className={classes.horizontalScrollStyle}

@@ -45,12 +45,14 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
       viewport={
         Object {
           "rect": Object {
-            "bottom": 900,
-            "height": 800,
+            "bottom": 700,
+            "height": 600,
             "left": 100,
             "right": 900,
             "top": 100,
             "width": 800,
+            "x": 100,
+            "y": 100,
           },
           "transformMatrix": Array [
             1,

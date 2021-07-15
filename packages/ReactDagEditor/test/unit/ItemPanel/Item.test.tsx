@@ -5,22 +5,13 @@ import { GraphCanvasEvent, GraphModel, GraphStateStore } from "../../../src";
 import { Item } from "../../../src/components/ItemPanel";
 import { GraphController } from "../../../src/controllers/GraphController";
 import { GraphControllerRef } from "../../TestComponent";
-import { patchPointerEvent } from "../../utils";
+import { mockClientRect, patchPointerEvent } from "../../utils";
 import { withGraphConfigContext } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";
 
-const rect = {
-  left: 100,
-  top: 100,
-  width: 800,
-  height: 800,
-  right: 900,
-  bottom: 900
-};
-
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
   useSvgRect: () => {
-    return rect;
+    return mockClientRect;
   }
 }));
 
@@ -60,7 +51,7 @@ describe("ItemPanel - Item", () => {
     act(() => {
       graphController.dispatch({
         type: GraphCanvasEvent.ViewportResize,
-        viewportRect: rect
+        viewportRect: mockClientRect
       });
     });
     (graphController.eventChannel.listenersRef as any).current = graphController.dispatch;

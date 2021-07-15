@@ -26,16 +26,7 @@ import { EventChannel } from "../../src/utils/eventChannel";
 import { GraphController } from "../../src/controllers/GraphController";
 import { identical } from "../../src/utils/identical";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
-import { getGraphConfig, patchPointerEvent } from "../utils";
-
-const mockViewport = {
-  width: 800,
-  height: 600,
-  left: 0,
-  top: 0,
-  right: 800,
-  bottom: 800
-};
+import { getGraphConfig, mockClientRect, patchPointerEvent } from "../utils";
 
 describe("test getNearestConnectablePort", () => {
   it("should return nothing with no ports", () => {
@@ -58,7 +49,7 @@ describe("test getNearestConnectablePort", () => {
       graphConfig,
       data,
       viewport: {
-        rect: mockViewport,
+        rect: mockClientRect,
         transformMatrix: [1, 0, 0, 1, 0, 0]
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -122,7 +113,7 @@ describe("test getNearestConnectablePort", () => {
       graphConfig,
       data,
       viewport: {
-        rect: mockViewport,
+        rect: mockClientRect,
         transformMatrix: [1, 0, 0, 1, 0, 0]
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -159,45 +150,53 @@ describe("test Connecting", () => {
 
   class Connecting {
     public start(node: NodeModel, port: ICanvasPort): void {
-      eventChannel.trigger({
-        type: GraphEdgeEvent.ConnectStart,
-        nodeId: node.id,
-        portId: port.id,
-        rawEvent: new KeyboardEvent("keydown") as any,
-        clientPoint: {
-          x: 190 + mockViewport.left,
-          y: 151 + mockViewport.top
-        }
+      act(() => {
+        eventChannel.trigger({
+          type: GraphEdgeEvent.ConnectStart,
+          nodeId: node.id,
+          portId: port.id,
+          rawEvent: new KeyboardEvent("keydown") as any,
+          clientPoint: {
+            x: 190 + mockClientRect.left,
+            y: 151 + mockClientRect.top
+          }
+        });
       });
     }
 
     public attach(node: NodeModel, port: ICanvasPort): void {
       graphController.pointerId = 0;
-      eventChannel.trigger({
-        type: GraphPortEvent.PointerEnter,
-        node,
-        port,
-        rawEvent: new PointerEvent("pointerenter", { pointerId: 0 })
+      act(() => {
+        eventChannel.trigger({
+          type: GraphPortEvent.PointerEnter,
+          node,
+          port,
+          rawEvent: new PointerEvent("pointerenter", { pointerId: 0 })
+        });
       });
     }
 
     public clearAttach(node: NodeModel, port: ICanvasPort): void {
       graphController.pointerId = 0;
-      eventChannel.trigger({
-        type: GraphPortEvent.PointerLeave,
-        node,
-        port,
-        rawEvent: new PointerEvent("pointerenter", { pointerId: 0 })
+      act(() => {
+        eventChannel.trigger({
+          type: GraphPortEvent.PointerLeave,
+          node,
+          port,
+          rawEvent: new PointerEvent("pointerenter", { pointerId: 0 })
+        });
       });
     }
 
     public finish(): void {
-      eventChannel.trigger({
-        type: GraphEdgeEvent.ConnectEnd,
-        defaultEdgeShape: "default",
-        edgeWillAdd,
-        isCancel: false,
-        rawEvent: new KeyboardEvent("keydown")
+      act(() => {
+        eventChannel.trigger({
+          type: GraphEdgeEvent.ConnectEnd,
+          defaultEdgeShape: "default",
+          edgeWillAdd,
+          isCancel: false,
+          rawEvent: new KeyboardEvent("keydown")
+        });
       });
     }
 
@@ -287,7 +286,7 @@ describe("test Connecting", () => {
     edgeWillAdd = jest.fn(identical);
     const graphControllerRef = React.createRef<GraphController>();
     container = render(
-      <TestComponent graphConfig={getGraphConfig()} data={mockData} edgeWillAdd={edgeWillAdd}>
+      <TestComponent graphConfig={getGraphConfig()} data={mockData} graphProps={{ edgeWillAdd }}>
         <GraphControllerRef ref={graphControllerRef} />
       </TestComponent>
     );
@@ -296,9 +295,11 @@ describe("test Connecting", () => {
     eventChannel = graphController.eventChannel;
     expect(eventChannel).toBeDefined();
     connecting = new Connecting();
-    eventChannel.trigger({
-      type: GraphCanvasEvent.ViewportResize,
-      viewportRect: mockViewport
+    act(() => {
+      eventChannel.trigger({
+        type: GraphCanvasEvent.ViewportResize,
+        viewportRect: mockClientRect
+      });
     });
   });
 
@@ -599,8 +600,8 @@ describe("test Connecting", () => {
         node: NodeModel.fromJSON(data.nodes[1], "0", undefined),
         rawEvent: new PointerEvent("pointerenter", {
           pointerId: 0,
-          clientX: 210 + mockViewport.left,
-          clientY: 160 + mockViewport.top
+          clientX: 210 + mockClientRect.left,
+          clientY: 160 + mockClientRect.top
         })
       });
     });
@@ -613,8 +614,8 @@ describe("test Connecting", () => {
         node: NodeModel.fromJSON(data.nodes[1], "0", undefined),
         rawEvent: new PointerEvent("pointerenter", {
           pointerId: 0,
-          clientX: 210 + mockViewport.left,
-          clientY: 160 + mockViewport.top
+          clientX: 210 + mockClientRect.left,
+          clientY: 160 + mockClientRect.top
         })
       });
     });

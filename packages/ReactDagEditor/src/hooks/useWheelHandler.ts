@@ -56,14 +56,12 @@ export const useWheelHandler = (args: IWheelOptions) => {
       if (e.ctrlKey && isCtrlKeyZoomEnable) {
         const deltaY = normalizeWheelDelta(e.deltaMode, e.deltaY);
         const scale = (deltaY > 0 ? -zoomSensitivity : zoomSensitivity) + 1;
-        if (scale >= 0) {
-          eventChannel.trigger({
-            type: GraphCanvasEvent.Zoom,
-            rawEvent: e,
-            scale,
-            anchor: getRelativePoint(rect, e)
-          });
-        }
+        eventChannel.trigger({
+          type: GraphCanvasEvent.Zoom,
+          rawEvent: e,
+          scale,
+          anchor: getRelativePoint(rect, e)
+        });
         return;
       }
 

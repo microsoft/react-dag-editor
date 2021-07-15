@@ -31,14 +31,12 @@ export function useSafariScale({ rectRef, svgRef, eventChannel }: IUseSafariScal
       const { scale } = e;
       const delta = scale / prevScale;
       prevScale = scale;
-      if (scale >= 1) {
-        eventChannel.trigger({
-          type: GraphCanvasEvent.Zoom,
-          rawEvent: e,
-          scale: delta,
-          anchor: getContainerCenter(rectRef)
-        });
-      }
+      eventChannel.trigger({
+        type: GraphCanvasEvent.Zoom,
+        rawEvent: e,
+        scale: delta,
+        anchor: getContainerCenter(rectRef)
+      });
     });
     const onGestureStart = (e: GestureEvent): void => {
       e.stopPropagation();

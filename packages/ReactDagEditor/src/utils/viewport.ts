@@ -266,33 +266,45 @@ export interface IZoomParams {
  */
 export const zoomTo = ({ scale, anchor, direction, limitScale }: IZoomParams): Action => {
   return prevState => {
-    const scaleX = limitScale(scale / prevState.transformMatrix[0]);
-    const scaleY = limitScale(scale / prevState.transformMatrix[3]);
+    const scaleX = limitScale(scale) / prevState.transformMatrix[0];
+    const scaleY = limitScale(scale) / prevState.transformMatrix[3];
     const { x, y } = anchor;
     const dx = x * (1 - scaleX);
     const dy = y * (1 - scaleY);
 
-    const transformMatrix: ITransformMatrix =
-      direction === Direction.X
-        ? [
-            scale,
-            0,
-            0,
-            prevState.transformMatrix[3],
-            prevState.transformMatrix[4] * scaleX + dx,
-            prevState.transformMatrix[5]
-          ]
-        : direction === Direction.Y
-        ? [
-            prevState.transformMatrix[0],
-            0,
-            0,
-            scale,
-            prevState.transformMatrix[4],
-            prevState.transformMatrix[5] * scaleY + dy
-          ]
-        : [scale, 0, 0, scale, prevState.transformMatrix[4] * scaleX + dx, prevState.transformMatrix[5] * scaleY + dy];
-
+    let transformMatrix: ITransformMatrix;
+    switch (direction) {
+      case Direction.X:
+        transformMatrix = [
+          scale,
+          0,
+          0,
+          prevState.transformMatrix[3],
+          prevState.transformMatrix[4] * scaleX + dx,
+          prevState.transformMatrix[5]
+        ];
+        break;
+      case Direction.Y:
+        transformMatrix = [
+          prevState.transformMatrix[0],
+          0,
+          0,
+          scale,
+          prevState.transformMatrix[4],
+          prevState.transformMatrix[5] * scaleY + dy
+        ];
+        break;
+      case Direction.XY:
+      default:
+        transformMatrix = [
+          scale,
+          0,
+          0,
+          scale,
+          prevState.transformMatrix[4] * scaleX + dx,
+          prevState.transformMatrix[5] * scaleY + dy
+        ];
+    }
     return {
       ...prevState,
       transformMatrix
@@ -300,49 +312,46 @@ export const zoomTo = ({ scale, anchor, direction, limitScale }: IZoomParams): A
   };
 };
 
-export const zoom = (params: IZoomParams): Action => {
-  if (params.scale === 1) {
+export const zoom = ({ scale, anchor, direction, limitScale }: IZoomParams): Action => {
+  if (scale === 1) {
     return identical;
   }
-  const { anchor, direction, limitScale } = params;
-  const scale = limitScale(params.scale);
-  const { x, y } = anchor;
-  const dx = x * (1 - scale);
-  const dy = y * (1 - scale);
 
   return prevState => {
     let transformMatrix: ITransformMatrix;
     switch (direction) {
       case Direction.X:
-        transformMatrix = [
-          prevState.transformMatrix[0] * scale,
-          prevState.transformMatrix[1],
-          prevState.transformMatrix[2],
-          prevState.transformMatrix[3],
-          prevState.transformMatrix[4] * scale + dx,
-          prevState.transformMatrix[5]
-        ];
-        break;
+        return zoomTo({
+          anchor,
+          direction,
+          limitScale,
+          scale: prevState.transformMatrix[0] * scale
+        })(prevState);
       case Direction.Y:
-        transformMatrix = [
-          prevState.transformMatrix[0],
-          prevState.transformMatrix[1],
-          prevState.transformMatrix[2],
-          prevState.transformMatrix[3] * scale,
-          prevState.transformMatrix[4],
-          prevState.transformMatrix[5] * scale + dy
-        ];
-        break;
+        return zoomTo({
+          anchor,
+          direction,
+          limitScale,
+          scale: prevState.transformMatrix[3] * scale
+        })(prevState);
       case Direction.XY:
-      default:
+      default: {
+        const resultX = limitScale(prevState.transformMatrix[0] * scale);
+        const resultY = limitScale(prevState.transformMatrix[3] * scale);
+        const scaleX = resultX / prevState.transformMatrix[0];
+        const scaleY = resultY / prevState.transformMatrix[3];
+        const { x, y } = anchor;
+        const dx = x * (1 - scaleX);
+        const dy = y * (1 - scaleY);
         transformMatrix = [
-          prevState.transformMatrix[0] * scale,
-          prevState.transformMatrix[1] * scale,
-          prevState.transformMatrix[2] * scale,
-          prevState.transformMatrix[3] * scale,
-          prevState.transformMatrix[4] * scale + dx,
-          prevState.transformMatrix[5] * scale + dy
+          resultX,
+          0,
+          0,
+          resultY,
+          prevState.transformMatrix[4] * scaleX + dx,
+          prevState.transformMatrix[5] * scaleY + dy
         ];
+      }
     }
     return {
       ...prevState,

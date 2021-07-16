@@ -5,41 +5,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
-      "request": "launch",
-      "name": "vscode-jest-unit-test-Core",
-      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
-      "args": [
-        "-c",
-        "./packages/Core/test/unit/jest.config.js",
-        "--verbose",
-        "-i",
-        "--no-cache",
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "vscode-jest-demo-test",
-      "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
-      "args": [
-        "-c",
-        "./packages/Demo/test/jest.config.js",
-        "--verbose",
-        "-i",
-        "--no-cache"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen"
-    },
-    {
       "name": "Current TS File",
       "type": "node",
       "request": "launch",
-      "args": ["${relativeFile}"],
-      "runtimeArgs": ["--nolazy", "-r", "ts-node/register"],
+      "args": [
+        "${relativeFile}"
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register"
+      ],
       "sourceMaps": true,
       "cwd": "${workspaceRoot}",
       "protocol": "inspector"

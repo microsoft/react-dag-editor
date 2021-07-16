@@ -139,10 +139,12 @@ Happy linting! 💖
   ],
   "css.validate": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll.markdownlint": true
   },
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
+  "editor.renderWhitespace": "all",
   "files.associations": {
     "*.js.mustache": "javascript",
     "*.json.mustache": "json"

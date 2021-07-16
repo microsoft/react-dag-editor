@@ -1,10 +1,7 @@
 {
   "recommendations": [
-    "gamunu.vscode-yarn",
-    "ms-vscode.vscode-typescript-tslint-plugin",
+    "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "orta.vscode-jest",
-    "shinnn.stylelint",
     "mrmlnc.vscode-scss",
     "streetsidesoftware.code-spell-checker"
   ]

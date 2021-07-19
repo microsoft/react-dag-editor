@@ -2,13 +2,12 @@
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
-import { EMPTY_VIEW_PORT, GraphCanvasEvent, GraphStateStore } from "../../../src";
+import { GraphCanvasEvent, GraphStateStore } from "../../../src";
 import { MouseEventButton } from "../../../src/common/constants";
 import { Item } from "../../../src/components/ItemPanel";
 import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
-import { ICanvasNode } from "../../../src/models/node";
-import { noopInstance } from "../../../src/props-api/IPropsAPIInstance";
 import { GraphController } from "../../../src/controllers/GraphController";
+import { ICanvasNode } from "../../../src/models/node";
 import { GraphControllerRef } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
 import { withGraphConfigContext } from "../__mocks__/mockContext";
@@ -114,39 +113,23 @@ describe("ItemPanel - AddingNodeSvg", () => {
 
   it("Should match the snapshot", () => {
     const renderer = ShallowRenderer.createRenderer();
-    expect(
-      renderer.render(
-        <AddingNodeSvg
-          nextNodeRef={{ current: null }}
-          model={{
-            name: "node1",
-            shape: "nodeShape",
-            x: 0,
-            y: 0,
-            id: "mock-id"
-          }}
-          svgRef={React.createRef<SVGSVGElement>()}
-        />
-      )
-    ).toMatchSnapshot();
+    renderer.render(
+      <AddingNodeSvg
+        nextNodeRef={{ current: null }}
+        model={{
+          name: "node1",
+          shape: "nodeShape",
+          x: 0,
+          y: 0,
+          id: "mock-id"
+        }}
+        svgRef={React.createRef<SVGSVGElement>()}
+      />
+    );
+    expect(renderer.getRenderOutput()).toMatchSnapshot();
   });
 
   it("adding node", () => {
-    const containerRect = {
-      current: {
-        top: 50,
-        right: 200,
-        bottom: 200,
-        left: 50,
-        width: 150,
-        height: 150,
-        x: 50,
-        y: 50
-      }
-    };
-    noopInstance.containerRectRef = containerRect;
-    EMPTY_VIEW_PORT.rect = containerRect as any;
-
     simulateDragging(screen.getByRole("button"), MouseEventButton.Primary, [
       [100, 100],
       [105, 105]

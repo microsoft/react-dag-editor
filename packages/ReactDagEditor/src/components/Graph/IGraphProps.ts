@@ -7,13 +7,8 @@ import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
 import { ICanvasPort } from "../../models/port";
 import { CanvasMouseMode } from "../../models/state";
-import { IPropsAPI } from "../../props-api/IPropsAPI";
 
 export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
-  /**
-   * The propsAPI reference
-   */
-  propsAPIRef?: React.Ref<IPropsAPI<NodeData, EdgeData, PortData> | null>;
   /**
    * Title of the svg
    */

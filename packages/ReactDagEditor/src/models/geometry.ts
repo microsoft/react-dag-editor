@@ -10,6 +10,11 @@ export interface IPoint {
   y: number;
 }
 
+export interface IRectSize {
+  width: number;
+  height: number;
+}
+
 export interface IGap {
   readonly top?: number;
   readonly bottom?: number;

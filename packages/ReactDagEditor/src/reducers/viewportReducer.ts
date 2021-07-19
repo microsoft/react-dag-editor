@@ -17,6 +17,7 @@ import {
   getGroupRect,
   getNodeRect,
   getOffsetLimit,
+  getScaleLimit,
   getZoomFitMatrix,
   IShapePosition,
   IShapeRect,
@@ -31,10 +32,7 @@ import {
 } from "../utils";
 import { pipe } from "../utils/pipe";
 
-function getRectCenter(rect: IContainerRect | undefined): IPoint | undefined {
-  if (!rect) {
-    return undefined;
-  }
+function getRectCenter(rect: IContainerRect): IPoint {
   return {
     x: rect.width / 2,
     y: rect.height / 2
@@ -108,18 +106,20 @@ function resetViewport(
 function zoomToFit(
   viewport: IViewport,
   data: GraphModel,
-  graphConfig: IGraphConfig,
+  settings: IGraphSettings,
   action: ICanvasZoomToFitEvent
 ): IViewport {
-  const { rect } = viewport;
-  if (!rect) {
+  if (!isViewportComplete(viewport)) {
     return viewport;
   }
+  const { graphConfig, nodeMaxVisibleSize, nodeMinVisibleSize } = settings;
   const transformMatrix = getZoomFitMatrix({
     ...action,
     data,
     graphConfig,
-    rect
+    rect: viewport.rect,
+    nodeMaxVisibleSize,
+    nodeMinVisibleSize
   });
   return {
     ...viewport,
@@ -127,12 +127,11 @@ function zoomToFit(
   };
 }
 
-const reducer = (
-  viewport: IViewport,
-  action: IEvent,
-  data: GraphModel,
-  { graphConfig, canvasBoundaryPadding, features }: IGraphSettings
-): IViewport => {
+const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings: IGraphSettings): IViewport => {
+  const { graphConfig, canvasBoundaryPadding, features } = settings;
+  const limitScale = (scale: number) => {
+    return Math.max(scale, getScaleLimit(data, settings));
+  };
   switch (action.type) {
     case GraphCanvasEvent.ViewportResize:
       return {
@@ -140,7 +139,15 @@ const reducer = (
         rect: action.viewportRect
       };
     case GraphCanvasEvent.Zoom:
-      return zoom(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
+      if (!isViewportComplete(viewport)) {
+        return viewport;
+      }
+      return zoom({
+        scale: action.scale,
+        anchor: action.anchor ?? getRectCenter(viewport.rect),
+        direction: action.direction,
+        limitScale
+      })(viewport);
     case GraphScrollBarEvent.Scroll:
     case GraphCanvasEvent.MouseWheelScroll:
     case GraphCanvasEvent.Pan:
@@ -168,16 +175,31 @@ const reducer = (
     }
     case GraphCanvasEvent.Pinch: {
       const { dx, dy, scale, anchor } = action;
-      return pipe(pan(dx, dy), zoom(scale, anchor))(viewport);
+      return pipe(
+        pan(dx, dy),
+        zoom({
+          scale,
+          anchor,
+          limitScale
+        })
+      )(viewport);
     }
     case GraphMinimapEvent.Pan:
       return minimapPan(action.dx, action.dy)(viewport);
     case GraphCanvasEvent.ResetViewport:
       return resetViewport(viewport, data, graphConfig, action);
     case GraphCanvasEvent.ZoomTo:
-      return zoomTo(action.scale, action.anchor ?? getRectCenter(viewport.rect), action.direction)(viewport);
+      if (!isViewportComplete(viewport)) {
+        return viewport;
+      }
+      return zoomTo({
+        scale: action.scale,
+        anchor: action.anchor ?? getRectCenter(viewport.rect),
+        direction: action.direction,
+        limitScale
+      })(viewport);
     case GraphCanvasEvent.ZoomToFit:
-      return zoomToFit(viewport, data, graphConfig, action);
+      return zoomToFit(viewport, data, settings, action);
     case GraphCanvasEvent.ScrollIntoView:
       if (viewport.rect) {
         const { x, y } = transformPoint(action.x, action.y, viewport.transformMatrix);

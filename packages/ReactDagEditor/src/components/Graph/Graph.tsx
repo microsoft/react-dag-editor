@@ -134,7 +134,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     rectRef,
     svgRef,
     setFocusedWithoutMouse,
-    propsAPI,
     containerRef,
     featureControl,
     graphConfig,
@@ -196,8 +195,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     isVerticalScrollDisabled,
     isCtrlKeyZoomEnable,
     eventChannel,
-    graphConfig,
-    propsAPI
+    graphConfig
   });
 
   const onContextMenuClick = React.useCallback(
@@ -228,10 +226,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   useSafariScale({
     rectRef,
     svgRef,
-    dispatch,
-    eventChannel,
-    graphConfig,
-    propsAPI
+    eventChannel
   });
 
   const accessKey = isA11yEnable ? focusCanvasAccessKey : undefined;

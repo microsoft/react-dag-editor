@@ -103,19 +103,23 @@ export const patchPointerEvent = () => {
   window.PointerEvent = PointerEvent;
 };
 
+export const mockClientRect = {
+  x: 100,
+  y: 100,
+  width: 800,
+  height: 600,
+  top: 100,
+  right: 900,
+  bottom: 700,
+  left: 100
+};
+
 export const mockBoundingBox = () => {
   const old = Element.prototype.getBoundingClientRect;
   Element.prototype.getBoundingClientRect = function(): DOMRect {
     return {
       ...old.call(this),
-      x: 100,
-      y: 100,
-      width: 800,
-      height: 600,
-      top: 100,
-      right: 900,
-      bottom: 700,
-      left: 100
+      ...mockClientRect
     };
   };
   Element.prototype.releasePointerCapture = () => {

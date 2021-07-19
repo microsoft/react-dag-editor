@@ -1,5 +1,6 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig, PropsAPIContext, ViewportContext } from "../../contexts";
+import { EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphConfig, ViewportContext } from "../../contexts";
+import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { GraphStateContext } from "../../contexts/GraphStateContext";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
 import { TouchDragAdapter } from "../../controllers/TouchDragAdapter";
@@ -7,7 +8,7 @@ import { MouseMoveEventProvider } from "../../event-provider/MouseMoveEventProvi
 import { IEventProvider, IGlobalMoveEventTypes } from "../../event-provider/types";
 import { useMinimapRect, useTheme } from "../../hooks";
 import { useRefValue } from "../../hooks/useRefValue";
-import { GraphMinimapEvent } from "../../models/event";
+import { GraphCanvasEvent, GraphMinimapEvent } from "../../models/event";
 import { ITransformMatrix } from "../../models/geometry";
 import {
   getPointDeltaByClientDelta,
@@ -62,7 +63,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   } = props;
 
   const graphViewport = React.useContext(ViewportContext);
-  const propsAPI = React.useContext(PropsAPIContext);
+  const graphController = React.useContext(GraphControllerContext);
   const { theme } = useTheme();
   const { data: dataState } = React.useContext(GraphStateContext).state;
   const data = dataState.present;
@@ -78,7 +79,22 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   const rectRef = useRefValue(rect);
 
   const minimapTransformMatrix = React.useMemo<ITransformMatrix>(() => {
-    return getZoomFitMatrix({ data, rect, graphConfig });
+    if (!rect) {
+      return EMPTY_TRANSFORM_MATRIX;
+    }
+    return getZoomFitMatrix({
+      data,
+      rect,
+      graphConfig,
+      nodeMaxVisibleSize: {
+        width: 0,
+        height: 0
+      },
+      nodeMinVisibleSize: {
+        width: Infinity,
+        height: Infinity
+      }
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rect, data.nodes]);
   const minimapTransformMatrixRef = useRefValue(minimapTransformMatrix);
@@ -130,12 +146,17 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
         minimapTransformMatrix
       );
 
-      propsAPI.scrollIntoView(point.x, point.y);
-
-      propsAPI.getEventChannel()?.trigger({
-        type: GraphMinimapEvent.Click,
-        rawEvent: evt
-      });
+      graphController.eventChannel.batch([
+        {
+          type: GraphCanvasEvent.ScrollIntoView,
+          x: point.x,
+          y: point.y
+        },
+        {
+          type: GraphMinimapEvent.Click,
+          rawEvent: evt
+        }
+      ]);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [rect]
@@ -154,7 +175,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
         endY: bottom - shadowPadding
       };
 
-      propsAPI.getEventChannel()?.trigger({
+      graphController.eventChannel.trigger({
         type: GraphMinimapEvent.PanStart,
         rawEvent: evt
       });
@@ -168,7 +189,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       });
       drag.onMove = ({ dx, dy, e }) => {
         const { x, y } = getPointDeltaByClientDelta(-dx, -dy, minimapTransformMatrixRef.current);
-        propsAPI.getEventChannel()?.trigger({
+        graphController.eventChannel.trigger({
           type: GraphMinimapEvent.Pan,
           dx: x,
           dy: y,
@@ -178,7 +199,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       drag.start(evt);
 
       drag.onEnd = () => {
-        propsAPI.getEventChannel()?.trigger({
+        graphController.eventChannel.trigger({
           type: GraphMinimapEvent.PanEnd,
           rawEvent: evt
         });

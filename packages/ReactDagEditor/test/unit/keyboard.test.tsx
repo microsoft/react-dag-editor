@@ -14,7 +14,7 @@ import {
 import { GraphController } from "../../src/controllers/GraphController";
 import { findDOMElement } from "../../src/utils/a11yUtils";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
-import { mockBoundingBox } from "../utils";
+import { mockBoundingBox, mockClientRect } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";
 
 let wrapper: RenderResult;
@@ -24,10 +24,12 @@ let graphController: GraphController;
 
 const getData = () => graphController.state.data.present;
 const updateData = (f: (prev: GraphModel) => GraphModel) =>
-  graphController.dispatch({
-    type: GraphCanvasEvent.UpdateData,
-    updater: f,
-    shouldRecord: false
+  act(() => {
+    graphController.dispatch({
+      type: GraphCanvasEvent.UpdateData,
+      updater: f,
+      shouldRecord: false
+    });
   });
 
 beforeEach(() => {
@@ -49,6 +51,12 @@ beforeEach(() => {
   graphController = graphControllerRef.current!;
   expect(graphController).toBeDefined();
   mockBoundingBox();
+  act(() => {
+    graphController.dispatch({
+      type: GraphCanvasEvent.ViewportResize,
+      viewportRect: mockClientRect
+    });
+  });
 });
 
 it("should focus first node", () => {

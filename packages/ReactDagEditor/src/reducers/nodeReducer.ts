@@ -2,6 +2,7 @@ import { emptyDummyNodes } from "../components/dummyNodes";
 import { IGraphConfig, IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { IDummyNode, IDummyNodes } from "../models/dummy-node";
+import { GraphNodeState } from "../models/element-state";
 import {
   GraphCanvasEvent,
   GraphNodeEvent,
@@ -12,7 +13,7 @@ import {
   INodeDragStartEvent,
   INodeLocateEvent
 } from "../models/event";
-import { GraphNodeState } from "../models/element-state";
+import { Direction } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
 import {
@@ -23,6 +24,7 @@ import {
   getPointDeltaByClientDelta,
   getRelativePoint,
   getRenderedNodes,
+  getScaleLimit,
   isSelected,
   isViewportComplete,
   pan,
@@ -67,6 +69,9 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
   if (!isViewportComplete(state.viewport)) {
     return state;
   }
+  const limitScale = (scale: number) => {
+    return Math.max(scale, getScaleLimit(data, state.settings));
+  };
   const e = event.rawEvent as MouseEvent;
   const { rect } = state.viewport;
   const nextState = {
@@ -78,7 +83,15 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
   const scale = viewportDx !== 0 || viewportDy !== 0 ? 0.999 : 1;
   const viewport =
     viewportDx !== 0 || viewportDx !== 0
-      ? pipe(pan(-viewportDx, -viewportDy), zoom(scale, getRelativePoint(rect, e)))(state.viewport)
+      ? pipe(
+          pan(-viewportDx, -viewportDy),
+          zoom({
+            scale,
+            anchor: getRelativePoint(rect, e),
+            direction: Direction.XY,
+            limitScale
+          })
+        )(state.viewport)
       : state.viewport;
   const delta = getPointDeltaByClientDelta(
     event.dx + viewportDx * scale,
@@ -353,6 +366,14 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
       return {
         ...state,
         data: pushHistory(state.data, data.insertNode(action.node))
+      };
+    case GraphNodeEvent.DoubleClick:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          present: state.data.present.updateNode(action.node.id, updateState(addState(GraphNodeState.editing)))
+        }
       };
     default:
       return state;

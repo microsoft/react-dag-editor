@@ -10,22 +10,13 @@ import { ICanvasNode } from "../../../src/models/node";
 import { noopInstance } from "../../../src/props-api/IPropsAPIInstance";
 import { GraphController } from "../../../src/controllers/GraphController";
 import { GraphControllerRef } from "../../TestComponent";
-import { patchPointerEvent } from "../../utils";
+import { mockClientRect, patchPointerEvent } from "../../utils";
 import { withGraphConfigContext } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";
 
-const rect = {
-  left: 100,
-  top: 100,
-  width: 800,
-  height: 800,
-  right: 900,
-  bottom: 900
-};
-
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
   useSvgRect: () => {
-    return rect;
+    return mockClientRect;
   }
 }));
 
@@ -66,7 +57,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
     act(() => {
       graphController.dispatch({
         type: GraphCanvasEvent.ViewportResize,
-        viewportRect: rect
+        viewportRect: mockClientRect
       });
     });
   });

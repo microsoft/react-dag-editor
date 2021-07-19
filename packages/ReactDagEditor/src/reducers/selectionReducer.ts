@@ -4,7 +4,14 @@ import { GraphFeatures } from "../Features";
 import { GraphCanvasEvent, GraphNodeEvent, ICanvasNavigateEvent } from "../models/event";
 import { GraphPortState } from "../models/element-state";
 import { GraphBehavior, IGraphState } from "../models/state";
-import { addState, getRelativePoint, nodeSelection, unSelectAllEntity, updateState } from "../utils";
+import {
+  addState,
+  getRelativePoint,
+  isViewportComplete,
+  nodeSelection,
+  unSelectAllEntity,
+  updateState
+} from "../utils";
 import { selectNodeBySelectBox } from "../utils/updateNodeBySelectBox";
 
 function handleNavigate(state: IGraphState, action: ICanvasNavigateEvent): IGraphState {
@@ -49,10 +56,10 @@ export const selectionReducer: IGraphReactReducer = (state, action) => {
         }
       };
     case GraphCanvasEvent.SelectStart: {
-      const point = getRelativePoint(state.viewport.rect, action.rawEvent);
-      if (!point) {
+      if (!isViewportComplete(state.viewport)) {
         return state;
       }
+      const point = getRelativePoint(state.viewport.rect, action.rawEvent);
       return {
         ...state,
         data: {
@@ -122,6 +129,16 @@ export const selectionReducer: IGraphReactReducer = (state, action) => {
           present: data.selectNodes(() => true)
         }
       };
+    case GraphNodeEvent.Select: {
+      const nodes = new Set(action.nodes);
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          present: data.selectNodes(node => nodes.has(node.id))
+        }
+      };
+    }
     default:
       return state;
   }

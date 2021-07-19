@@ -1,31 +1,42 @@
-import { EMPTY_TRANSFORM_MATRIX, IPoint, Direction, IViewport } from "../../src";
-import { focusArea, pan, scrollIntoView, zoom, zoomTo } from "../../src/utils";
+import { EMPTY_TRANSFORM_MATRIX, IPoint, Direction, IViewport, ITransformMatrix } from "../../src";
+import { focusArea, pan, scrollIntoView, zoom as zoomImpl, zoomTo as zoomToImpl } from "../../src/utils";
+import { identical } from "../../src/utils/identical";
+
+const zoomTo = (anchor: IPoint, transformMatrix: ITransformMatrix, direction?: Direction) => {
+  return zoomToImpl({
+    scale: 0.5,
+    anchor,
+    limitScale: identical,
+    direction
+  })({ transformMatrix });
+};
 
 describe("test zoomTo", () => {
   const anchor: IPoint = {
     x: 100,
     y: 100
   };
+
   it("should zoom to", () => {
-    expect(zoomTo(0.5, anchor)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoomTo(anchor, [1, 0, 0, 1, 50, 50])).toEqual({
       transformMatrix: [0.5, 0, 0, 0.5, 75, 75]
     });
   });
 
   it("should zoom x", () => {
-    expect(zoomTo(0.5, anchor, Direction.X)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoomTo(anchor, [1, 0, 0, 1, 50, 50], Direction.X)).toEqual({
       transformMatrix: [0.5, 0, 0, 1, 75, 50]
     });
   });
 
   it("should zoom y", () => {
-    expect(zoomTo(0.5, anchor, Direction.Y)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoomTo(anchor, [1, 0, 0, 1, 50, 50], Direction.Y)).toEqual({
       transformMatrix: [1, 0, 0, 0.5, 50, 75]
     });
   });
 
   it("should noop", () => {
-    expect(zoomTo(0.5, anchor)({ transformMatrix: [0.5, 0, 0, 0.5, 25, 25] })).toEqual({
+    expect(zoomTo(anchor, [0.5, 0, 0, 0.5, 25, 25])).toEqual({
       transformMatrix: [0.5, 0, 0, 0.5, 25, 25]
     });
   });
@@ -37,25 +48,25 @@ describe("test zoomToWithoutPan", () => {
     y: 0
   };
   it("should zoom to along x and y directions without pan", () => {
-    expect(zoomTo(0.5, anchor)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoomTo(anchor, [1, 0, 0, 1, 50, 50])).toEqual({
       transformMatrix: [0.5, 0, 0, 0.5, 25, 25]
     });
   });
 
   it("should zoom x", () => {
-    expect(zoomTo(0.5, anchor, Direction.X)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoomTo(anchor, [1, 0, 0, 1, 50, 50], Direction.X)).toEqual({
       transformMatrix: [0.5, 0, 0, 1, 25, 50]
     });
   });
 
   it("should zoom y", () => {
-    expect(zoomTo(0.5, anchor, Direction.Y)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoomTo(anchor, [1, 0, 0, 1, 50, 50], Direction.Y)).toEqual({
       transformMatrix: [1, 0, 0, 0.5, 50, 25]
     });
   });
 
   it("should noop", () => {
-    expect(zoomTo(0.5, anchor)({ transformMatrix: [0.5, 0, 0, 0.5, 25, 25] })).toEqual({
+    expect(zoomTo(anchor, [0.5, 0, 0, 0.5, 25, 25])).toEqual({
       transformMatrix: [0.5, 0, 0, 0.5, 25, 25]
     });
   });
@@ -67,26 +78,35 @@ describe("test zoom", () => {
     y: 100
   };
 
+  const zoom = (scale: number, transformMatrix: ITransformMatrix, direction?: Direction) => {
+    return zoomImpl({
+      scale,
+      anchor,
+      direction,
+      limitScale: identical
+    })({ transformMatrix });
+  };
+
   it("should zoom", () => {
-    expect(zoom(0.5, anchor)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoom(0.5, [1, 0, 0, 1, 50, 50])).toEqual({
       transformMatrix: [0.5, 0, 0, 0.5, 75, 75]
     });
   });
 
   it("should zoom x", () => {
-    expect(zoom(0.5, anchor, Direction.X)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoom(0.5, [1, 0, 0, 1, 50, 50], Direction.X)).toEqual({
       transformMatrix: [0.5, 0, 0, 1, 75, 50]
     });
   });
 
   it("should zoom y", () => {
-    expect(zoom(0.5, anchor, Direction.Y)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(zoom(0.5, [1, 0, 0, 1, 50, 50], Direction.Y)).toEqual({
       transformMatrix: [1, 0, 0, 0.5, 50, 75]
     });
   });
 
   it("should noop", () => {
-    expect(zoom(1, anchor)({ transformMatrix: [0.5, 0, 0, 0.5, 25, 25] })).toEqual({
+    expect(zoom(1, [0.5, 0, 0, 0.5, 25, 25])).toEqual({
       transformMatrix: [0.5, 0, 0, 0.5, 25, 25]
     });
   });

@@ -22,7 +22,7 @@ import {
   getRenderedNodes,
   isNodeVisible,
   isPointVisible,
-  IZoomFixPublicOption,
+  IZoomFixPublicParams,
   resetState,
   updateState,
   isViewportComplete,
@@ -356,7 +356,7 @@ export class PropsAPI<NodeData, EdgeData, PortData> implements IPropsAPI<NodeDat
     });
   }
 
-  public zoomToFit(option: Omit<IZoomFixPublicOption, "rect"> = {}): void {
+  public zoomToFit(option: Omit<IZoomFixPublicParams, "rect"> = {}): void {
     this.dispatch({
       ...option,
       type: GraphCanvasEvent.ZoomToFit

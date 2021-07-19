@@ -10,7 +10,7 @@ import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { GraphBehavior, IGraphState } from "../models/state";
-import { IZoomFixPublicOption } from "../utils";
+import { IZoomFixPublicParams } from "../utils";
 
 import { IAutoLayout } from "../libs";
 import { GraphFeatures } from "../Features";
@@ -239,7 +239,7 @@ export interface IPropsAPI<NodeData = unknown, EdgeData = unknown, PortData = un
    *
    * @returns scale
    */
-  zoomToFit(option?: IZoomFixPublicOption): void;
+  zoomToFit(option?: IZoomFixPublicParams): void;
   /**
    * copy the selected item(s)
    */

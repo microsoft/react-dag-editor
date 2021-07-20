@@ -2,12 +2,10 @@ import * as React from "react";
 import { IGraphConfig } from "../contexts";
 import { useFeatureControl } from "../hooks/useFeatureControl";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
-import { IPropsAPI } from "../props-api/IPropsAPI";
 import { EventChannel } from "../utils/eventChannel";
 import { metaControl } from "../utils/keyboard";
 
 export interface IGetCanvasKeyboardEventHandlers {
-  propsAPI: IPropsAPI;
   featureControl: ReturnType<typeof useFeatureControl>;
   eventChannel: EventChannel;
   graphConfig: IGraphConfig;

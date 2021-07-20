@@ -1,6 +1,5 @@
 export * from "./ReactDagEditor";
 export * from "./Graph/Graph";
-export * from "./SearchBox";
 export * from "./ItemPanel";
 export * from "./Minimap/Minimap";
 export * from "./StaticGraph/StaticGraph";

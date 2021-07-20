@@ -3,10 +3,20 @@ import { HashMap, OrderedMap } from "../collections";
 import { IGraphConfig } from "../contexts";
 import { ICanvasEdge } from "../models/edge";
 import { EdgeModel } from "../models/EdgeModel";
-import { Direction, IContainerRect, IPoint, IRectShape, ITransformMatrix, IViewport } from "../models/geometry";
+import {
+  Direction,
+  IContainerRect,
+  IGap,
+  IPoint,
+  IRectShape,
+  IRectSize,
+  ITransformMatrix,
+  IViewport
+} from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
+import { IGraphSettings } from "../models/state";
 import { isPointInRect } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize, IShapeRect } from "./layout";
@@ -14,6 +24,13 @@ import { getContainerClientPoint, reverseTransformPoint } from "./transformMatri
 
 export const isViewportComplete = (viewport: IViewport): viewport is Required<IViewport> => {
   return !!viewport.rect;
+};
+
+export const isViewportEmpty = (viewport: IViewport): boolean => {
+  if (!isViewportComplete(viewport)) {
+    return true;
+  }
+  return !viewport.rect.width || !viewport.rect.height;
 };
 
 export const getNodeRect = (node: ICanvasNode, graphConfig: IGraphConfig): IShapeRect => {
@@ -181,80 +198,113 @@ export const getEdgeSourceTargetCoordinate = (
   };
 };
 
-export interface IZoomFixPublicOption {
-  /**
-   * container rectangle
-   */
-  rect?: IContainerRect | null;
+export interface IZoomCommonParams {
+  nodeMinVisibleSize: IRectSize;
+  nodeMaxVisibleSize: IRectSize;
+}
+
+export interface IZoomFixPublicParams {
   /**
    * zoom vertical
    */
   direction?: Direction;
   /**
-   * margin of the graph in the canvas, default is 60px
-   */
-  marginGraph?: number;
-  /**
    * is disable pan when zoom
    */
   disablePan?: boolean;
-  nodeMinVisibleWidth?: number;
-  nodeMinVisibleHeight?: number;
-  nodeMaxVisibleWidth?: number;
-  nodeMaxVisibleHeight?: number;
+  spacing?: number | IGap;
 }
 
-export interface IZoomFixMatrix extends IZoomFixPublicOption {
+const normalizeSpacing = (spacing: number | IGap | undefined): Required<IGap> => {
+  if (!spacing) {
+    return {
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    };
+  }
+  if (typeof spacing === "number") {
+    return {
+      top: spacing,
+      right: spacing,
+      bottom: spacing,
+      left: spacing
+    };
+  }
+  return {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    ...spacing
+  };
+};
+
+export interface IZoomFitParams extends IZoomFixPublicParams, IZoomCommonParams {
   data: GraphModel;
   graphConfig: IGraphConfig;
+  rect: IContainerRect;
 }
 
-export interface IZoomToFit extends IZoomFixMatrix {}
+type Action = (viewport: IViewport) => IViewport;
 
-type Action = (zoomPanSettings: IViewport) => IViewport;
 /**
- * zoom to [scale]
- *
  * @param scale the scale to zoom to
  * @param anchor this client point is not moved after zoom
  * @param direction X: zoom horizontal, Y: zoom vertical
- *
- * @returns GraphAction the GraphAction for zooming
  */
-export const zoomTo = (scale: number, anchor: IPoint | undefined, direction?: Direction): Action => {
-  // istanbul ignore next
-  if (!anchor) {
-    return identical;
-  }
+export interface IZoomParams {
+  scale: number;
+  anchor: IPoint;
+  direction?: Direction;
+  limitScale(scale: number): number;
+}
 
+/**
+ * zoom to [scale]
+ */
+export const zoomTo = ({ scale, anchor, direction, limitScale }: IZoomParams): Action => {
   return prevState => {
-    const scaleX = scale / prevState.transformMatrix[0];
-    const scaleY = scale / prevState.transformMatrix[3];
+    const scaleX = limitScale(scale) / prevState.transformMatrix[0];
+    const scaleY = limitScale(scale) / prevState.transformMatrix[3];
     const { x, y } = anchor;
     const dx = x * (1 - scaleX);
     const dy = y * (1 - scaleY);
 
-    const transformMatrix: ITransformMatrix =
-      direction === Direction.X
-        ? [
-            scale,
-            0,
-            0,
-            prevState.transformMatrix[3],
-            prevState.transformMatrix[4] * scaleX + dx,
-            prevState.transformMatrix[5]
-          ]
-        : direction === Direction.Y
-        ? [
-            prevState.transformMatrix[0],
-            0,
-            0,
-            scale,
-            prevState.transformMatrix[4],
-            prevState.transformMatrix[5] * scaleY + dy
-          ]
-        : [scale, 0, 0, scale, prevState.transformMatrix[4] * scaleX + dx, prevState.transformMatrix[5] * scaleY + dy];
-
+    let transformMatrix: ITransformMatrix;
+    switch (direction) {
+      case Direction.X:
+        transformMatrix = [
+          scale,
+          0,
+          0,
+          prevState.transformMatrix[3],
+          prevState.transformMatrix[4] * scaleX + dx,
+          prevState.transformMatrix[5]
+        ];
+        break;
+      case Direction.Y:
+        transformMatrix = [
+          prevState.transformMatrix[0],
+          0,
+          0,
+          scale,
+          prevState.transformMatrix[4],
+          prevState.transformMatrix[5] * scaleY + dy
+        ];
+        break;
+      case Direction.XY:
+      default:
+        transformMatrix = [
+          scale,
+          0,
+          0,
+          scale,
+          prevState.transformMatrix[4] * scaleX + dx,
+          prevState.transformMatrix[5] * scaleY + dy
+        ];
+    }
     return {
       ...prevState,
       transformMatrix
@@ -262,43 +312,47 @@ export const zoomTo = (scale: number, anchor: IPoint | undefined, direction?: Di
   };
 };
 
-export const zoom = (scale: number, anchor: IPoint | undefined, direction?: Direction): Action => {
-  if (scale === 1 || !anchor) {
+export const zoom = ({ scale, anchor, direction, limitScale }: IZoomParams): Action => {
+  if (scale === 1) {
     return identical;
   }
 
-  const { x, y } = anchor;
-  const dx = x * (1 - scale);
-  const dy = y * (1 - scale);
-
   return prevState => {
-    const transformMatrix: ITransformMatrix =
-      direction === Direction.X
-        ? [
-            prevState.transformMatrix[0] * scale,
-            prevState.transformMatrix[1],
-            prevState.transformMatrix[2],
-            prevState.transformMatrix[3],
-            prevState.transformMatrix[4] * scale + dx,
-            prevState.transformMatrix[5]
-          ]
-        : direction === Direction.Y
-        ? [
-            prevState.transformMatrix[0],
-            prevState.transformMatrix[1],
-            prevState.transformMatrix[2],
-            prevState.transformMatrix[3] * scale,
-            prevState.transformMatrix[4],
-            prevState.transformMatrix[5] * scale + dy
-          ]
-        : [
-            prevState.transformMatrix[0] * scale,
-            prevState.transformMatrix[1] * scale,
-            prevState.transformMatrix[2] * scale,
-            prevState.transformMatrix[3] * scale,
-            prevState.transformMatrix[4] * scale + dx,
-            prevState.transformMatrix[5] * scale + dy
-          ];
+    let transformMatrix: ITransformMatrix;
+    switch (direction) {
+      case Direction.X:
+        return zoomTo({
+          anchor,
+          direction,
+          limitScale,
+          scale: prevState.transformMatrix[0] * scale
+        })(prevState);
+      case Direction.Y:
+        return zoomTo({
+          anchor,
+          direction,
+          limitScale,
+          scale: prevState.transformMatrix[3] * scale
+        })(prevState);
+      case Direction.XY:
+      default: {
+        const resultX = limitScale(prevState.transformMatrix[0] * scale);
+        const resultY = limitScale(prevState.transformMatrix[3] * scale);
+        const scaleX = resultX / prevState.transformMatrix[0];
+        const scaleY = resultY / prevState.transformMatrix[3];
+        const { x, y } = anchor;
+        const dx = x * (1 - scaleX);
+        const dy = y * (1 - scaleY);
+        transformMatrix = [
+          resultX,
+          0,
+          0,
+          resultY,
+          prevState.transformMatrix[4] * scaleX + dx,
+          prevState.transformMatrix[5] * scaleY + dy
+        ];
+      }
+    }
     return {
       ...prevState,
       transformMatrix
@@ -343,6 +397,7 @@ export const minimapPan = (dx: number, dy: number): Action => {
     };
   };
 };
+
 export const getContentArea = (data: GraphModel, graphConfig: IGraphConfig, nodeIds?: Set<string>) => {
   let minNodeWidth = Infinity;
   let minNodeHeight = Infinity;
@@ -396,13 +451,10 @@ export const getContentArea = (data: GraphModel, graphConfig: IGraphConfig, node
     maxNodeY
   };
 };
-const normalizeNodeVisibleMinMax = (args: IZoomFixMatrix) => {
-  let {
-    nodeMinVisibleWidth = 0,
-    nodeMinVisibleHeight = 0,
-    nodeMaxVisibleWidth = 500,
-    nodeMaxVisibleHeight = 500
-  } = args;
+
+const normalizeNodeVisibleMinMax = ({ nodeMinVisibleSize, nodeMaxVisibleSize }: IZoomCommonParams) => {
+  let { width: nodeMinVisibleWidth, height: nodeMinVisibleHeight } = nodeMinVisibleSize;
+  let { width: nodeMaxVisibleWidth, height: nodeMaxVisibleHeight } = nodeMaxVisibleSize;
   if (nodeMinVisibleWidth > nodeMaxVisibleWidth) {
     const temp = nodeMinVisibleWidth;
     nodeMinVisibleWidth = nodeMaxVisibleWidth;
@@ -420,31 +472,14 @@ const normalizeNodeVisibleMinMax = (args: IZoomFixMatrix) => {
     nodeMaxVisibleHeight
   };
 };
-export const getZoomFitMatrix = (args: IZoomFixMatrix): ITransformMatrix => {
-  const { data, graphConfig, disablePan, rect, direction, marginGraph = 60 } = args;
 
-  const { nodes } = data;
-
-  // istanbul ignore next
-  if (nodes.size === 0 || !rect) {
-    return [1, 0, 0, 1, 0, 0];
-  }
-
-  const { height, width } = rect;
-
-  if (!height || !width) {
-    return [1, 0, 0, 1, 0, 0];
-  }
-
-  const { minNodeWidth, minNodeHeight, minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(data, graphConfig);
-
+export const getScaleRange = (params: IZoomCommonParams, { width: minNodeWidth, height: minNodeHeight }: IRectSize) => {
   const {
     nodeMinVisibleWidth,
     nodeMinVisibleHeight,
     nodeMaxVisibleWidth,
     nodeMaxVisibleHeight
-  } = normalizeNodeVisibleMinMax(args);
-
+  } = normalizeNodeVisibleMinMax(params);
   let minScaleX = 0;
   let minScaleY = 0;
   let maxScaleX = Infinity;
@@ -457,9 +492,35 @@ export const getZoomFitMatrix = (args: IZoomFixMatrix): ITransformMatrix => {
     minScaleY = nodeMinVisibleHeight / minNodeHeight;
     maxScaleY = nodeMaxVisibleHeight / minNodeHeight;
   }
+  return {
+    minScaleX,
+    minScaleY,
+    maxScaleX,
+    maxScaleY
+  };
+};
 
-  const scaleX = width / (maxNodeX - minNodeX + marginGraph * 2);
-  const scaleY = height / (maxNodeY - minNodeY + marginGraph * 2);
+export const getZoomFitMatrix = (args: IZoomFitParams): ITransformMatrix => {
+  const { data, graphConfig, disablePan, direction, rect } = args;
+
+  const { nodes } = data;
+
+  // istanbul ignore next
+  if (nodes.size === 0) {
+    return [1, 0, 0, 1, 0, 0];
+  }
+
+  const { minNodeWidth, minNodeHeight, minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(data, graphConfig);
+
+  const { minScaleX, minScaleY, maxScaleX, maxScaleY } = getScaleRange(args, {
+    width: minNodeWidth,
+    height: minNodeHeight
+  });
+
+  const spacing = normalizeSpacing(args.spacing);
+  const { width, height } = rect;
+  const scaleX = width / (maxNodeX - minNodeX + spacing.left + spacing.right);
+  const scaleY = height / (maxNodeY - minNodeY + spacing.top + spacing.bottom);
 
   const scaleCommon =
     direction === Direction.Y
@@ -473,14 +534,14 @@ export const getZoomFitMatrix = (args: IZoomFixMatrix): ITransformMatrix => {
     return [newScaleX, 0, 0, newScaleY, 0, 0];
   }
 
-  const dx = -newScaleX * (minNodeX - marginGraph);
-  const dy = -newScaleY * (minNodeY - marginGraph);
+  const dx = -newScaleX * (minNodeX - spacing.left);
+  const dy = -newScaleY * (minNodeY - spacing.top);
 
   const visibleNodes = getVisibleNodes(
     data.nodes,
     {
-      transformMatrix: [newScaleX, 0, 0, newScaleY, dx, dy],
-      rect
+      rect,
+      transformMatrix: [newScaleX, 0, 0, newScaleY, dx, dy]
     },
     graphConfig
   );
@@ -504,27 +565,11 @@ export const getZoomFitMatrix = (args: IZoomFixMatrix): ITransformMatrix => {
     0,
     0,
     newScaleY,
-    -newScaleX * (focusNode.x - marginGraph),
-    -newScaleY * (focusNode.y - marginGraph)
+    -newScaleX * (focusNode.x - spacing.left),
+    -newScaleY * (focusNode.y - spacing.top)
   ];
 };
-// istanbul ignore next
-export const zoomToFit = (args: IZoomToFit): [{ scaleX: number; scaleY: number }, Action] => {
-  const transformMatrix = getZoomFitMatrix(args);
 
-  return [
-    {
-      scaleX: transformMatrix?.[0],
-      scaleY: transformMatrix?.[3]
-    },
-    prevState => {
-      return {
-        ...prevState,
-        transformMatrix
-      };
-    }
-  ];
-};
 export const focusArea = (
   minX: number,
   minY: number,
@@ -568,10 +613,7 @@ export function getContainerCenter(rectRef: React.RefObject<IContainerRect | und
  * @param rect
  * @param e
  */
-export function getRelativePoint(rect: IContainerRect | undefined | null, e: MouseEvent): IPoint | undefined {
-  if (!rect) {
-    return undefined;
-  }
+export function getRelativePoint(rect: IContainerRect, e: MouseEvent): IPoint {
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
   return {
@@ -615,4 +657,15 @@ export const scrollIntoView = (
       ]
     };
   };
+};
+
+export const getScaleLimit = (data: GraphModel, settings: IGraphSettings) => {
+  const { minNodeWidth, minNodeHeight } = getContentArea(data, settings.graphConfig);
+
+  const { minScaleX, minScaleY } = getScaleRange(settings, {
+    width: minNodeWidth,
+    height: minNodeHeight
+  });
+
+  return Math.max(minScaleX, minScaleY);
 };

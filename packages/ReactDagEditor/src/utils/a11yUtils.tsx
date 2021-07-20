@@ -2,13 +2,13 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { VisitPortHelper } from "../components/A11yHelpers/VisitPortHelper";
 import { IGetConnectableParams, IGraphConfig } from "../contexts";
-import { GraphCanvasEvent } from "../models/event";
+import { GraphController } from "../controllers/GraphController";
+import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
 
 import { GraphModel } from "../models/GraphModel";
 import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
 import { ICanvasPort } from "../models/port";
-import { IPropsAPI } from "../props-api/IPropsAPI";
 import { EventChannel } from "./eventChannel";
 import { getNeighborPorts, getNodeUid, getPortUid } from "./graphDataUtils";
 
@@ -168,7 +168,7 @@ export const getFocusNodeHandler = (compareFn?: (a: ICanvasNode, b: ICanvasNode)
   data: GraphModel,
   curNodeId: string,
   svgRef: React.RefObject<SVGSVGElement>,
-  propsAPI: IPropsAPI,
+  graphController: GraphController,
   evt: React.KeyboardEvent,
   eventChannel: EventChannel
 ): void => {
@@ -177,8 +177,14 @@ export const getFocusNodeHandler = (compareFn?: (a: ICanvasNode, b: ICanvasNode)
   const nextNode = sortedNodes[(curNodeIndex + 1) % sortedNodes.length];
 
   if (nextNode && svgRef.current) {
-    propsAPI.selectNodeById(nextNode.id);
-    propsAPI.centralizeNode(nextNode.id);
+    graphController.dispatch({
+      type: GraphNodeEvent.Select,
+      nodes: [nextNode.id]
+    });
+    graphController.dispatch({
+      type: GraphNodeEvent.Centralize,
+      nodes: [nextNode.id]
+    });
 
     focusItem(svgRef, { node: nextNode, port: undefined }, evt, eventChannel);
   }

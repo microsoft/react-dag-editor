@@ -40,3 +40,5 @@ interface IRegisterNodeProps {
   config: IRectConfig<ICanvasNode>;
 }
 ```
+
+## `RegisterEdge`

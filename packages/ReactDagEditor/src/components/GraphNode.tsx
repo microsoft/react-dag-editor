@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { useTheme } from "../hooks";
 import { GraphNodeEvent, INodeCommonEvent, INodeContextMenuEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
-import { getNodeAutomationId, getNodeConfig, getNodeUid } from "../utils";
-import { Debug } from "../utils/debug";
+import { INodeConfig } from "../models/settings";
+import { getNodeAutomationId, getNodeUid } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { checkIsMultiSelect } from "../utils/keyboard";
 import classes from "./Graph.styles.m.scss";
@@ -22,13 +21,11 @@ export interface IGraphNodeCommonProps {
 
 export interface IGraphNodeProps extends IGraphNodeCommonProps {
   node: NodeModel;
+  nodeConfig: INodeConfig;
 }
 
 const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
-  const { node, eventChannel, getNodeAriaLabel, viewport, graphId } = props;
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
-  const shape = node.shape ? node.shape : graphConfig.defaultNodeShape;
-  const nodeConfig = getNodeConfig(node, graphConfig);
+  const { node, eventChannel, getNodeAriaLabel, viewport, graphId, nodeConfig } = props;
   const { theme } = useTheme();
 
   const nodeEvent = (type: (INodeCommonEvent | INodeContextMenuEvent)["type"]) => (
@@ -56,12 +53,6 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
   const id = getNodeUid(graphId, node);
 
   const automationId = node.automationId ?? getNodeAutomationId(node);
-
-  if (!nodeConfig.render) {
-    Debug.warn(`Missing "render" method in node config ${shape}`);
-
-    return null;
-  }
 
   return (
     <g

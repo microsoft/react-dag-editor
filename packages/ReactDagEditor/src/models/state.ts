@@ -1,7 +1,7 @@
 import { ISelectBoxPosition } from "../components/Graph/SelectBox";
 import { ILine } from "../components/Line";
-import { IGraphConfig } from "../contexts";
 import { GraphFeatures } from "../Features";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { IHistory, IZoomCommonParams } from "../utils";
 import { IDummyNodes } from "./dummy-node";
 import { IGap, IPoint, IViewport } from "./geometry";

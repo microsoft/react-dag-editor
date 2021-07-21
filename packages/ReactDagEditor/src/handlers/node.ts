@@ -5,6 +5,7 @@ import { PointerEventProvider } from "../event-provider/PointerEventProvider";
 import { GraphNodeEvent, IEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { isWithinThreshold } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { GraphController } from "../controllers/GraphController";

@@ -1,16 +1,17 @@
 import { OrderedMap } from "../collections";
 
-import { IGraphConfig, IRectConfig } from "../contexts";
 import { ICanvasGroup } from "../models/canvas";
 import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
+import { INodeConfig } from "../models/settings";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { getNodeConfig } from "./getNodeConfig";
 
 /**
  * @param rectConfig
  * @param rect
  */
-export function getRectWidth<T extends { width?: number }>(rectConfig: IRectConfig<T>, rect: T): number {
+export function getRectWidth<T extends { width?: number }>(rectConfig: INodeConfig<T>, rect: T): number {
   const minWidth = rectConfig.getMinWidth(rect);
 
   if (rect.width && rect.width >= minWidth) {
@@ -24,7 +25,7 @@ export function getRectWidth<T extends { width?: number }>(rectConfig: IRectConf
  * @param rectConfig
  * @param rect
  */
-export function getRectHeight<T extends { height?: number }>(rectConfig: IRectConfig<T>, rect: T): number {
+export function getRectHeight<T extends { height?: number }>(rectConfig: INodeConfig<T>, rect: T): number {
   const minHeight = rectConfig.getMinHeight(rect);
 
   if (rect.height && rect.height >= minHeight) {

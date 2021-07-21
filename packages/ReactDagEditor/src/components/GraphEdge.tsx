@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
+import { GraphConfigContext } from "../contexts";
 import { VirtualizationContext } from "../contexts/VirtualizationContext";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
@@ -7,6 +7,7 @@ import { GraphEdgeState } from "../models/element-state";
 import { useTheme } from "../hooks";
 import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { getEdgeUid, getLinearFunction, hasState, isPointInRect } from "../utils";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";

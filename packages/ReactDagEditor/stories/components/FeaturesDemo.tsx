@@ -8,18 +8,14 @@ import {
   GraphStateStore,
   GraphModel,
   RegisterNode,
-  IRectConfig,
   NodeModel,
   getRectHeight,
   getRectWidth,
   hasState,
   GraphNodeState,
-  IPortConfig,
   ICanvasPort,
   ICanvasNode,
   GraphPortState,
-  IGetConnectableParams,
-  IPortDrawArgs,
   RegisterPort
 } from "../../src";
 import { sampleGraphData } from "../data/sample-graph-1";

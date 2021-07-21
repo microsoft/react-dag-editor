@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import * as React from "react";
 import { v4 as uuid } from "uuid";
-import { GraphConfigContext, IGraphConfig } from "../../contexts";
+import { GraphConfigContext } from "../../contexts";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import {
   useContainerRect,
@@ -19,6 +19,7 @@ import { useFeatureControl } from "../../hooks/useFeatureControl";
 import { GraphCanvasEvent, GraphContextMenuEvent, ICanvasCommonEvent, ICanvasKeyboardEvent } from "../../models/event";
 import { IContainerRect, IViewport } from "../../models/geometry";
 import { GraphBehavior } from "../../models/state";
+import { IGraphConfig } from "../../settings/IGraphConfig";
 import { isSelected, isSupported, isViewportComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";

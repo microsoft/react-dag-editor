@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IGroupConfig, IGroupDrawArgs } from "../contexts/GraphConfigContext";
+import { IGroupConfig, IGroupDrawArgs } from "../models/settings";
 
 const Renderer: React.FC<IGroupDrawArgs> = props => (
   <rect height={props.height} width={props.width} fill={props.group.fill} />

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { HashMap, OrderedMap } from "../collections";
-import { IGraphConfig } from "../contexts";
 import { ICanvasEdge } from "../models/edge";
 import { EdgeModel } from "../models/EdgeModel";
 import {
@@ -17,6 +16,7 @@ import { GraphModel } from "../models/GraphModel";
 import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
 import { IGraphSettings } from "../models/state";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { isPointInRect } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize, IShapeRect } from "./layout";

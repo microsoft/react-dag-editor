@@ -1,8 +1,8 @@
 import { v4 as uuid } from "uuid";
 import { ILine } from "../components/Line";
-import { IGraphConfig } from "../contexts";
 import { IDummyNode } from "../models/dummy-node";
 import { ICanvasNode } from "../models/node";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { getNodeSize } from "./layout";
 
 interface IClosestNodes {
@@ -31,13 +31,7 @@ export const getAlignmentLines = (
 ): ILine[] => {
   const dummyDraggingNodeHW = getDummyDraggingNode(draggingNodes);
 
-  const closestNodes = getClosestNodes(
-    dummyDraggingNodeHW,
-    draggingNodes,
-    nodes,
-    graphConfig,
-    threshold
-  );
+  const closestNodes = getClosestNodes(dummyDraggingNodeHW, draggingNodes, nodes, graphConfig, threshold);
 
   return getLines(dummyDraggingNodeHW, closestNodes, draggingNodes.length);
 };
@@ -59,8 +53,7 @@ export const getAutoAlignDisplacement = (
 
   const nodeHW = getDummyDraggingNode(nodes);
 
-  const widthOrHeight =
-    alignDirection === "x" ? nodeHW.width || 0 : nodeHW.height || 0;
+  const widthOrHeight = alignDirection === "x" ? nodeHW.width || 0 : nodeHW.height || 0;
 
   alignmentLines.forEach(item => {
     let alignLine: number;
@@ -73,8 +66,7 @@ export const getAutoAlignDisplacement = (
     }
 
     const distance1 = nodeHW[alignDirection] - alignLine;
-    const distanceMiddle =
-      nodeHW[alignDirection] + (widthOrHeight || 0) / 2 - alignLine;
+    const distanceMiddle = nodeHW[alignDirection] + (widthOrHeight || 0) / 2 - alignLine;
     const distance2 = nodeHW[alignDirection] + (widthOrHeight || 0) - alignLine;
 
     if (Math.abs(distance1) < min) {
@@ -99,10 +91,7 @@ export const getAutoAlignDisplacement = (
  * @param nodes among these nodes to get the min coordinate
  * @param field "x"|"y"
  */
-const getMinCoordinate = (
-  nodes: ICanvasNode[],
-  field: "x" | "y"
-): number | undefined => {
+const getMinCoordinate = (nodes: ICanvasNode[], field: "x" | "y"): number | undefined => {
   if (!nodes.length) {
     return undefined;
   }
@@ -114,16 +103,11 @@ const getMinCoordinate = (
  * @param nodes among these nodes to get the max coordinate
  * @param field "x"|"y"
  */
-const getMaxCoordinate = (
-  nodes: ICanvasNode[],
-  field: "x" | "y"
-): number | undefined => {
+const getMaxCoordinate = (nodes: ICanvasNode[], field: "x" | "y"): number | undefined => {
   if (!nodes.length) {
     return undefined;
   }
-  return Math.max(
-    ...nodes.map(n => n[field] + (field === "y" ? n.height || 0 : n.width || 0))
-  );
+  return Math.max(...nodes.map(n => n[field] + (field === "y" ? n.height || 0 : n.width || 0)));
 };
 
 /**
@@ -131,10 +115,7 @@ const getMaxCoordinate = (
  * @param node the node to set height and width
  * @param graphConfig graphConfig of type IGraphConfig
  */
-const setSizeForNode = (
-  node: ICanvasNode,
-  graphConfig: IGraphConfig
-): ICanvasNode => {
+const setSizeForNode = (node: ICanvasNode, graphConfig: IGraphConfig): ICanvasNode => {
   return {
     ...node,
     ...getNodeSize(node, graphConfig)
@@ -190,9 +171,7 @@ const getBoundingBoxOfNodes = (
  * @param draggingNodes all dragging nodes
  * @param graphConfig graphConfig of type IGraphConfig
  */
-const getDummyDraggingNode = (
-  draggingNodes: readonly IDummyNode[]
-) => {
+const getDummyDraggingNode = (draggingNodes: readonly IDummyNode[]) => {
   const { x, y, width, height } = getBoundingBoxOfNodes(draggingNodes);
   const dummyDraggingNode: IDummyNode = {
     id: uuid(),
@@ -244,20 +223,16 @@ const getClosestNodes = (
     const { width: nodeWidth = 0, height: nodeHeight = 0 } = nodeHW;
 
     // compare X coordinate of dragging node
-    [
-      draggingNodeX,
-      draggingNodeX + draggingNodeWidth / 2,
-      draggingNodeX + draggingNodeWidth
-    ].forEach((draggingNodeValue, alignPos) => {
-      if (!resX[alignPos]) {
-        resX[alignPos] = {};
-      }
-      if (!resX[alignPos].closestNodes) {
-        resX[alignPos].closestNodes = [];
-      }
+    [draggingNodeX, draggingNodeX + draggingNodeWidth / 2, draggingNodeX + draggingNodeWidth].forEach(
+      (draggingNodeValue, alignPos) => {
+        if (!resX[alignPos]) {
+          resX[alignPos] = {};
+        }
+        if (!resX[alignPos].closestNodes) {
+          resX[alignPos].closestNodes = [];
+        }
 
-      [nodeHW.x, nodeHW.x + nodeWidth / 2, nodeHW.x + nodeWidth].forEach(
-        comparedValue => {
+        [nodeHW.x, nodeHW.x + nodeWidth / 2, nodeHW.x + nodeWidth].forEach(comparedValue => {
           const distance = Math.abs(draggingNodeValue - comparedValue);
           if (distance <= minDistanceX) {
             resX[alignPos].closestNodes?.push(nodeHW);
@@ -265,25 +240,21 @@ const getClosestNodes = (
 
             minDistanceX = distance;
           }
-        }
-      );
-    });
+        });
+      }
+    );
 
     // compare Y coordinate of dragging node
-    [
-      draggingNodeY,
-      draggingNodeY + draggingNodeHeight / 2,
-      draggingNodeY + draggingNodeHeight
-    ].forEach((draggingNodeValue, alignPos) => {
-      if (!resY[alignPos]) {
-        resY[alignPos] = {};
-      }
-      if (!resY[alignPos].closestNodes) {
-        resY[alignPos].closestNodes = [];
-      }
+    [draggingNodeY, draggingNodeY + draggingNodeHeight / 2, draggingNodeY + draggingNodeHeight].forEach(
+      (draggingNodeValue, alignPos) => {
+        if (!resY[alignPos]) {
+          resY[alignPos] = {};
+        }
+        if (!resY[alignPos].closestNodes) {
+          resY[alignPos].closestNodes = [];
+        }
 
-      [nodeHW.y, nodeHW.y + nodeHeight / 2, nodeHW.y + nodeHeight].forEach(
-        comparedValue => {
+        [nodeHW.y, nodeHW.y + nodeHeight / 2, nodeHW.y + nodeHeight].forEach(comparedValue => {
           const distance = Math.abs(draggingNodeValue - comparedValue);
           if (distance <= minDistanceY) {
             resY[alignPos].closestNodes?.push(nodeHW);
@@ -291,9 +262,9 @@ const getClosestNodes = (
 
             minDistanceY = distance;
           }
-        }
-      );
-    });
+        });
+      }
+    );
   });
   return { closestX: resX, closestY: resY };
 };
@@ -329,11 +300,7 @@ const getLines = (
     const sameXNodes: ICanvasNode[] = [];
     const x = item.alignCoordinateValue;
     item.closestNodes?.forEach(node => {
-      if (
-        node.x === x ||
-        node.x + (node.width || 0) / 2 === x ||
-        node.x + (node.width || 0) === x
-      ) {
+      if (node.x === x || node.x + (node.width || 0) / 2 === x || node.x + (node.width || 0) === x) {
         sameXNodes.push(node);
       }
     });
@@ -357,11 +324,7 @@ const getLines = (
     const y = item.alignCoordinateValue;
 
     item.closestNodes?.forEach(node => {
-      if (
-        node.y === y ||
-        node.y + (node.height || 0) / 2 === y ||
-        node.y + (node.height || 0) === y
-      ) {
+      if (node.y === y || node.y + (node.height || 0) / 2 === y || node.y + (node.height || 0) === y) {
         sameYNodes.push(node);
       }
     });

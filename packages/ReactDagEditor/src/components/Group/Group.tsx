@@ -1,11 +1,9 @@
 import * as React from "react";
 import { defaultGroup } from "../../built-in/defaultGroup";
-import {
-  GraphConfigContext,
-  IGraphConfig
-} from "../../contexts/GraphConfigContext";
+import { GraphConfigContext } from "../../contexts/GraphConfigContext";
 import { ICanvasGroup } from "../../models/canvas";
 import { GraphModel } from "../../models/GraphModel";
+import { IGraphConfig } from "../../settings/IGraphConfig";
 import { getGroupRect } from "../../utils/layout";
 
 export interface IGroupProps {
@@ -16,13 +14,13 @@ export interface IGroupProps {
 export const Group: React.FC<IGroupProps> = props => {
   const { data, group } = props;
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
-  const { x, y, width, height } = React.useMemo(
-    () => getGroupRect(group, data.nodes, graphConfig),
-    [group, data.nodes, graphConfig]
-  );
+  const { x, y, width, height } = React.useMemo(() => getGroupRect(group, data.nodes, graphConfig), [
+    group,
+    data.nodes,
+    graphConfig
+  ]);
 
-  const groupConfig =
-    graphConfig.getGroupConfigByName(group.shape) ?? defaultGroup;
+  const groupConfig = graphConfig.getGroupConfigByName(group.shape) ?? defaultGroup;
 
   const automationId = `group-container-${group.id}`;
   return (

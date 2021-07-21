@@ -1,9 +1,10 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
+import { GraphConfigContext } from "../contexts";
 import { GraphNodeState } from "../models/element-state";
 import { useTheme } from "../hooks";
 import { IViewport } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { getNodeConfig, hasState } from "../utils";
 
 interface IProps {

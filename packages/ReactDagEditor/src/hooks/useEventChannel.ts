@@ -1,7 +1,6 @@
 import * as React from "react";
 import { DEFAULT_AUTO_ALIGN_THRESHOLD, MouseEventButton } from "../common/constants";
 import { IGraphProps } from "../components/Graph/IGraphProps";
-import { IGraphConfig } from "../contexts";
 import { IDispatch } from "../contexts/GraphStateContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
@@ -21,6 +20,7 @@ import { onContainerMouseDown, onNodePointerDown } from "../handlers";
 import { IContainerRect } from "../models/geometry";
 import { GraphBehavior } from "../models/state";
 import { handleBehaviorChange } from "../reducers/behaviorReducer";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { filterSelectedItems } from "../utils";
 import {
   findDOMElement,

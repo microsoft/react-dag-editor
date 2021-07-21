@@ -1,4 +1,4 @@
-export class DefaultStorage implements Storage {
+export class InMemoryStorage implements Storage {
   public get length(): number {
     return Object.keys(this.items || {}).length;
   }

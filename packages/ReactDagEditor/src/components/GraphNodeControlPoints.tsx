@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig, ITheme } from "../contexts";
+import { ITheme } from "../contexts";
 import { GraphControllerContext } from "../contexts/GraphControllerContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
@@ -7,12 +7,12 @@ import { useTheme } from "../hooks";
 import { GraphNodeEvent } from "../models/event";
 import { INodeGeometryDelta } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
-import { getNodeConfig, getRectHeight, getRectWidth } from "../utils";
-import { EventChannel } from "../utils/eventChannel";
+import { INodeConfig } from "../models/settings";
+import { getRectHeight, getRectWidth } from "../utils";
 
 interface IGraphNodeControlPointsProps {
   node: NodeModel;
-  eventChannel: EventChannel;
+  nodeConfig: INodeConfig;
 }
 
 const BBOX_PADDING = 15;
@@ -43,19 +43,16 @@ const ResizePoint: React.FunctionComponent<IResizePointProps> = ({ x, y, cursor,
 };
 
 export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPointsProps> = props => {
-  const { node, eventChannel } = props;
-
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
-  const nodeConfig = getNodeConfig(node, graphConfig);
-  const graphController = React.useContext(GraphControllerContext);
-
+  const { node, nodeConfig } = props;
   const minWidth = nodeConfig.getMinWidth(node);
   const minHeight = nodeConfig.getMinHeight(node);
+  const height = getRectHeight(nodeConfig, node);
+  const width = getRectWidth(nodeConfig, node);
+  const graphController = React.useContext(GraphControllerContext);
 
   const { theme } = useTheme();
 
-  const height = getRectHeight(nodeConfig, node);
-  const width = getRectWidth(nodeConfig, node);
+  const eventChannel = graphController.eventChannel;
 
   const getMouseDown = (f: Handler) => (evt: React.MouseEvent) => {
     evt.preventDefault();

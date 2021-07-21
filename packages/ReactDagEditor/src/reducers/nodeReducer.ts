@@ -1,5 +1,5 @@
 import { emptyDummyNodes } from "../components/dummyNodes";
-import { IGraphConfig, IGraphReactReducer } from "../contexts";
+import { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { IDummyNode, IDummyNodes } from "../models/dummy-node";
 import { GraphNodeState } from "../models/element-state";
@@ -16,6 +16,7 @@ import {
 import { Direction } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import {
   addState,
   focusArea,

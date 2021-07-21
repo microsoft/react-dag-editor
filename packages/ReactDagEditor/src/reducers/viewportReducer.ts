@@ -1,4 +1,4 @@
-import { IGraphConfig, IGraphReactReducer } from "../contexts";
+import { IGraphReactReducer } from "../contexts";
 import { EMPTY_TRANSFORM_MATRIX } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
 import {
@@ -12,6 +12,7 @@ import {
 import { IContainerRect, IPoint, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { IGraphSettings } from "../models/state";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import {
   clamp,
   getGroupRect,

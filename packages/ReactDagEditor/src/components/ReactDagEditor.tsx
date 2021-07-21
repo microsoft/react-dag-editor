@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DefaultClipboard, defaultPort, DefaultStorage, line, rect } from "../built-in";
+import { InMemoryClipboard, defaultPort, InMemoryStorage, line, rect } from "../built-in";
 import { ContextMenuConfig, ContextMenuConfigContext, GraphConfig, GraphConfigContext } from "../contexts";
 import { useConst } from "../hooks/useConst";
 import { Debug } from "../utils/debug";
@@ -41,8 +41,8 @@ export interface IReactDagEditorProps extends IThemeProviderProps {
  * @param props
  */
 export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = props => {
-  const clipboardStorage = useConst(() => new DefaultStorage());
-  const clipboard = useConst(() => new DefaultClipboard(clipboardStorage));
+  const clipboardStorage = useConst(() => new InMemoryStorage());
+  const clipboard = useConst(() => new InMemoryClipboard(clipboardStorage));
 
   React.useEffect(() => {
     if (props.handleWarning) {

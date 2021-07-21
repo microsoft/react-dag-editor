@@ -1,7 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { VisitPortHelper } from "../components/A11yHelpers/VisitPortHelper";
-import { IGetConnectableParams, IGraphConfig } from "../contexts";
 import { GraphController } from "../controllers/GraphController";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
 
@@ -9,6 +8,8 @@ import { GraphModel } from "../models/GraphModel";
 import { ICanvasNode } from "../models/node";
 import { NodeModel } from "../models/NodeModel";
 import { ICanvasPort } from "../models/port";
+import { IGetConnectableParams } from "../models/settings";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { EventChannel } from "./eventChannel";
 import { getNeighborPorts, getNodeUid, getPortUid } from "./graphDataUtils";
 

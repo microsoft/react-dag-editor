@@ -1,11 +1,11 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
 import { useTheme } from "../hooks";
 import { GraphPortEvent } from "../models/event";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { ICanvasPort } from "../models/port";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { getPortAutomationId, getPortUid } from "../utils";
 import { Debug } from "../utils/debug";
 import { IGraphProps } from "./Graph/IGraphProps";
@@ -16,11 +16,11 @@ export interface IGraphOneNodePortsProps
   node: NodeModel;
   data: GraphModel;
   getPortAriaLabel: Required<IGraphProps>["getPortAriaLabel"];
+  graphConfig: IGraphConfig;
 }
 
 export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps> = props => {
-  const { data, node, getPortAriaLabel, eventChannel, viewport, graphId } = props;
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const { data, node, getPortAriaLabel, eventChannel, viewport, graphId, graphConfig } = props;
   const { theme } = useTheme();
 
   const ports = node.ports;

@@ -1,6 +1,14 @@
 import * as React from "react";
-import { applyDefaultPortsPosition, ICanvasEdge, ICanvasNode, ICanvasPort, IGetConnectableParams } from "../src";
-import { GraphConfig, IGraphConfig, IItemConfigArgs, IPortDrawArgs } from "../src/contexts";
+import {
+  applyDefaultPortsPosition,
+  ICanvasEdge,
+  ICanvasNode,
+  ICanvasPort,
+  IGraphConfig,
+  IItemConfigArgs,
+  IPortDrawArgs
+} from "../src";
+import { GraphConfig } from "../src/contexts";
 
 function makePort(id: string, state: number): ICanvasPort {
   return {

@@ -1,13 +1,9 @@
 /* eslint-disable no-plusplus */
-import ElkConstructor, {
-  ElkExtendedEdge,
-  ElkNode,
-  LayoutOptions
-} from "elkjs/lib/elk-api";
-import { IGraphConfig } from "../contexts";
+import ElkConstructor, { ElkExtendedEdge, ElkNode, LayoutOptions } from "elkjs/lib/elk-api";
 import { GraphModel } from "../models/GraphModel";
 import { ICanvasNode } from "../models/node";
 import { ICanvasPort } from "../models/port";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { getPortPositionByPortId } from "../utils/getPortPosition";
 import { getNodeSize } from "../utils/layout";
 
@@ -36,18 +32,14 @@ const defaultGlobalLayoutOption: LayoutOptions = {
 const defaultWorkerFactory = (): Worker => {
   return new Worker("elkjs/lib/elk-worker.js", {
     type: "module",
-    name: "elk-worker"  // add name to combine same elk-worker.js bundle
+    name: "elk-worker" // add name to combine same elk-worker.js bundle
   });
 };
 
 type Direction = "DOWN" | "UP" | "RIGHT" | "LEFT";
 type Side = "NORTH" | "SOUTH" | "EAST" | "WEST";
 
-const isWithinRange = (
-  lower: number,
-  upper: number,
-  target: number
-): boolean => {
+const isWithinRange = (lower: number, upper: number, target: number): boolean => {
   return target > lower && target < upper;
 };
 
@@ -97,12 +89,7 @@ const getPortSideAndType = (
 export async function autoLayout<NodeData, EdgeData, PortData>(
   props: IAutoLayoutProps<NodeData, EdgeData, PortData>
 ): Promise<GraphModel<NodeData, EdgeData, PortData>> {
-  const {
-    graphConfig,
-    data,
-    portRadius = 18,
-    workerFactory = defaultWorkerFactory
-  } = props;
+  const { graphConfig, data, portRadius = 18, workerFactory = defaultWorkerFactory } = props;
 
   let { nodeLayoutOptions = {}, globalLayoutOption = {} } = props;
 
@@ -121,8 +108,7 @@ export async function autoLayout<NodeData, EdgeData, PortData>(
   const children: ElkNode[] = [];
   data.nodes.forEach(node => {
     let minPortIndex = 0;
-    let maxPortIndex =
-      node.ports && node.ports.length ? node.ports.length - 1 : 0;
+    let maxPortIndex = node.ports && node.ports.length ? node.ports.length - 1 : 0;
 
     const { width, height } = getNodeSize(node, graphConfig);
     children.push({
@@ -142,9 +128,7 @@ export async function autoLayout<NodeData, EdgeData, PortData>(
           const layoutOptions: LayoutOptions = side
             ? {
                 "elk.port.side": side,
-                "elk.port.index": isOutput
-                  ? (maxPortIndex--).toString()
-                  : (minPortIndex++).toString()
+                "elk.port.index": isOutput ? (maxPortIndex--).toString() : (minPortIndex++).toString()
               }
             : {};
           return {

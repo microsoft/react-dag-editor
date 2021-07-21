@@ -9,6 +9,7 @@ import { useRefValue } from "../hooks/useRefValue";
 import { useTheme } from "../hooks/useTheme";
 import { GraphScrollBarEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { EventChannel } from "../utils/eventChannel";
 import { IOffsetLimit } from "../utils/getOffsetLimit";
 

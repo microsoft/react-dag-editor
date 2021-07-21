@@ -3,7 +3,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { v4 as uuid } from "uuid";
 import { MouseEventButton } from "../../common/constants";
-import { emptyNodeConfig, GraphConfigContext, IRectConfig } from "../../contexts";
+import { emptyNodeConfig, GraphConfigContext } from "../../contexts";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { defaultGetPositionFromEvent, DragController } from "../../controllers";
 import { PointerEventProvider } from "../../event-provider/PointerEventProvider";
@@ -12,6 +12,7 @@ import { useRefValue } from "../../hooks/useRefValue";
 import { GraphCanvasEvent } from "../../models/event";
 import { IContainerRect, IPoint, ITransformMatrix } from "../../models/geometry";
 import { ICanvasNode } from "../../models/node";
+import { INodeConfig } from "../../models/settings";
 import { deepClone, getRectHeight, getRectWidth, isViewportComplete, reverseTransformPoint } from "../../utils";
 import { identical } from "../../utils/identical";
 import { noop } from "../../utils/noop";
@@ -89,7 +90,7 @@ const adjustPosition = <T extends { width?: number; height?: number }>(
   rect: IContainerRect | undefined,
   transformMatrix: ITransformMatrix,
   node: T,
-  nodeConfig: IRectConfig<T>
+  nodeConfig: INodeConfig<T>
 ): IPoint => {
   const rectWidth = getRectWidth(nodeConfig, node);
   const rectHeight = getRectHeight(nodeConfig, node);

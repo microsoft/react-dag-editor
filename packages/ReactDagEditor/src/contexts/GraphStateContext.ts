@@ -2,14 +2,13 @@ import * as React from "react";
 import { NODE_MAX_VISIBLE_LENGTH, NODE_MIN_VISIBLE_LENGTH } from "../common/constants";
 import { emptyDummyNodes } from "../components/dummyNodes";
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
-import { defaultFeatures } from "../Features";
 import { IEvent } from "../models/event";
 import { IGap, IRectSize, ITransformMatrix, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { Debug } from "../utils/debug";
 import { resetUndoStack } from "../utils/history";
-import { GraphConfig } from "./GraphConfigContext";
+import { EMPTY_SETTINGS } from "./GraphSettingsContext";
 
 export const EMPTY_TRANSFORM_MATRIX: ITransformMatrix = [1, 0, 0, 1, 0, 0];
 
@@ -36,13 +35,7 @@ export const DEFAULT_NODE_MAX_VISIBLE_SIZE: IRectSize = {
 };
 
 export const EMPTY_GRAPH_STATE: IGraphState = {
-  settings: {
-    features: defaultFeatures,
-    graphConfig: new GraphConfig(),
-    canvasBoundaryPadding: EMPTY_GAP,
-    nodeMinVisibleSize: DEFAULT_NODE_MIN_VISIBLE_SIZE,
-    nodeMaxVisibleSize: DEFAULT_NODE_MAX_VISIBLE_SIZE
-  },
+  settings: EMPTY_SETTINGS,
   behavior: GraphBehavior.default,
   data: resetUndoStack(GraphModel.empty()),
   viewport: {

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
+import { GraphConfigContext } from "../contexts";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
 import { IViewport } from "../models/geometry";
 import { ICanvasPort } from "../models/port";
@@ -7,6 +7,7 @@ import { GraphPortState } from "../models/element-state";
 import { useTheme } from "../hooks";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { hasState } from "../utils";
 
 interface IPortTooltipsProps {

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
+import { GraphConfigContext } from "../contexts";
 import { useTheme } from "../hooks";
 import { IDummyNodes } from "../models/dummy-node";
 import { GraphModel } from "../models/GraphModel";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { getNodeConfig } from "../utils";
 
 interface IAnimatingNodeGroup {

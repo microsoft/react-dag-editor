@@ -4,7 +4,6 @@ import {
   GraphModel,
   ICanvasData,
   IEvent,
-  IGraphConfig,
   IGraphReducer,
   IGraphStateStoreProps
 } from "../src";

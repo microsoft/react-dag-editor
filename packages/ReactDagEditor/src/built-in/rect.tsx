@@ -1,12 +1,13 @@
 import * as React from "react";
-import { INodeDrawArgs, IRectConfig, ITheme } from "../contexts";
+import { ITheme } from "../contexts";
 import { ICanvasNode } from "../models/node";
 import { GraphNodeState } from "../models/element-state";
+import { INodeDrawArgs, INodeConfig } from "../models/settings";
 import { hasState } from "../utils";
 import { getRectHeight, getRectWidth } from "../utils/layout";
 import { RectComponent } from "./RectComponent";
 
-export const rect: IRectConfig<ICanvasNode> = {
+export const rect: INodeConfig<ICanvasNode> = {
   getMinHeight(): number {
     return 150;
   },
@@ -14,9 +15,7 @@ export const rect: IRectConfig<ICanvasNode> = {
     return 150;
   },
   getStyle(node: ICanvasNode, theme: ITheme): Partial<React.CSSProperties> {
-    if (
-      hasState(GraphNodeState.selected | GraphNodeState.activated)(node.state)
-    ) {
+    if (hasState(GraphNodeState.selected | GraphNodeState.activated)(node.state)) {
       return {
         fill: theme.nodeActivateFill,
         stroke: theme.nodeActivateStroke
@@ -38,14 +37,6 @@ export const rect: IRectConfig<ICanvasNode> = {
     const style = rect.getStyle ? rect.getStyle(node, args.theme) : {};
     const textY = node.y + height / 3;
 
-    return (
-      <RectComponent
-        style={style}
-        node={node}
-        width={width}
-        height={height}
-        textY={textY}
-      />
-    );
+    return <RectComponent style={style} node={node} width={width} height={height} textY={textY} />;
   }
 };

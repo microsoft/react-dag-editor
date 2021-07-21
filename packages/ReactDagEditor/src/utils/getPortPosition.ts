@@ -1,12 +1,13 @@
-import { IGraphConfig, IRectConfig } from "../contexts";
 import { IPoint } from "../models/geometry";
 import { ICanvasNode } from "../models/node";
 import { ICanvasPort } from "../models/port";
+import { INodeConfig } from "../models/settings";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { Debug } from "./debug";
 import { getNodeConfig } from "./getNodeConfig";
 import { getRectHeight, getRectWidth } from "./layout";
 
-export const getPortPosition = (node: ICanvasNode, port: ICanvasPort, nodeConfig: IRectConfig<ICanvasNode>): IPoint => {
+export const getPortPosition = (node: ICanvasNode, port: ICanvasPort, nodeConfig: INodeConfig<ICanvasNode>): IPoint => {
   const width = getRectWidth<ICanvasNode>(nodeConfig, node);
   const height = getRectHeight<ICanvasNode>(nodeConfig, node);
 

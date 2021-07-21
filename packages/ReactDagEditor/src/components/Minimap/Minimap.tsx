@@ -1,5 +1,5 @@
 import * as React from "react";
-import { EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphConfig, ViewportContext } from "../../contexts";
+import { EMPTY_TRANSFORM_MATRIX, GraphConfigContext, ViewportContext } from "../../contexts";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { GraphStateContext } from "../../contexts/GraphStateContext";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
@@ -10,6 +10,7 @@ import { useMinimapRect, useTheme } from "../../hooks";
 import { useRefValue } from "../../hooks/useRefValue";
 import { GraphCanvasEvent, GraphMinimapEvent } from "../../models/event";
 import { ITransformMatrix } from "../../models/geometry";
+import { IGraphConfig } from "../../settings/IGraphConfig";
 import {
   getPointDeltaByClientDelta,
   getVisibleArea,

@@ -5,6 +5,7 @@ import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider
 import { GraphCanvasEvent, ICanvasCommonEvent, IEvent } from "../models/event";
 import { IPoint } from "../models/geometry";
 import { CanvasMouseMode, IGraphState } from "../models/state";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { EventChannel } from "../utils/eventChannel";
 import { GraphController } from "../controllers/GraphController";
 import { isWithinThreshold } from "../utils/isWithinThreshold";

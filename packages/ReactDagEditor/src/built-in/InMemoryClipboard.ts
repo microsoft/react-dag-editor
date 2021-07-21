@@ -1,14 +1,10 @@
 import * as uuid from "uuid";
 import { COPIED_NODE_SPACING } from "../common/constants";
 import { ICanvasData } from "../models/canvas";
+import { IGraphClipboard } from "../settings/IGraphClipboard";
 
-export interface IGraphClipBoard<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
-  write(data: ICanvasData<NodeData, EdgeData, PortData>): void;
-  read(): ICanvasData<NodeData, EdgeData, PortData> | null;
-}
-
-export class DefaultClipboard<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  implements IGraphClipBoard<NodeData, EdgeData, PortData> {
+export class InMemoryClipboard<NodeData = unknown, EdgeData = unknown, PortData = unknown>
+  implements IGraphClipboard<NodeData, EdgeData, PortData> {
   private readonly storage: Storage;
 
   public constructor(storage: Storage) {

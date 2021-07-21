@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IGraphConfig } from "../contexts";
 import { useFeatureControl } from "../hooks/useFeatureControl";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
+import { IGraphConfig } from "../settings/IGraphConfig";
 import { EventChannel } from "../utils/eventChannel";
 import { metaControl } from "../utils/keyboard";
 

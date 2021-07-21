@@ -1,7 +1,7 @@
 import * as React from "react";
-import { IGraphConfig } from "../../contexts";
 import { ConnectingStateContext } from "../../contexts/ConnectingStateContext";
 import { IPoint, IViewport } from "../../models/geometry";
+import { IGraphConfig } from "../../settings/IGraphConfig";
 import { transformPoint } from "../../utils";
 import { EventChannel } from "../../utils/eventChannel";
 import { emptyLine, ILine } from "../Line";

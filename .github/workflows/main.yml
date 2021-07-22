@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    if: github.event.pull_request.draft == false
     name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:

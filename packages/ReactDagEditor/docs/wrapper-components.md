@@ -56,3 +56,42 @@ Permit the wrapped components to access the state via propsAPI or built-in hooks
   middleware?: IGraphReducer<NodeData, EdgeData, PortData, Action>;
   onStateChanged?: IDispatchCallback<NodeData, EdgeData, PortData>;
 ```
+
+## `<Item />`
+
+Usually people want a palette aside the main canvas to build their own workflow. To implement this, wrap `<item />` around the a palette item then it will be able to drag-to-add to the canvas.
+
+## `<Item />` props
+
+```typescript
+interface IItemProps {
+  /**
+   * Custom styling for the Item
+   */
+  style?: React.CSSProperties;
+  /**
+   * ClassName for the Item
+   */
+  className?: string;
+  /**
+   * The node model of type ICanvasNode
+   */
+  model: Partial<ICanvasNode>;
+  /**
+   * The shape of the node model
+   */
+  shape?: string;
+  /**
+   * Triggered just before drag the model node from the item panel
+   */
+  dragWillStart?(node: ICanvasNode): void;
+  /**
+   * Triggered just before the node will be added on the canvas
+   */
+  nodeWillAdd?(node: ICanvasNode): ICanvasNode;
+  /**
+   * Triggered just after the node added on the canvas
+   */
+  nodeDidAdd?(node: ICanvasNode): void;
+}
+```

@@ -1,14 +1,7 @@
 import * as React from "react";
 import { DefaultClipboard, defaultPort, DefaultStorage, line, rect } from "../built-in";
-import {
-  ContextMenuConfig,
-  ContextMenuConfigContext,
-  GraphConfig,
-  GraphConfigContext,
-  PropsAPIContext
-} from "../contexts";
+import { ContextMenuConfig, ContextMenuConfigContext, GraphConfig, GraphConfigContext } from "../contexts";
 import { useConst } from "../hooks/useConst";
-import { PropsAPI } from "../props-api/PropsAPI";
 import { Debug } from "../utils/debug";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 import { PanelContextProvider } from "./PanelContextProvider";
@@ -66,19 +59,17 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
     <ErrorBoundary renderOnError={handleError}>
       <GraphConfigContext.Provider value={React.useMemo(() => new GraphConfig(globalEventTarget), [globalEventTarget])}>
         <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
-          <PropsAPIContext.Provider value={useConst(() => new PropsAPI())}>
-            <ThemeProvider theme={theme} setTheme={setTheme}>
-              <PanelContextProvider>
-                <RegisterNode name="default" config={rect} />
-                <RegisterEdge name="default" config={line} />
-                <RegisterPort name="default" config={defaultPort} />
-                <RegisterClipboard clipboard={clipboard} />
-                <div style={props.style} className={props.className}>
-                  {props.children}
-                </div>
-              </PanelContextProvider>
-            </ThemeProvider>
-          </PropsAPIContext.Provider>
+          <ThemeProvider theme={theme} setTheme={setTheme}>
+            <PanelContextProvider>
+              <RegisterNode name="default" config={rect} />
+              <RegisterEdge name="default" config={line} />
+              <RegisterPort name="default" config={defaultPort} />
+              <RegisterClipboard clipboard={clipboard} />
+              <div style={props.style} className={props.className}>
+                {props.children}
+              </div>
+            </PanelContextProvider>
+          </ThemeProvider>
         </ContextMenuConfigContext.Provider>
       </GraphConfigContext.Provider>
     </ErrorBoundary>

@@ -1,4 +1,3 @@
-export * from "./usePropsAPI";
 export * from "./useContextMenuConfigContext";
 export * from "./useWheelHandler";
 export * from "./useClientRect";

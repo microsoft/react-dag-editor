@@ -8,20 +8,13 @@ import { GraphStateContext, GraphValueContext } from "../../contexts/GraphStateC
 import { defaultFeatures, GraphFeatures } from "../../Features";
 import { useConst } from "../../hooks/useConst";
 import { useGraphReducer } from "../../hooks/useGraphReducer";
-
-import { usePropsAPI } from "../../hooks/usePropsAPI";
 import { GraphCanvasEvent } from "../../models/event";
 import { IGap, ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
-import { IPropsAPI } from "../../props-api/IPropsAPI";
 import { isViewportComplete } from "../../utils";
 import { GraphController } from "../../controllers/GraphController";
 
 export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> {
-  /**
-   * The propsAPI reference.
-   */
-  propsAPIRef?: React.Ref<IPropsAPI<NodeData, EdgeData, PortData> | null>;
   /**
    * the initial graph data model.
    */
@@ -41,9 +34,6 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     features = defaultFeatures,
     canvasBoundaryPadding = EMPTY_GAP
   } = props;
-
-  const propsAPI = usePropsAPI<NodeData, EdgeData, PortData>();
-  React.useImperativeHandle(props.propsAPIRef, () => propsAPI, [propsAPI]);
 
   const graphConfig = React.useContext(GraphConfigContext);
 

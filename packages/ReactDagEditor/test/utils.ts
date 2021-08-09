@@ -114,12 +114,12 @@ export const mockClientRect = {
   left: 100
 };
 
-export const mockBoundingBox = () => {
+export const mockBoundingBox = (rect = mockClientRect) => {
   const old = Element.prototype.getBoundingClientRect;
   Element.prototype.getBoundingClientRect = function(): DOMRect {
     return {
       ...old.call(this),
-      ...mockClientRect
+      ...rect
     };
   };
   Element.prototype.releasePointerCapture = () => {

@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import * as React from "react";
 import { v4 as uuid } from "uuid";
-import { GraphConfigContext, IGraphConfig, PanelContext, PropsAPIContext } from "../../contexts";
+import { GraphConfigContext, IGraphConfig } from "../../contexts";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { VirtualizationRenderedContext } from "../../contexts/VirtualizationRenderedContext";
 import {
@@ -19,10 +19,7 @@ import { useEventChannel } from "../../hooks/useEventChannel";
 import { useFeatureControl } from "../../hooks/useFeatureControl";
 import { GraphCanvasEvent, GraphContextMenuEvent, ICanvasCommonEvent, ICanvasKeyboardEvent } from "../../models/event";
 import { IContainerRect, IViewport } from "../../models/geometry";
-import { GraphModel } from "../../models/GraphModel";
 import { GraphBehavior } from "../../models/state";
-import { IPropsAPI } from "../../props-api/IPropsAPI";
-import { IPropsAPIInstance } from "../../props-api/IPropsAPIInstance";
 import { isSelected, isSupported, isViewportComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";
@@ -49,45 +46,12 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
 ): React.ReactElement | null {
   const [focusedWithoutMouse, setFocusedWithoutMouse] = React.useState<boolean>(false);
 
-  const propsAPI = React.useContext(PropsAPIContext);
   const graphController = React.useContext(GraphControllerContext);
   const { state, dispatch } = useGraphState();
   const data = state.data.present;
   const { viewport } = state;
 
-  const panelContext = React.useContext(PanelContext);
-
   const { eventChannel } = graphController;
-
-  /**
-   * temporary workaround for a corner case
-   * useImperativeHandle sets ref to null before the next assigment
-   * results in bugs if propsAPI is called in effects
-   * @todo https://msdata.visualstudio.com/Vienna/_workitems/edit/1084909/
-   */
-  React.useLayoutEffect(() => {
-    (propsAPI.instanceRef as React.MutableRefObject<IPropsAPIInstance<NodeData, EdgeData, PortData> | null>).current = {
-      state,
-      dispatch,
-      getData: () => data as GraphModel<NodeData, EdgeData, PortData>,
-      svgRef,
-      graphConfig,
-      panelContext,
-      containerRectRef: rectRef,
-      graphId,
-      eventChannel
-    };
-  });
-  React.useLayoutEffect(() => {
-    return () => {
-      (propsAPI.instanceRef as React.MutableRefObject<IPropsAPIInstance<
-        NodeData,
-        EdgeData,
-        PortData
-      > | null>).current = null;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const graphId = useConst(() => `graph-${uuid()}`);
   const defaultSVGRef = React.useRef<SVGSVGElement>(null);
@@ -112,13 +76,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   graphConfig.defaultEdgeShape = defaultEdgeShape;
   graphConfig.defaultPortShape = defaultPortShape;
   graphConfig.defaultGroupShape = defaultGroupShape;
-
-  React.useImperativeHandle(
-    props.propsAPIRef,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    () => propsAPI as IPropsAPI<any, any, any>,
-    [propsAPI]
-  );
 
   const [curHoverNode, setCurHoverNode] = React.useState<string>();
   const [curHoverPort, setCurHoverPort] = React.useState<[string, string] | undefined>(undefined);

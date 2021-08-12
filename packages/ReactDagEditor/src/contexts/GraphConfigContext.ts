@@ -92,7 +92,6 @@ export interface IGraphConfig<NodeData = unknown, EdgeData = unknown, PortData =
   getPortConfigByName(name?: string): IPortConfig<NodeData, EdgeData, PortData> | undefined;
   registerClipboard(clipboard: IGraphClipBoard<NodeData, EdgeData, PortData>): void;
   getClipboard(): IGraphClipBoard<NodeData, EdgeData, PortData>;
-  getGlobalEventTarget(): Window | Element;
   registerGroup(name: string, config: IGroupConfig): void;
   getGroupConfigByName(name?: string): IGroupConfig | undefined;
 }
@@ -108,11 +107,6 @@ export class GraphConfig<NodeData = unknown, EdgeData = unknown, PortData = unkn
   private readonly portConfigMap = new Map<string, IPortConfig<NodeData, EdgeData, PortData>>();
   private readonly groupConfigMap = new Map<string, IGroupConfig>();
   private clipboard?: IGraphClipBoard<NodeData, EdgeData, PortData>;
-  private readonly globalEventTarget: Window | Element;
-
-  public constructor(globalEventTarget: Window | Element) {
-    this.globalEventTarget = globalEventTarget;
-  }
 
   public registerNode(name: string, config: IRectConfig<ICanvasNode>): void {
     this.nodeConfigMap.set(name, config);
@@ -148,10 +142,6 @@ export class GraphConfig<NodeData = unknown, EdgeData = unknown, PortData = unkn
     }
 
     return this.clipboard;
-  }
-
-  public getGlobalEventTarget(): Window | Element {
-    return this.globalEventTarget;
   }
 
   public registerGroup(name: string, config: IGroupConfig): void {
@@ -216,7 +206,6 @@ export const defaultGraphConfigContext: IGraphConfig = {
     );
   },
   getClipboard: () => (({} as unknown) as IGraphClipBoard),
-  getGlobalEventTarget: () => window,
   registerGroup: () => {
     console.warn(
       "registerGroup is NOOP now. Please check if you are using RegisterNode without ReactDagEditor rendered"

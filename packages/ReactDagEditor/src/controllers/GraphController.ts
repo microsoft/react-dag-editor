@@ -1,3 +1,4 @@
+import * as React from "react";
 import { IDispatch } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { IPoint } from "../models/geometry";
@@ -26,7 +27,8 @@ export class GraphController {
   public readonly eventChannel = new EventChannel();
   public state: IGraphState;
   public UNSAFE_latestState: IGraphState;
-  public readonly dispatch: IDispatch;
+  public dispatch: IDispatch;
+  public globalEventTargetRef?: React.RefObject<Window | Element>;
   private mouseClientPoint?: IPoint;
   private behavior = GraphBehavior.default;
 
@@ -62,5 +64,9 @@ export class GraphController {
 
   public getData(): GraphModel {
     return this.state.data.present;
+  }
+
+  public getGlobalEventTarget(): Element | Window {
+    return this.globalEventTargetRef?.current ?? window;
   }
 }

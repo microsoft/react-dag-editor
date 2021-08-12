@@ -207,7 +207,6 @@ export function useEventChannel({
             dragThreshold,
             containerRef,
             getPositionFromEvent: defaultGetPositionFromEvent,
-            graphConfig,
             eventChannel,
             graphController
           });
@@ -357,7 +356,6 @@ export function useEventChannel({
             dragThreshold,
             getPositionFromEvent,
             isClickNodeToSelectDisabled,
-            graphConfig,
             autoAlignThreshold,
             eventChannel,
             graphController
@@ -423,7 +421,7 @@ export function useEventChannel({
         return;
       }
       updateViewport();
-      const globalEventTarget = graphConfig.getGlobalEventTarget();
+      const globalEventTarget = graphController.getGlobalEventTarget();
       const dragging = new DragController<PointerEvent>(
         new PointerEventProvider(globalEventTarget, evt.pointerId),
         getPositionFromEvent
@@ -467,7 +465,6 @@ export function useEventChannel({
       edgeWillAdd,
       eventChannel,
       getPositionFromEvent,
-      graphConfig,
       graphController,
       isConnectDisabled,
       setFocusedWithoutMouse,

@@ -15,7 +15,7 @@ export interface IReactDagEditorProps extends IThemeProviderProps {
   /**
    * @default Window
    */
-  globalEventTarget?: Window | Element;
+  globalEventTargetRef?: React.RefObject<Window | Element>;
   /**
    * Additional css styles to apply to the container element.
    */
@@ -53,11 +53,11 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
 
   const handleError = props.handleError?.bind(null);
 
-  const { globalEventTarget = window, theme, setTheme } = props;
+  const { theme, setTheme } = props;
 
   return (
     <ErrorBoundary renderOnError={handleError}>
-      <GraphConfigContext.Provider value={React.useMemo(() => new GraphConfig(globalEventTarget), [globalEventTarget])}>
+      <GraphConfigContext.Provider value={React.useMemo(() => new GraphConfig(), [])}>
         <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
           <ThemeProvider theme={theme} setTheme={setTheme}>
             <PanelContextProvider>

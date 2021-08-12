@@ -243,7 +243,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
 
   const onMouseDown: React.MouseEventHandler = React.useCallback(
     evt => {
-      onStartDrag(evt.nativeEvent, new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()));
+      onStartDrag(evt.nativeEvent, new MouseMoveEventProvider(graphController.getGlobalEventTarget()));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [onStartDrag]

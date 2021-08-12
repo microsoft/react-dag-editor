@@ -58,9 +58,12 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
 
   const graphController = useConst(() => new GraphController(state, dispatch));
   graphController.UNSAFE_latestState = state;
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     graphController.state = state;
-  }, [graphController, state]);
+    graphController.dispatch = dispatch;
+    // TODO: fix the next line after state is lifted and everything is merged into top level `ReactDagEditor`
+    // graphController.globalEventTargetRef = globalEventTargetRef;
+  }, [dispatch, graphController, state]);
 
   const contextValue = React.useMemo(
     () => ({

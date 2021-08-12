@@ -142,7 +142,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
       };
 
       const drag = new DragController(
-        new PointerEventProvider(graphConfig.getGlobalEventTarget()),
+        new PointerEventProvider(graphController.getGlobalEventTarget()),
         defaultGetPositionFromEvent
       );
 

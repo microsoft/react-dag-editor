@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createUseStyles } from "react-jss";
-import { GraphConfigContext, IGraphConfig } from "../contexts/GraphConfigContext";
+import { GraphControllerContext } from "../contexts/GraphControllerContext";
 import { IDispatch } from "../contexts/GraphStateContext";
 import { ITheme } from "../contexts/ThemeContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers/DragController";
@@ -75,7 +75,7 @@ const useStyles = createUseStyles({
 export const Scrollbar: React.FC<IProps> = props => {
   const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewport } = props;
 
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphController = React.useContext(GraphControllerContext);
   const { theme } = useTheme();
 
   const scrollbarLayout = getScrollbarLayout(viewport, offsetLimit);
@@ -93,7 +93,7 @@ export const Scrollbar: React.FC<IProps> = props => {
     const { height: containerHeight } = viewport.rect;
 
     const dragging = new DragController(
-      new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
+      new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
       defaultGetPositionFromEvent
     );
     dragging.onMove = ({ dy: scrollbarDy, e: rawEvent }) => {
@@ -127,7 +127,7 @@ export const Scrollbar: React.FC<IProps> = props => {
     const { width: containerWidth } = viewport.rect;
 
     const dragging = new DragController(
-      new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
+      new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
       defaultGetPositionFromEvent
     );
     dragging.onMove = ({ dx: scrollbarDx, e: rawEvent }) => {

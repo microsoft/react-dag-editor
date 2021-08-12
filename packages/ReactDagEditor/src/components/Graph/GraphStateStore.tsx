@@ -62,7 +62,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     graphController.state = state;
     graphController.dispatch = dispatch;
     // TODO: fix the next line after state is lifted and everything is merged into top level `ReactDagEditor`
-    // graphController.globalEventTargetRef = globalEventTargetRef;
+    // graphController.getGlobalEventTargetImpl = getGlobalEventTarget;
   }, [dispatch, graphController, state]);
 
   const contextValue = React.useMemo(

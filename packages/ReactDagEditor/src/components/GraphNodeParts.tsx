@@ -1,7 +1,5 @@
 import * as React from "react";
-import { AutoZoomFitContext } from "../contexts/AutoZoomFitContext";
 import { VirtualizationContext } from "../contexts/VirtualizationContext";
-import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
 import { NodeModel } from "../models/NodeModel";
 import { isNodeEditing, isPointInRect } from "../utils";
 import { GraphNode, IGraphNodeCommonProps } from "./GraphNode";
@@ -16,24 +14,14 @@ export interface IGraphNodePartsProps
 }
 
 const GraphNodeParts = ({ node, isNodeResizable, ...commonProps }: IGraphNodePartsProps) => {
-  const shouldAutoZoomToFit = React.useContext(AutoZoomFitContext);
-  React.useLayoutEffect(() => {
-    shouldAutoZoomToFit.current = true;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [node.x, node.y]);
-
   const virtualization = React.useContext(VirtualizationContext);
   const { renderedArea, viewport } = virtualization;
-  const renderedContext = React.useContext(VirtualizationRenderedContext);
 
   const visible = isPointInRect(renderedArea, node);
 
   if (!visible) {
-    renderedContext.nodes.delete(node.id);
     return null;
   }
-
-  renderedContext.nodes.add(node.id);
 
   return (
     <>

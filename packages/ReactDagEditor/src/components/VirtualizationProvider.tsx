@@ -1,8 +1,9 @@
 import * as React from "react";
 import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
+import { useDeferredValue, useRenderedArea } from "../hooks";
 import { GraphCanvasEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
-import { getRenderedArea, getVisibleArea } from "../utils";
+import { getVisibleArea } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 
 export interface IVirtualizationProviderProps {
@@ -19,39 +20,22 @@ export const VirtualizationProvider: React.FunctionComponent<IVirtualizationProv
   eventChannel,
   children
 }) => {
-  const getVirtualizationContext = React.useCallback((): IVirtualizationContext => {
-    const renderedArea = isVirtualizationEnabled
-      ? getRenderedArea(viewport)
-      : {
-          minX: -Number.MAX_SAFE_INTEGER,
-          minY: -Number.MAX_SAFE_INTEGER,
-          maxX: Number.MAX_SAFE_INTEGER,
-          maxY: Number.MAX_SAFE_INTEGER
-        };
-    const visibleArea = getVisibleArea(viewport);
-    return {
+  const renderedArea = useRenderedArea(viewport, isVirtualizationEnabled);
+  const visibleArea = React.useMemo(() => getVisibleArea(viewport), [viewport]);
+
+  const contextValue = React.useMemo<IVirtualizationContext>(
+    () => ({
       viewport,
       renderedArea,
       visibleArea,
-      renderedNodes: new Set(),
       renderedEdges: new Set(),
+      renderedNodes: new Set(),
       timestamp: performance.now()
-    };
-  }, [isVirtualizationEnabled, viewport]);
+    }),
+    [viewport, renderedArea, visibleArea]
+  );
 
-  const [context, setContext] = React.useState<IVirtualizationContext>(getVirtualizationContext);
-  React.useMemo(() => {
-    context.timestamp = performance.now();
-  }, [context]);
-
-  React.useEffect(() => {
-    const timer = setTimeout(() => {
-      setContext(getVirtualizationContext);
-    }, virtualizationDelay);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [getVirtualizationContext, virtualizationDelay]);
+  const context = useDeferredValue(contextValue, { timeout: virtualizationDelay });
 
   const previousContextRef = React.useRef(context);
 

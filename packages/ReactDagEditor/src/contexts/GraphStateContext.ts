@@ -38,7 +38,7 @@ export const DEFAULT_NODE_MAX_VISIBLE_SIZE: IRectSize = {
 export const EMPTY_GRAPH_STATE: IGraphState = {
   settings: {
     features: defaultFeatures,
-    graphConfig: new GraphConfig(window),
+    graphConfig: new GraphConfig(),
     canvasBoundaryPadding: EMPTY_GAP,
     nodeMinVisibleSize: DEFAULT_NODE_MIN_VISIBLE_SIZE,
     nodeMaxVisibleSize: DEFAULT_NODE_MAX_VISIBLE_SIZE

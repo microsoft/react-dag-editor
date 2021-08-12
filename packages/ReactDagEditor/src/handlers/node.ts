@@ -1,6 +1,5 @@
 import * as React from "react";
 import { MouseEventButton } from "../common/constants";
-import { IGraphConfig } from "../contexts";
 import { DragNodeController, TGetPositionFromEvent } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
 import { GraphNodeEvent, IEvent } from "../models/event";
@@ -19,7 +18,6 @@ export interface INodePointerDownParams {
   dragThreshold: number;
   getPositionFromEvent: TGetPositionFromEvent;
   isClickNodeToSelectDisabled: boolean;
-  graphConfig: IGraphConfig;
   autoAlignThreshold: number;
   eventChannel: EventChannel;
   graphController: GraphController;
@@ -29,7 +27,6 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
   evt.preventDefault();
 
   const {
-    graphConfig,
     svgRef,
     isNodesDraggable,
     getPositionFromEvent,
@@ -59,7 +56,7 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
   const isMultiSelect = checkIsMultiSelect(evt);
 
   const dragging = new DragNodeController(
-    new PointerEventProvider(graphConfig.getGlobalEventTarget(), evt.pointerId),
+    new PointerEventProvider(graphController.getGlobalEventTarget(), evt.pointerId),
     getPositionFromEvent,
     rectRef
   );

@@ -26,7 +26,8 @@ export class GraphController {
   public readonly eventChannel = new EventChannel();
   public state: IGraphState;
   public UNSAFE_latestState: IGraphState;
-  public readonly dispatch: IDispatch;
+  public dispatch: IDispatch;
+  public getGlobalEventTargetImpl?: () => Window | Element | null | undefined;
   private mouseClientPoint?: IPoint;
   private behavior = GraphBehavior.default;
 
@@ -62,5 +63,9 @@ export class GraphController {
 
   public getData(): GraphModel {
     return this.state.data.present;
+  }
+
+  public getGlobalEventTarget(): Element | Window {
+    return this.getGlobalEventTargetImpl?.() ?? window;
   }
 }

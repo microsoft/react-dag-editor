@@ -1,6 +1,5 @@
 import * as React from "react";
 import { MouseEventButton } from "../common/constants";
-import { IGraphConfig } from "../contexts";
 import { DragController, IOnDragEnd } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { GraphCanvasEvent, ICanvasCommonEvent, IEvent } from "../models/event";
@@ -19,7 +18,6 @@ export interface IContainerMouseDownParams {
   dragThreshold: number;
   containerRef: React.RefObject<HTMLDivElement>;
   eventChannel: EventChannel;
-  graphConfig: IGraphConfig;
   graphController: GraphController;
   getPositionFromEvent(e: MouseEvent): IPoint;
 }
@@ -49,9 +47,9 @@ const withSimulatedClick = (params: IContainerMouseDownParams, type: ICanvasComm
 };
 
 const dragMultiSelect = (e: MouseEvent, params: IContainerMouseDownParams): void => {
-  const { getPositionFromEvent, graphConfig, eventChannel } = params;
+  const { getPositionFromEvent, graphController, eventChannel } = params;
   const dragging = new DragController(
-    new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
+    new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
     getPositionFromEvent
   );
   dragging.onMove = ({ dx, dy, e: rawEvent }) => {
@@ -73,10 +71,10 @@ const dragMultiSelect = (e: MouseEvent, params: IContainerMouseDownParams): void
 };
 
 const dragPan = (e: MouseEvent, params: IContainerMouseDownParams): void => {
-  const { getPositionFromEvent, graphConfig, eventChannel } = params;
+  const { getPositionFromEvent, graphController, eventChannel } = params;
 
   const dragging = new DragController(
-    new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
+    new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
     getPositionFromEvent
   );
   dragging.onMove = ({ dx, dy, e: rawEvent }) => {

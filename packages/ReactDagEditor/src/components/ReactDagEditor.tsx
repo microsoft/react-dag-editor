@@ -13,10 +13,6 @@ import { IThemeProviderProps, ThemeProvider } from "./ThemeProvider";
  */
 export interface IReactDagEditorProps extends IThemeProviderProps {
   /**
-   * @default Window
-   */
-  globalEventTarget?: Window | Element;
-  /**
    * Additional css styles to apply to the container element.
    */
   style?: React.CSSProperties;
@@ -33,6 +29,11 @@ export interface IReactDagEditorProps extends IThemeProviderProps {
    * Fired when ReactDagEditor catches an error. And the return value will be rendered.
    */
   handleError?(error?: Error, errorInfo?: React.ErrorInfo, children?: React.ReactNode): React.ReactChild;
+
+  /**
+   * Fallback to `window` if this is not provided or returns null or undefined
+   */
+  getGlobalEventTarget?(): Window | Element | null | undefined;
 }
 
 /**
@@ -53,11 +54,11 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
 
   const handleError = props.handleError?.bind(null);
 
-  const { globalEventTarget = window, theme, setTheme } = props;
+  const { theme, setTheme } = props;
 
   return (
     <ErrorBoundary renderOnError={handleError}>
-      <GraphConfigContext.Provider value={React.useMemo(() => new GraphConfig(globalEventTarget), [globalEventTarget])}>
+      <GraphConfigContext.Provider value={React.useMemo(() => new GraphConfig(), [])}>
         <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
           <ThemeProvider theme={theme} setTheme={setTheme}>
             <PanelContextProvider>

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { GraphConfigContext, IGraphConfig, ITheme } from "../contexts";
+import { GraphControllerContext } from "../contexts/GraphControllerContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { useTheme } from "../hooks";
@@ -46,6 +47,7 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
 
   const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
   const nodeConfig = getNodeConfig(node, graphConfig);
+  const graphController = React.useContext(GraphControllerContext);
 
   const minWidth = nodeConfig.getMinWidth(node);
   const minHeight = nodeConfig.getMinHeight(node);
@@ -66,7 +68,7 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
     });
 
     const drag = new DragController(
-      new MouseMoveEventProvider(graphConfig.getGlobalEventTarget()),
+      new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
       defaultGetPositionFromEvent
     );
     drag.onMove = ({ totalDX, totalDY, e: rawEvent }) => {

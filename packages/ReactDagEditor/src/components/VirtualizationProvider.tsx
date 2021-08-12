@@ -1,11 +1,8 @@
 import * as React from "react";
 import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
-import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
-import { useRenderedArea } from "../hooks";
-import { useDeferredValue } from "../hooks/useDeferredValue";
 import { GraphCanvasEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
-import { getVisibleArea } from "../utils";
+import { getRenderedArea, getVisibleArea } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 
 export interface IVirtualizationProviderProps {
@@ -22,38 +19,54 @@ export const VirtualizationProvider: React.FunctionComponent<IVirtualizationProv
   eventChannel,
   children
 }) => {
-  const renderedArea = useRenderedArea(viewport, isVirtualizationEnabled);
-  const visibleArea = React.useMemo(() => getVisibleArea(viewport), [viewport]);
-
-  const renderedContext = React.useContext(VirtualizationRenderedContext);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const performanceStartTime = React.useMemo(() => window.performance.now(), [renderedArea]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const renderedNodesCountBeforeRerender = renderedContext.nodes.size;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const renderedEdgesCountBeforeRerender = renderedContext.edges.size;
-
-  const context = React.useMemo<IVirtualizationContext>(
-    () => ({
+  const getVirtualizationContext = React.useCallback((): IVirtualizationContext => {
+    const renderedArea = isVirtualizationEnabled
+      ? getRenderedArea(viewport)
+      : {
+          minX: -Number.MAX_SAFE_INTEGER,
+          minY: -Number.MAX_SAFE_INTEGER,
+          maxX: Number.MAX_SAFE_INTEGER,
+          maxY: Number.MAX_SAFE_INTEGER
+        };
+    const visibleArea = getVisibleArea(viewport);
+    return {
       viewport,
       renderedArea,
-      visibleArea
-    }),
-    [viewport, renderedArea, visibleArea]
-  );
+      visibleArea,
+      renderedNodes: new Set(),
+      renderedEdges: new Set(),
+      timestamp: performance.now()
+    };
+  }, [isVirtualizationEnabled, viewport]);
 
-  const value = useDeferredValue(context, { timeout: virtualizationDelay });
+  const [context, setContext] = React.useState<IVirtualizationContext>(getVirtualizationContext);
+  React.useMemo(() => {
+    context.timestamp = performance.now();
+  }, [context]);
 
   React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setContext(getVirtualizationContext);
+    }, virtualizationDelay);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [getVirtualizationContext, virtualizationDelay]);
+
+  const previousContextRef = React.useRef(context);
+
+  React.useEffect(() => {
+    const previousContext = previousContextRef.current;
+    previousContextRef.current = context;
     eventChannel.trigger({
       type: GraphCanvasEvent.VirtualizationRecalculated,
-      performanceStartTime,
-      renderedNodesCountBeforeRerender,
-      renderedEdgesCountBeforeRerender
+      performanceStartTime: context.timestamp,
+      renderedNodes: previousContext.renderedNodes,
+      renderedEdges: previousContext.renderedEdges,
+      previousRenderedNodes: previousContext.renderedNodes,
+      previousRenderedEdges: previousContext.renderedEdges
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [context, eventChannel]);
 
-  return <VirtualizationContext.Provider value={value}>{children}</VirtualizationContext.Provider>;
+  return <VirtualizationContext.Provider value={context}>{children}</VirtualizationContext.Provider>;
 };

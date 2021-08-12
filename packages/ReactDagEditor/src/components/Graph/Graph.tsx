@@ -3,7 +3,6 @@ import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { GraphConfigContext, IGraphConfig } from "../../contexts";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
-import { VirtualizationRenderedContext } from "../../contexts/VirtualizationRenderedContext";
 import {
   useContainerRect,
   useGraphState,
@@ -194,15 +193,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     return <>{onBrowserNotSupported()}</>;
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const virtualizationRenderedContextValue = React.useMemo(
-    () => ({
-      nodes: new Set<string>(),
-      edges: new Set<string>()
-    }),
-    []
-  );
-
   const renderPortTooltip = () => {
     if (!curHoverPort || !isViewportComplete(state.viewport)) {
       return null;
@@ -268,33 +258,31 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
         <desc>{props.desc}</desc>
         <Transform matrix={viewport.transformMatrix}>
           {state.viewport.rect && (
-            <VirtualizationRenderedContext.Provider value={virtualizationRenderedContextValue}>
-              <VirtualizationProvider
-                viewport={state.viewport as Required<IViewport>}
-                isVirtualizationEnabled={isVirtualizationEnabled}
-                virtualizationDelay={virtualizationDelay}
+            <VirtualizationProvider
+              viewport={state.viewport as Required<IViewport>}
+              isVirtualizationEnabled={isVirtualizationEnabled}
+              virtualizationDelay={virtualizationDelay}
+              eventChannel={eventChannel}
+            >
+              <GraphGroupsRenderer data={data} groups={data.groups ?? constantEmptyArray()} />
+              <EdgeTree
+                graphId={graphId}
+                tree={data.edges}
+                data={data}
+                graphConfig={graphConfig}
                 eventChannel={eventChannel}
-              >
-                <GraphGroupsRenderer data={data} groups={data.groups ?? constantEmptyArray()} />
-                <EdgeTree
-                  graphId={graphId}
-                  tree={data.edges}
-                  data={data}
-                  graphConfig={graphConfig}
-                  eventChannel={eventChannel}
-                />
-                <NodeTree
-                  graphId={graphId}
-                  isNodeResizable={isNodeResizable}
-                  tree={data.nodes}
-                  data={data}
-                  isNodeEditDisabled={isNodeEditDisabled}
-                  eventChannel={eventChannel}
-                  getNodeAriaLabel={props.getNodeAriaLabel ?? defaultGetNodeAriaLabel}
-                  getPortAriaLabel={props.getPortAriaLabel ?? defaultGetPortAriaLabel}
-                />
-              </VirtualizationProvider>
-            </VirtualizationRenderedContext.Provider>
+              />
+              <NodeTree
+                graphId={graphId}
+                isNodeResizable={isNodeResizable}
+                tree={data.nodes}
+                data={data}
+                isNodeEditDisabled={isNodeEditDisabled}
+                eventChannel={eventChannel}
+                getNodeAriaLabel={props.getNodeAriaLabel ?? defaultGetNodeAriaLabel}
+                getPortAriaLabel={props.getPortAriaLabel ?? defaultGetPortAriaLabel}
+              />
+            </VirtualizationProvider>
           )}
           {state.dummyNodes.isVisible && (
             <AnimatingNodeGroup dummyNodes={state.dummyNodes} graphData={state.data.present} />

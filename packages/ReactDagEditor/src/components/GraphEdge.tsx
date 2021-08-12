@@ -1,7 +1,6 @@
 import * as React from "react";
 import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { VirtualizationContext } from "../contexts/VirtualizationContext";
-import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
 import { GraphEdgeState } from "../models/element-state";
@@ -61,7 +60,6 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
 
     const virtualization = React.useContext(VirtualizationContext);
     const { viewport, renderedArea, visibleArea } = virtualization;
-    const renderedContext = React.useContext(VirtualizationRenderedContext);
 
     const { theme } = useTheme();
 
@@ -75,11 +73,17 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
     };
 
     const isSourceRendered = isPointInRect(renderedArea, source);
-
     const isTargetRendered = isPointInRect(renderedArea, target);
+    const isVisible = isSourceRendered && isTargetRendered;
 
-    if (!isSourceRendered && !isTargetRendered) {
-      renderedContext.edges.delete(edge.id);
+    React.useLayoutEffect(() => {
+      if (isVisible) {
+        virtualization.renderedEdges.add(edge.id);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [virtualization]);
+
+    if (!isVisible) {
       return null;
     }
 
@@ -95,8 +99,6 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       Debug.warn(`Missing "render" method in edge config ${JSON.stringify(edge)}`);
       return null;
     }
-
-    renderedContext.edges.add(edge.id);
 
     const isSourceVisible = isPointInRect(visibleArea, source);
 

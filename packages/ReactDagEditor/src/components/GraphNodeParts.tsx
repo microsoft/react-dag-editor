@@ -17,9 +17,16 @@ const GraphNodeParts = ({ node, isNodeResizable, ...commonProps }: IGraphNodePar
   const virtualization = React.useContext(VirtualizationContext);
   const { renderedArea, viewport } = virtualization;
 
-  const visible = isPointInRect(renderedArea, node);
+  const isVisible = isPointInRect(renderedArea, node);
 
-  if (!visible) {
+  React.useLayoutEffect(() => {
+    if (isVisible) {
+      virtualization.renderedEdges.add(node.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [virtualization]);
+
+  if (!isVisible) {
     return null;
   }
 

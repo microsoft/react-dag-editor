@@ -31,7 +31,6 @@ import { GraphGroupsRenderer } from "../Group/GraphGroupsRenderer";
 import { NodeTooltips } from "../NodeTooltips";
 import { PortTooltips } from "../PortTooltips";
 import { Scrollbar } from "../Scrollbar";
-import { SidePanel } from "../SidePanel";
 import { Transform } from "../Transform";
 import { EdgeTree } from "../tree/EdgeTree";
 import { NodeTree } from "../tree/NodeTree";
@@ -111,7 +110,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     isNodeEditDisabled,
     isVerticalScrollDisabled,
     isHorizontalScrollDisabled,
-    isSidePanelEnabled,
     isA11yEnable,
     isCtrlKeyZoomEnable,
     isLimitBoundary,
@@ -322,7 +320,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
           />
         )}
       <GraphContextMenu state={state} onClick={onContextMenuClick} data-automation-id="context-menu-container" />
-      {isSidePanelEnabled && <SidePanel svgRef={svgRef} />}
       {renderNodeTooltip()}
       {renderPortTooltip()}
     </div>

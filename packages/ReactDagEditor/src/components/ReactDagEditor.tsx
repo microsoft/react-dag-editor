@@ -30,7 +30,10 @@ export interface IReactDagEditorProps extends IThemeProviderProps {
    */
   handleError?(error?: Error, errorInfo?: React.ErrorInfo, children?: React.ReactNode): React.ReactChild;
 
-  getGlobalEventTarget?(): Element | Window;
+  /**
+   * Fallback to `window` if this is not provided or returns null or undefined
+   */
+  getGlobalEventTarget?(): Window | Element | null | undefined;
 }
 
 /**

@@ -27,7 +27,7 @@ export class GraphController {
   public state: IGraphState;
   public UNSAFE_latestState: IGraphState;
   public dispatch: IDispatch;
-  public getGlobalEventTargetImpl?: () => Window | Element;
+  public getGlobalEventTargetImpl?: () => Window | Element | null | undefined;
   private mouseClientPoint?: IPoint;
   private behavior = GraphBehavior.default;
 

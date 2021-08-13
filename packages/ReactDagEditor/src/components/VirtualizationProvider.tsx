@@ -1,8 +1,6 @@
 import * as React from "react";
 import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
-import { VirtualizationRenderedContext } from "../contexts/VirtualizationRenderedContext";
-import { useRenderedArea } from "../hooks";
-import { useDeferredValue } from "../hooks/useDeferredValue";
+import { useDeferredValue, useRenderedArea } from "../hooks";
 import { GraphCanvasEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
 import { getVisibleArea } from "../utils";
@@ -25,35 +23,34 @@ export const VirtualizationProvider: React.FunctionComponent<IVirtualizationProv
   const renderedArea = useRenderedArea(viewport, isVirtualizationEnabled);
   const visibleArea = React.useMemo(() => getVisibleArea(viewport), [viewport]);
 
-  const renderedContext = React.useContext(VirtualizationRenderedContext);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const performanceStartTime = React.useMemo(() => window.performance.now(), [renderedArea]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const renderedNodesCountBeforeRerender = renderedContext.nodes.size;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const renderedEdgesCountBeforeRerender = renderedContext.edges.size;
-
-  const context = React.useMemo<IVirtualizationContext>(
+  const contextValue = React.useMemo<IVirtualizationContext>(
     () => ({
       viewport,
       renderedArea,
-      visibleArea
+      visibleArea,
+      renderedEdges: new Set(),
+      renderedNodes: new Set(),
+      timestamp: performance.now()
     }),
     [viewport, renderedArea, visibleArea]
   );
 
-  const value = useDeferredValue(context, { timeout: virtualizationDelay });
+  const context = useDeferredValue(contextValue, { timeout: virtualizationDelay });
+
+  const previousContextRef = React.useRef(context);
 
   React.useEffect(() => {
+    const previousContext = previousContextRef.current;
+    previousContextRef.current = context;
     eventChannel.trigger({
       type: GraphCanvasEvent.VirtualizationRecalculated,
-      performanceStartTime,
-      renderedNodesCountBeforeRerender,
-      renderedEdgesCountBeforeRerender
+      performanceStartTime: context.timestamp,
+      renderedNodes: previousContext.renderedNodes,
+      renderedEdges: previousContext.renderedEdges,
+      previousRenderedNodes: previousContext.renderedNodes,
+      previousRenderedEdges: previousContext.renderedEdges
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+  }, [context, eventChannel]);
 
-  return <VirtualizationContext.Provider value={value}>{children}</VirtualizationContext.Provider>;
+  return <VirtualizationContext.Provider value={context}>{children}</VirtualizationContext.Provider>;
 };

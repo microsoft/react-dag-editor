@@ -4,7 +4,6 @@ import { ContextMenuConfig, ContextMenuConfigContext, GraphConfig, GraphConfigCo
 import { useConst } from "../hooks/useConst";
 import { Debug } from "../utils/debug";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
-import { PanelContextProvider } from "./PanelContextProvider";
 import { RegisterClipboard, RegisterEdge, RegisterNode, RegisterPort } from "./RegisterComponent";
 import { IThemeProviderProps, ThemeProvider } from "./ThemeProvider";
 
@@ -61,15 +60,13 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
       <GraphConfigContext.Provider value={React.useMemo(() => new GraphConfig(), [])}>
         <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
           <ThemeProvider theme={theme} setTheme={setTheme}>
-            <PanelContextProvider>
-              <RegisterNode name="default" config={rect} />
-              <RegisterEdge name="default" config={line} />
-              <RegisterPort name="default" config={defaultPort} />
-              <RegisterClipboard clipboard={clipboard} />
-              <div style={props.style} className={props.className}>
-                {props.children}
-              </div>
-            </PanelContextProvider>
+            <RegisterNode name="default" config={rect} />
+            <RegisterEdge name="default" config={line} />
+            <RegisterPort name="default" config={defaultPort} />
+            <RegisterClipboard clipboard={clipboard} />
+            <div style={props.style} className={props.className}>
+              {props.children}
+            </div>
           </ThemeProvider>
         </ContextMenuConfigContext.Provider>
       </GraphConfigContext.Provider>

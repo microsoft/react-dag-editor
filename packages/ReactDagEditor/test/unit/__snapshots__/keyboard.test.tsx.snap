@@ -23,7 +23,7 @@ exports[`should copy and paste with edge 1`] = `
         <title />
         <desc />
         <g
-          transform="matrix(0.7151370679380215 0 0 0.7151370679380215 -123.71871275327771 -35.04171632896305)"
+          transform="matrix(1 0 0 1 0 0)"
         >
           <g />
           <g

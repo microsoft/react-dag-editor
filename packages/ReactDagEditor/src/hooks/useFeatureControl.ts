@@ -17,7 +17,6 @@ export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
     const isNodeEditDisabled = !features.has(GraphFeatures.editNode);
     const isVerticalScrollDisabled = !features.has(GraphFeatures.canvasVerticalScrollable);
     const isHorizontalScrollDisabled = !features.has(GraphFeatures.canvasHorizontalScrollable);
-    const isSidePanelEnabled = features.has(GraphFeatures.sidePanel);
     const isA11yEnable = features.has(GraphFeatures.a11yFeatures);
     const isAutoAlignEnable = features.has(GraphFeatures.autoAlign);
     const isCtrlKeyZoomEnable = features.has(GraphFeatures.ctrlKeyZoom);
@@ -42,7 +41,6 @@ export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
       isNodeEditDisabled,
       isVerticalScrollDisabled,
       isHorizontalScrollDisabled,
-      isSidePanelEnabled,
       isA11yEnable,
       isAutoAlignEnable,
       isCtrlKeyZoomEnable,

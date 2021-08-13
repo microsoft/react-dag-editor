@@ -6,6 +6,9 @@ export interface IVirtualizationContext {
   viewport: Required<IViewport>;
   visibleArea: IRectShape;
   renderedArea: IRectShape;
+  renderedNodes: Set<string>;
+  renderedEdges: Set<string>;
+  timestamp: number;
 }
 
 const EMPTY_RECT = {
@@ -38,5 +41,8 @@ export const VirtualizationContext = createContext<IVirtualizationContext>({
     minY: 0,
     maxX: 0,
     maxY: 0
-  }
+  },
+  renderedNodes: new Set(),
+  renderedEdges: new Set(),
+  timestamp: 0
 });

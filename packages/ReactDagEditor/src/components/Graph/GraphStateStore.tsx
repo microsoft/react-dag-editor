@@ -2,17 +2,14 @@ import * as React from "react";
 import { ConnectingState } from "../../ConnectingState";
 import { EMPTY_GAP, EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphReducer, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
-import { AutoZoomFitContext } from "../../contexts/AutoZoomFitContext";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { GraphStateContext, GraphValueContext } from "../../contexts/GraphStateContext";
+import { GraphController } from "../../controllers/GraphController";
 import { defaultFeatures, GraphFeatures } from "../../Features";
 import { useConst } from "../../hooks/useConst";
 import { useGraphReducer } from "../../hooks/useGraphReducer";
-import { GraphCanvasEvent } from "../../models/event";
 import { IGap, ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
-import { isViewportComplete } from "../../utils";
-import { GraphController } from "../../controllers/GraphController";
 
 export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> {
   /**
@@ -73,39 +70,19 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     [state, dispatch]
   );
 
-  /**
-   * GraphNode useLayoutEffect shouldAutoZoomToFit.current = true
-   * then useEffect here fired
-   */
-  const shouldAutoZoomToFit = React.useRef(false);
-  React.useEffect((): void => {
-    if (!isViewportComplete(state.viewport) || !shouldAutoZoomToFit.current) {
-      return;
-    }
-    shouldAutoZoomToFit.current = false;
-    if (!state.settings.features.has(GraphFeatures.autoFit)) {
-      return;
-    }
-    dispatch({
-      type: GraphCanvasEvent.ZoomToFit
-    });
-  });
-
   return (
     <GraphControllerContext.Provider value={graphController}>
-      <AutoZoomFitContext.Provider value={shouldAutoZoomToFit}>
-        <ConnectingState data={state.data.present} connectState={state.connectState}>
-          <GraphStateContext.Provider value={contextValue}>
-            <ViewportContext.Provider value={state.viewport}>
-              <GraphValueContext.Provider value={state.data.present}>
-                <AlignmentLinesContext.Provider value={state.alignmentLines}>
-                  {props.children}
-                </AlignmentLinesContext.Provider>
-              </GraphValueContext.Provider>
-            </ViewportContext.Provider>
-          </GraphStateContext.Provider>
-        </ConnectingState>
-      </AutoZoomFitContext.Provider>
+      <ConnectingState data={state.data.present} connectState={state.connectState}>
+        <GraphStateContext.Provider value={contextValue}>
+          <ViewportContext.Provider value={state.viewport}>
+            <GraphValueContext.Provider value={state.data.present}>
+              <AlignmentLinesContext.Provider value={state.alignmentLines}>
+                {props.children}
+              </AlignmentLinesContext.Provider>
+            </GraphValueContext.Provider>
+          </ViewportContext.Provider>
+        </GraphStateContext.Provider>
+      </ConnectingState>
     </GraphControllerContext.Provider>
   );
 }

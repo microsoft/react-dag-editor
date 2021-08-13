@@ -192,8 +192,10 @@ export interface ICanvasViewportResizeEvent {
 export interface ICanvasVirtualizationEvent {
   type: GraphCanvasEvent.VirtualizationRecalculated;
   performanceStartTime: number;
-  renderedNodesCountBeforeRerender: number;
-  renderedEdgesCountBeforeRerender: number;
+  renderedNodes: ReadonlySet<string>;
+  renderedEdges: ReadonlySet<string>;
+  previousRenderedNodes: ReadonlySet<string>;
+  previousRenderedEdges: ReadonlySet<string>;
 }
 
 export interface ICanvasNavigateEvent<NodeData = unknown, PortData = unknown> extends IEventBase<React.KeyboardEvent> {

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../../contexts";
 import { useTheme } from "../../hooks";
+import { useGraphConfig } from "../../hooks/context";
 import { ICanvasNode } from "../../models/node";
 import { getNodeConfig, getRectHeight, getRectWidth } from "../../utils";
 
@@ -10,10 +10,10 @@ interface IStaticNodeProps {
 
 const StaticNode: React.FunctionComponent<IStaticNodeProps> = props => {
   const { node } = props;
-  const graphConfigContext = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const { theme } = useTheme();
 
-  const nodeConfig = getNodeConfig(node, graphConfigContext);
+  const nodeConfig = getNodeConfig(node, graphConfig);
 
   if (nodeConfig.renderStatic) {
     return <g>{nodeConfig.renderStatic({ model: node, theme })}</g>;

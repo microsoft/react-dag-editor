@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IGraphConfig } from "../../contexts";
-import { ConnectingStateContext } from "../../contexts/ConnectingStateContext";
+import { useConnectingState } from "../../hooks/context";
 import { IPoint, IViewport } from "../../models/geometry";
 import { transformPoint } from "../../utils";
 import { EventChannel } from "../../utils/eventChannel";
@@ -17,7 +17,7 @@ interface IConnectingProps {
 
 export const Connecting = React.memo<IConnectingProps>(props => {
   const { styles, graphConfig, viewport, movingPoint } = props;
-  const { sourcePort, sourceNode, targetPort, targetNode } = React.useContext(ConnectingStateContext);
+  const { sourcePort, sourceNode, targetPort, targetNode } = useConnectingState();
   if (!sourceNode || !sourcePort) {
     return null;
   }

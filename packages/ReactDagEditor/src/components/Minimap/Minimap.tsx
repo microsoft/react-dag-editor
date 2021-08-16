@@ -1,12 +1,11 @@
 import * as React from "react";
-import { EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphConfig, ViewportContext } from "../../contexts";
-import { GraphControllerContext } from "../../contexts/GraphControllerContext";
-import { GraphStateContext } from "../../contexts/GraphStateContext";
+import { EMPTY_TRANSFORM_MATRIX } from "../../contexts";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
 import { TouchDragAdapter } from "../../controllers/TouchDragAdapter";
 import { MouseMoveEventProvider } from "../../event-provider/MouseMoveEventProvider";
 import { IEventProvider, IGlobalMoveEventTypes } from "../../event-provider/types";
-import { useMinimapRect, useTheme } from "../../hooks";
+import { useGraphData, useMinimapRect, useTheme } from "../../hooks";
+import { useGraphConfig, useGraphController, useViewport } from "../../hooks/context";
 import { useRefValue } from "../../hooks/useRefValue";
 import { GraphCanvasEvent, GraphMinimapEvent } from "../../models/event";
 import { ITransformMatrix } from "../../models/geometry";
@@ -62,18 +61,17 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
     renderArrow = (arrowDeg: number) => undefined
   } = props;
 
-  const graphViewport = React.useContext(ViewportContext);
-  const graphController = React.useContext(GraphControllerContext);
+  const graphViewport = useViewport();
+  const graphController = useGraphController();
   const { theme } = useTheme();
-  const { data: dataState } = React.useContext(GraphStateContext).state;
-  const data = dataState.present;
+  const data = useGraphData();
   const minimapContainerStyle: React.CSSProperties = {
     background: theme.minimapBackground,
     ...props.style
   };
 
   const svgRef = React.useRef<SVGSVGElement>(null);
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
 
   const rect = useMinimapRect(svgRef);
   const rectRef = useRefValue(rect);

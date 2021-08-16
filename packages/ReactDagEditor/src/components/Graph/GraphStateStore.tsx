@@ -1,12 +1,13 @@
 import * as React from "react";
 import { ConnectingState } from "../../ConnectingState";
-import { EMPTY_GAP, EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphReducer, ViewportContext } from "../../contexts";
+import { EMPTY_GAP, EMPTY_TRANSFORM_MATRIX, IGraphReducer, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { GraphStateContext, GraphValueContext } from "../../contexts/GraphStateContext";
 import { GraphController } from "../../controllers/GraphController";
 import { defaultFeatures, GraphFeatures } from "../../Features";
 import { useConst } from "../../hooks/useConst";
+import { useGraphConfig } from "../../hooks/context";
 import { useGraphReducer } from "../../hooks/useGraphReducer";
 import { IGap, ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
@@ -32,7 +33,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     canvasBoundaryPadding = EMPTY_GAP
   } = props;
 
-  const graphConfig = React.useContext(GraphConfigContext);
+  const graphConfig = useGraphConfig();
 
   const [state, dispatch] = useGraphReducer(
     {

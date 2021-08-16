@@ -1,5 +1,5 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
+import { useGraphConfig } from "../hooks/context";
 import { GraphNodeState } from "../models/element-state";
 import { useTheme } from "../hooks";
 import { IViewport } from "../models/geometry";
@@ -13,7 +13,7 @@ interface IProps {
 
 export const NodeTooltips: React.FunctionComponent<IProps> = props => {
   const { node, viewport } = props;
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const { theme } = useTheme();
 
   if (!node) {

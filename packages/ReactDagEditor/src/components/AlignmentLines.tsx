@@ -1,5 +1,5 @@
 import * as React from "react";
-import { AlignmentLinesContext } from "../contexts/AlignmentLinesContext";
+import { useAlignmentLines } from "../hooks/context";
 import { Line } from "./Line";
 
 interface IProps {
@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const AlignmentLines = React.memo<IProps>(({ style }) => {
-  const alignmentLines = React.useContext(AlignmentLinesContext);
+  const alignmentLines = useAlignmentLines();
   return (
     <>
       {alignmentLines.map((l, index) => {

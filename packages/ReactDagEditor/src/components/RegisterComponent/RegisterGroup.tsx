@@ -1,5 +1,6 @@
 import * as React from "react";
-import { GraphConfigContext, IGroupConfig } from "../../contexts";
+import { IGroupConfig } from "../../contexts";
+import { useGraphConfig } from "../../hooks/context";
 
 export interface IRegisterGroupProps {
   /**
@@ -19,7 +20,7 @@ export interface IRegisterGroupProps {
  * @param props
  */
 export const RegisterGroup: React.FunctionComponent<IRegisterGroupProps> = props => {
-  const graphConfig = React.useContext(GraphConfigContext);
+  const graphConfig = useGraphConfig();
 
   graphConfig.registerGroup(props.name, props.config);
 

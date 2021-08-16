@@ -1,6 +1,6 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
+import { useGraphConfig } from "../hooks/context";
 import { IViewport } from "../models/geometry";
 import { ICanvasPort } from "../models/port";
 import { GraphPortState } from "../models/element-state";
@@ -17,7 +17,7 @@ interface IPortTooltipsProps {
 }
 
 export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = props => {
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const { theme } = useTheme();
 
   const { parentNode, port, viewport } = props;

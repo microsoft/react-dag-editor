@@ -1,7 +1,7 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
 import { useTheme } from "../hooks";
+import { useGraphConfig } from "../hooks/context";
 import { GraphPortEvent } from "../models/event";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
@@ -20,7 +20,7 @@ export interface IGraphOneNodePortsProps
 
 export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps> = props => {
   const { data, node, getPortAriaLabel, eventChannel, viewport, graphId } = props;
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const { theme } = useTheme();
 
   const ports = node.ports;

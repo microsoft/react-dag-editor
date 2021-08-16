@@ -3,11 +3,11 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { v4 as uuid } from "uuid";
 import { MouseEventButton } from "../../common/constants";
-import { emptyNodeConfig, GraphConfigContext, IRectConfig } from "../../contexts";
-import { GraphControllerContext } from "../../contexts/GraphControllerContext";
+import { emptyNodeConfig, IRectConfig } from "../../contexts";
 import { defaultGetPositionFromEvent, DragController } from "../../controllers";
 import { PointerEventProvider } from "../../event-provider/PointerEventProvider";
 import { GraphFeatures } from "../../Features";
+import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { useRefValue } from "../../hooks/useRefValue";
 import { GraphCanvasEvent } from "../../models/event";
 import { IContainerRect, IPoint, ITransformMatrix } from "../../models/geometry";
@@ -108,8 +108,8 @@ const adjustPosition = <T extends { width?: number; height?: number }>(
  * @returns
  */
 export const Item: React.FunctionComponent<IItemProps> = props => {
-  const graphConfig = React.useContext(GraphConfigContext);
-  const graphController = React.useContext(GraphControllerContext);
+  const graphConfig = useGraphConfig();
+  const graphController = useGraphController();
   const [workingModel, setWorkingModel] = React.useState<ICanvasNode | null>(null);
   const nextNodeRef = useRefValue(workingModel);
   const svgRef = React.useRef<SVGSVGElement>(null);

@@ -1,9 +1,9 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig, ITheme } from "../contexts";
-import { GraphControllerContext } from "../contexts/GraphControllerContext";
+import { ITheme } from "../contexts";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { useTheme } from "../hooks";
+import { useGraphConfig, useGraphController } from "../hooks/context";
 import { GraphNodeEvent } from "../models/event";
 import { INodeGeometryDelta } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
@@ -45,9 +45,9 @@ const ResizePoint: React.FunctionComponent<IResizePointProps> = ({ x, y, cursor,
 export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPointsProps> = props => {
   const { node, eventChannel } = props;
 
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const nodeConfig = getNodeConfig(node, graphConfig);
-  const graphController = React.useContext(GraphControllerContext);
+  const graphController = useGraphController();
 
   const minWidth = nodeConfig.getMinWidth(node);
   const minHeight = nodeConfig.getMinHeight(node);

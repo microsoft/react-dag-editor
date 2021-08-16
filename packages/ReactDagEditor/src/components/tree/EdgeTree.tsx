@@ -1,6 +1,7 @@
 import * as React from "react";
 import { HashMap } from "../../collections";
 import { BitmapIndexedNode, HashCollisionNode, NodeType } from "../../collections/champ";
+import { useGraphConfig } from "../../hooks/context";
 import { EdgeModel } from "../../models/EdgeModel";
 import { GraphEdge, IGraphEdgeCommonProps } from "../GraphEdge";
 
@@ -24,7 +25,8 @@ function compareEqual(
 }
 
 const EdgeChampNodeRender = React.memo<IEdgeChampNodeRenderProps>(props => {
-  const { node, data, graphConfig, ...others } = props;
+  const { node, data, ...others } = props;
+  const graphConfig = useGraphConfig();
   const values: React.ReactNode[] = [];
   const valueCount = node.valueCount;
   for (let i = 0; i < valueCount; i += 1) {
@@ -32,17 +34,7 @@ const EdgeChampNodeRender = React.memo<IEdgeChampNodeRenderProps>(props => {
     const source = data.nodes.get(it.source)?.getPortPosition(it.sourcePortId, graphConfig);
     const target = data.nodes.get(it.target)?.getPortPosition(it.targetPortId, graphConfig);
     if (source && target) {
-      values.push(
-        <GraphEdge
-          {...others}
-          key={it.id}
-          data={data}
-          graphConfig={graphConfig}
-          edge={it}
-          source={source}
-          target={target}
-        />
-      );
+      values.push(<GraphEdge {...others} key={it.id} data={data} edge={it} source={source} target={target} />);
     }
   }
 
@@ -68,24 +60,15 @@ const EdgeChampNodeRender = React.memo<IEdgeChampNodeRenderProps>(props => {
 EdgeChampNodeRender.displayName = "EdgeChampNodeRender";
 
 const EdgeHashCollisionNodeRender = React.memo<IEdgeHashCollisionNodeRenderProps>(props => {
-  const { data, node, graphConfig, ...others } = props;
+  const { data, node, ...others } = props;
+  const graphConfig = useGraphConfig();
   return (
     <>
       {node.values.map(edge => {
         const source = data.nodes.get(edge.source)?.getPortPosition(edge.sourcePortId, graphConfig);
         const target = data.nodes.get(edge.target)?.getPortPosition(edge.targetPortId, graphConfig);
         if (source && target) {
-          return (
-            <GraphEdge
-              {...others}
-              key={edge.id}
-              data={data}
-              graphConfig={graphConfig}
-              edge={edge}
-              source={source}
-              target={target}
-            />
-          );
+          return <GraphEdge {...others} key={edge.id} data={data} edge={edge} source={source} target={target} />;
         } else {
           return null;
         }

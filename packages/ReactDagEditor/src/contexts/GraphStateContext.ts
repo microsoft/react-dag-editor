@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DEFAULT_AUTO_ALIGN_THRESHOLD, NODE_MAX_VISIBLE_LENGTH, NODE_MIN_VISIBLE_LENGTH } from "../common/constants";
+import { NODE_MAX_VISIBLE_LENGTH, NODE_MIN_VISIBLE_LENGTH } from "../common/constants";
 import { emptyDummyNodes } from "../components/dummyNodes";
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
 import { defaultFeatures } from "../Features";
@@ -40,8 +40,7 @@ export const DEFAULT_GRAPH_SETTINGS: IGraphSettings = {
   graphConfig: GraphConfigBuilder.default().build(),
   canvasBoundaryPadding: EMPTY_GAP,
   nodeMinVisibleSize: DEFAULT_NODE_MIN_VISIBLE_SIZE,
-  nodeMaxVisibleSize: DEFAULT_NODE_MAX_VISIBLE_SIZE,
-  autoAlignThreshold: DEFAULT_AUTO_ALIGN_THRESHOLD
+  nodeMaxVisibleSize: DEFAULT_NODE_MAX_VISIBLE_SIZE
 };
 
 export const EMPTY_GRAPH_STATE: IGraphState = {

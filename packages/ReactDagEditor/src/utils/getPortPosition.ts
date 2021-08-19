@@ -1,14 +1,14 @@
-import { IGraphConfig, IRectConfig } from "../contexts";
-import { IPoint } from "../models/geometry";
-import { ICanvasNode } from "../models/node";
-import { ICanvasPort } from "../models/port";
+import type { IGraphConfig, INodeConfig } from "../models/config/types";
+import type { IPoint } from "../models/geometry";
+import type { ICanvasNode } from "../models/node";
+import type { ICanvasPort } from "../models/port";
 import { Debug } from "./debug";
 import { getNodeConfig } from "./getNodeConfig";
 import { getRectHeight, getRectWidth } from "./layout";
 
-export const getPortPosition = (node: ICanvasNode, port: ICanvasPort, nodeConfig: IRectConfig<ICanvasNode>): IPoint => {
-  const width = getRectWidth<ICanvasNode>(nodeConfig, node);
-  const height = getRectHeight<ICanvasNode>(nodeConfig, node);
+export const getPortPosition = (node: ICanvasNode, port: ICanvasPort, nodeConfig: INodeConfig): IPoint => {
+  const width = getRectWidth(nodeConfig, node);
+  const height = getRectHeight(nodeConfig, node);
 
   const xOffset = port.position ? port.position[0] * width : width * 0.5;
   const x = node.x + xOffset;
@@ -27,6 +27,10 @@ export const getPortPositionByPortId = (
   graphConfig: IGraphConfig
 ): IPoint | undefined => {
   const nodeConfig = getNodeConfig(node, graphConfig);
+
+  if (!nodeConfig) {
+    return undefined;
+  }
 
   const ports = node.ports || [];
 

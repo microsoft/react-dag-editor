@@ -23,8 +23,8 @@ export interface INodeConfig<NodeData = unknown, PortData = unknown> {
   renderDummy?(rect: ICanvasNode<NodeData, PortData>, theme: ITheme): React.ReactNode;
   renderStatic?(args: Omit<INodeDrawArgs<NodeData, PortData>, "viewport">): React.ReactNode;
   getStyle?(rect: ICanvasNode<NodeData, PortData>, theme: ITheme): React.CSSProperties;
-  getMinWidth(rect: ICanvasNode<NodeData, PortData>): number;
-  getMinHeight(rect: ICanvasNode<NodeData, PortData>): number;
+  getMinWidth(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
+  getMinHeight(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
   renderTooltips?(args: INodeDrawArgs<NodeData, PortData>): React.ReactNode;
 }
 

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { IPortConfig, IPortDrawArgs, ITheme } from "../contexts";
-import { ICanvasNode } from "../models/node";
-import { ICanvasPort } from "../models/port";
+import type { ITheme } from "../contexts";
+import type { ICanvasNode } from "../models/node";
+import type { ICanvasPort } from "../models/port";
 import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { hasState } from "../utils";
+import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
 
 class DefaultPort implements IPortConfig {
   public getStyle(
@@ -39,23 +40,10 @@ class DefaultPort implements IPortConfig {
   public render(args: IPortDrawArgs): React.ReactNode {
     const { model: port, data, parentNode } = args;
 
-    const connectedAsSource = data.isPortConnectedAsSource(
-      parentNode.id,
-      port.id
-    );
-    const connectedAsTarget = data.isPortConnectedAsTarget(
-      parentNode.id,
-      port.id
-    );
+    const connectedAsSource = data.isPortConnectedAsSource(parentNode.id, port.id);
+    const connectedAsTarget = data.isPortConnectedAsTarget(parentNode.id, port.id);
 
-    const style = this.getStyle(
-      port,
-      parentNode,
-      data,
-      args.theme,
-      connectedAsSource,
-      connectedAsTarget
-    );
+    const style = this.getStyle(port, parentNode, data, args.theme, connectedAsSource, connectedAsTarget);
 
     const { x, y } = args;
     const polygonPoints = `${x - 5} ${y}, ${x + 7} ${y}, ${x + 1} ${y + 8}`;
@@ -65,13 +53,7 @@ class DefaultPort implements IPortConfig {
         {connectedAsTarget ? (
           <polygon points={polygonPoints} style={style} />
         ) : (
-          <circle
-            key={`${args.parentNode.id}-${args.model.id}`}
-            r={5}
-            cx={x}
-            cy={y}
-            style={style}
-          />
+          <circle key={`${args.parentNode.id}-${args.model.id}`} r={5} cx={x} cy={y} style={style} />
         )}
       </>
     );

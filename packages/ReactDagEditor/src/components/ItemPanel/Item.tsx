@@ -3,12 +3,12 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { v4 as uuid } from "uuid";
 import { MouseEventButton } from "../../common/constants";
-import { emptyNodeConfig, IRectConfig } from "../../contexts";
 import { defaultGetPositionFromEvent, DragController } from "../../controllers";
 import { PointerEventProvider } from "../../event-provider/PointerEventProvider";
 import { GraphFeatures } from "../../Features";
 import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { useRefValue } from "../../hooks/useRefValue";
+import { INodeConfig } from "../../models/config/types";
 import { GraphCanvasEvent } from "../../models/event";
 import { IContainerRect, IPoint, ITransformMatrix } from "../../models/geometry";
 import { ICanvasNode } from "../../models/node";
@@ -83,13 +83,13 @@ const adjustedClientPoint = (
 };
 
 // adjust position to the middle of the node, and with the correct zoom/pan
-const adjustPosition = <T extends { width?: number; height?: number }>(
+const adjustPosition = (
   clientX: number,
   clientY: number,
   rect: IContainerRect | undefined,
   transformMatrix: ITransformMatrix,
-  node: T,
-  nodeConfig: IRectConfig<T>
+  node: Partial<ICanvasNode>,
+  nodeConfig: INodeConfig | undefined
 ): IPoint => {
   const rectWidth = getRectWidth(nodeConfig, node);
   const rectHeight = getRectHeight(nodeConfig, node);
@@ -126,7 +126,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
         return;
       }
       const shape = props.shape || model.shape;
-      const nodeConfig = graphConfig.getNodeConfigByName(shape) ?? emptyNodeConfig;
+      const nodeConfig = graphConfig.getNodeConfigByName(shape);
 
       const node: ICanvasNode = {
         ...deepClone(model),

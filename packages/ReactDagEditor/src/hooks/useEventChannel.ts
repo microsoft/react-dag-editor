@@ -80,8 +80,7 @@ export function useEventChannel({
     autoAlignThreshold = DEFAULT_AUTO_ALIGN_THRESHOLD,
     getPositionFromEvent = defaultGetPositionFromEvent,
     canvasMouseMode,
-    edgeWillAdd,
-    defaultEdgeShape = "default"
+    edgeWillAdd
   } = props;
   const {
     isNodesDraggable,
@@ -439,7 +438,6 @@ export function useEventChannel({
           type: GraphEdgeEvent.ConnectEnd,
           rawEvent: e,
           edgeWillAdd,
-          defaultEdgeShape,
           isCancel: false
         });
         graphController.pointerId = null;
@@ -461,7 +459,6 @@ export function useEventChannel({
       dragging.start(evt.nativeEvent);
     },
     [
-      defaultEdgeShape,
       edgeWillAdd,
       eventChannel,
       getPositionFromEvent,
@@ -579,7 +576,6 @@ export function useEventChannel({
           type: GraphEdgeEvent.ConnectEnd,
           rawEvent: evt.nativeEvent,
           edgeWillAdd,
-          defaultEdgeShape,
           isCancel: false
         });
         break;
@@ -618,7 +614,6 @@ export function useEventChannel({
           eventChannel.trigger({
             type: GraphEdgeEvent.ConnectEnd,
             rawEvent: (event.rawEvent as React.FocusEvent).nativeEvent,
-            defaultEdgeShape,
             edgeWillAdd,
             isCancel: true
           });

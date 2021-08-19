@@ -1,8 +1,8 @@
-import { IContainerRect, IGap, ITransformMatrix } from "../models/geometry";
-import { getClientDeltaByPointDelta } from "../utils/transformMatrix";
-import { GraphModel } from "../models/GraphModel";
+import type { IGraphConfig } from "../models/config/types";
+import type { IContainerRect, IGap, ITransformMatrix } from "../models/geometry";
+import type { GraphModel } from "../models/GraphModel";
 import { memoize } from "../utils/memoize";
-import { IGraphConfig } from "../contexts/GraphConfigContext";
+import { getClientDeltaByPointDelta } from "../utils/transformMatrix";
 import { getContentArea as getContentAreaRaw } from "./viewport";
 
 export interface IOffsetLimit {

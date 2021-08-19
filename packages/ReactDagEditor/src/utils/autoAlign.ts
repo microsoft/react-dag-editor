@@ -1,8 +1,8 @@
 import { v4 as uuid } from "uuid";
-import { ILine } from "../components/Line";
-import { IGraphConfig } from "../contexts";
-import { IDummyNode } from "../models/dummy-node";
-import { ICanvasNode } from "../models/node";
+import type { ILine } from "../components/Line";
+import type { IGraphConfig } from "../models/config/types";
+import type { IDummyNode } from "../models/dummy-node";
+import type { ICanvasNode } from "../models/node";
 import { getNodeSize } from "./layout";
 
 interface IClosestNodes {

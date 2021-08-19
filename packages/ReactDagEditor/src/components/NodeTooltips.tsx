@@ -2,8 +2,8 @@ import * as React from "react";
 import { useGraphConfig } from "../hooks/context";
 import { GraphNodeState } from "../models/element-state";
 import { useTheme } from "../hooks";
-import { IViewport } from "../models/geometry";
-import { NodeModel } from "../models/NodeModel";
+import type { IViewport } from "../models/geometry";
+import type { NodeModel } from "../models/NodeModel";
 import { getNodeConfig, hasState } from "../utils";
 
 interface IProps {
@@ -26,7 +26,7 @@ export const NodeTooltips: React.FunctionComponent<IProps> = props => {
 
   const nodeConfig = getNodeConfig(node, graphConfig);
 
-  if (!nodeConfig.renderTooltips) {
+  if (!nodeConfig?.renderTooltips) {
     return null;
   }
 

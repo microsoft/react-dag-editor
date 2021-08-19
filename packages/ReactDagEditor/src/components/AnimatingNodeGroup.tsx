@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useTheme } from "../hooks";
 import { useGraphConfig } from "../hooks/context";
-import { IDummyNodes } from "../models/dummy-node";
-import { GraphModel } from "../models/GraphModel";
+import type { IDummyNodes } from "../models/dummy-node";
+import type { GraphModel } from "../models/GraphModel";
 import { getNodeConfig } from "../utils";
 
 interface IAnimatingNodeGroup {
@@ -30,7 +30,7 @@ export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = 
         const height = dummyNode.height + dHeight;
         const nodeConfig = getNodeConfig(node, graphConfig);
 
-        if (nodeConfig.renderDummy) {
+        if (nodeConfig?.renderDummy) {
           return nodeConfig.renderDummy(
             {
               ...node.inner,

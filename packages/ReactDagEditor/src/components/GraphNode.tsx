@@ -57,7 +57,7 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
 
   const automationId = node.automationId ?? getNodeAutomationId(node);
 
-  if (!nodeConfig.render) {
+  if (!nodeConfig?.render) {
     Debug.warn(`Missing "render" method in node config ${shape}`);
 
     return null;

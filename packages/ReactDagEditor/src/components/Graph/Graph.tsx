@@ -11,12 +11,12 @@ import {
   useUpdateViewportCallback,
   useWheelHandler
 } from "../../hooks";
+import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { useConst } from "../../hooks/useConst";
 import { useEventChannel } from "../../hooks/useEventChannel";
 import { useFeatureControl } from "../../hooks/useFeatureControl";
-import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { GraphCanvasEvent, GraphContextMenuEvent, ICanvasCommonEvent, ICanvasKeyboardEvent } from "../../models/event";
-import { IContainerRect, IViewport } from "../../models/geometry";
+import type { IContainerRect, IViewport } from "../../models/geometry";
 import { GraphBehavior } from "../../models/state";
 import { isSelected, isSupported, isViewportComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
@@ -35,7 +35,7 @@ import { EdgeTree } from "../tree/EdgeTree";
 import { NodeTree } from "../tree/NodeTree";
 import { VirtualizationProvider } from "../VirtualizationProvider";
 import { getGraphStyles } from "./Graph.styles";
-import { IGraphProps } from "./IGraphProps";
+import type { IGraphProps } from "./IGraphProps";
 import { SelectBox } from "./SelectBox";
 
 export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown>(
@@ -54,10 +54,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const defaultSVGRef = React.useRef<SVGSVGElement>(null);
 
   const {
-    defaultNodeShape = "default",
-    defaultEdgeShape = "default",
-    defaultPortShape = "default",
-    defaultGroupShape = "default",
     focusCanvasAccessKey = "f",
     zoomSensitivity = 0.1,
     scrollSensitivity = 0.5,
@@ -68,11 +64,6 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const { theme } = useTheme();
   const graphConfig = useGraphConfig();
   const featureControl = useFeatureControl(state.settings.features);
-
-  graphConfig.defaultNodeShape = defaultNodeShape;
-  graphConfig.defaultEdgeShape = defaultEdgeShape;
-  graphConfig.defaultPortShape = defaultPortShape;
-  graphConfig.defaultGroupShape = defaultGroupShape;
 
   const [curHoverNode, setCurHoverNode] = React.useState<string>();
   const [curHoverPort, setCurHoverPort] = React.useState<[string, string] | undefined>(undefined);

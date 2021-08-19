@@ -1,6 +1,7 @@
-import { IGraphConfig, IGraphReactReducer } from "../contexts";
+import type { IGraphReactReducer } from "../contexts";
 import { EMPTY_TRANSFORM_MATRIX } from "../contexts/GraphStateContext";
 import { GraphFeatures } from "../Features";
+import type { IGraphConfig } from "../models/config/types";
 import {
   GraphCanvasEvent,
   GraphMinimapEvent,
@@ -9,9 +10,9 @@ import {
   ICanvasZoomToFitEvent,
   IEvent
 } from "../models/event";
-import { IContainerRect, IPoint, IViewport } from "../models/geometry";
+import type { IContainerRect, IPoint, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
-import { IGraphSettings } from "../models/state";
+import type { IGraphSettings } from "../models/state";
 import {
   clamp,
   getGroupRect,

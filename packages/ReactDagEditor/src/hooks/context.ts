@@ -3,11 +3,12 @@ import type { ILine } from "../components/Line";
 import { ViewportContext } from "../contexts";
 import { AlignmentLinesContext } from "../contexts/AlignmentLinesContext";
 import { ConnectingStateContext, IConnectingStateContext } from "../contexts/ConnectingStateContext";
-import { GraphConfigContext, IGraphConfig } from "../contexts/GraphConfigContext";
+import { GraphConfigContext } from "../contexts/GraphConfigContext";
 import { GraphControllerContext } from "../contexts/GraphControllerContext";
 import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
 import type { GraphController } from "../controllers/GraphController";
-import { IViewport } from "../models/geometry";
+import type { IGraphConfig } from "../models/config/types";
+import type { IViewport } from "../models/geometry";
 
 export function useGraphConfig(): IGraphConfig {
   return useContext(GraphConfigContext);

@@ -1,7 +1,6 @@
 import * as React from "react";
-import { ContextMenuConfig, ContextMenuConfigContext, GraphConfigContext } from "../contexts";
+import { ContextMenuConfig, ContextMenuConfigContext } from "../contexts";
 import { useConst } from "../hooks/useConst";
-import { GraphConfigBuilder } from "../models/config/GraphConfigBuilder";
 import { Debug } from "../utils/debug";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 import { IThemeProviderProps, ThemeProvider } from "./ThemeProvider";
@@ -53,15 +52,13 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
 
   return (
     <ErrorBoundary renderOnError={handleError}>
-      <GraphConfigContext.Provider value={React.useMemo(() => GraphConfigBuilder.default().build(), [])}>
-        <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
-          <ThemeProvider theme={theme} setTheme={setTheme}>
-            <div style={props.style} className={props.className}>
-              {props.children}
-            </div>
-          </ThemeProvider>
-        </ContextMenuConfigContext.Provider>
-      </GraphConfigContext.Provider>
+      <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
+        <ThemeProvider theme={theme} setTheme={setTheme}>
+          <div style={props.style} className={props.className}>
+            {props.children}
+          </div>
+        </ThemeProvider>
+      </ContextMenuConfigContext.Provider>
     </ErrorBoundary>
   );
 };

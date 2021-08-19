@@ -1,14 +1,14 @@
 import * as React from "react";
 import { ConnectingState } from "../../ConnectingState";
-import { EMPTY_GAP, EMPTY_TRANSFORM_MATRIX, IGraphReducer, ViewportContext } from "../../contexts";
+import { EMPTY_GAP, EMPTY_TRANSFORM_MATRIX, GraphConfigContext, IGraphReducer, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { GraphStateContext, GraphValueContext } from "../../contexts/GraphStateContext";
 import { GraphController } from "../../controllers/GraphController";
 import { defaultFeatures, GraphFeatures } from "../../Features";
 import { useConst } from "../../hooks/useConst";
-import { useGraphConfig } from "../../hooks/context";
 import { useGraphReducer } from "../../hooks/useGraphReducer";
+import { IGraphConfig } from "../../models/config/types";
 import { IGap, ITransformMatrix } from "../../models/geometry";
 import { GraphModel } from "../../models/GraphModel";
 
@@ -21,6 +21,7 @@ export interface IGraphStateStoreProps<NodeData = unknown, EdgeData = unknown, P
   middleware?: IGraphReducer<NodeData, EdgeData, PortData, Action>;
   features?: ReadonlySet<GraphFeatures>;
   canvasBoundaryPadding?: IGap;
+  graphConfig: IGraphConfig;
 }
 
 export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
@@ -30,10 +31,9 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     defaultTransformMatrix = EMPTY_TRANSFORM_MATRIX,
     middleware,
     features = defaultFeatures,
-    canvasBoundaryPadding = EMPTY_GAP
+    canvasBoundaryPadding = EMPTY_GAP,
+    graphConfig
   } = props;
-
-  const graphConfig = useGraphConfig();
 
   const [state, dispatch] = useGraphReducer(
     {
@@ -72,18 +72,20 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
   );
 
   return (
-    <GraphControllerContext.Provider value={graphController}>
-      <ConnectingState data={state.data.present} connectState={state.connectState}>
-        <GraphStateContext.Provider value={contextValue}>
-          <ViewportContext.Provider value={state.viewport}>
-            <GraphValueContext.Provider value={state.data.present}>
-              <AlignmentLinesContext.Provider value={state.alignmentLines}>
-                {props.children}
-              </AlignmentLinesContext.Provider>
-            </GraphValueContext.Provider>
-          </ViewportContext.Provider>
-        </GraphStateContext.Provider>
-      </ConnectingState>
-    </GraphControllerContext.Provider>
+    <GraphConfigContext.Provider value={graphConfig}>
+      <GraphControllerContext.Provider value={graphController}>
+        <ConnectingState data={state.data.present} connectState={state.connectState}>
+          <GraphStateContext.Provider value={contextValue}>
+            <ViewportContext.Provider value={state.viewport}>
+              <GraphValueContext.Provider value={state.data.present}>
+                <AlignmentLinesContext.Provider value={state.alignmentLines}>
+                  {props.children}
+                </AlignmentLinesContext.Provider>
+              </GraphValueContext.Provider>
+            </ViewportContext.Provider>
+          </GraphStateContext.Provider>
+        </ConnectingState>
+      </GraphControllerContext.Provider>
+    </GraphConfigContext.Provider>
   );
 }

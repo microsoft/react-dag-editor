@@ -1,4 +1,5 @@
-import { DefaultClipboard, DefaultStorage } from "../../built-in";
+import { DefaultClipboard, defaultPort, DefaultStorage, line, rect } from "../../built-in";
+import { defaultGroup } from "../../built-in/defaultGroup";
 import { GraphConfig } from "./GraphConfig";
 import type { IEdgeConfig, IGraphClipboard, IGroupConfig, INodeConfig, IPortConfig } from "./types";
 
@@ -41,10 +42,10 @@ export class GraphConfigBuilder<NodeData = unknown, EdgeData = unknown, PortData
       "default",
       "default",
       "default",
-      new Map(),
-      new Map(),
-      new Map(),
-      new Map(),
+      new Map().set("default", rect),
+      new Map().set("default", line),
+      new Map().set("default", defaultPort),
+      new Map().set("default", defaultGroup),
       new DefaultClipboard(new DefaultStorage())
     );
   }

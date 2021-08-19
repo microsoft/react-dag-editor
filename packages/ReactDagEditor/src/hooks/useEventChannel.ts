@@ -1,10 +1,12 @@
 import * as React from "react";
 import { DEFAULT_AUTO_ALIGN_THRESHOLD, MouseEventButton } from "../common/constants";
 import { IGraphProps } from "../components/Graph/IGraphProps";
-import { IGraphConfig } from "../contexts";
 import { IDispatch } from "../contexts/GraphStateContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
+import { GraphController } from "../controllers/GraphController";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
+import { onContainerMouseDown, onNodePointerDown } from "../handlers";
+import type { IGraphConfig } from "../models/config/types";
 import {
   GraphCanvasEvent,
   GraphContextMenuEvent,
@@ -17,7 +19,6 @@ import {
   INodeCommonEvent,
   IPortEvent
 } from "../models/event";
-import { onContainerMouseDown, onNodePointerDown } from "../handlers";
 import { IContainerRect } from "../models/geometry";
 import { GraphBehavior } from "../models/state";
 import { handleBehaviorChange } from "../reducers/behaviorReducer";
@@ -36,7 +37,6 @@ import {
   goToConnectedPort
 } from "../utils/a11yUtils";
 import { EventChannel } from "../utils/eventChannel";
-import { GraphController } from "../controllers/GraphController";
 import { animationFramed } from "../utils/scheduling";
 import { useCanvasKeyboardEventHandlers } from "./useCanvasKeyboardEventHandlers";
 import { useFeatureControl } from "./useFeatureControl";

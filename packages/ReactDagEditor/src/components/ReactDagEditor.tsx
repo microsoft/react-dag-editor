@@ -1,14 +1,19 @@
 import * as React from "react";
-import { ContextMenuConfig, ContextMenuConfigContext } from "../contexts";
+import { ContextMenuConfig, ContextMenuConfigContext, IDispatch } from "../contexts";
+import { GraphController } from "../controllers/GraphController";
 import { useConst } from "../hooks/useConst";
+import type { IGraphState } from "../models/state";
 import { Debug } from "../utils/debug";
+import { noop } from "../utils/noop";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
+import { GraphStateStore } from "./Graph/GraphStateStore";
 import { IThemeProviderProps, ThemeProvider } from "./ThemeProvider";
 
 /**
  * ReactDagEditor props
  */
-export interface IReactDagEditorProps extends IThemeProviderProps {
+export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>
+  extends IThemeProviderProps {
   /**
    * Additional css styles to apply to the container element.
    */
@@ -17,6 +22,8 @@ export interface IReactDagEditorProps extends IThemeProviderProps {
    * Additional css class to apply to the container element.
    */
   className?: string;
+  state: IGraphState<NodeData, EdgeData, PortData>;
+  dispatch: IDispatch<NodeData, EdgeData, PortData, Action>;
   /**
    * Fired when there is invalid data or config. The invalid data or config will be ignored to avoid crashing your app.
    */
@@ -48,17 +55,32 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
 
   const handleError = props.handleError?.bind(null);
 
-  const { theme, setTheme } = props;
+  const { theme, setTheme, state, dispatch, getGlobalEventTarget } = props;
+
+  const graphController = useConst(() => new GraphController(state, dispatch));
+  graphController.UNSAFE_latestState = state;
+  React.useLayoutEffect(() => {
+    graphController.state = state;
+    graphController.dispatch = dispatch;
+    graphController.getGlobalEventTargetImpl = getGlobalEventTarget;
+  }, [dispatch, getGlobalEventTarget, graphController, state]);
+  React.useEffect(() => {
+    return () => {
+      graphController.dispatch = noop;
+    };
+  }, [graphController]);
 
   return (
     <ErrorBoundary renderOnError={handleError}>
-      <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
-        <ThemeProvider theme={theme} setTheme={setTheme}>
-          <div style={props.style} className={props.className}>
-            {props.children}
-          </div>
-        </ThemeProvider>
-      </ContextMenuConfigContext.Provider>
+      <GraphStateStore state={state} dispatch={dispatch} graphController={graphController}>
+        <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
+          <ThemeProvider theme={theme} setTheme={setTheme}>
+            <div style={props.style} className={props.className}>
+              {props.children}
+            </div>
+          </ThemeProvider>
+        </ContextMenuConfigContext.Provider>
+      </GraphStateStore>
     </ErrorBoundary>
   );
 };

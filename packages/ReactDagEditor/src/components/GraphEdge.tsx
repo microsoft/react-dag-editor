@@ -1,6 +1,5 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
-import { VirtualizationContext } from "../contexts/VirtualizationContext";
+import { useGraphConfig, useVirtualization } from "../hooks/context";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
 import { GraphEdgeState } from "../models/element-state";
@@ -13,7 +12,6 @@ import { EventChannel } from "../utils/eventChannel";
 
 export interface IGraphEdgeCommonProps {
   data: GraphModel;
-  graphConfig: IGraphConfig;
   eventChannel: EventChannel;
   graphId: string;
 }
@@ -56,9 +54,9 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
   // eslint-disable-next-line complexity
   props => {
     const { edge, data: graphModel, eventChannel, source, target, graphId } = props;
-    const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+    const graphConfig = useGraphConfig();
 
-    const virtualization = React.useContext(VirtualizationContext);
+    const virtualization = useVirtualization();
     const { viewport, renderedArea, visibleArea } = virtualization;
 
     const { theme } = useTheme();

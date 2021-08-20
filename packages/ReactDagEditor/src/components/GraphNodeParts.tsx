@@ -1,5 +1,5 @@
 import * as React from "react";
-import { VirtualizationContext } from "../contexts/VirtualizationContext";
+import { useVirtualization } from "../hooks/context";
 import { NodeModel } from "../models/NodeModel";
 import { isNodeEditing, isPointInRect } from "../utils";
 import { GraphNode, IGraphNodeCommonProps } from "./GraphNode";
@@ -14,7 +14,7 @@ export interface IGraphNodePartsProps
 }
 
 const GraphNodeParts = ({ node, isNodeResizable, ...commonProps }: IGraphNodePartsProps) => {
-  const virtualization = React.useContext(VirtualizationContext);
+  const virtualization = useVirtualization();
   const { renderedArea, viewport } = virtualization;
 
   const isVisible = isPointInRect(renderedArea, node);

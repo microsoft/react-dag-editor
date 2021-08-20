@@ -1,5 +1,6 @@
 import * as React from "react";
-import { GraphConfigContext, IPortConfig } from "../../contexts";
+import { IPortConfig } from "../../contexts";
+import { useGraphConfig } from "../../hooks/context";
 
 export interface IRegisterPortProps {
   /**
@@ -19,7 +20,7 @@ export interface IRegisterPortProps {
  * @param props
  */
 export const RegisterPort: React.FunctionComponent<IRegisterPortProps> = props => {
-  const graphConfig = React.useContext(GraphConfigContext);
+  const graphConfig = useGraphConfig();
 
   graphConfig.registerPort(props.name, props.config);
 

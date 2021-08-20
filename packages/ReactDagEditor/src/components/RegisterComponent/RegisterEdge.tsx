@@ -1,5 +1,6 @@
 import * as React from "react";
-import { GraphConfigContext, IEdgeConfig } from "../../contexts";
+import { IEdgeConfig } from "../../contexts";
+import { useGraphConfig } from "../../hooks/context";
 
 export interface IRegisterEdgeProps {
   /**
@@ -19,7 +20,7 @@ export interface IRegisterEdgeProps {
  * @param props
  */
 export const RegisterEdge: React.FunctionComponent<IRegisterEdgeProps> = props => {
-  const graphConfig = React.useContext(GraphConfigContext);
+  const graphConfig = useGraphConfig();
 
   graphConfig.registerEdge(props.name, props.config);
 

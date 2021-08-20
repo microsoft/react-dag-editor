@@ -1,6 +1,6 @@
 import * as React from "react";
 import { IGraphClipBoard } from "../../built-in/defaultClipboard";
-import { GraphConfigContext } from "../../contexts";
+import { useGraphConfig } from "../../hooks/context";
 
 export interface IRegisterClipboardProps {
   /**
@@ -16,7 +16,7 @@ export interface IRegisterClipboardProps {
  * @param props
  */
 export const RegisterClipboard: React.FunctionComponent<IRegisterClipboardProps> = props => {
-  const graphConfig = React.useContext(GraphConfigContext);
+  const graphConfig = useGraphConfig();
 
   React.useEffect(() => {
     graphConfig.registerClipboard(props.clipboard);

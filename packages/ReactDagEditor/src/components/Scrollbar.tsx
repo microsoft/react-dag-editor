@@ -1,10 +1,10 @@
 import * as React from "react";
 import { createUseStyles } from "react-jss";
-import { GraphControllerContext } from "../contexts/GraphControllerContext";
 import { IDispatch } from "../contexts/GraphStateContext";
 import { ITheme } from "../contexts/ThemeContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers/DragController";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
+import { useGraphController } from "../hooks/context";
 import { useRefValue } from "../hooks/useRefValue";
 import { useTheme } from "../hooks/useTheme";
 import { GraphScrollBarEvent } from "../models/event";
@@ -75,7 +75,7 @@ const useStyles = createUseStyles({
 export const Scrollbar: React.FC<IProps> = props => {
   const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewport } = props;
 
-  const graphController = React.useContext(GraphControllerContext);
+  const graphController = useGraphController();
   const { theme } = useTheme();
 
   const scrollbarLayout = getScrollbarLayout(viewport, offsetLimit);

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { useTheme } from "../hooks";
+import { useGraphConfig } from "../hooks/context";
 import { IDummyNodes } from "../models/dummy-node";
 import { GraphModel } from "../models/GraphModel";
 import { getNodeConfig } from "../utils";
@@ -12,7 +12,7 @@ interface IAnimatingNodeGroup {
 
 export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = props => {
   const { dummyNodes, graphData } = props;
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const { theme } = useTheme();
   const { dWidth, dHeight } = dummyNodes;
   const dx = dummyNodes.alignedDX ?? dummyNodes.dx;

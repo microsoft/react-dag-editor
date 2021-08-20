@@ -10,8 +10,8 @@ import {
 } from "../src";
 import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphConfigContext } from "../src/contexts";
-import { GraphControllerContext } from "../src/contexts/GraphControllerContext";
 import { GraphController } from "../src/controllers/GraphController";
+import { useGraphController } from "../src/hooks/context";
 import Sample0 from "../test/unit/__data__/sample0.json";
 
 const data: ICanvasData = {
@@ -41,7 +41,7 @@ afterEach(() => {
 });
 
 export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => {
-  const graphController = React.useContext(GraphControllerContext);
+  const graphController = useGraphController();
   React.useImperativeHandle(ref, () => graphController, [graphController]);
   return null;
 });

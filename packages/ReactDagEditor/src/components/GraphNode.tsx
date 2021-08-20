@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-bind */
 import * as React from "react";
-import { GraphConfigContext, IGraphConfig } from "../contexts";
 import { useTheme } from "../hooks";
+import { useGraphConfig } from "../hooks/context";
 import { GraphNodeEvent, INodeCommonEvent, INodeContextMenuEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
@@ -26,7 +26,7 @@ export interface IGraphNodeProps extends IGraphNodeCommonProps {
 
 const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
   const { node, eventChannel, getNodeAriaLabel, viewport, graphId } = props;
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const shape = node.shape ? node.shape : graphConfig.defaultNodeShape;
   const nodeConfig = getNodeConfig(node, graphConfig);
   const { theme } = useTheme();

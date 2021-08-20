@@ -1,8 +1,6 @@
 /* eslint-disable max-lines */
 import * as React from "react";
 import { v4 as uuid } from "uuid";
-import { GraphConfigContext, IGraphConfig } from "../../contexts";
-import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import {
   useContainerRect,
   useGraphState,
@@ -16,6 +14,7 @@ import {
 import { useConst } from "../../hooks/useConst";
 import { useEventChannel } from "../../hooks/useEventChannel";
 import { useFeatureControl } from "../../hooks/useFeatureControl";
+import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { GraphCanvasEvent, GraphContextMenuEvent, ICanvasCommonEvent, ICanvasKeyboardEvent } from "../../models/event";
 import { IContainerRect, IViewport } from "../../models/geometry";
 import { GraphBehavior } from "../../models/state";
@@ -44,7 +43,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
 ): React.ReactElement | null {
   const [focusedWithoutMouse, setFocusedWithoutMouse] = React.useState<boolean>(false);
 
-  const graphController = React.useContext(GraphControllerContext);
+  const graphController = useGraphController();
   const { state, dispatch } = useGraphState();
   const data = state.data.present;
   const { viewport } = state;
@@ -67,7 +66,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   } = props;
 
   const { theme } = useTheme();
-  const graphConfig = React.useContext<IGraphConfig>(GraphConfigContext);
+  const graphConfig = useGraphConfig();
   const featureControl = useFeatureControl(state.settings.features);
 
   graphConfig.defaultNodeShape = defaultNodeShape;
@@ -263,13 +262,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
               eventChannel={eventChannel}
             >
               <GraphGroupsRenderer data={data} groups={data.groups ?? constantEmptyArray()} />
-              <EdgeTree
-                graphId={graphId}
-                tree={data.edges}
-                data={data}
-                graphConfig={graphConfig}
-                eventChannel={eventChannel}
-              />
+              <EdgeTree graphId={graphId} tree={data.edges} data={data} eventChannel={eventChannel} />
               <NodeTree
                 graphId={graphId}
                 isNodeResizable={isNodeResizable}

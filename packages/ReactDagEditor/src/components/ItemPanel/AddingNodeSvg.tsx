@@ -1,9 +1,7 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
-import { GraphConfigContext, ViewportContext } from "../../contexts";
-import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
-import { GraphControllerContext } from "../../contexts/GraphControllerContext";
 import { useConst } from "../../hooks/useConst";
+import { useAlignmentLines, useGraphConfig, useGraphController, useViewport } from "../../hooks/context";
 import { GraphCanvasEvent } from "../../models/event";
 import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
@@ -28,10 +26,10 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
   nextNodeRef
 }) => {
   const rect = useSvgRect(svgRef);
-  const graphConfig = React.useContext(GraphConfigContext);
-  const graphController = React.useContext(GraphControllerContext);
-  const alignmentLines = React.useContext(AlignmentLinesContext);
-  const viewport = React.useContext(ViewportContext);
+  const graphConfig = useGraphConfig();
+  const graphController = useGraphController();
+  const alignmentLines = useAlignmentLines();
+  const viewport = useViewport();
 
   const dummyNode = React.useMemo(() => {
     if (!model || !viewport.rect) {

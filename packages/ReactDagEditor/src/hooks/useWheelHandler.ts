@@ -1,9 +1,10 @@
 import { RefObject, useLayoutEffect } from "react";
-import { IDispatch, IGraphConfig } from "../contexts";
+import type { IDispatch } from "../contexts";
+import type { IGraphConfig } from "../models/config/types";
 import { GraphCanvasEvent } from "../models/event";
-import { IContainerRect } from "../models/geometry";
+import type { IContainerRect } from "../models/geometry";
 import { getRelativePoint } from "../utils";
-import { EventChannel } from "../utils/eventChannel";
+import type { EventChannel } from "../utils/eventChannel";
 import { noop } from "../utils/noop";
 import { normalizeWheelDelta } from "../utils/wheel-delta";
 

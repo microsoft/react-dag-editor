@@ -464,7 +464,6 @@ export interface IEdgeConnectMoveEvent<T = unknown> extends IEventBase<MouseEven
 export interface IEdgeConnectEndEvent<T = unknown> extends IEventBase<MouseEvent | KeyboardEvent | FocusEvent> {
   type: GraphEdgeEvent.ConnectEnd;
   isCancel: boolean;
-  defaultEdgeShape: string;
   edgeWillAdd: ((edge: ICanvasEdge, data: GraphModel) => ICanvasEdge) | undefined;
 }
 

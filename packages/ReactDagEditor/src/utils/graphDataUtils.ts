@@ -1,22 +1,19 @@
 import type * as React from "react";
-import { HashMapBuilder } from "../collections";
+import type { HashMapBuilder } from "../collections";
 import { MouseEventButton } from "../common/constants";
-import { IGetConnectableParams, IGraphConfig} from "../contexts";
-import { ICanvasData } from "../models/canvas";
-import { ICanvasEdge } from "../models/edge";
-import { IPoint, IViewport } from "../models/geometry";
-import { ICanvasNode } from "../models/node";
-import { ICanvasPort } from "../models/port";
+import type { ICanvasData } from "../models/canvas";
+import type { IGetConnectableParams, IGraphConfig } from "../models/config/types";
+import type { ICanvasEdge } from "../models/edge";
+import type { EdgeModel } from "../models/EdgeModel";
 import { GraphEdgeState, GraphNodeState, GraphPortState } from "../models/element-state";
-import { EdgeModel } from "../models/EdgeModel";
-import { GraphModel } from "../models/GraphModel";
-import { NodeModel } from "../models/NodeModel";
-import { getNodeConfig } from "./getNodeConfig";
-import { getPortPosition, getPortPositionByPortId } from "./getPortPosition";
+import type { IViewport } from "../models/geometry";
+import type { GraphModel } from "../models/GraphModel";
+import type { ICanvasNode } from "../models/node";
+import type { NodeModel } from "../models/NodeModel";
+import type { ICanvasPort } from "../models/port";
+import { getPortPositionByPortId } from "./getPortPosition";
 import { identical } from "./identical";
-import { isWithinRect } from "./isWithinThreshold";
 import { checkIsMultiSelect } from "./keyboard";
-import { getNodeSize } from "./layout";
 import { isNodeEditing, isSelected, resetState, updateState } from "./state";
 import { getRealPointFromClientPoint } from "./transformMatrix";
 
@@ -76,45 +73,6 @@ export const getNearestConnectablePort = (params: IGetNearestConnectablePortPara
   });
 
   return nearestPort;
-};
-
-export const getNodeAndPortByPosition = <NodeData, PortData>(
-  graphConfig: IGraphConfig | undefined,
-  nodes: Array<NodeModel<NodeData, PortData>>,
-  pos: IPoint,
-  portRadius: number
-): {
-  node: NodeModel<NodeData, PortData> | undefined;
-  port: ICanvasPort<PortData> | undefined;
-} => {
-  if (!graphConfig) {
-    return { node: undefined, port: undefined };
-  }
-
-  for (const node of nodes) {
-    const nodeConfig = getNodeConfig(node, graphConfig);
-    const { width, height } = getNodeSize(node, graphConfig);
-    if (node.ports) {
-      const port = node.ports.find(p => {
-        let pos0 = getPortPosition(node, p, nodeConfig);
-        if (pos0) {
-          pos0 = { x: pos0.x - portRadius, y: pos0.y - portRadius };
-          if (isWithinRect(pos0, pos, portRadius * 2, portRadius * 2)) {
-            return true;
-          }
-        }
-        return false;
-      });
-      // enter a port
-      if (port) {
-        return { node, port };
-      }
-    }
-    if (isWithinRect(node, pos, width, height)) {
-      return { node, port: undefined };
-    }
-  }
-  return { node: undefined, port: undefined };
 };
 
 export const isConnectable = <NodeData, EdgeData, PortData>(

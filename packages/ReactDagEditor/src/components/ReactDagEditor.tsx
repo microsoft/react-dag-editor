@@ -1,10 +1,8 @@
 import * as React from "react";
-import { DefaultClipboard, defaultPort, DefaultStorage, line, rect } from "../built-in";
-import { ContextMenuConfig, ContextMenuConfigContext, GraphConfig, GraphConfigContext } from "../contexts";
+import { ContextMenuConfig, ContextMenuConfigContext } from "../contexts";
 import { useConst } from "../hooks/useConst";
 import { Debug } from "../utils/debug";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
-import { RegisterClipboard, RegisterEdge, RegisterNode, RegisterPort } from "./RegisterComponent";
 import { IThemeProviderProps, ThemeProvider } from "./ThemeProvider";
 
 /**
@@ -41,9 +39,6 @@ export interface IReactDagEditorProps extends IThemeProviderProps {
  * @param props
  */
 export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = props => {
-  const clipboardStorage = useConst(() => new DefaultStorage());
-  const clipboard = useConst(() => new DefaultClipboard(clipboardStorage));
-
   React.useEffect(() => {
     if (props.handleWarning) {
       Debug.warn = props.handleWarning;
@@ -57,19 +52,13 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
 
   return (
     <ErrorBoundary renderOnError={handleError}>
-      <GraphConfigContext.Provider value={React.useMemo(() => new GraphConfig(), [])}>
-        <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
-          <ThemeProvider theme={theme} setTheme={setTheme}>
-            <RegisterNode name="default" config={rect} />
-            <RegisterEdge name="default" config={line} />
-            <RegisterPort name="default" config={defaultPort} />
-            <RegisterClipboard clipboard={clipboard} />
-            <div style={props.style} className={props.className}>
-              {props.children}
-            </div>
-          </ThemeProvider>
-        </ContextMenuConfigContext.Provider>
-      </GraphConfigContext.Provider>
+      <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
+        <ThemeProvider theme={theme} setTheme={setTheme}>
+          <div style={props.style} className={props.className}>
+            {props.children}
+          </div>
+        </ThemeProvider>
+      </ContextMenuConfigContext.Provider>
     </ErrorBoundary>
   );
 };

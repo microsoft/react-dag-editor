@@ -1,7 +1,8 @@
 import { emptyDummyNodes } from "../components/dummyNodes";
-import { IGraphConfig, IGraphReactReducer } from "../contexts";
+import type { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
-import { IDummyNode, IDummyNodes } from "../models/dummy-node";
+import type { IGraphConfig } from "../models/config/types";
+import type { IDummyNode, IDummyNodes } from "../models/dummy-node";
 import { GraphNodeState } from "../models/element-state";
 import {
   GraphCanvasEvent,

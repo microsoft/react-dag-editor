@@ -17,3 +17,6 @@ export * from "./models/canvas";
 export * from "./models/geometry";
 export * from "./models/state";
 export * from "./models/event";
+export * from "./models/config/GraphConfig";
+export * from "./models/config/GraphConfigBuilder";
+export * from "./models/config/types";

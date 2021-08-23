@@ -6,7 +6,7 @@ import { Item } from "../../../src/components/ItemPanel";
 import { GraphController } from "../../../src/controllers/GraphController";
 import { GraphControllerRef } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
-import { withGraphConfigContext } from "../__mocks__/mockContext";
+import { defaultConfig } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";
 
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
@@ -32,19 +32,17 @@ describe("ItemPanel - Item", () => {
     dragWillStart = jest.fn();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
-      withGraphConfigContext(
-        <GraphStateStore data={GraphModel.empty()}>
-          <Item
-            model={{ name: "node1", shape: "nodeShape" }}
-            dragWillStart={dragWillStart}
-            nodeWillAdd={jest.fn()}
-            nodeDidAdd={jest.fn()}
-          >
-            <TestItemContent text="test item" />
-          </Item>
-          <GraphControllerRef ref={graphControllerRef} />
-        </GraphStateStore>
-      )
+      <GraphStateStore data={GraphModel.empty()} graphConfig={defaultConfig}>
+        <Item
+          model={{ name: "node1", shape: "nodeShape" }}
+          dragWillStart={dragWillStart}
+          nodeWillAdd={jest.fn()}
+          nodeDidAdd={jest.fn()}
+        >
+          <TestItemContent text="test item" />
+        </Item>
+        <GraphControllerRef ref={graphControllerRef} />
+      </GraphStateStore>
     );
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();

@@ -1,16 +1,15 @@
-import { IGraphConfig } from "../contexts";
 import { mapCow } from "../utils/array";
-import { $Complete } from "../utils/complete";
+import type { $Complete } from "../utils/complete";
 import { getPortPositionByPortId } from "../utils/getPortPosition";
 import { preventSpread } from "../utils/preventSpread";
 import { updateState } from "../utils/state";
-import { IPoint } from "./geometry";
-import { ICanvasNode } from "./node";
-import { ICanvasPort } from "./port";
-import { GraphNodeState } from "./element-state";
+import type { IGraphConfig } from "./config/types";
+import type { GraphNodeState } from "./element-state";
+import type { IPoint } from "./geometry";
+import type { ICanvasNode } from "./node";
+import type { ICanvasPort } from "./port";
 
-export class NodeModel<NodeData = unknown, PortData = unknown>
-  implements $Complete<ICanvasNode<NodeData, PortData>> {
+export class NodeModel<NodeData = unknown, PortData = unknown> implements $Complete<ICanvasNode<NodeData, PortData>> {
   public readonly inner: ICanvasNode<NodeData, PortData>;
   public readonly portPositionCache: Map<string, IPoint | undefined>;
   public readonly prev: string | undefined;
@@ -97,44 +96,25 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     return this.ports?.find(port => port.id === id);
   }
 
-  public link({
-    prev,
-    next
-  }: {
-    prev?: string | undefined;
-    next?: string | undefined;
-  }): NodeModel<NodeData, PortData> {
+  public link({ prev, next }: { prev?: string | undefined; next?: string | undefined }): NodeModel<NodeData, PortData> {
     if (prev === this.prev && next === this.next) {
       return this;
     }
-    return new NodeModel(
-      this.inner,
-      this.portPositionCache,
-      prev ?? this.prev,
-      next ?? this.next
-    );
+    return new NodeModel(this.inner, this.portPositionCache, prev ?? this.prev, next ?? this.next);
   }
 
-  public updateState(
-    f: (state: number | undefined) => number
-  ): NodeModel<NodeData, PortData> {
+  public updateState(f: (state: number | undefined) => number): NodeModel<NodeData, PortData> {
     return this.update(updateState(f));
   }
 
   public update(
-    f: (
-      curNode: ICanvasNode<NodeData, PortData>
-    ) => ICanvasNode<NodeData, PortData>
+    f: (curNode: ICanvasNode<NodeData, PortData>) => ICanvasNode<NodeData, PortData>
   ): NodeModel<NodeData, PortData> {
     const node = f(this.inner);
-    return node === this.inner
-      ? this
-      : new NodeModel(node, new Map(), this.prev, this.next);
+    return node === this.inner ? this : new NodeModel(node, new Map(), this.prev, this.next);
   }
 
-  public updateData(
-    f: (data: Readonly<NodeData>) => Readonly<NodeData>
-  ): NodeModel<NodeData, PortData> {
+  public updateData(f: (data: Readonly<NodeData>) => Readonly<NodeData>): NodeModel<NodeData, PortData> {
     if (!this.data) {
       return this;
     }
@@ -150,10 +130,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     });
   }
 
-  public getPortPosition(
-    portId: string,
-    graphConfig: IGraphConfig
-  ): IPoint | undefined {
+  public getPortPosition(portId: string, graphConfig: IGraphConfig): IPoint | undefined {
     let point = this.portPositionCache.get(portId);
     if (!point) {
       point = getPortPositionByPortId(this.inner, portId, graphConfig);
@@ -169,9 +146,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   /**
    * @internal
    */
-  public updatePositionAndSize(
-    dummy: ICanvasNode
-  ): NodeModel<NodeData, PortData> {
+  public updatePositionAndSize(dummy: ICanvasNode): NodeModel<NodeData, PortData> {
     const { x, y, width, height } = dummy;
     const node = {
       ...this.inner,
@@ -197,9 +172,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
             ...this.inner,
             ports
           };
-    return node === this.inner
-      ? this
-      : new NodeModel(node, new Map(), this.prev, this.next);
+    return node === this.inner ? this : new NodeModel(node, new Map(), this.prev, this.next);
   }
 
   public invalidCache(): NodeModel<NodeData, PortData> {

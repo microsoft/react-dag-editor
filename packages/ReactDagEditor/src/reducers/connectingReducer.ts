@@ -113,7 +113,7 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
       return state;
     case GraphEdgeEvent.ConnectEnd:
       if (state.connectState) {
-        const { edgeWillAdd, defaultEdgeShape, isCancel } = action;
+        const { edgeWillAdd, isCancel } = action;
         const { sourceNode, sourcePort, targetNode, targetPort } = state.connectState;
         let data = state.data.present;
         data = data.updatePort(sourceNode, sourcePort, updateState(resetState(GraphPortState.default)));
@@ -124,7 +124,7 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
             target: targetNode,
             targetPortId: targetPort,
             id: uuid(),
-            shape: defaultEdgeShape,
+            shape: state.settings.graphConfig.defaultEdgeShape,
             state: GraphEdgeState.default
           };
           if (edgeWillAdd) {

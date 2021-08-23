@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useTheme } from "../../hooks";
 import { useGraphConfig } from "../../hooks/context";
-import { ICanvasNode } from "../../models/node";
+import type { NodeModel } from "../../models/NodeModel";
 import { getNodeConfig, getRectHeight, getRectWidth } from "../../utils";
 
 interface IStaticNodeProps {
-  node: ICanvasNode;
+  node: NodeModel;
 }
 
 const StaticNode: React.FunctionComponent<IStaticNodeProps> = props => {
@@ -15,12 +15,12 @@ const StaticNode: React.FunctionComponent<IStaticNodeProps> = props => {
 
   const nodeConfig = getNodeConfig(node, graphConfig);
 
-  if (nodeConfig.renderStatic) {
+  if (nodeConfig?.renderStatic) {
     return <g>{nodeConfig.renderStatic({ model: node, theme })}</g>;
   }
 
-  const rectHeight = getRectHeight<ICanvasNode>(nodeConfig, node);
-  const rectWidth = getRectWidth<ICanvasNode>(nodeConfig, node);
+  const rectHeight = getRectHeight(nodeConfig, node);
+  const rectWidth = getRectWidth(nodeConfig, node);
 
   return (
     <rect

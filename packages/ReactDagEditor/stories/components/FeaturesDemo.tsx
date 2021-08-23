@@ -3,25 +3,23 @@
 /* eslint-disable react/display-name */
 import * as React from "react";
 import {
-  ReactDagEditor,
-  Graph,
-  GraphStateStore,
-  GraphModel,
-  RegisterNode,
-  IRectConfig,
-  NodeModel,
   getRectHeight,
   getRectWidth,
-  hasState,
+  Graph,
+  GraphConfigBuilder,
+  GraphModel,
   GraphNodeState,
-  IPortConfig,
-  ICanvasPort,
-  ICanvasNode,
   GraphPortState,
+  GraphStateStore,
+  hasState,
+  ICanvasNode,
+  ICanvasPort,
   IGetConnectableParams,
+  IPortConfig,
   IPortDrawArgs,
-  RegisterPort
+  ReactDagEditor
 } from "../../src";
+import { INodeConfig } from "../../src/models/config/types";
 import { sampleGraphData } from "../data/sample-graph-1";
 
 /** How to customize a node by "shape" by data.nodes[].shape */
@@ -48,7 +46,7 @@ const StepNode: React.FC<{ name: string }> = props => {
   );
 };
 
-const sourceNodeConfig: IRectConfig<NodeModel> = {
+const sourceNodeConfig: INodeConfig = {
   // min height constraint for node resizing.
   getMinHeight: () => 60,
   // min width constraint for node resizing.
@@ -78,7 +76,7 @@ const sourceNodeConfig: IRectConfig<NodeModel> = {
 
 /** Another node config. Use nodes[].shape to specify which one to use */
 
-const stepNodeConfig: IRectConfig<NodeModel> = {
+const stepNodeConfig: INodeConfig = {
   getMinHeight: () => 64,
   getMinWidth: model => 120 + (model.name?.length ?? 0) * 12,
   render: args => {
@@ -245,14 +243,17 @@ class MyPortConfig implements IPortConfig {
   }
 }
 
+const graphConfig = GraphConfigBuilder.default()
+  .registerNode("source", sourceNodeConfig)
+  .registerNode("step", stepNodeConfig)
+  .registerPort("myPort", new MyPortConfig())
+  .build();
+
 export const FeaturesDemo: React.FC = () => {
   return (
     <ReactDagEditor style={{ width: "900px", height: "600px" }}>
       {/** where to initialize your data */}
-      <GraphStateStore data={GraphModel.fromJSON(sampleGraphData)}>
-        <RegisterNode name="source" config={sourceNodeConfig} />
-        <RegisterNode name="step" config={stepNodeConfig} />
-        <RegisterPort name="myPort" config={new MyPortConfig()} />
+      <GraphStateStore data={GraphModel.fromJSON(sampleGraphData)} graphConfig={graphConfig}>
         <Graph />
       </GraphStateStore>
     </ReactDagEditor>

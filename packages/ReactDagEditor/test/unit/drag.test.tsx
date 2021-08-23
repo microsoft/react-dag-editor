@@ -148,13 +148,15 @@ describe("test drag and selection", () => {
   let container: HTMLElement;
   let graphController: GraphController;
   const getData = () => graphController.state.data.present;
-  const updateData = (f: (prev: GraphModel) => GraphModel) =>
-    graphController.dispatch({
-      type: GraphCanvasEvent.UpdateData,
-      updater: f,
-      shouldRecord: false
+  const updateData = (f: (prev: GraphModel) => GraphModel) => {
+    act(() => {
+      graphController.dispatch({
+        type: GraphCanvasEvent.UpdateData,
+        updater: f,
+        shouldRecord: false
+      });
     });
-
+  };
   beforeEach(() => {
     const graphControllerRef = React.createRef<GraphController>();
     wrapper = render(

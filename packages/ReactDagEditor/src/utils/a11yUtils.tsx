@@ -1,15 +1,15 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { VisitPortHelper } from "../components/A11yHelpers/VisitPortHelper";
-import { IGetConnectableParams, IGraphConfig } from "../contexts";
-import { GraphController } from "../controllers/GraphController";
+import type { GraphController } from "../controllers/GraphController";
+import type { IGetConnectableParams, IGraphConfig } from "../models/config/types";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
 
-import { GraphModel } from "../models/GraphModel";
-import { ICanvasNode } from "../models/node";
-import { NodeModel } from "../models/NodeModel";
-import { ICanvasPort } from "../models/port";
-import { EventChannel } from "./eventChannel";
+import type { GraphModel } from "../models/GraphModel";
+import type { ICanvasNode } from "../models/node";
+import type { NodeModel } from "../models/NodeModel";
+import type { ICanvasPort } from "../models/port";
+import type { EventChannel } from "./eventChannel";
 import { getNeighborPorts, getNodeUid, getPortUid } from "./graphDataUtils";
 
 export interface INextItem {

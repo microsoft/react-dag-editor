@@ -1,17 +1,16 @@
-import { OrderedMap } from "../collections";
-
-import { IGraphConfig, IRectConfig } from "../contexts";
-import { ICanvasGroup } from "../models/canvas";
-import { ICanvasNode } from "../models/node";
-import { NodeModel } from "../models/NodeModel";
+import type { OrderedMap } from "../collections";
+import type { ICanvasGroup } from "../models/canvas";
+import type { IGraphConfig, INodeConfig } from "../models/config/types";
+import type { ICanvasNode } from "../models/node";
+import type { NodeModel } from "../models/NodeModel";
 import { getNodeConfig } from "./getNodeConfig";
 
 /**
  * @param rectConfig
  * @param rect
  */
-export function getRectWidth<T extends { width?: number }>(rectConfig: IRectConfig<T>, rect: T): number {
-  const minWidth = rectConfig.getMinWidth(rect);
+export function getRectWidth<T>(rectConfig: INodeConfig<T> | undefined, rect: Partial<ICanvasNode<T>>): number {
+  const minWidth = rectConfig?.getMinWidth(rect) ?? 0;
 
   if (rect.width && rect.width >= minWidth) {
     return rect.width;
@@ -24,8 +23,8 @@ export function getRectWidth<T extends { width?: number }>(rectConfig: IRectConf
  * @param rectConfig
  * @param rect
  */
-export function getRectHeight<T extends { height?: number }>(rectConfig: IRectConfig<T>, rect: T): number {
-  const minHeight = rectConfig.getMinHeight(rect);
+export function getRectHeight<T>(rectConfig: INodeConfig<T> | undefined, rect: Partial<ICanvasNode<T>>): number {
+  const minHeight = rectConfig?.getMinHeight(rect) ?? 0;
 
   if (rect.height && rect.height >= minHeight) {
     return rect.height;
@@ -47,8 +46,8 @@ export interface INodeRect {
  */
 export function getNodeSize(node: ICanvasNode, graphConfig: IGraphConfig): INodeRect {
   const nodeConfig = getNodeConfig(node, graphConfig);
-  const width = getRectWidth<ICanvasNode>(nodeConfig, node);
-  const height = getRectHeight<ICanvasNode>(nodeConfig, node);
+  const width = getRectWidth(nodeConfig, node);
+  const height = getRectHeight(nodeConfig, node);
 
   return {
     height,

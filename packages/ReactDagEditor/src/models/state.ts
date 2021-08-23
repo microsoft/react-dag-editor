@@ -1,11 +1,11 @@
-import { ISelectBoxPosition } from "../components/Graph/SelectBox";
-import { ILine } from "../components/Line";
-import { IGraphConfig } from "../contexts";
-import { GraphFeatures } from "../Features";
-import { IHistory, IZoomCommonParams } from "../utils";
-import { IDummyNodes } from "./dummy-node";
-import { IGap, IPoint, IViewport } from "./geometry";
-import { GraphModel } from "./GraphModel";
+import type { ISelectBoxPosition } from "../components/Graph/SelectBox";
+import type { ILine } from "../components/Line";
+import type { GraphFeatures } from "../Features";
+import type { IHistory, IZoomCommonParams } from "../utils";
+import type { IGraphConfig } from "./config/types";
+import type { IDummyNodes } from "./dummy-node";
+import type { IGap, IPoint, IViewport } from "./geometry";
+import type { GraphModel } from "./GraphModel";
 
 export enum CanvasMouseMode {
   pan = "pan",

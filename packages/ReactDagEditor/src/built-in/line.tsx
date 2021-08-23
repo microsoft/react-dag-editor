@@ -1,6 +1,7 @@
 import * as React from "react";
-import { IEdgeConfig, ITheme } from "../contexts";
-import { ICanvasEdge } from "../models/edge";
+import type { ITheme } from "../contexts";
+import type { IEdgeConfig } from "../models/config/types";
+import type { ICanvasEdge } from "../models/edge";
 import { GraphEdgeState } from "../models/element-state";
 import { getCurvePathD, hasState } from "../utils";
 
@@ -8,9 +9,7 @@ export const line: IEdgeConfig = {
   getStyle(edge: ICanvasEdge, theme: ITheme): React.CSSProperties {
     return {
       cursor: "crosshair",
-      stroke: hasState(GraphEdgeState.selected)(edge.state)
-        ? theme.edgeColorSelected
-        : theme.edgeColor,
+      stroke: hasState(GraphEdgeState.selected)(edge.state) ? theme.edgeColorSelected : theme.edgeColor,
       strokeWidth: "2"
     };
   },

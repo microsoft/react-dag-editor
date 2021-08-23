@@ -49,8 +49,8 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
   const nodeConfig = getNodeConfig(node, graphConfig);
   const graphController = useGraphController();
 
-  const minWidth = nodeConfig.getMinWidth(node);
-  const minHeight = nodeConfig.getMinHeight(node);
+  const minWidth = nodeConfig?.getMinWidth(node) ?? 0;
+  const minHeight = nodeConfig?.getMinHeight(node) ?? 0;
 
   const { theme } = useTheme();
 

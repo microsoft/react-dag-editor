@@ -1,8 +1,8 @@
-import * as React from "react";
-import { HashMap, OrderedMap } from "../collections";
-import { IGraphConfig } from "../contexts";
-import { ICanvasEdge } from "../models/edge";
-import { EdgeModel } from "../models/EdgeModel";
+import type * as React from "react";
+import type { HashMap, OrderedMap } from "../collections";
+import type { IGraphConfig } from "../models/config/types";
+import type { ICanvasEdge } from "../models/edge";
+import type { EdgeModel } from "../models/EdgeModel";
 import {
   Direction,
   IContainerRect,
@@ -13,10 +13,10 @@ import {
   ITransformMatrix,
   IViewport
 } from "../models/geometry";
-import { GraphModel } from "../models/GraphModel";
-import { ICanvasNode } from "../models/node";
-import { NodeModel } from "../models/NodeModel";
-import { IGraphSettings } from "../models/state";
+import type { GraphModel } from "../models/GraphModel";
+import type { ICanvasNode } from "../models/node";
+import type { NodeModel } from "../models/NodeModel";
+import type { IGraphSettings } from "../models/state";
 import { isPointInRect } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize, IShapeRect } from "./layout";

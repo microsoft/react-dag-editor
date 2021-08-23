@@ -1,15 +1,12 @@
-import * as React from "react";
 import { render } from "@testing-library/react";
-import { allFeatures, IEvent, IGraphConfig, IGraphState, IViewport } from "../../src";
+import * as React from "react";
+import { IEvent, IGraphState, IViewport } from "../../src";
 import { Scrollbar } from "../../src/components/Scrollbar";
 import { EMPTY_GRAPH_STATE } from "../../src/contexts/GraphStateContext";
 import { viewportReducer } from "../../src/reducers/viewportReducer";
 import { EventChannel } from "../../src/utils/eventChannel";
-import { getGraphConfig } from "../utils";
 
 describe("Scrollbar", () => {
-  let graphConfig: IGraphConfig;
-
   const ScrollbarComponent = () => {
     const rect: DOMRect | ClientRect = {
       width: 800,
@@ -22,7 +19,7 @@ describe("Scrollbar", () => {
 
     const [, dispatch] = React.useReducer(
       (prev: IGraphState, action: IEvent) => {
-        return viewportReducer(prev, action, { graphConfig, features: allFeatures });
+        return viewportReducer(prev, action);
       },
       {
         ...EMPTY_GRAPH_STATE
@@ -45,10 +42,6 @@ describe("Scrollbar", () => {
       />
     );
   };
-
-  beforeEach(() => {
-    graphConfig = getGraphConfig();
-  });
 
   it("should match the snapshot", () => {
     const { container } = render(<ScrollbarComponent />);

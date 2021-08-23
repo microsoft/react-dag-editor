@@ -10,7 +10,7 @@ import { GraphController } from "../../../src/controllers/GraphController";
 import { ICanvasNode } from "../../../src/models/node";
 import { GraphControllerRef } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
-import { withGraphConfigContext } from "../__mocks__/mockContext";
+import { defaultConfig } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";
 
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
@@ -37,19 +37,17 @@ describe("ItemPanel - AddingNodeSvg", () => {
     nodeDidAdd = jest.fn();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
-      withGraphConfigContext(
-        <GraphStateStore>
-          <Item
-            model={{ name: "node1", shape: "nodeShape" }}
-            dragWillStart={jest.fn()}
-            nodeWillAdd={nodeWillAdd}
-            nodeDidAdd={nodeDidAdd}
-          >
-            <TestItemContent text="test item for addingNodeSVG" />
-          </Item>
-          <GraphControllerRef ref={graphControllerRef} />
-        </GraphStateStore>
-      )
+      <GraphStateStore graphConfig={defaultConfig}>
+        <Item
+          model={{ name: "node1", shape: "nodeShape" }}
+          dragWillStart={jest.fn()}
+          nodeWillAdd={nodeWillAdd}
+          nodeDidAdd={nodeDidAdd}
+        >
+          <TestItemContent text="test item for addingNodeSVG" />
+        </Item>
+        <GraphControllerRef ref={graphControllerRef} />
+      </GraphStateStore>
     );
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();

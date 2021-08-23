@@ -9,10 +9,10 @@ import {
   IGraphStateStoreProps
 } from "../src";
 import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
-import { GraphConfigContext } from "../src/contexts";
 import { GraphController } from "../src/controllers/GraphController";
 import { useGraphController } from "../src/hooks/context";
 import Sample0 from "../test/unit/__data__/sample0.json";
+import { defaultConfig } from "./unit/__mocks__/mockContext";
 
 const data: ICanvasData = {
   ...Sample0,
@@ -47,7 +47,7 @@ export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => 
 });
 
 export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps>) => {
-  const { graphProps, stateProps } = props;
+  const { graphProps, stateProps, graphConfig } = props;
   const onEvent = React.useCallback(
     (event: IEvent) => {
       graphProps?.onEvent?.(event);
@@ -56,22 +56,18 @@ export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [graphProps?.onEvent]
   );
-  const {} = props;
-
-  const content = (
-    <GraphStateStore {...stateProps} data={props.data ?? GraphModel.fromJSON(data)} middleware={props.middleware}>
-      <Graph {...graphProps} onEvent={onEvent} />
-      {props.children}
-    </GraphStateStore>
-  );
 
   return (
     <ReactDagEditor>
-      {props.graphConfig ? (
-        <GraphConfigContext.Provider value={props.graphConfig}>{content}</GraphConfigContext.Provider>
-      ) : (
-        content
-      )}
+      <GraphStateStore
+        {...stateProps}
+        data={props.data ?? GraphModel.fromJSON(data)}
+        middleware={props.middleware}
+        graphConfig={graphConfig ?? defaultConfig}
+      >
+        <Graph {...graphProps} onEvent={onEvent} />
+        {props.children}
+      </GraphStateStore>
     </ReactDagEditor>
   );
 };

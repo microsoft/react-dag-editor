@@ -192,7 +192,6 @@ describe("test Connecting", () => {
       act(() => {
         eventChannel.trigger({
           type: GraphEdgeEvent.ConnectEnd,
-          defaultEdgeShape: "default",
           edgeWillAdd,
           isCancel: false,
           rawEvent: new KeyboardEvent("keydown")

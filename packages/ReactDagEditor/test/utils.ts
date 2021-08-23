@@ -1,6 +1,15 @@
 import * as React from "react";
-import { applyDefaultPortsPosition, ICanvasEdge, ICanvasNode, ICanvasPort, IGetConnectableParams } from "../src";
-import { GraphConfig, IGraphConfig, IItemConfigArgs, IPortDrawArgs } from "../src/contexts";
+import {
+  applyDefaultPortsPosition,
+  GraphConfigBuilder,
+  ICanvasEdge,
+  ICanvasNode,
+  ICanvasPort,
+  IGetConnectableParams,
+  IGraphConfig,
+  INodeDrawArgs,
+  IPortDrawArgs
+} from "../src";
 
 function makePort(id: string, state: number): ICanvasPort {
   return {
@@ -57,31 +66,31 @@ export function makeNodesWithPosition(
 }
 
 export function getGraphConfig(): IGraphConfig {
-  const config = new GraphConfig(window);
-  config.registerNode("default", {
-    render(args: IItemConfigArgs<ICanvasNode>): React.ReactNode {
-      return null;
-    },
-    getMinWidth(rect: ICanvasNode): number {
-      return 280;
-    },
-    getMinHeight(rect: ICanvasNode): number {
-      return 50;
-    }
-  });
-  config.registerPort("default", {
-    render(args: IPortDrawArgs): React.ReactNode {
-      return null;
-    },
-    renderTooltips(args: Omit<IPortDrawArgs, "setData">): React.ReactNode {
-      return null;
-    },
-    getIsConnectable({ model }: IGetConnectableParams): boolean | undefined {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (model.data as any)?.isConnectable;
-    }
-  });
-  return config;
+  return GraphConfigBuilder.default()
+    .registerNode("default", {
+      render(args: INodeDrawArgs): React.ReactNode {
+        return null;
+      },
+      getMinWidth(rect: ICanvasNode): number {
+        return 280;
+      },
+      getMinHeight(rect: ICanvasNode): number {
+        return 50;
+      }
+    })
+    .registerPort("default", {
+      render(args: IPortDrawArgs): React.ReactNode {
+        return null;
+      },
+      renderTooltips(args: Omit<IPortDrawArgs, "setData">): React.ReactNode {
+        return null;
+      },
+      getIsConnectable({ model }: IGetConnectableParams): boolean | undefined {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        return (model.data as any)?.isConnectable;
+      }
+    })
+    .build();
 }
 
 export const patchPointerEvent = () => {

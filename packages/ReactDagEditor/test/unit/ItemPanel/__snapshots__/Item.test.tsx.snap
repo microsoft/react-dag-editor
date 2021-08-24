@@ -1,41 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ItemPanel - Item Should work well when mousedown and mouseup 1`] = `
-<div>
-  <div
-    class="module-item"
-    role="button"
-  >
-    <p>
-      test item:default
-    </p>
-  </div>
+<div
+  class="module-item"
+  role="button"
+>
+  <p>
+    test item:default
+  </p>
 </div>
 `;
 
 exports[`ItemPanel - Item Should work well when mousedown and mouseup 2`] = `
-<div>
-  <div
-    class="module-item"
-    role="button"
-  >
-    <p>
-      test item:addingNode
-    </p>
-  </div>
+<div
+  class="module-item"
+  role="button"
+>
+  <p>
+    test item:addingNode
+  </p>
 </div>
 `;
 
 exports[`ItemPanel - Item Should work well when mousedown and mouseup 3`] = `
-<div>
-  <div
-    class="module-item"
-    role="button"
-  >
-    <p>
-      test item:default
-    </p>
-  </div>
+<div
+  class="module-item"
+  role="button"
+>
+  <p>
+    test item:default
+  </p>
 </div>
 `;
 

@@ -1,16 +1,9 @@
 import * as React from "react";
-import {
-  applyDefaultPortsPosition,
-  GraphModel,
-  ICanvasData,
-  IEvent,
-  IGraphConfig,
-  IGraphReducer,
-  IGraphStateStoreProps
-} from "../src";
-import { Graph, GraphStateStore, IGraphProps, ReactDagEditor } from "../src/components";
+import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphConfig, IGraphReducer } from "../src";
+import { Graph, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphController } from "../src/controllers/GraphController";
 import { useGraphController } from "../src/hooks/context";
+import { IGraphReducerInitializerParams, useGraphReducer } from "../src/hooks/useGraphReducer";
 import Sample0 from "../test/unit/__data__/sample0.json";
 import { defaultConfig } from "./unit/__mocks__/mockContext";
 
@@ -27,7 +20,8 @@ export interface ITestComponentProps {
   graphConfig?: IGraphConfig;
   middleware?: IGraphReducer;
   graphProps?: Partial<IGraphProps>;
-  stateProps?: Partial<IGraphStateStoreProps>;
+  stateProps?: Partial<IGraphReducerInitializerParams>;
+  graph?: boolean;
 }
 
 let events: string[];
@@ -46,8 +40,10 @@ export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => 
   return null;
 });
 
+const defaultData = GraphModel.fromJSON(data);
+
 export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps>) => {
-  const { graphProps, stateProps, graphConfig } = props;
+  const { graphProps, stateProps, graphConfig = defaultConfig, middleware, graph = true, data = defaultData } = props;
   const onEvent = React.useCallback(
     (event: IEvent) => {
       graphProps?.onEvent?.(event);
@@ -57,17 +53,19 @@ export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps
     [graphProps?.onEvent]
   );
 
+  const [state, dispatch] = useGraphReducer(
+    {
+      ...stateProps,
+      graphConfig,
+      data
+    },
+    middleware
+  );
+
   return (
-    <ReactDagEditor>
-      <GraphStateStore
-        {...stateProps}
-        data={props.data ?? GraphModel.fromJSON(data)}
-        middleware={props.middleware}
-        graphConfig={graphConfig ?? defaultConfig}
-      >
-        <Graph {...graphProps} onEvent={onEvent} />
-        {props.children}
-      </GraphStateStore>
+    <ReactDagEditor state={state} dispatch={dispatch}>
+      {graph && <Graph {...graphProps} onEvent={onEvent} />}
+      {props.children}
     </ReactDagEditor>
   );
 };

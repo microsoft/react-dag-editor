@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
-import { GraphCanvasEvent, GraphModel } from "../../../src";
+import { GraphCanvasEvent, GraphConfigBuilder, GraphModel, rect } from "../../../src";
 import { Item } from "../../../src/components/ItemPanel";
 import { GraphController } from "../../../src/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../../TestComponent";
@@ -30,9 +30,12 @@ describe("ItemPanel - Item", () => {
 
   beforeEach(() => {
     dragWillStart = jest.fn();
+    const graphConfig = GraphConfigBuilder.default()
+      .registerNode("nodeShape", rect)
+      .build();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
-      <TestComponent data={GraphModel.empty()} graph={false}>
+      <TestComponent data={GraphModel.empty()} graph={false} graphConfig={graphConfig}>
         <Item
           model={{ name: "node1", shape: "nodeShape" }}
           dragWillStart={dragWillStart}

@@ -10,54 +10,41 @@ function getStorybookConfig({ tsconfig, stories }) {
       name: "@storybook/addon-docs",
       options: {
         actions: false,
-        controls: false
-      }
-    }
+        controls: false,
+      },
+    },
   ];
 
   return {
     stories,
     addons,
     webpackFinal(config) {
-      config.module.rules.push(
-        {
-          test: /\.(ts|tsx)$/,
-          use: [
-            {
-              loader: require.resolve("ts-loader"),
-              options: {
-                configFile: tsconfig
-              }
-            }
-          ]
-        },
-        {
-          test: /\.m\.scss$/,
-          use: [
-            "style-loader",
-            {
-              loader: "css-loader",
-              options: {
-                modules: {
-                  localIdentName: "[local]_[hash:8]",
-                  exportLocalsConvention: "camelCase"
-                }
-              }
+      config.module.rules.push({
+        test: /\.m\.scss$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: "[local]_[hash:8]",
+                exportLocalsConvention: "camelCase",
+              },
             },
-            "sass-loader"
-          ]
-        }
-      );
+          },
+          "sass-loader",
+        ],
+      });
       config.plugins.push(
         new WorkerPlugin({
-          globalObject: "self"
+          globalObject: "self",
         }),
         new CircularDependencyPlugin({
-          exclude: /node_modules/
+          exclude: /node_modules/,
         })
       );
 
-      glob.sync(path.resolve(__dirname, "../../packages/*")).forEach(packageDir => {
+      glob.sync(path.resolve(__dirname, "../../packages/*")).forEach((packageDir) => {
         const thisPackageJsonPath = path.resolve(__dirname, "../../", packageDir, "package.json");
         const thisPackageJson = JSON.parse(fs.readFileSync(thisPackageJsonPath));
 
@@ -67,7 +54,7 @@ function getStorybookConfig({ tsconfig, stories }) {
       });
 
       return config;
-    }
+    },
   };
 }
 

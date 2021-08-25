@@ -1,4 +1,4 @@
-/* eslint-disable max-classes-per-file */
+/* eslint-disable max-classes-per-file,@typescript-eslint/no-non-null-assertion */
 import { Owner } from "./common";
 import { is } from "./utils";
 

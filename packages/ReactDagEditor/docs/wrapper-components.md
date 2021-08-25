@@ -36,27 +36,6 @@ All other components in the package react-dag-editor should be wrapped by this o
   handleError?(error?: Error, errorInfo?: React.ErrorInfo, children?: React.ReactNode): React.ReactChild;
 ```
 
-## `<GraphStateStore />`
-
-Use this one to initialize the state and add custom middlewares.
-Permit the wrapped components to access the state via propsAPI or built-in hooks.
-
-## `<GraphStateStore />` props
-
-```typescript
-  /**
-   * The propsAPI reference.
-   */
-  propsAPIRef?: React.Ref<IPropsAPI<NodeData, EdgeData, PortData> | null>;
-  /**
-   * the initial graph data model.
-   */
-  data?: GraphModel<NodeData, EdgeData, PortData>;
-  defaultTransformMatrix?: ITransformMatrix;
-  middleware?: IGraphReducer<NodeData, EdgeData, PortData, Action>;
-  onStateChanged?: IDispatchCallback<NodeData, EdgeData, PortData>;
-```
-
 ## `<Item />`
 
 Usually people want a palette aside the main canvas to build their own workflow. To implement this, wrap `<item />` around the a palette item then it will be able to drag-to-add to the canvas.

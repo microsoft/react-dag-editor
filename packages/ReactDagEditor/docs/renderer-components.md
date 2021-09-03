@@ -34,30 +34,6 @@ interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = unknown
    */
   svgRef?: React.RefObject<SVGSVGElement>;
   /**
-   * The default shape of the node
-   *
-   * @default "default"
-   */
-  defaultNodeShape?: string;
-  /**
-   * The default shape of the edge
-   *
-   * @default "default"
-   */
-  defaultEdgeShape?: string;
-  /**
-   * The default shape of the port
-   *
-   * @default "default"
-   */
-  defaultPortShape?: string;
-  /**
-   * The default shape of the group
-   *
-   * @default "default"
-   */
-  defaultGroupShape?: string;
-  /**
    * The access key to focus the canvas
    *
    * @default "f"

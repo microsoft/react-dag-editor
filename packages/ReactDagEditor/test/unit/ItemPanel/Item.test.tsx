@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
-import { GraphCanvasEvent, GraphModel, GraphStateStore } from "../../../src";
+import { GraphCanvasEvent, GraphConfigBuilder, GraphModel, rect } from "../../../src";
 import { Item } from "../../../src/components/ItemPanel";
 import { GraphController } from "../../../src/controllers/GraphController";
-import { GraphControllerRef } from "../../TestComponent";
+import { GraphControllerRef, TestComponent } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
-import { defaultConfig } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";
 
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
@@ -19,6 +18,7 @@ describe("ItemPanel - Item", () => {
   let dragWillStart: () => void;
   let renderedWrapper: RenderResult;
   let graphController: GraphController;
+  const getElement = () => renderedWrapper.getByRole("button");
 
   beforeAll(() => {
     jest.useFakeTimers();
@@ -30,9 +30,12 @@ describe("ItemPanel - Item", () => {
 
   beforeEach(() => {
     dragWillStart = jest.fn();
+    const graphConfig = GraphConfigBuilder.default()
+      .registerNode("nodeShape", rect)
+      .build();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
-      <GraphStateStore data={GraphModel.empty()} graphConfig={defaultConfig}>
+      <TestComponent data={GraphModel.empty()} graph={false} graphConfig={graphConfig}>
         <Item
           model={{ name: "node1", shape: "nodeShape" }}
           dragWillStart={dragWillStart}
@@ -42,7 +45,7 @@ describe("ItemPanel - Item", () => {
           <TestItemContent text="test item" />
         </Item>
         <GraphControllerRef ref={graphControllerRef} />
-      </GraphStateStore>
+      </TestComponent>
     );
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();
@@ -58,22 +61,20 @@ describe("ItemPanel - Item", () => {
   afterEach(cleanup);
 
   it("Should work well when mousedown and mouseup", () => {
-    const { container } = renderedWrapper;
-
-    expect(container).toMatchSnapshot();
+    expect(getElement()).toMatchSnapshot();
 
     // when mouse down
     act(() => {
       fireEvent.pointerDown(screen.getByRole("button"));
     });
     expect(dragWillStart).toBeCalled();
-    expect(container).toMatchSnapshot();
+    expect(getElement()).toMatchSnapshot();
 
     // when mouse up
     act(() => {
       jest.runAllTimers();
       fireEvent.pointerUp(window);
     });
-    expect(container).toMatchSnapshot();
+    expect(getElement()).toMatchSnapshot();
   });
 });

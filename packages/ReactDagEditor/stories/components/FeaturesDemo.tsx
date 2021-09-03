@@ -10,16 +10,16 @@ import {
   GraphModel,
   GraphNodeState,
   GraphPortState,
-  GraphStateStore,
   hasState,
   ICanvasNode,
   ICanvasPort,
   IGetConnectableParams,
+  INodeConfig,
   IPortConfig,
   IPortDrawArgs,
   ReactDagEditor
 } from "../../src";
-import { INodeConfig } from "../../src/models/config/types";
+import { useGraphReducer } from "../../src/hooks/useGraphReducer";
 import { sampleGraphData } from "../data/sample-graph-1";
 
 /** How to customize a node by "shape" by data.nodes[].shape */
@@ -250,12 +250,17 @@ const graphConfig = GraphConfigBuilder.default()
   .build();
 
 export const FeaturesDemo: React.FC = () => {
+  const [state, dispatch] = useGraphReducer(
+    {
+      graphConfig,
+      data: GraphModel.fromJSON(sampleGraphData)
+    },
+    undefined
+  );
+
   return (
-    <ReactDagEditor style={{ width: "900px", height: "600px" }}>
-      {/** where to initialize your data */}
-      <GraphStateStore data={GraphModel.fromJSON(sampleGraphData)} graphConfig={graphConfig}>
-        <Graph />
-      </GraphStateStore>
+    <ReactDagEditor style={{ width: "900px", height: "600px" }} state={state} dispatch={dispatch}>
+      <Graph />
     </ReactDagEditor>
   );
 };

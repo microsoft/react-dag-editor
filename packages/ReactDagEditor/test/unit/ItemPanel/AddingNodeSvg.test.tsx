@@ -2,15 +2,14 @@
 import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
-import { GraphCanvasEvent, GraphStateStore } from "../../../src";
+import { GraphCanvasEvent, GraphConfigBuilder, rect } from "../../../src";
 import { MouseEventButton } from "../../../src/common/constants";
 import { Item } from "../../../src/components/ItemPanel";
 import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
 import { GraphController } from "../../../src/controllers/GraphController";
 import { ICanvasNode } from "../../../src/models/node";
-import { GraphControllerRef } from "../../TestComponent";
+import { GraphControllerRef, TestComponent } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
-import { defaultConfig } from "../__mocks__/mockContext";
 import { TestItemContent } from "./TestItemContent";
 
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
@@ -24,6 +23,8 @@ describe("ItemPanel - AddingNodeSvg", () => {
   let nodeDidAdd: () => void;
   let renderedWrapper: RenderResult;
   let graphController: GraphController;
+  const getElement = () => renderedWrapper.getByRole("button");
+
   beforeAll(() => {
     patchPointerEvent();
     jest.useFakeTimers();
@@ -35,9 +36,12 @@ describe("ItemPanel - AddingNodeSvg", () => {
   beforeEach(() => {
     nodeWillAdd = jest.fn();
     nodeDidAdd = jest.fn();
+    const graphConfig = GraphConfigBuilder.default()
+      .registerNode("nodeShape", rect)
+      .build();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
-      <GraphStateStore graphConfig={defaultConfig}>
+      <TestComponent graph={false} graphConfig={graphConfig}>
         <Item
           model={{ name: "node1", shape: "nodeShape" }}
           dragWillStart={jest.fn()}
@@ -47,7 +51,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
           <TestItemContent text="test item for addingNodeSVG" />
         </Item>
         <GraphControllerRef ref={graphControllerRef} />
-      </GraphStateStore>
+      </TestComponent>
     );
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();
@@ -135,7 +139,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
 
     expect(nodeWillAdd).toBeCalledTimes(1);
     expect(nodeDidAdd).toBeCalledTimes(1);
-    expect(renderedWrapper.container).toMatchSnapshot();
+    expect(getElement()).toMatchSnapshot();
   });
 
   it("not adding node if out of graph", () => {
@@ -157,7 +161,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
 
     expect(nodeWillAdd).not.toBeCalled();
     expect(nodeDidAdd).not.toBeCalled();
-    expect(renderedWrapper.container).toMatchSnapshot();
+    expect(getElement()).toMatchSnapshot();
   });
 
   it("without left mouse down when dragging", () => {
@@ -168,6 +172,6 @@ describe("ItemPanel - AddingNodeSvg", () => {
 
     expect(nodeWillAdd).not.toBeCalled();
     expect(nodeDidAdd).not.toBeCalled();
-    expect(renderedWrapper.container).toMatchSnapshot();
+    expect(getElement()).toMatchSnapshot();
   });
 });

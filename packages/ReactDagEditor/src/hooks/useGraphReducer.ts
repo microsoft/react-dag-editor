@@ -1,7 +1,14 @@
 import * as React from "react";
 import { emptyDummyNodes } from "../components/dummyNodes";
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
-import { EMPTY_TRANSFORM_MATRIX, IDispatch, IDispatchCallback, IGraphReactReducer, IGraphReducer } from "../contexts";
+import {
+  DEFAULT_GRAPH_SETTINGS,
+  EMPTY_TRANSFORM_MATRIX,
+  IDispatch,
+  IDispatchCallback,
+  IGraphReactReducer,
+  IGraphReducer
+} from "../contexts";
 import { ITransformMatrix } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphSettings, IGraphState } from "../models/state";
@@ -20,7 +27,7 @@ import { batchedUpdates } from "../utils/batchedUpdates";
 import { useConst } from "./useConst";
 
 export interface IGraphReducerInitializerParams<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  extends IGraphSettings<NodeData, EdgeData, PortData> {
+  extends Partial<IGraphSettings<NodeData, EdgeData, PortData>> {
   data?: GraphModel<NodeData, EdgeData, PortData>;
   transformMatrix?: ITransformMatrix;
 }
@@ -52,21 +59,10 @@ export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData
   const [state, dispatchImpl] = React.useReducer(
     reducer,
     params,
-    ({
-      data,
-      transformMatrix,
-      features,
-      graphConfig,
-      canvasBoundaryPadding,
-      nodeMaxVisibleSize,
-      nodeMinVisibleSize
-    }) => ({
+    ({ data, transformMatrix, ...settings }): IGraphState => ({
       settings: {
-        features,
-        graphConfig,
-        canvasBoundaryPadding,
-        nodeMaxVisibleSize,
-        nodeMinVisibleSize
+        ...DEFAULT_GRAPH_SETTINGS,
+        ...settings
       },
       data: resetUndoStack(data ?? GraphModel.empty()),
       viewport: {

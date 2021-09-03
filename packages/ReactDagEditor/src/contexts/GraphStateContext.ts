@@ -7,7 +7,7 @@ import { GraphConfigBuilder } from "../models/config/GraphConfigBuilder";
 import type { IEvent } from "../models/event";
 import type { IGap, IRectSize, ITransformMatrix, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
-import { GraphBehavior, IGraphState } from "../models/state";
+import { GraphBehavior, IGraphSettings, IGraphState } from "../models/state";
 import { Debug } from "../utils/debug";
 import { resetUndoStack } from "../utils/history";
 
@@ -35,14 +35,16 @@ export const DEFAULT_NODE_MAX_VISIBLE_SIZE: IRectSize = {
   height: NODE_MAX_VISIBLE_LENGTH
 };
 
+export const DEFAULT_GRAPH_SETTINGS: IGraphSettings = {
+  features: defaultFeatures,
+  graphConfig: GraphConfigBuilder.default().build(),
+  canvasBoundaryPadding: EMPTY_GAP,
+  nodeMinVisibleSize: DEFAULT_NODE_MIN_VISIBLE_SIZE,
+  nodeMaxVisibleSize: DEFAULT_NODE_MAX_VISIBLE_SIZE
+};
+
 export const EMPTY_GRAPH_STATE: IGraphState = {
-  settings: {
-    features: defaultFeatures,
-    graphConfig: GraphConfigBuilder.default().build(),
-    canvasBoundaryPadding: EMPTY_GAP,
-    nodeMinVisibleSize: DEFAULT_NODE_MIN_VISIBLE_SIZE,
-    nodeMaxVisibleSize: DEFAULT_NODE_MAX_VISIBLE_SIZE
-  },
+  settings: DEFAULT_GRAPH_SETTINGS,
   behavior: GraphBehavior.default,
   data: resetUndoStack(GraphModel.empty()),
   viewport: {

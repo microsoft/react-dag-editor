@@ -1,8 +1,10 @@
 {
   "name": "react-dag-editor",
   "license": "MIT",
-  "repository": "git@github.com:AML-StudioUX/react-dag-editor.git",
-  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/microsoft/react-dag-editor.git"
+  },
+  "version": "0.1.1",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "files": [

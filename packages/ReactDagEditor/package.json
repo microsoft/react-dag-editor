@@ -38,10 +38,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@fluentui/merge-styles": "^8.0.0-beta.0",
     "@react-dag-editor-common/builder": "^0.0.1",
     "@react-dag-editor-common/demo": "0.0.1",
     "@react-dag-editor-common/eslint-config": "^0.0.1",
-    "@fluentui/merge-styles": "^8.0.0-beta.0",
     "@storybook/addon-docs": "^6.0.22",
     "@storybook/addon-storyshots": "^6.0.22",
     "@storybook/react": "^6.0.22",
@@ -132,5 +132,6 @@
       "last 1 edge version",
       "last 1 ie version"
     ]
-  }
+  },
+  "gitHead": "a0d1b6742c2d5e3178538db44bff88ade12d3cc0"
 }

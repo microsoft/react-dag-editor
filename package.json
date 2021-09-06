@@ -8,7 +8,7 @@
     "lintfix": "lerna run lintfix",
     "build": "lerna run build",
     "test": "jest && lerna run test",
-    "publish-packages": "git update-index --assume-unchanged .npmrc && lerna publish from-package --yes --no-git-reset",
+    "publish-packages": "lerna publish from-package --yes --no-git-reset",
     "start": "node ./scripts/run-demo.js",
     "updatePackageJson": "node ./scripts/edit-package-json.js",
     "run-demo": "node ./scripts/run-demo.js",

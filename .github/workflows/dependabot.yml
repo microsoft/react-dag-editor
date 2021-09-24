@@ -4,8 +4,5 @@ on:
     branches: [ security-deps-fix ]
 
 jobs:
-  check-dependabot:
+  dependabot:
     runs-on: ubuntu-latest
-    if: ${{ github.actor == 'dependabot[bot]' }}
-    steps:
-      - uses: actions/checkout@v2

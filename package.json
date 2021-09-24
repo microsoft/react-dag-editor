@@ -48,6 +48,7 @@
     "yo/**/meow": "^10.0.0",
     "yo/**/normalize-url": "^4.5.1",
     "lerna/**/normalize-url": "^4.5.1",
-    "immer": "^9.0.6"
+    "immer": "9.0.6",
+    "prismjs": "1.25.0"
   }
 }

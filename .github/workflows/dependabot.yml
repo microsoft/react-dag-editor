@@ -1,0 +1,11 @@
+name: Dependabot Untrusted Workflow
+on:
+  push:
+    branches: [ security-deps-fix ]
+
+jobs:
+  check-dependabot:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - uses: actions/checkout@v2

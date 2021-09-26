@@ -1,6 +1,10 @@
 # Basic dependabot.yml file with
 # minimum configuration for two package managers
 
+name: Dependabot
+on:
+  push:
+    branches: [ security-deps-fix ]
 version: 2
 updates:
   # Enable version updates for npm

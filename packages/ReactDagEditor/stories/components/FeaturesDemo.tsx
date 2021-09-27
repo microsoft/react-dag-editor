@@ -17,7 +17,7 @@ import {
   INodeConfig,
   IPortConfig,
   IPortDrawArgs,
-  ReactDagEditor
+  ReactDagEditor,
 } from "../../src";
 import { useGraphReducer } from "../../src/hooks/useGraphReducer";
 import { sampleGraphData } from "../data/sample-graph-1";
@@ -28,10 +28,10 @@ const stepNodeContainerStyles: React.CSSProperties = {
   flexGrow: 1,
   height: "100%",
   backgroundColor: "yellow",
-  opacity: 0.5
+  opacity: 0.5,
 };
 
-const StepNode: React.FC<{ name: string }> = props => {
+const StepNode: React.FC<{ name: string }> = (props) => {
   return (
     <div style={stepNodeContainerStyles}>
       {props.name}
@@ -71,15 +71,15 @@ const sourceNodeConfig: INodeConfig = {
         fillOpacity={0.8}
       />
     );
-  }
+  },
 };
 
 /** Another node config. Use nodes[].shape to specify which one to use */
 
 const stepNodeConfig: INodeConfig = {
   getMinHeight: () => 64,
-  getMinWidth: model => 120 + (model.name?.length ?? 0) * 12,
-  render: args => {
+  getMinWidth: (model) => 120 + (model.name?.length ?? 0) * 12,
+  render: (args) => {
     const height = getRectHeight(stepNodeConfig, args.model);
     const width = getRectWidth(stepNodeConfig, args.model);
 
@@ -94,7 +94,7 @@ const stepNodeConfig: INodeConfig = {
         <StepNode name={args.model.name ?? ""} />
       </foreignObject>
     );
-  }
+  },
 };
 
 /** How to customize your port on a node. */
@@ -117,7 +117,7 @@ interface IPortProps {
  */
 const RADIUS = 18;
 
-export const Port: React.FunctionComponent<IPortProps> = props => {
+export const Port: React.FunctionComponent<IPortProps> = (props) => {
   const { port, x, y, parentNode, style, isConnectable } = props;
 
   const renderCircle = (r: number, circleStyle: Partial<React.CSSProperties>): React.ReactNode => {
@@ -187,7 +187,7 @@ class MyPortConfig implements IPortConfig {
       stroke,
       strokeWidth,
       strokeDasharray,
-      fill
+      fill,
     };
   }
 
@@ -232,7 +232,7 @@ class MyPortConfig implements IPortConfig {
       height: 30,
       border: "1px solid #ccc",
       minWidth: 50,
-      zIndex: 1000
+      zIndex: 1000,
     };
 
     return (
@@ -252,8 +252,10 @@ const graphConfig = GraphConfigBuilder.default()
 export const FeaturesDemo: React.FC = () => {
   const [state, dispatch] = useGraphReducer(
     {
-      graphConfig,
-      data: GraphModel.fromJSON(sampleGraphData)
+      settings: {
+        graphConfig,
+      },
+      data: GraphModel.fromJSON(sampleGraphData),
     },
     undefined
   );

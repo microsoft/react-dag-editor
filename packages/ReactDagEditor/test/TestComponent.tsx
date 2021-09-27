@@ -1,18 +1,26 @@
 import * as React from "react";
-import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphConfig, IGraphReducer } from "../src";
+import {
+  applyDefaultPortsPosition,
+  GraphModel,
+  ICanvasData,
+  IEvent,
+  IGraphConfig,
+  IGraphReducer,
+  IGraphReducerInitializerParams,
+} from "../src";
 import { Graph, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphController } from "../src/controllers/GraphController";
 import { useGraphController } from "../src/hooks/context";
-import { IGraphReducerInitializerParams, useGraphReducer } from "../src/hooks/useGraphReducer";
+import { useGraphReducer } from "../src/hooks/useGraphReducer";
 import Sample0 from "../test/unit/__data__/sample0.json";
 import { defaultConfig } from "./unit/__mocks__/mockContext";
 
 const data: ICanvasData = {
   ...Sample0,
-  nodes: Sample0.nodes.map(node => ({
+  nodes: Sample0.nodes.map((node) => ({
     ...node,
-    ports: applyDefaultPortsPosition<unknown>(node.ports || [])
-  }))
+    ports: applyDefaultPortsPosition<unknown>(node.ports || []),
+  })),
 };
 
 export interface ITestComponentProps {
@@ -57,7 +65,7 @@ export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps
     {
       ...stateProps,
       graphConfig,
-      data
+      data,
     },
     middleware
   );

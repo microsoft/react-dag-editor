@@ -20,3 +20,4 @@ export * from "./models/event";
 export * from "./models/config/GraphConfig";
 export * from "./models/config/GraphConfigBuilder";
 export * from "./models/config/types";
+export * from "./createGraphState";

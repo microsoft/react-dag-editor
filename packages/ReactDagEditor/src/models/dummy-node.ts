@@ -1,4 +1,4 @@
-import { INodeGeometryDelta } from "./GraphModel";
+import type { INodeGeometryDelta } from "./GraphModel";
 
 /**
  * @internal
@@ -17,3 +17,14 @@ export interface IDummyNodes extends INodeGeometryDelta {
   alignedDX: number | undefined;
   alignedDY: number | undefined;
 }
+
+export const emptyDummyNodes = (): IDummyNodes => ({
+  dx: 0,
+  dy: 0,
+  dWidth: 0,
+  dHeight: 0,
+  alignedDX: undefined,
+  alignedDY: undefined,
+  nodes: [],
+  isVisible: false,
+});

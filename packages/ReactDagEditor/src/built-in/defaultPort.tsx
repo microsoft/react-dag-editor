@@ -4,7 +4,7 @@ import type { ICanvasNode } from "../models/node";
 import type { ICanvasPort } from "../models/port";
 import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
-import { hasState } from "../utils";
+import { hasState } from "../utils/state";
 import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
 
 class DefaultPort implements IPortConfig {
@@ -29,7 +29,7 @@ class DefaultPort implements IPortConfig {
 
     return {
       stroke,
-      fill
+      fill,
     };
   }
 

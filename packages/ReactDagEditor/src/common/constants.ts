@@ -21,14 +21,14 @@ export enum MouseEventButton {
   /**
    * typically the Browser Forward button
    */
-  Fifth = 5
+  Fifth = 5,
 }
 
 export enum MouseEventButtons {
   None = 0,
   Left = 1,
   Right = 2,
-  Middle = 4
+  Middle = 4,
 }
 
 export const DEFAULT_AUTO_ALIGN_THRESHOLD = 50;

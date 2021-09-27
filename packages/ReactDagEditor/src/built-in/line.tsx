@@ -3,14 +3,15 @@ import type { ITheme } from "../contexts";
 import type { IEdgeConfig } from "../models/config/types";
 import type { ICanvasEdge } from "../models/edge";
 import { GraphEdgeState } from "../models/element-state";
-import { getCurvePathD, hasState } from "../utils";
+import { getCurvePathD } from "../utils/getCurvePathD";
+import { hasState } from "../utils/state";
 
 export const line: IEdgeConfig = {
   getStyle(edge: ICanvasEdge, theme: ITheme): React.CSSProperties {
     return {
       cursor: "crosshair",
       stroke: hasState(GraphEdgeState.selected)(edge.state) ? theme.edgeColorSelected : theme.edgeColor,
-      strokeWidth: "2"
+      strokeWidth: "2",
     };
   },
   render(args): React.ReactNode {
@@ -26,5 +27,5 @@ export const line: IEdgeConfig = {
         id={`edge${edge.id}`}
       />
     );
-  }
+  },
 };

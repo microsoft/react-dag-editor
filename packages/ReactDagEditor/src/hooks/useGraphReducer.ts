@@ -1,6 +1,7 @@
 import * as React from "react";
 import { IDispatch, IDispatchCallback, IGraphAction, IGraphReactReducer, IGraphReducer } from "../contexts";
-import { createGraphState, IGraphReducerInitializerParams, IGraphState } from "../models/state";
+import { createGraphState } from "../createGraphState";
+import { IGraphReducerInitializerParams, IGraphState } from "../models/state";
 import { behaviorReducer } from "../reducers/behaviorReducer";
 import { canvasReducer } from "../reducers/canvasReducer";
 import { composeReducers } from "../reducers/composeReducers";

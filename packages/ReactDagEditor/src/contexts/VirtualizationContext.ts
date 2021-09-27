@@ -1,6 +1,6 @@
 import { createContext } from "react";
+import { EMPTY_TRANSFORM_MATRIX } from "../createGraphState";
 import { IContainerRect, IRectShape, IViewport } from "../models/geometry";
-import { EMPTY_TRANSFORM_MATRIX } from "./GraphStateContext";
 
 export interface IVirtualizationContext {
   viewport: Required<IViewport>;
@@ -22,27 +22,27 @@ const EMPTY_RECT = {
   top: 0,
   toJSON(): IContainerRect {
     return this;
-  }
+  },
 };
 
 export const VirtualizationContext = createContext<IVirtualizationContext>({
   viewport: {
     rect: EMPTY_RECT,
-    transformMatrix: EMPTY_TRANSFORM_MATRIX
+    transformMatrix: EMPTY_TRANSFORM_MATRIX,
   },
   renderedArea: {
     minX: 0,
     minY: 0,
     maxX: 0,
-    maxY: 0
+    maxY: 0,
   },
   visibleArea: {
     minX: 0,
     minY: 0,
     maxX: 0,
-    maxY: 0
+    maxY: 0,
   },
   renderedNodes: new Set(),
   renderedEdges: new Set(),
-  timestamp: 0
+  timestamp: 0,
 });

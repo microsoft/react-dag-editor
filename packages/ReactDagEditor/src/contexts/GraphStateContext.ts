@@ -1,62 +1,9 @@
 import * as React from "react";
-import { NODE_MAX_VISIBLE_LENGTH, NODE_MIN_VISIBLE_LENGTH } from "../common/constants";
-import { emptyDummyNodes } from "../components/dummyNodes";
-import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
-import { defaultFeatures } from "../Features";
-import { GraphConfigBuilder } from "../models/config/GraphConfigBuilder";
+import { EMPTY_GRAPH_STATE } from "../createGraphState";
 import type { IEvent } from "../models/event";
-import type { IGap, IRectSize, ITransformMatrix, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
-import { GraphBehavior, IGraphSettings, IGraphState } from "../models/state";
+import type { IGraphState } from "../models/state";
 import { Debug } from "../utils/debug";
-import { resetUndoStack } from "../utils/history";
-
-export const EMPTY_TRANSFORM_MATRIX: ITransformMatrix = [1, 0, 0, 1, 0, 0];
-
-export const EMPTY_VIEW_PORT: IViewport = {
-  rect: undefined,
-  transformMatrix: EMPTY_TRANSFORM_MATRIX
-};
-
-export const EMPTY_GAP: IGap = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0
-};
-
-export const DEFAULT_NODE_MIN_VISIBLE_SIZE: IRectSize = {
-  width: NODE_MIN_VISIBLE_LENGTH,
-  height: NODE_MIN_VISIBLE_LENGTH
-};
-
-export const DEFAULT_NODE_MAX_VISIBLE_SIZE: IRectSize = {
-  width: NODE_MAX_VISIBLE_LENGTH,
-  height: NODE_MAX_VISIBLE_LENGTH
-};
-
-export const DEFAULT_GRAPH_SETTINGS: IGraphSettings = {
-  features: defaultFeatures,
-  graphConfig: GraphConfigBuilder.default().build(),
-  canvasBoundaryPadding: EMPTY_GAP,
-  nodeMinVisibleSize: DEFAULT_NODE_MIN_VISIBLE_SIZE,
-  nodeMaxVisibleSize: DEFAULT_NODE_MAX_VISIBLE_SIZE
-};
-
-export const EMPTY_GRAPH_STATE: IGraphState = {
-  settings: DEFAULT_GRAPH_SETTINGS,
-  behavior: GraphBehavior.default,
-  data: resetUndoStack(GraphModel.empty()),
-  viewport: {
-    transformMatrix: [1, 0, 0, 1, 0, 0],
-    rect: undefined
-  },
-  dummyNodes: emptyDummyNodes(),
-  alignmentLines: [],
-  activeKeys: new Set<string>(),
-  selectBoxPosition: emptySelectBoxPosition(),
-  connectState: undefined
-};
 
 /**
  *
@@ -72,13 +19,8 @@ export const defaultGraphStateContext: IGraphStateContext = {
   },
   dispatch: () => {
     warnGraphStateContext();
-  }
+  },
 };
-
-export type TDataComposer<NodeData = unknown, EdgeData = unknown, PortData = unknown> = (
-  prev: GraphModel<NodeData, EdgeData, PortData>,
-  prevState: IGraphState<NodeData, EdgeData, PortData>
-) => GraphModel<NodeData, EdgeData, PortData>;
 
 export const EMPTY_CONNECT_STATE = {
   sourceNode: undefined,
@@ -87,8 +29,8 @@ export const EMPTY_CONNECT_STATE = {
   targetPort: undefined,
   movingPoint: {
     x: 0,
-    y: 0
-  }
+    y: 0,
+  },
 };
 
 export type IGraphAction<NodeData = unknown, EdgeData = unknown, PortData = unknown> = IEvent<
@@ -123,7 +65,7 @@ export const GraphValueContext = React.createContext<GraphModel>(
       console.warn("Default graph data value is being used. Please check if you forget rendering Graph component");
 
       return target[prop];
-    }
+    },
   })
 );
 
@@ -147,8 +89,8 @@ export const setData = <NodeData = unknown, EdgeData = unknown, PortData = unkno
   ...state,
   data: {
     ...state.data,
-    present: data
-  }
+    present: data,
+  },
 });
 
 export const updateData = <NodeData = unknown, EdgeData = unknown, PortData = unknown>(
@@ -158,6 +100,6 @@ export const updateData = <NodeData = unknown, EdgeData = unknown, PortData = un
   ...state,
   data: {
     ...state.data,
-    present: f(state.data.present)
-  }
+    present: f(state.data.present),
+  },
 });

@@ -1,5 +1,5 @@
 import type { IGraphReactReducer } from "../contexts";
-import { EMPTY_TRANSFORM_MATRIX } from "../contexts/GraphStateContext";
+import { EMPTY_TRANSFORM_MATRIX } from "../createGraphState";
 import { GraphFeatures } from "../Features";
 import type { IGraphConfig } from "../models/config/types";
 import {
@@ -8,7 +8,7 @@ import {
   GraphScrollBarEvent,
   ICanvasResetViewportEvent,
   ICanvasZoomToFitEvent,
-  IEvent
+  IEvent,
 } from "../models/event";
 import type { IContainerRect, IPoint, IViewport } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
@@ -29,14 +29,14 @@ import {
   scrollIntoView,
   transformPoint,
   zoom,
-  zoomTo
+  zoomTo,
 } from "../utils";
 import { pipe } from "../utils/pipe";
 
 function getRectCenter(rect: IContainerRect): IPoint {
   return {
     x: rect.width / 2,
-    y: rect.height / 2
+    y: rect.height / 2,
   };
 }
 
@@ -53,7 +53,7 @@ function resetViewport(
   if (!action.ensureNodeVisible) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: EMPTY_TRANSFORM_MATRIX,
     };
   }
 
@@ -62,7 +62,7 @@ function resetViewport(
   if (nodes.size === 0) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: EMPTY_TRANSFORM_MATRIX,
     };
   }
 
@@ -70,22 +70,22 @@ function resetViewport(
     return isRectVisible(r, viewport);
   };
 
-  const nodeRects = nodes.map(n => getNodeRect(n, graphConfig));
+  const nodeRects = nodes.map((n) => getNodeRect(n, graphConfig));
   const hasVisibleNode = nodeRects.find(isShapeRectInViewport);
 
   if (hasVisibleNode) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: EMPTY_TRANSFORM_MATRIX,
     };
   }
 
-  const groupRects = groups.map(g => getGroupRect(g, nodes, graphConfig));
+  const groupRects = groups.map((g) => getGroupRect(g, nodes, graphConfig));
   const hasVisibleGroup = groupRects.find(isShapeRectInViewport);
   if (hasVisibleGroup) {
     return {
       ...viewport,
-      transformMatrix: EMPTY_TRANSFORM_MATRIX
+      transformMatrix: EMPTY_TRANSFORM_MATRIX,
     };
   }
 
@@ -101,7 +101,7 @@ function resetViewport(
 
   return {
     ...viewport,
-    transformMatrix: [1, 0, 0, 1, -focusNode.x, -focusNode.y]
+    transformMatrix: [1, 0, 0, 1, -focusNode.x, -focusNode.y],
   };
 }
 
@@ -121,11 +121,11 @@ function zoomToFit(
     graphConfig,
     rect: viewport.rect,
     nodeMaxVisibleSize,
-    nodeMinVisibleSize
+    nodeMinVisibleSize,
   });
   return {
     ...viewport,
-    transformMatrix
+    transformMatrix,
   };
 }
 
@@ -138,7 +138,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
     case GraphCanvasEvent.ViewportResize:
       return {
         ...viewport,
-        rect: action.viewportRect
+        rect: action.viewportRect,
       };
     case GraphCanvasEvent.Zoom:
       if (!isViewportComplete(viewport)) {
@@ -148,7 +148,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
         scale: action.scale,
         anchor: action.anchor ?? getRectCenter(viewport.rect),
         direction: action.direction,
-        limitScale
+        limitScale,
       })(viewport);
     case GraphScrollBarEvent.Scroll:
     case GraphCanvasEvent.MouseWheelScroll:
@@ -168,7 +168,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
           rect,
           transformMatrix,
           canvasBoundaryPadding,
-          groupPadding
+          groupPadding,
         });
         dx = clamp(minX - transformMatrix[4], maxX - transformMatrix[4], dx);
         dy = clamp(minY - transformMatrix[5], maxY - transformMatrix[5], dy);
@@ -182,7 +182,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
         zoom({
           scale,
           anchor,
-          limitScale
+          limitScale,
         })
       )(viewport);
     }
@@ -198,7 +198,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
         scale: action.scale,
         anchor: action.anchor ?? getRectCenter(viewport.rect),
         direction: action.direction,
-        limitScale
+        limitScale,
       })(viewport);
     case GraphCanvasEvent.ZoomToFit:
       return zoomToFit(viewport, data, settings, action);
@@ -219,6 +219,6 @@ export const viewportReducer: IGraphReactReducer = (state, action) => {
     ? state
     : {
         ...state,
-        viewport
+        viewport,
       };
 };

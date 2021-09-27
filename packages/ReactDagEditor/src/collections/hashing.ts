@@ -59,6 +59,7 @@ function hashNumber(n: number): number {
     return 0;
   }
   let hash = n | 0;
+  // eslint-disable-next-line security/detect-possible-timing-attacks
   if (hash !== n) {
     hash ^= n * 0xffffffff;
   }

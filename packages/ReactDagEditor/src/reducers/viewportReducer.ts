@@ -89,6 +89,7 @@ function resetViewport(
     };
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   let focusNode: IShapePosition = nodeRects.first()!;
   const findTopMostRect = (cur: IShapeRect) => {
     if (focusNode.y > cur.y) {

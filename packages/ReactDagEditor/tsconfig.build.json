@@ -1,12 +1,11 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "rootDir": "./"
+    "composite": false,
+    "rootDir": "./src"
   },
   "include": [
-    "src/**/*",
-    "stories/**/*",
-    "rollup.config.js"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",

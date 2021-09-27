@@ -46,6 +46,7 @@ const commonConfig = root => {
             declarationDir: path.resolve(root, "dist")
           }
         },
+        tsconfig: path.resolve(root, "tsconfig.build.json"),
         useTsconfigDeclarationDir: true
       }),
       nodeResolve({

@@ -4,7 +4,15 @@
   "version": "0.0.1",
   "main": "./index.js",
   "dependencies": {
+    "@storybook/addon-docs": "^6.3.8",
+    "@storybook/react": "^6.3.8",
     "circular-dependency-plugin": "^5.2.0",
+    "css-loader": "^5.0.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "sass-loader": "^10.0.0",
+    "style-loader": "^2.0.0",
+    "tslint": "^6.0.0",
     "worker-plugin": "^5.0.0"
   }
 }

@@ -44,8 +44,6 @@
     "@react-dag-editor-common/builder": "^0.0.1",
     "@react-dag-editor-common/demo": "0.0.1",
     "@react-dag-editor-common/eslint-config": "^0.0.1",
-    "@storybook/addon-docs": "^6.3.8",
-    "@storybook/addon-storyshots": "^6.3.8",
     "@storybook/react": "^6.3.8",
     "@testing-library/react": "^10.2.1",
     "@types/jest-dev-server": "^4.2.0",

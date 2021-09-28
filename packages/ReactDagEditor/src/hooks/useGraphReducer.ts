@@ -13,6 +13,7 @@ import { portReducer } from "../reducers/portReducer";
 import { selectionReducer } from "../reducers/selectionReducer";
 import { viewportReducer } from "../reducers/viewportReducer";
 import { batchedUpdates } from "../utils/batchedUpdates";
+import { identical } from "../utils/identical";
 import { useConst } from "./useConst";
 
 const builtinReducer = composeReducers(
@@ -29,13 +30,12 @@ const builtinReducer = composeReducers(
   ].map((reducer): IGraphReducer => (next) => (state, action) => next(reducer(state, action), action))
 );
 
-const noopReducer: IGraphReactReducer = (state) => state;
-
 export function getGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
-  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined = undefined
+  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined = undefined,
+  finalReducer: IGraphReactReducer<NodeData, EdgeData, PortData, Action> = identical
 ): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
   const finalMiddleware = middleware ? composeReducers([middleware, builtinReducer]) : builtinReducer;
-  return finalMiddleware(noopReducer) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+  return finalMiddleware(finalReducer) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
 }
 
 export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(

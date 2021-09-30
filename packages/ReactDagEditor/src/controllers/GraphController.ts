@@ -26,7 +26,7 @@ export class GraphController {
   public readonly eventChannel = new EventChannel();
   public state: IGraphState;
   public UNSAFE_latestState: IGraphState;
-  public dispatch: IDispatch;
+  public dispatchDelegate: IDispatch;
   public getGlobalEventTargetImpl?: () => Window | Element | null | undefined;
   private mouseClientPoint?: IPoint;
   private behavior = GraphBehavior.default;
@@ -36,6 +36,10 @@ export class GraphController {
     this.UNSAFE_latestState = state;
     this.dispatch = dispatch;
   }
+
+  public readonly dispatch: IDispatch = (action, callback) => {
+    this.dispatchDelegate(action, callback);
+  };
 
   public setMouseClientPosition(pos: IPoint): void {
     this.mouseClientPoint = pos;

@@ -45,7 +45,7 @@ export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, Po
  *
  * @param props
  */
-export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = props => {
+export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = (props) => {
   React.useEffect(() => {
     if (props.handleWarning) {
       Debug.warn = props.handleWarning;
@@ -61,12 +61,12 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = pro
   graphController.UNSAFE_latestState = state;
   React.useLayoutEffect(() => {
     graphController.state = state;
-    graphController.dispatch = dispatch;
+    graphController.dispatchDelegate = dispatch;
     graphController.getGlobalEventTargetImpl = getGlobalEventTarget;
   }, [dispatch, getGlobalEventTarget, graphController, state]);
   React.useEffect(() => {
     return () => {
-      graphController.dispatch = noop;
+      graphController.dispatchDelegate = noop;
     };
   }, [graphController]);
 

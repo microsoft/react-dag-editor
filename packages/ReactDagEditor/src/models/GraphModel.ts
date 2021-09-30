@@ -28,13 +28,24 @@ export interface INodeGeometryDelta {
   dHeight: number;
 }
 
+interface IGraphModel<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+  readonly nodes: OrderedMap<string, NodeModel<NodeData, PortData>>;
+  readonly edges: HashMap<string, EdgeModel<EdgeData>>;
+  readonly groups: ICanvasGroup[];
+  readonly head: string | undefined;
+  readonly tail: string | undefined;
+  readonly edgesBySource: EdgesByPort;
+  readonly edgesByTarget: EdgesByPort;
+}
+
 /**
  * Things preferred to be implemented as methods here:
  * * widely shared functions, eg. `updateNode`
  * * including multiple operations that must happen atomically
  * * improve performance by internal mutability
  */
-export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unknown>
+  implements IGraphModel<NodeData, EdgeData, PortData> {
   public readonly nodes: OrderedMap<string, NodeModel<NodeData, PortData>>;
   public readonly edges: HashMap<string, EdgeModel<EdgeData>>;
   public readonly groups: ICanvasGroup[];
@@ -43,35 +54,27 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
   public readonly edgesBySource: EdgesByPort;
   public readonly edgesByTarget: EdgesByPort;
 
-  private constructor(
-    nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
-    edges: HashMap<string, EdgeModel<EdgeData>>,
-    groups: ICanvasGroup[],
-    head: string | undefined,
-    tail: string | undefined,
-    edgesBySource: EdgesByPort,
-    edgesByTarget: EdgesByPort
-  ) {
-    this.nodes = nodes;
-    this.edges = edges;
-    this.groups = groups;
-    this.head = head;
-    this.tail = tail;
-    this.edgesBySource = edgesBySource;
-    this.edgesByTarget = edgesByTarget;
+  private constructor(init: IGraphModel<NodeData, EdgeData, PortData>) {
+    this.nodes = init.nodes;
+    this.edges = init.edges;
+    this.groups = init.groups;
+    this.head = init.head;
+    this.tail = init.tail;
+    this.edgesBySource = init.edgesBySource;
+    this.edgesByTarget = init.edgesByTarget;
     preventSpread(this);
   }
 
   public static empty<N, E, P>(): GraphModel<N, E, P> {
-    return new GraphModel(
-      OrderedMap.empty(),
-      HashMap.empty(),
-      [],
-      undefined,
-      undefined,
-      HashMap.empty(),
-      HashMap.empty()
-    );
+    return new GraphModel({
+      nodes: OrderedMap.empty(),
+      edges: HashMap.empty(),
+      groups: [],
+      head: undefined,
+      tail: undefined,
+      edgesBySource: HashMap.empty(),
+      edgesByTarget: HashMap.empty(),
+    });
   }
 
   public static fromJSON<N, E, P>(init: ICanvasData<N, E, P>): GraphModel<N, E, P> {
@@ -116,15 +119,15 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       setEdgeByPortMutable(edgesByTarget, edge.id, edge.target, edge.targetPortId);
     }
 
-    return new GraphModel(
-      nodes.finish(),
-      edges.finish(),
-      init.groups ?? [],
+    return new GraphModel({
+      nodes: nodes.finish(),
+      edges: edges.finish(),
+      groups: init.groups ?? [],
       head,
       tail,
-      edgesBySource.finish(),
-      edgesByTarget.finish()
-    );
+      edgesBySource: edgesBySource.finish(),
+      edgesByTarget: edgesByTarget.finish(),
+    });
   }
 
   public getNavigationFirstNode(): NodeModel<NodeData, PortData> | undefined {
@@ -138,43 +141,32 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     id: string,
     f: (node: ICanvasNode<NodeData, PortData>) => ICanvasNode<NodeData, PortData>
   ): GraphModel<NodeData, EdgeData, PortData> {
-    const nodes = this.nodes.update(id, node => node.update(f));
+    const nodes = this.nodes.update(id, (node) => node.update(f));
     if (nodes === this.nodes) {
       return this;
     }
 
     const edges = this.edges.mutate();
-    this.edgesBySource.get(id)?.forEach(edgeIds => {
-      edgeIds.forEach(edgeId => {
+    this.edgesBySource.get(id)?.forEach((edgeIds) => {
+      edgeIds.forEach((edgeId) => {
         markEdgeDirty(edges, edgeId);
       });
     });
-    this.edgesByTarget.get(id)?.forEach(edgeIds => {
-      edgeIds.forEach(edgeId => {
+    this.edgesByTarget.get(id)?.forEach((edgeIds) => {
+      edgeIds.forEach((edgeId) => {
         markEdgeDirty(edges, edgeId);
       });
     });
-    return new GraphModel(
+    return this.merge({
       nodes,
-      edges.finish(),
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+      edges: edges.finish(),
+    });
   }
 
   public updateNodeData(id: string, f: (data: NodeData) => NodeData): GraphModel<NodeData, EdgeData, PortData> {
-    return new GraphModel(
-      this.nodes.update(id, node => node.updateData(f)),
-      this.edges,
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    return this.merge({
+      nodes: this.nodes.update(id, (node) => node.updateData(f)),
+    });
   }
 
   public updatePort(
@@ -182,28 +174,28 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     portId: string,
     f: (port: ICanvasPort<PortData>) => ICanvasPort<PortData>
   ): GraphModel<NodeData, EdgeData, PortData> {
-    const nodes = this.nodes.update(nodeId, node => node.updatePorts(port => (port.id === portId ? f(port) : port)));
-    return new GraphModel(nodes, this.edges, this.groups, this.head, this.tail, this.edgesBySource, this.edgesByTarget);
+    const nodes = this.nodes.update(nodeId, (node) =>
+      node.updatePorts((port) => (port.id === portId ? f(port) : port))
+    );
+    return this.merge({
+      nodes,
+    });
   }
 
   public insertNode(node: ICanvasNode<NodeData, PortData>): GraphModel<NodeData, EdgeData, PortData> {
     const nodes = this.nodes.mutate().set(node.id, NodeModel.fromJSON(node, this.tail, undefined));
     if (this.tail && !this.nodes.has(node.id)) {
-      nodes.update(this.tail, tail =>
+      nodes.update(this.tail, (tail) =>
         tail.link({
-          next: node.id
+          next: node.id,
         })
       );
     }
-    return new GraphModel(
-      nodes.finish(),
-      this.edges,
-      this.groups,
-      this.nodes.size === 0 ? node.id : this.head,
-      node.id,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    return this.merge({
+      nodes: nodes.finish(),
+      head: this.nodes.size === 0 ? node.id : this.head,
+      tail: node.id,
+    });
   }
 
   public deleteItems(
@@ -224,23 +216,23 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
         edgesByTarget.delete(node.id);
         deleted.add(node.id);
         if (prev) {
-          nodes.update(prev.id, prevNode => prevNode.link({ next: node?.next }));
+          nodes.update(prev.id, (prevNode) => prevNode.link({ next: node?.next }));
         }
         if (next) {
-          nodes.update(next.id, nextNode => nextNode.link({ prev: prev?.id }));
+          nodes.update(next.id, (nextNode) => nextNode.link({ prev: prev?.id }));
         }
         if (node === first) {
           first = next;
         }
       } else {
-        nodes.update(node.id, current =>
-          current.link({ prev: prev?.id }).update(n => {
+        nodes.update(node.id, (current) =>
+          current.link({ prev: prev?.id }).update((n) => {
             if (hasState(GraphNodeState.editing)(n.state)) {
               return n;
             }
             return {
               ...n,
-              state: GraphNodeState.default
+              state: GraphNodeState.default,
             };
           })
         );
@@ -249,9 +241,9 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       node = next;
     }
     const edges = this.edges.mutate();
-    this.edges.forEach(edge => {
+    this.edges.forEach((edge) => {
       if (!deleted.has(edge.source) && !deleted.has(edge.target) && (predicate.edge?.(edge) ?? true)) {
-        edges.update(edge.id, e => e.update(updateState(resetState(GraphEdgeState.default))));
+        edges.update(edge.id, (e) => e.update(updateState(resetState(GraphEdgeState.default))));
       } else {
         edges.delete(edge.id);
         deleteEdgeByPort(edgesBySource, edge.id, edge.source, edge.sourcePortId);
@@ -259,15 +251,14 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       }
     });
 
-    return new GraphModel(
-      nodes.finish(),
-      edges.finish(),
-      this.groups,
-      first?.id,
-      prev?.id,
-      edgesBySource.finish(),
-      edgesByTarget.finish()
-    );
+    return this.merge({
+      nodes: nodes.finish(),
+      edges: edges.finish(),
+      head: first?.id,
+      tail: prev?.id,
+      edgesBySource: edgesBySource.finish(),
+      edgesByTarget: edgesByTarget.finish(),
+    });
   }
 
   public insertEdge(edge: ICanvasEdge<EdgeData>): GraphModel<NodeData, EdgeData, PortData> {
@@ -280,30 +271,25 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     }
     const edgesBySource = setEdgeByPort(this.edgesBySource, edge.id, edge.source, edge.sourcePortId);
     const edgesByTarget = setEdgeByPort(this.edgesByTarget, edge.id, edge.target, edge.targetPortId);
-    return new GraphModel(
-      this.nodes.update(edge.source, node => node.invalidCache()).update(edge.target, node => node.invalidCache()),
-      this.edges.set(edge.id, EdgeModel.fromJSON(edge)).map(e => e.updateState(resetState(GraphEdgeState.default))),
-      this.groups,
-      this.head,
-      this.tail,
+    return this.merge({
+      nodes: this.nodes
+        .update(edge.source, (node) => node.invalidCache())
+        .update(edge.target, (node) => node.invalidCache()),
+      edges: this.edges
+        .set(edge.id, EdgeModel.fromJSON(edge))
+        .map((e) => e.updateState(resetState(GraphEdgeState.default))),
       edgesBySource,
-      edgesByTarget
-    );
+      edgesByTarget,
+    });
   }
 
   public updateEdge(
     id: string,
     f: (edge: ICanvasEdge<EdgeData>) => ICanvasEdge<EdgeData>
   ): GraphModel<NodeData, EdgeData, PortData> {
-    return new GraphModel(
-      this.nodes,
-      this.edges.update(id, e => e.update(f)),
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    return this.merge({
+      edges: this.edges.update(id, (e) => e.update(f)),
+    });
   }
 
   public deleteEdge(id: string): GraphModel<NodeData, EdgeData, PortData> {
@@ -311,15 +297,11 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     if (!edge) {
       return this;
     }
-    return new GraphModel(
-      this.nodes,
-      this.edges.delete(id),
-      this.groups,
-      this.head,
-      this.tail,
-      deleteEdgeByPort(this.edgesBySource, edge.id, edge.source, edge.sourcePortId),
-      deleteEdgeByPort(this.edgesByTarget, edge.id, edge.target, edge.targetPortId)
-    );
+    return this.merge({
+      edges: this.edges.delete(id),
+      edgesBySource: deleteEdgeByPort(this.edgesBySource, edge.id, edge.source, edge.sourcePortId),
+      edgesByTarget: deleteEdgeByPort(this.edgesByTarget, edge.id, edge.target, edge.targetPortId),
+    });
   }
 
   /**
@@ -329,55 +311,38 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     const updates = new Set<string>();
     const nodes = this.nodes.mutate();
     const edges = this.edges.mutate();
-    dummies.forEach(dummy => {
+    dummies.forEach((dummy) => {
       updates.add(dummy.id);
-      nodes.update(dummy.id, node => node.updatePositionAndSize(dummy));
-      this.edgesBySource.get(dummy.id)?.forEach(ids => {
-        ids.forEach(id => {
+      nodes.update(dummy.id, (node) => node.updatePositionAndSize(dummy));
+      this.edgesBySource.get(dummy.id)?.forEach((ids) => {
+        ids.forEach((id) => {
           markEdgeDirty(edges, id);
         });
       });
-      this.edgesByTarget.get(dummy.id)?.forEach(ids => {
-        ids.forEach(id => {
+      this.edgesByTarget.get(dummy.id)?.forEach((ids) => {
+        ids.forEach((id) => {
           markEdgeDirty(edges, id);
         });
       });
     });
-    return new GraphModel(
-      nodes.finish(),
-      edges.finish(),
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    return this.merge({
+      nodes: nodes.finish(),
+      edges: edges.finish(),
+    });
   }
 
   public mapNodes(
     f: (node: NodeModel<NodeData, PortData>) => NodeModel<NodeData, PortData>
   ): GraphModel<NodeData, EdgeData, PortData> {
-    return new GraphModel(
-      this.nodes.map(f),
-      this.edges,
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    return this.merge({
+      nodes: this.nodes.map(f),
+    });
   }
 
   public mapEdges(f: (node: EdgeModel<EdgeData>) => EdgeModel<EdgeData>): GraphModel<NodeData, EdgeData, PortData> {
-    return new GraphModel(
-      this.nodes,
-      this.edges.map(f),
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    return this.merge({
+      edges: this.edges.map(f),
+    });
   }
 
   public selectNodes(
@@ -386,18 +351,20 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
   ): GraphModel<NodeData, EdgeData, PortData> {
     const selected = new Set<string>();
     const nodes = this.nodes
-      .map(node => {
+      .map((node) => {
         const isNodeSelected = predicate(node.inner);
         if (isNodeSelected) {
           selected.add(node.id);
         }
         return node
           .updatePorts(updateState(resetState(GraphPortState.default)))
-          .updateState(resetConnectState(isNodeSelected ? GraphNodeState.selected : GraphNodeState.unconnectedToSelected));
+          .updateState(
+            resetConnectState(isNodeSelected ? GraphNodeState.selected : GraphNodeState.unconnectedToSelected)
+          );
       })
       .mutate();
     if (selected.size === 0) {
-      this.nodes.forEach(n => nodes.update(n.id, it => it.updateState(resetState(GraphNodeState.default))));
+      this.nodes.forEach((n) => nodes.update(n.id, (it) => it.updateState(resetState(GraphNodeState.default))));
     } else if (topNode) {
       const n = nodes.get(topNode);
       if (n) {
@@ -406,14 +373,14 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       }
     }
     const setConnected = (id: string) => {
-      nodes.update(id, node =>
+      nodes.update(id, (node) =>
         node.update(
           updateState(resetState(isSelected(node) ? GraphNodeState.selected : GraphNodeState.connectedToSelected))
         )
       );
     };
     const edges = selected.size
-      ? this.edges.map(edge => {
+      ? this.edges.map((edge) => {
           let state = GraphEdgeState.unconnectedToSelected;
           if (selected.has(edge.source)) {
             setConnected(edge.target);
@@ -425,16 +392,11 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
           }
           return edge.update(updateState(resetState(state)));
         })
-      : this.edges.map(edge => edge.updateState(resetState(GraphEdgeState.default)));
-    return new GraphModel(
-      nodes.finish(),
+      : this.edges.map((edge) => edge.updateState(resetState(GraphEdgeState.default)));
+    return this.merge({
+      nodes: nodes.finish(),
       edges,
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    });
   }
 
   public getEdgesBySource(nodeId: string, portId: string): ReadonlySet<string> | undefined {
@@ -454,15 +416,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
   }
 
   public shallow(): GraphModel<NodeData, EdgeData, PortData> {
-    return new GraphModel(
-      this.nodes,
-      this.edges,
-      this.groups,
-      this.head,
-      this.tail,
-      this.edgesBySource,
-      this.edgesByTarget
-    );
+    return this.merge({});
   }
 
   public toJSON(): ICanvasData<NodeData, EdgeData, PortData> {
@@ -472,10 +426,10 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       nodes.push(current.inner);
       current = current.next && this.nodes.get(current.next);
     }
-    const edges = Array.from(this.edges.values()).map(it => it.inner);
+    const edges = Array.from(this.edges.values()).map((it) => it.inner);
     return {
       nodes,
-      edges
+      edges,
     };
   }
 
@@ -486,12 +440,24 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       return false;
     }
     let exist = false;
-    sources.forEach(id => {
+    sources.forEach((id) => {
       if (targets.has(id)) {
         exist = true;
       }
     });
     return exist;
+  }
+
+  private merge(init: Partial<IGraphModel<NodeData, EdgeData, PortData>>): GraphModel<NodeData, EdgeData, PortData> {
+    return new GraphModel({
+      nodes: init.nodes ?? this.nodes,
+      edges: init.edges ?? this.edges,
+      groups: init.groups ?? this.groups,
+      head: init.head ?? this.head,
+      tail: init.tail ?? this.tail,
+      edgesBySource: init.edgesBySource ?? this.edgesBySource,
+      edgesByTarget: init.edgesByTarget ?? this.edgesByTarget,
+    });
   }
 }
 
@@ -503,7 +469,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
  */
 function setEdgeByPort(edgesByPort: EdgesByPort, edgeId: string, nodeId: string, portId: string): EdgesByPort {
   return edgesByPort.has(nodeId)
-    ? edgesByPort.update(nodeId, map => {
+    ? edgesByPort.update(nodeId, (map) => {
         const edges = map.get(portId);
         return new Map(map).set(portId, (edges ? new Set(edges) : new Set<string>()).add(edgeId));
       })
@@ -518,7 +484,7 @@ function setEdgeByPort(edgesByPort: EdgesByPort, edgeId: string, nodeId: string,
  */
 function setEdgeByPortMutable(edgesByPort: EdgesByPortMutable, edgeId: string, nodeId: string, portId: string): void {
   if (edgesByPort.has(nodeId)) {
-    edgesByPort.update(nodeId, map => {
+    edgesByPort.update(nodeId, (map) => {
       let set = map.get(portId);
       if (!set) {
         set = new Set<string>();
@@ -547,7 +513,7 @@ function deleteEdgeByPort<T extends EdgesByPort | HashMapBuilder<string, Readonl
   if (!edgesByPort.has(nodeId)) {
     return edgesByPort;
   }
-  return edgesByPort.update(nodeId, edgeByPortsMap => {
+  return edgesByPort.update(nodeId, (edgeByPortsMap) => {
     const edgeIds = edgeByPortsMap.get(portId);
     if (!edgeIds) {
       return edgeByPortsMap;

@@ -19,7 +19,7 @@ import {
   IConnectingState,
   IGraphProps,
   IGraphState,
-  NodeModel
+  NodeModel,
 } from "../../src";
 import { getNearestConnectablePort } from "../../src/utils";
 import { EventChannel } from "../../src/utils/eventChannel";
@@ -36,11 +36,11 @@ describe("test getNearestConnectablePort", () => {
       width: 200,
       height: 100,
       x: 100,
-      y: 100
+      y: 100,
     };
     const data = GraphModel.fromJSON({
       nodes: [node],
-      edges: []
+      edges: [],
     });
     const port = getNearestConnectablePort({
       parentNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -50,7 +50,7 @@ describe("test getNearestConnectablePort", () => {
       data,
       viewport: {
         rect: mockClientRect,
-        transformMatrix: [1, 0, 0, 1, 0, 0]
+        transformMatrix: [1, 0, 0, 1, 0, 0],
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
       anotherPort: {
@@ -59,9 +59,9 @@ describe("test getNearestConnectablePort", () => {
         position: [0, 0],
         isInputDisabled: false,
         data: {
-          isConnectable: false
-        }
-      }
+          isConnectable: false,
+        },
+      },
     });
     expect(port).toBeUndefined();
   });
@@ -74,25 +74,25 @@ describe("test getNearestConnectablePort", () => {
         name: "",
         isInputDisabled: false,
         data: {
-          isConnectable: false
-        }
+          isConnectable: false,
+        },
       },
       {
         id: "1",
         name: "",
         isInputDisabled: false,
         data: {
-          isConnectable: true
-        }
+          isConnectable: true,
+        },
       },
       {
         id: "2",
         name: "",
         isInputDisabled: false,
         data: {
-          isConnectable: true
-        }
-      }
+          isConnectable: true,
+        },
+      },
     ]);
     const node: ICanvasNode = {
       id: "0",
@@ -100,11 +100,11 @@ describe("test getNearestConnectablePort", () => {
       height: 100,
       x: 100,
       y: 100,
-      ports
+      ports,
     };
     const data = GraphModel.fromJSON({
       nodes: [node],
-      edges: []
+      edges: [],
     });
     const port = getNearestConnectablePort({
       parentNode: NodeModel.fromJSON(node, undefined, undefined),
@@ -114,7 +114,7 @@ describe("test getNearestConnectablePort", () => {
       data,
       viewport: {
         rect: mockClientRect,
-        transformMatrix: [1, 0, 0, 1, 0, 0]
+        transformMatrix: [1, 0, 0, 1, 0, 0],
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
       anotherPort: {
@@ -123,9 +123,9 @@ describe("test getNearestConnectablePort", () => {
         position: [0, 0],
         isInputDisabled: false,
         data: {
-          isConnectable: true
-        }
-      }
+          isConnectable: true,
+        },
+      },
     });
     expect(port?.id).toBe("1");
   });
@@ -158,8 +158,8 @@ describe("test Connecting", () => {
           rawEvent: new KeyboardEvent("keydown") as any,
           clientPoint: {
             x: 190 + mockClientRect.left,
-            y: 151 + mockClientRect.top
-          }
+            y: 151 + mockClientRect.top,
+          },
         });
       });
     }
@@ -171,7 +171,7 @@ describe("test Connecting", () => {
           type: GraphPortEvent.PointerEnter,
           node,
           port,
-          rawEvent: new PointerEvent("pointerenter", { pointerId: 0 })
+          rawEvent: new PointerEvent("pointerenter", { pointerId: 0 }),
         });
       });
     }
@@ -183,7 +183,7 @@ describe("test Connecting", () => {
           type: GraphPortEvent.PointerLeave,
           node,
           port,
-          rawEvent: new PointerEvent("pointerenter", { pointerId: 0 })
+          rawEvent: new PointerEvent("pointerenter", { pointerId: 0 }),
         });
       });
     }
@@ -194,7 +194,7 @@ describe("test Connecting", () => {
           type: GraphEdgeEvent.ConnectEnd,
           edgeWillAdd,
           isCancel: false,
-          rawEvent: new KeyboardEvent("keydown")
+          rawEvent: new KeyboardEvent("keydown"),
         });
       });
     }
@@ -237,8 +237,8 @@ describe("test Connecting", () => {
         isInputDisabled: false,
         isOutputDisabled: true,
         data: {
-          isConnectable: false
-        }
+          isConnectable: false,
+        },
       },
       {
         id: "1",
@@ -247,9 +247,9 @@ describe("test Connecting", () => {
         isInputDisabled: true,
         isOutputDisabled: false,
         data: {
-          isConnectable: true
-        }
-      }
+          isConnectable: true,
+        },
+      },
     ]);
 
     mockData = GraphModel.fromJSON({
@@ -261,7 +261,7 @@ describe("test Connecting", () => {
           y: 50,
           width: 100,
           height: 100,
-          ports
+          ports,
         },
         {
           id: "1",
@@ -269,7 +269,7 @@ describe("test Connecting", () => {
           y: 150,
           width: 100,
           height: 100,
-          ports
+          ports,
         },
         {
           id: "2",
@@ -277,15 +277,15 @@ describe("test Connecting", () => {
           y: 250,
           width: 150,
           height: 150,
-          ports
-        }
-      ]
+          ports,
+        },
+      ],
     });
 
     edgeWillAdd = jest.fn(identical);
     const graphControllerRef = React.createRef<GraphController>();
     container = render(
-      <TestComponent graphConfig={getGraphConfig()} data={mockData} graphProps={{ edgeWillAdd }}>
+      <TestComponent settings={{ graphConfig: getGraphConfig() }} data={mockData} graphProps={{ edgeWillAdd }}>
         <GraphControllerRef ref={graphControllerRef} />
       </TestComponent>
     );
@@ -297,7 +297,7 @@ describe("test Connecting", () => {
     act(() => {
       eventChannel.trigger({
         type: GraphCanvasEvent.ViewportResize,
-        viewportRect: mockClientRect
+        viewportRect: mockClientRect,
       });
     });
   });
@@ -359,8 +359,8 @@ describe("test Connecting", () => {
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
-                isConnectable: false
-              }
+                isConnectable: false,
+              },
             },
             {
               id: "1",
@@ -370,10 +370,10 @@ describe("test Connecting", () => {
               isInputDisabled: true,
               isOutputDisabled: false,
               data: {
-                isConnectable: true
-              }
-            }
-          ]
+                isConnectable: true,
+              },
+            },
+          ],
         },
         {
           id: "1",
@@ -381,7 +381,7 @@ describe("test Connecting", () => {
           y: 150,
           width: 100,
           height: 100,
-          ports
+          ports,
         },
         {
           id: "2",
@@ -389,9 +389,9 @@ describe("test Connecting", () => {
           y: 250,
           width: 150,
           height: 150,
-          ports
-        }
-      ]
+          ports,
+        },
+      ],
     });
     expect(getConnectLineElement()).toMatchSnapshot();
   });
@@ -417,8 +417,8 @@ describe("test Connecting", () => {
           target: "1",
           targetPortId: "1",
           shape: "default",
-          state: GraphEdgeState.default
-        }
+          state: GraphEdgeState.default,
+        },
       ],
       nodes: [
         {
@@ -436,8 +436,8 @@ describe("test Connecting", () => {
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
-                isConnectable: false
-              }
+                isConnectable: false,
+              },
             },
             {
               id: "1",
@@ -447,10 +447,10 @@ describe("test Connecting", () => {
               isInputDisabled: true,
               isOutputDisabled: false,
               data: {
-                isConnectable: true
-              }
-            }
-          ]
+                isConnectable: true,
+              },
+            },
+          ],
         },
         {
           id: "1",
@@ -467,8 +467,8 @@ describe("test Connecting", () => {
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
-                isConnectable: false
-              }
+                isConnectable: false,
+              },
             },
             {
               id: "1",
@@ -478,10 +478,10 @@ describe("test Connecting", () => {
               isInputDisabled: true,
               isOutputDisabled: false,
               data: {
-                isConnectable: true
-              }
-            }
-          ]
+                isConnectable: true,
+              },
+            },
+          ],
         },
         {
           id: "2",
@@ -489,9 +489,9 @@ describe("test Connecting", () => {
           y: 250,
           width: 150,
           height: 150,
-          ports
-        }
-      ]
+          ports,
+        },
+      ],
     });
     expect(connecting.sourceNode).toBeUndefined();
     expect(connecting.sourcePort).toBeUndefined();
@@ -518,16 +518,16 @@ describe("test Connecting", () => {
               name: "0",
               state: GraphPortState.default,
               isInputDisabled: false,
-              isOutputDisabled: true
+              isOutputDisabled: true,
             },
             {
               id: "1",
               name: "1",
               state: GraphPortState.default,
               isInputDisabled: true,
-              isOutputDisabled: false
-            }
-          ])
+              isOutputDisabled: false,
+            },
+          ]),
         },
         {
           id: "1",
@@ -544,8 +544,8 @@ describe("test Connecting", () => {
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
-                isConnectable: true
-              }
+                isConnectable: true,
+              },
             },
             {
               id: "1",
@@ -554,8 +554,8 @@ describe("test Connecting", () => {
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
-                isConnectable: true
-              }
+                isConnectable: true,
+              },
             },
             {
               id: "2",
@@ -564,8 +564,8 @@ describe("test Connecting", () => {
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
-                isConnectable: true
-              }
+                isConnectable: true,
+              },
             },
             {
               id: "3",
@@ -574,17 +574,17 @@ describe("test Connecting", () => {
               isInputDisabled: true,
               isOutputDisabled: false,
               data: {
-                isConnectable: true
-              }
-            }
-          ])
-        }
-      ]
+                isConnectable: true,
+              },
+            },
+          ]),
+        },
+      ],
     };
     act(() => {
       graphController.dispatch({
         type: GraphCanvasEvent.SetData,
-        data: GraphModel.fromJSON(data)
+        data: GraphModel.fromJSON(data),
       });
     });
     act(() => {
@@ -600,8 +600,8 @@ describe("test Connecting", () => {
         rawEvent: new PointerEvent("pointerenter", {
           pointerId: 0,
           clientX: 210 + mockClientRect.left,
-          clientY: 160 + mockClientRect.top
-        })
+          clientY: 160 + mockClientRect.top,
+        }),
       });
     });
     expect(connecting.targetNode).toBe("1");
@@ -614,8 +614,8 @@ describe("test Connecting", () => {
         rawEvent: new PointerEvent("pointerenter", {
           pointerId: 0,
           clientX: 210 + mockClientRect.left,
-          clientY: 160 + mockClientRect.top
-        })
+          clientY: 160 + mockClientRect.top,
+        }),
       });
     });
     expect(connecting.targetNode).toBeUndefined();
@@ -649,7 +649,7 @@ describe("test Connecting", () => {
         type: GraphPortEvent.PointerLeave,
         rawEvent: new PointerEvent("pointerleave"),
         node,
-        port
+        port,
       });
     });
     expect(getConnectLineElement()).toMatchSnapshot();
@@ -668,7 +668,7 @@ describe("test Connecting", () => {
         type: GraphPortEvent.PointerLeave,
         rawEvent: new PointerEvent("pointerleave"),
         node,
-        port
+        port,
       });
     });
     expect(connecting.targetNode).toBeUndefined();

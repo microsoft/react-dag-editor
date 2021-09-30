@@ -1,4 +1,4 @@
-import { IPoint, Direction, IViewport, ITransformMatrix } from "../../src";
+import { IPoint, Direction, IViewport, ITransformMatrix, EMPTY_TRANSFORM_MATRIX } from "../../src";
 import { focusArea, pan, scrollIntoView, zoom as zoomImpl, zoomTo as zoomToImpl } from "../../src/utils";
 import { identical } from "../../src/utils/identical";
 

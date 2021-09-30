@@ -36,6 +36,7 @@ interface IGraphModel<NodeData = unknown, EdgeData = unknown, PortData = unknown
   readonly tail: string | undefined;
   readonly edgesBySource: EdgesByPort;
   readonly edgesByTarget: EdgesByPort;
+  readonly selectedNodes: ReadonlySet<string>;
 }
 
 /**
@@ -53,6 +54,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
   public readonly tail: string | undefined;
   public readonly edgesBySource: EdgesByPort;
   public readonly edgesByTarget: EdgesByPort;
+  public readonly selectedNodes: ReadonlySet<string>;
 
   private constructor(init: IGraphModel<NodeData, EdgeData, PortData>) {
     this.nodes = init.nodes;
@@ -62,6 +64,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     this.tail = init.tail;
     this.edgesBySource = init.edgesBySource;
     this.edgesByTarget = init.edgesByTarget;
+    this.selectedNodes = init.selectedNodes;
     preventSpread(this);
   }
 
@@ -74,6 +77,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       tail: undefined,
       edgesBySource: HashMap.empty(),
       edgesByTarget: HashMap.empty(),
+      selectedNodes: new Set(),
     });
   }
 
@@ -127,6 +131,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       tail,
       edgesBySource: edgesBySource.finish(),
       edgesByTarget: edgesByTarget.finish(),
+      selectedNodes: new Set(),
     });
   }
 
@@ -396,6 +401,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     return this.merge({
       nodes: nodes.finish(),
       edges,
+      selectedNodes: selected,
     });
   }
 
@@ -448,15 +454,16 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     return exist;
   }
 
-  private merge(init: Partial<IGraphModel<NodeData, EdgeData, PortData>>): GraphModel<NodeData, EdgeData, PortData> {
+  private merge(partial: Partial<IGraphModel<NodeData, EdgeData, PortData>>): GraphModel<NodeData, EdgeData, PortData> {
     return new GraphModel({
-      nodes: init.nodes ?? this.nodes,
-      edges: init.edges ?? this.edges,
-      groups: init.groups ?? this.groups,
-      head: init.head ?? this.head,
-      tail: init.tail ?? this.tail,
-      edgesBySource: init.edgesBySource ?? this.edgesBySource,
-      edgesByTarget: init.edgesByTarget ?? this.edgesByTarget,
+      nodes: partial.nodes ?? this.nodes,
+      edges: partial.edges ?? this.edges,
+      groups: partial.groups ?? this.groups,
+      head: partial.head ?? this.head,
+      tail: partial.tail ?? this.tail,
+      edgesBySource: partial.edgesBySource ?? this.edgesBySource,
+      edgesByTarget: partial.edgesByTarget ?? this.edgesByTarget,
+      selectedNodes: partial.selectedNodes ?? this.selectedNodes,
     });
   }
 }

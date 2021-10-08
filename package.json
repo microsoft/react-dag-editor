@@ -26,6 +26,7 @@
     "glob-array": "^1.0.0",
     "jest": "^27.0.0",
     "lerna": "^4.0.0",
+    "prettier": "^2.2.1",
     "prettier-package-json": "^2.0.0",
     "prompts": "^2.4.1",
     "semver": "^7.3.5",

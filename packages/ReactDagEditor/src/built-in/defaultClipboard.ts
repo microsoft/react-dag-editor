@@ -1,6 +1,6 @@
 import * as uuid from "uuid";
 import { COPIED_NODE_SPACING } from "../common/constants";
-import { ICanvasData } from "../models/canvas";
+import type { ICanvasData } from "../models/canvas";
 
 export interface IGraphClipBoard<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   write(data: ICanvasData<NodeData, EdgeData, PortData>): void;
@@ -19,8 +19,8 @@ export class DefaultClipboard<NodeData = unknown, EdgeData = unknown, PortData =
     this.storage.setItem(
       "graph-clipboard",
       JSON.stringify({
-        nodes: data.nodes.map(n => ({ ...n, data: {} })),
-        edges: data.edges.map(e => ({ ...e, data: {} }))
+        nodes: data.nodes.map((n) => ({ ...n, data: {} })),
+        edges: data.edges.map((e) => ({ ...e, data: {} })),
       })
     );
   }
@@ -37,7 +37,7 @@ export class DefaultClipboard<NodeData = unknown, EdgeData = unknown, PortData =
       const nodeIdHash = new Map<string, string>();
 
       return {
-        nodes: data.nodes.map(n => {
+        nodes: data.nodes.map((n) => {
           const newId = uuid.v4();
 
           nodeIdHash.set(n.id, newId);
@@ -46,15 +46,15 @@ export class DefaultClipboard<NodeData = unknown, EdgeData = unknown, PortData =
             ...n,
             x: n.x + COPIED_NODE_SPACING,
             y: n.y + COPIED_NODE_SPACING,
-            id: newId
+            id: newId,
           };
         }),
-        edges: data.edges.map(e => ({
+        edges: data.edges.map((e) => ({
           ...e,
           id: uuid.v4(),
           source: nodeIdHash.get(e.source) || "",
-          target: nodeIdHash.get(e.target) || ""
-        }))
+          target: nodeIdHash.get(e.target) || "",
+        })),
       };
     } catch (error) {
       return null;

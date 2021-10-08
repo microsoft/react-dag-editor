@@ -1,8 +1,7 @@
 import { render } from "@testing-library/react";
 import * as React from "react";
-import { IEvent, IGraphState, IViewport } from "../../src";
+import { EMPTY_GRAPH_STATE, IEvent, IGraphState, IViewport } from "../../src";
 import { Scrollbar } from "../../src/components/Scrollbar";
-import { EMPTY_GRAPH_STATE } from "../../src/contexts/GraphStateContext";
 import { viewportReducer } from "../../src/reducers/viewportReducer";
 import { EventChannel } from "../../src/utils/eventChannel";
 
@@ -14,7 +13,7 @@ describe("Scrollbar", () => {
       left: 0,
       top: 0,
       right: 800,
-      bottom: 800
+      bottom: 800,
     };
 
     const [, dispatch] = React.useReducer(
@@ -22,13 +21,13 @@ describe("Scrollbar", () => {
         return viewportReducer(prev, action);
       },
       {
-        ...EMPTY_GRAPH_STATE
+        ...EMPTY_GRAPH_STATE,
       }
     );
 
     const viewport: Required<IViewport> = {
       rect,
-      transformMatrix: [1, 0, 0, 1, 0, 0]
+      transformMatrix: [1, 0, 0, 1, 0, 0],
     };
 
     return (

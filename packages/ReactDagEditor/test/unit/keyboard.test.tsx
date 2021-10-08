@@ -9,7 +9,7 @@ import {
   GraphFeatures,
   GraphModel,
   GraphNodeState,
-  updateState
+  updateState,
 } from "../../src";
 import { GraphController } from "../../src/controllers/GraphController";
 import { findDOMElement } from "../../src/utils/a11yUtils";
@@ -28,7 +28,7 @@ const updateData = (f: (prev: GraphModel) => GraphModel) =>
     graphController.dispatch({
       type: GraphCanvasEvent.UpdateData,
       updater: f,
-      shouldRecord: false
+      shouldRecord: false,
     });
   });
 
@@ -39,8 +39,8 @@ beforeEach(() => {
   wrapper = render(
     <TestComponent
       data={GraphModel.fromJSON(getSample1Data())}
-      stateProps={{
-        features
+      settings={{
+        features,
       }}
     >
       <GraphControllerRef ref={graphControllerRef} />
@@ -54,7 +54,7 @@ beforeEach(() => {
   act(() => {
     graphController.dispatch({
       type: GraphCanvasEvent.ViewportResize,
-      viewportRect: mockClientRect
+      viewportRect: mockClientRect,
     });
   });
 });
@@ -62,7 +62,7 @@ beforeEach(() => {
 it("should focus first node", () => {
   act(() => {
     fireEvent.keyDown(element, {
-      key: "Tab"
+      key: "Tab",
     });
   });
   const data = getData();
@@ -76,37 +76,29 @@ it("should focus first node", () => {
 
 it("should delete selected edge", () => {
   const id = "0";
-  updateData(data => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
+  updateData((data) => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
   act(() => {
     fireEvent.keyDown(element, {
-      key: "Delete"
+      key: "Delete",
     });
   });
-  expect(getData().toJSON()).toEqual(
-    GraphModel.fromJSON(getSample1Data())
-      .deleteEdge(id)
-      .toJSON()
-  );
+  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON());
 });
 
 it("should undo, redo", () => {
   const id = "0";
-  updateData(data => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
+  updateData((data) => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
   act(() => {
     fireEvent.keyDown(element, {
-      key: "Delete"
+      key: "Delete",
     });
   });
-  expect(getData().toJSON()).toEqual(
-    GraphModel.fromJSON(getSample1Data())
-      .deleteEdge(id)
-      .toJSON()
-  );
+  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON());
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
       metaKey: true,
-      key: "z"
+      key: "z",
     });
   });
   expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).toJSON());
@@ -114,14 +106,10 @@ it("should undo, redo", () => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
       metaKey: true,
-      key: "y"
+      key: "y",
     });
   });
-  expect(getData().toJSON()).toEqual(
-    GraphModel.fromJSON(getSample1Data())
-      .deleteEdge(id)
-      .toJSON()
-  );
+  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON());
 });
 
 it("should select all", () => {
@@ -129,7 +117,7 @@ it("should select all", () => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
       metaKey: true,
-      key: "a"
+      key: "a",
     });
   });
   expect(getData().toJSON()).toEqual(
@@ -140,19 +128,19 @@ it("should select all", () => {
 });
 
 it("should copy and paste with edge", () => {
-  updateData(data => data.selectNodes(node => node.id === "4b199015" || node.id === "fb404f70"));
+  updateData((data) => data.selectNodes((node) => node.id === "4b199015" || node.id === "fb404f70"));
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
       metaKey: true,
-      key: "c"
+      key: "c",
     });
   });
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
       metaKey: true,
-      key: "v"
+      key: "v",
     });
   });
   expect(wrapper.container).toMatchSnapshot();
@@ -164,7 +152,7 @@ it("should navigate with keyboard", () => {
       const target = document.activeElement!.tagName.toLowerCase() === "svg" ? element : document.activeElement!;
       fireEvent.keyDown(target, {
         key: "Tab",
-        shiftKey
+        shiftKey,
       });
     });
   svg.focus();
@@ -173,7 +161,7 @@ it("should navigate with keyboard", () => {
   tab();
   expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port: undefined }));
   const ports = nodes[0].ports!;
-  ports.forEach(port => {
+  ports.forEach((port) => {
     tab();
     expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port }));
   });
@@ -182,7 +170,7 @@ it("should navigate with keyboard", () => {
   ports
     .slice()
     .reverse()
-    .forEach(port => {
+    .forEach((port) => {
       tab(true);
       expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port }));
     });
@@ -194,33 +182,33 @@ it("should record keyup and keydown", () => {
   const getActiveKey = () => graphController.state.activeKeys;
   expect(getActiveKey().size).toBe(0);
   fireEvent.keyDown(element, {
-    key: "a"
+    key: "a",
   });
   expect(getActiveKey().size).toBe(1);
   expect(getActiveKey()).toContain("a");
   fireEvent.keyDown(element, {
-    key: "a"
+    key: "a",
   });
   expect(getActiveKey().size).toBe(1);
   expect(getActiveKey()).toContain("a");
   fireEvent.keyUp(element, {
-    key: "b"
+    key: "b",
   });
   expect(getActiveKey().size).toBe(1);
   expect(getActiveKey()).toContain("a");
   fireEvent.keyDown(element, {
-    key: "b"
+    key: "b",
   });
   expect(getActiveKey().size).toBe(2);
   expect(getActiveKey()).toContain("a");
   expect(getActiveKey()).toContain("b");
   fireEvent.keyUp(element, {
-    key: "b"
+    key: "b",
   });
   expect(getActiveKey().size).toBe(1);
   expect(getActiveKey()).toContain("a");
   fireEvent.keyUp(element, {
-    key: "a"
+    key: "a",
   });
   expect(getActiveKey().size).toBe(0);
 });

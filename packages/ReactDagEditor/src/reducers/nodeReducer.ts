@@ -1,8 +1,7 @@
-import { emptyDummyNodes } from "../components/dummyNodes";
 import type { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import type { IGraphConfig } from "../models/config/types";
-import type { IDummyNode, IDummyNodes } from "../models/dummy-node";
+import { emptyDummyNodes, IDummyNode, IDummyNodes } from "../models/dummy-node";
 import { GraphNodeState } from "../models/element-state";
 import {
   GraphCanvasEvent,
@@ -12,7 +11,7 @@ import {
   INodeDragEndEvent,
   INodeDragEvent,
   INodeDragStartEvent,
-  INodeLocateEvent
+  INodeLocateEvent,
 } from "../models/event";
 import { Direction } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
@@ -35,7 +34,7 @@ import {
   transformPoint,
   unSelectAllEntity,
   updateState,
-  zoom
+  zoom,
 } from "../utils";
 import { getAlignmentLines, getAutoAlignDisplacement } from "../utils/autoAlign";
 import { pipe } from "../utils/pipe";
@@ -52,7 +51,7 @@ const getDelta = (start: number, end: number, value: number): number => {
 
 function getSelectedNodes(data: GraphModel, graphConfig: IGraphConfig): IDummyNode[] {
   const nodes: IDummyNode[] = [];
-  data.nodes.forEach(node => {
+  data.nodes.forEach((node) => {
     if (!isSelected(node)) {
       return;
     }
@@ -60,7 +59,7 @@ function getSelectedNodes(data: GraphModel, graphConfig: IGraphConfig): IDummyNo
       id: node.id,
       x: node.x,
       y: node.y,
-      ...getNodeSize(node, graphConfig)
+      ...getNodeSize(node, graphConfig),
     });
   });
   return nodes;
@@ -76,7 +75,7 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
   const e = event.rawEvent as MouseEvent;
   const { rect } = state.viewport;
   const nextState = {
-    ...state
+    ...state,
   };
   const data = state.data.present;
   const viewportDx = getDelta(rect.left, rect.right, e.clientX);
@@ -90,7 +89,7 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
             scale,
             anchor: getRelativePoint(rect, e),
             direction: Direction.XY,
-            limitScale
+            limitScale,
           })
         )(state.viewport)
       : state.viewport;
@@ -103,15 +102,15 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
     ...state.dummyNodes,
     dx: state.dummyNodes.dx + delta.x,
     dy: state.dummyNodes.dy + delta.y,
-    isVisible: event.isVisible
+    isVisible: event.isVisible,
   };
   if (event.isAutoAlignEnable) {
     const renderedNodes = getRenderedNodes(data.nodes, state.viewport);
     if (renderedNodes.length < event.autoAlignThreshold) {
-      const nodes = dummyNodes.nodes.map(it => ({
+      const nodes = dummyNodes.nodes.map((it) => ({
         ...it,
         x: it.x + dummyNodes.dx,
-        y: it.y + dummyNodes.dy
+        y: it.y + dummyNodes.dy,
       }));
       const alignmentLines = getAlignmentLines(
         nodes,
@@ -153,7 +152,7 @@ function handleDraggingNewNode(state: IGraphState, action: ICanvasAddNodeEvent):
   );
   return {
     ...state,
-    alignmentLines
+    alignmentLines,
   };
 }
 
@@ -165,7 +164,7 @@ function dragStart(state: IGraphState, action: INodeDragStartEvent): IGraphState
   }
   let selectedNodes: IDummyNode[];
   if (action.isMultiSelect) {
-    data = data.selectNodes(node => node.id === action.node.id || isSelected(node));
+    data = data.selectNodes((node) => node.id === action.node.id || isSelected(node));
     selectedNodes = getSelectedNodes(data, state.settings.graphConfig);
   } else if (!isSelected(targetNode)) {
     selectedNodes = [
@@ -173,8 +172,8 @@ function dragStart(state: IGraphState, action: INodeDragStartEvent): IGraphState
         id: action.node.id,
         x: action.node.x,
         y: action.node.y,
-        ...getNodeSize(action.node, state.settings.graphConfig)
-      }
+        ...getNodeSize(action.node, state.settings.graphConfig),
+      },
     ];
   } else {
     selectedNodes = getSelectedNodes(data, state.settings.graphConfig);
@@ -183,13 +182,13 @@ function dragStart(state: IGraphState, action: INodeDragStartEvent): IGraphState
     ...state,
     data: {
       ...state.data,
-      present: data
+      present: data,
     },
     dummyNodes: {
       ...emptyDummyNodes(),
       isVisible: false,
-      nodes: selectedNodes
-    }
+      nodes: selectedNodes,
+    },
   };
 }
 
@@ -199,24 +198,24 @@ function dragEnd(state: IGraphState, action: INodeDragEndEvent): IGraphState {
     return {
       ...state,
       alignmentLines: [],
-      dummyNodes: emptyDummyNodes()
+      dummyNodes: emptyDummyNodes(),
     };
   }
   const { dx, dy } = state.dummyNodes;
   data = data.updateNodesPositionAndSize(
-    state.dummyNodes.nodes.map(node => ({
+    state.dummyNodes.nodes.map((node) => ({
       ...node,
       x: node.x + dx,
       y: node.y + dy,
       width: undefined,
-      height: undefined
+      height: undefined,
     }))
   );
   return {
     ...state,
     alignmentLines: [],
     dummyNodes: emptyDummyNodes(),
-    data: pushHistory(state.data, data, unSelectAllEntity())
+    data: pushHistory(state.data, data, unSelectAllEntity()),
   };
 }
 
@@ -242,7 +241,7 @@ function locateNode(action: INodeCentralizeEvent | INodeLocateEvent, state: IGra
 
     return {
       ...state,
-      viewport: scrollIntoView(clientX, clientY, state.viewport.rect, true, position)(state.viewport)
+      viewport: scrollIntoView(clientX, clientY, state.viewport.rect, true, position)(state.viewport),
     };
   }
   const { minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(
@@ -252,7 +251,7 @@ function locateNode(action: INodeCentralizeEvent | INodeLocateEvent, state: IGra
   );
   return {
     ...state,
-    viewport: focusArea(minNodeX, minNodeY, maxNodeX, maxNodeY, state.viewport)
+    viewport: focusArea(minNodeX, minNodeY, maxNodeX, maxNodeY, state.viewport),
   };
 }
 
@@ -266,8 +265,8 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
         dummyNodes: {
           ...emptyDummyNodes(),
           isVisible: true,
-          nodes: getSelectedNodes(data, state.settings.graphConfig)
-        }
+          nodes: getSelectedNodes(data, state.settings.graphConfig),
+        },
       };
     case GraphNodeEvent.Resizing:
       return {
@@ -277,8 +276,8 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
           dx: action.dx,
           dy: action.dy,
           dWidth: action.dWidth,
-          dHeight: action.dHeight
-        }
+          dHeight: action.dHeight,
+        },
       };
     case GraphNodeEvent.ResizingEnd: {
       const { dx, dy, dWidth, dHeight } = state.dummyNodes;
@@ -288,16 +287,16 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
         data: pushHistory(
           state.data,
           data.updateNodesPositionAndSize(
-            state.dummyNodes.nodes.map(node => ({
+            state.dummyNodes.nodes.map((node) => ({
               ...node,
               x: node.x + dx,
               y: node.y + dy,
               width: node.width + dWidth,
-              height: node.height + dHeight
+              height: node.height + dHeight,
             }))
           ),
           unSelectAllEntity()
-        )
+        ),
       };
     }
     //#endregion resize
@@ -318,8 +317,8 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(action.node.id, updateState(addState(GraphNodeState.activated)))
-            }
+              present: data.updateNode(action.node.id, updateState(addState(GraphNodeState.activated))),
+            },
           };
         default:
           return state;
@@ -332,8 +331,8 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(action.node.id, updateState(removeState(GraphNodeState.activated)))
-            }
+              present: data.updateNode(action.node.id, updateState(removeState(GraphNodeState.activated))),
+            },
           };
         default:
           return state;
@@ -349,15 +348,15 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             state.data,
             state.data.present.insertNode({
               ...action.node,
-              state: GraphNodeState.selected
+              state: GraphNodeState.selected,
             }),
             unSelectAllEntity()
-          )
+          ),
         };
       }
       return {
         ...state,
-        alignmentLines: []
+        alignmentLines: [],
       };
     }
     case GraphNodeEvent.Centralize:
@@ -366,15 +365,15 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
     case GraphNodeEvent.Add:
       return {
         ...state,
-        data: pushHistory(state.data, data.insertNode(action.node))
+        data: pushHistory(state.data, data.insertNode(action.node)),
       };
     case GraphNodeEvent.DoubleClick:
       return {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateNode(action.node.id, updateState(addState(GraphNodeState.editing)))
-        }
+          present: state.data.present.updateNode(action.node.id, updateState(addState(GraphNodeState.editing))),
+        },
       };
     default:
       return state;

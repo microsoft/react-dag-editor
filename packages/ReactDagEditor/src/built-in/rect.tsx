@@ -3,7 +3,7 @@ import type { ITheme } from "../contexts";
 import type { INodeConfig, INodeDrawArgs } from "../models/config/types";
 import type { ICanvasNode } from "../models/node";
 import { GraphNodeState } from "../models/element-state";
-import { hasState } from "../utils";
+import { hasState } from "../utils/state";
 import { getRectHeight, getRectWidth } from "../utils/layout";
 import { RectComponent } from "./RectComponent";
 
@@ -18,7 +18,7 @@ export const rect: INodeConfig = {
     if (hasState(GraphNodeState.selected | GraphNodeState.activated)(node.state)) {
       return {
         fill: theme.nodeActivateFill,
-        stroke: theme.nodeActivateStroke
+        stroke: theme.nodeActivateStroke,
       };
     }
 
@@ -26,7 +26,7 @@ export const rect: INodeConfig = {
       fill: theme.nodeFill,
       fillOpacity: 0.1,
       stroke: theme.nodeStroke,
-      borderRadius: "5"
+      borderRadius: "5",
     };
   },
   render(args: INodeDrawArgs): React.ReactNode {
@@ -38,5 +38,5 @@ export const rect: INodeConfig = {
     const textY = node.y + height / 3;
 
     return <RectComponent style={style} node={node} width={width} height={height} textY={textY} />;
-  }
+  },
 };

@@ -11,3 +11,4 @@ export * from "./useSafariScale";
 export * from "./useSelectBox";
 export * from "./useGraphState";
 export * from "./useDeferredValue";
+export * from "./useGraphReducer";

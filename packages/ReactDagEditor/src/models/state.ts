@@ -1,15 +1,15 @@
-import type { ISelectBoxPosition } from "../components/Graph/SelectBox";
+import { ISelectBoxPosition } from "../components/Graph/SelectBox";
 import type { ILine } from "../components/Line";
 import type { GraphFeatures } from "../Features";
 import type { IHistory, IZoomCommonParams } from "../utils";
 import type { IGraphConfig } from "./config/types";
-import type { IDummyNodes } from "./dummy-node";
-import type { IGap, IPoint, IViewport } from "./geometry";
-import type { GraphModel } from "./GraphModel";
+import { IDummyNodes } from "./dummy-node";
+import type { IGap, IPoint, ITransformMatrix, IViewport } from "./geometry";
+import { GraphModel } from "./GraphModel";
 
 export enum CanvasMouseMode {
   pan = "pan",
-  select = "select"
+  select = "select",
 }
 
 export enum GraphBehavior {
@@ -18,7 +18,7 @@ export enum GraphBehavior {
   panning = "panning",
   multiSelect = "multiSelect",
   connecting = "connecting",
-  addingNode = "addingNode"
+  addingNode = "addingNode",
 }
 
 export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortData = unknown>
@@ -49,4 +49,10 @@ export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = 
   contextMenuPosition?: IPoint;
   selectBoxPosition: ISelectBoxPosition;
   connectState: IConnectingState | undefined;
+}
+
+export interface IGraphReducerInitializerParams<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+  data?: GraphModel<NodeData, EdgeData, PortData>;
+  transformMatrix?: ITransformMatrix;
+  settings?: Partial<IGraphSettings<NodeData, EdgeData, PortData>>;
 }

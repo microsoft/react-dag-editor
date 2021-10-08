@@ -1,7 +1,7 @@
 import * as React from "react";
-import { EMPTY_TRANSFORM_MATRIX } from "../../contexts";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
 import { TouchDragAdapter } from "../../controllers/TouchDragAdapter";
+import { EMPTY_TRANSFORM_MATRIX } from "../../createGraphState";
 import { MouseMoveEventProvider } from "../../event-provider/MouseMoveEventProvider";
 import { IEventProvider, IGlobalMoveEventTypes } from "../../event-provider/types";
 import { useGraphData, useMinimapRect, useTheme } from "../../hooks";
@@ -15,7 +15,7 @@ import {
   getZoomFitMatrix,
   isViewportComplete,
   reverseTransformPoint,
-  transformPoint
+  transformPoint,
 } from "../../utils";
 import { clamp } from "../../utils/clamp";
 import classes from "../Graph.styles.m.scss";
@@ -53,12 +53,12 @@ export interface IMiniMapProps {
   renderArrow?(arrowDeg: number): React.ReactNode;
 }
 
-export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
+export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
   const {
     shadowPadding = 0,
     maxNodesCountAllowed = 150,
     onRenderUnavailable = () => null,
-    renderArrow = (arrowDeg: number) => undefined
+    renderArrow = (arrowDeg: number) => undefined,
   } = props;
 
   const graphViewport = useViewport();
@@ -67,7 +67,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   const data = useGraphData();
   const minimapContainerStyle: React.CSSProperties = {
     background: theme.minimapBackground,
-    ...props.style
+    ...props.style,
   };
 
   const svgRef = React.useRef<SVGSVGElement>(null);
@@ -86,12 +86,12 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       graphConfig,
       nodeMaxVisibleSize: {
         width: 0,
-        height: 0
+        height: 0,
       },
       nodeMinVisibleSize: {
         width: Infinity,
-        height: Infinity
-      }
+        height: Infinity,
+      },
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rect, data.nodes]);
@@ -103,7 +103,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
         startX: 0,
         startY: 0,
         endX: 0,
-        endY: 0
+        endY: 0,
       };
     }
 
@@ -117,7 +117,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       startX,
       startY,
       endX,
-      endY
+      endY,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rect, minimapTransformMatrix, graphViewport.rect, ...graphViewport.transformMatrix]);
@@ -148,12 +148,12 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
         {
           type: GraphCanvasEvent.ScrollIntoView,
           x: point.x,
-          y: point.y
+          y: point.y,
         },
         {
           type: GraphMinimapEvent.Click,
-          rawEvent: evt
-        }
+          rawEvent: evt,
+        },
       ]);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -170,19 +170,19 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
         startX: left + shadowPadding,
         startY: top + shadowPadding,
         endX: right - shadowPadding,
-        endY: bottom - shadowPadding
+        endY: bottom - shadowPadding,
       };
 
       graphController.eventChannel.trigger({
         type: GraphMinimapEvent.PanStart,
-        rawEvent: evt
+        rawEvent: evt,
       });
-      const drag = new DragController(eventProvider, e => {
+      const drag = new DragController(eventProvider, (e) => {
         const x = clamp(validMouseRect.startX, validMouseRect.endX, e.clientX);
         const y = clamp(validMouseRect.startY, validMouseRect.endY, e.clientY);
         return {
           x,
-          y
+          y,
         };
       });
       drag.onMove = ({ dx, dy, e }) => {
@@ -191,7 +191,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
           type: GraphMinimapEvent.Pan,
           dx: x,
           dy: y,
-          rawEvent: e
+          rawEvent: e,
         });
       };
       drag.start(evt);
@@ -199,7 +199,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
       drag.onEnd = () => {
         graphController.eventChannel.trigger({
           type: GraphMinimapEvent.PanEnd,
-          rawEvent: evt
+          rawEvent: evt,
         });
       };
     },
@@ -211,7 +211,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
     if (!rect) {
       return {
         showArrow: false,
-        arrowDeg: 0
+        arrowDeg: 0,
       };
     }
 
@@ -235,12 +235,12 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
 
     return {
       showArrow,
-      arrowDeg
+      arrowDeg,
     };
   }, [rect, viewport, shadowPadding]);
 
   const onMouseDown: React.MouseEventHandler = React.useCallback(
-    evt => {
+    (evt) => {
       onStartDrag(evt.nativeEvent, new MouseMoveEventProvider(graphController.getGlobalEventTarget()));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -250,7 +250,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = props => {
   const touchController = React.useMemo(() => {
     const handlers = new Map<number, ITouchHandler>();
     const touchDragAdapter = new TouchDragAdapter();
-    touchDragAdapter.on("start", e => {
+    touchDragAdapter.on("start", (e) => {
       onStartDrag(e, touchDragAdapter);
     });
     handlers.set(1, touchDragAdapter);

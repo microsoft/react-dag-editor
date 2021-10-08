@@ -1,17 +1,7 @@
 import * as React from "react";
-import { emptyDummyNodes } from "../components/dummyNodes";
-import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
-import {
-  DEFAULT_GRAPH_SETTINGS,
-  EMPTY_TRANSFORM_MATRIX,
-  IDispatch,
-  IDispatchCallback,
-  IGraphReactReducer,
-  IGraphReducer
-} from "../contexts";
-import { ITransformMatrix } from "../models/geometry";
-import { GraphModel } from "../models/GraphModel";
-import { GraphBehavior, IGraphSettings, IGraphState } from "../models/state";
+import { IDispatch, IDispatchCallback, IGraphAction, IGraphReactReducer, IGraphReducer } from "../contexts";
+import { createGraphState } from "../createGraphState";
+import { IGraphReducerInitializerParams, IGraphState } from "../models/state";
 import { behaviorReducer } from "../reducers/behaviorReducer";
 import { canvasReducer } from "../reducers/canvasReducer";
 import { composeReducers } from "../reducers/composeReducers";
@@ -22,15 +12,9 @@ import { nodeReducer } from "../reducers/nodeReducer";
 import { portReducer } from "../reducers/portReducer";
 import { selectionReducer } from "../reducers/selectionReducer";
 import { viewportReducer } from "../reducers/viewportReducer";
-import { resetUndoStack } from "../utils";
 import { batchedUpdates } from "../utils/batchedUpdates";
+import { identical } from "../utils/identical";
 import { useConst } from "./useConst";
-
-export interface IGraphReducerInitializerParams<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  extends Partial<IGraphSettings<NodeData, EdgeData, PortData>> {
-  data?: GraphModel<NodeData, EdgeData, PortData>;
-  transformMatrix?: ITransformMatrix;
-}
 
 const builtinReducer = composeReducers(
   [
@@ -42,41 +26,24 @@ const builtinReducer = composeReducers(
     canvasReducer,
     connectingReducer,
     selectionReducer,
-    contextMenuReducer
-  ].map((reducer): IGraphReducer => next => (state, action) => next(reducer(state, action), action))
+    contextMenuReducer,
+  ].map((reducer): IGraphReducer => (next) => (state, action) => next(reducer(state, action), action))
 );
 
-const noopReducer: IGraphReactReducer = state => state;
+export function getGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
+  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined = undefined,
+  finalReducer: IGraphReactReducer<NodeData, EdgeData, PortData, Action> = identical
+): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
+  const finalMiddleware = middleware ? composeReducers([middleware, builtinReducer]) : builtinReducer;
+  return finalMiddleware(finalReducer) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+}
 
 export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
   params: IGraphReducerInitializerParams<NodeData, EdgeData, PortData>,
   middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined
 ): [IGraphState<NodeData, EdgeData, PortData>, IDispatch<NodeData, EdgeData, PortData, Action>] {
-  const reducer = React.useMemo(() => {
-    const finalMiddleware = middleware ? composeReducers([middleware, builtinReducer]) : builtinReducer;
-    return finalMiddleware(noopReducer);
-  }, [middleware]);
-  const [state, dispatchImpl] = React.useReducer(
-    reducer,
-    params,
-    ({ data, transformMatrix, ...settings }): IGraphState => ({
-      settings: {
-        ...DEFAULT_GRAPH_SETTINGS,
-        ...settings
-      },
-      data: resetUndoStack(data ?? GraphModel.empty()),
-      viewport: {
-        rect: undefined,
-        transformMatrix: transformMatrix ?? EMPTY_TRANSFORM_MATRIX
-      },
-      behavior: GraphBehavior.default,
-      dummyNodes: emptyDummyNodes(),
-      alignmentLines: [],
-      activeKeys: new Set<string>(),
-      selectBoxPosition: emptySelectBoxPosition(),
-      connectState: undefined
-    })
-  );
+  const reducer = React.useMemo(() => getGraphReducer(middleware), [middleware]);
+  const [state, dispatchImpl] = React.useReducer(reducer, params, createGraphState);
   const sideEffects = useConst<IDispatchCallback[]>(() => []);
   const prevStateRef = React.useRef(state);
   const dispatch: IDispatch = React.useCallback(
@@ -84,7 +51,7 @@ export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData
       if (callback) {
         sideEffects.push(callback);
       }
-      dispatchImpl(action);
+      dispatchImpl(action as Action | IGraphAction<NodeData, EdgeData, PortData>);
     },
     [sideEffects]
   );
@@ -95,7 +62,7 @@ export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData
     }
     prevStateRef.current = state;
     batchedUpdates(() => {
-      sideEffects.forEach(callback => {
+      sideEffects.forEach((callback) => {
         try {
           callback(state, prevState);
         } catch (e) {

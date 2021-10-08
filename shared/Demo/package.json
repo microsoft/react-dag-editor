@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "main": "./index.js",
   "dependencies": {
-    "@storybook/addon-docs": "^6.3.8",
-    "@storybook/react": "^6.3.8",
+    "@storybook/addon-docs": "^6.3.10",
+    "@storybook/react": "^6.3.10",
     "circular-dependency-plugin": "^5.2.0",
     "css-loader": "^5.0.0",
     "react": "^16.12.0",

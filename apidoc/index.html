@@ -1,0 +1,1285 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>react-dag-editor</title>
+	<meta name="description" content="Documentation for react-dag-editor">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">react-dag-editor</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>react-dag-editor</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#work-in-progress" id="work-in-progress" style="color: inherit; text-decoration: none;">
+					<h1>Work in progress</h1>
+				</a>
+				<a href="#react-dag-editor" id="react-dag-editor" style="color: inherit; text-decoration: none;">
+					<h1>react-dag-editor</h1>
+				</a>
+				<p><a href="https://microsoft.github.io/react-dag-editor/">Try it out!</a></p>
+				<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
+					<h2>Overview</h2>
+				</a>
+				<p>React component to create graphic user interface with:</p>
+				<ul>
+					<li>draggable nodes with ports and edges on a directed graph editor.</li>
+					<li>extensibility to customize the widgets or behaviors.</li>
+					<li>accessbility and testability support</li>
+				</ul>
+				<a href="#about-the-name-quotreact-dag-editorquot" id="about-the-name-quotreact-dag-editorquot" style="color: inherit; text-decoration: none;">
+					<h2>About the name &quot;react-dag-editor&quot;</h2>
+				</a>
+				<ul>
+					<li>react: it is a react component created from scratch.</li>
+					<li>dag: directed acyclic graph editor. Our a11y solution assumes the graph is a DAG. If you intend to turn off the a11y features, it is fine to draw undirected or cyclic graph with this component.</li>
+					<li>editor: it supports readonly graphic data visualization. However the reason you choose this library is the highlight in the user interaction to create/edit a graph.</li>
+				</ul>
+				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
+					<h2>Demo</h2>
+				</a>
+				<a href="#online-sample-link-wip" id="online-sample-link-wip" style="color: inherit; text-decoration: none;">
+					<h3>Online sample link: WIP</h3>
+				</a>
+				<a href="#local-demo" id="local-demo" style="color: inherit; text-decoration: none;">
+					<h3>Local demo</h3>
+				</a>
+				<p>Follow the steps below to run local demo on your machine(MacOS/Linux/Windows):</p>
+				<ol>
+					<li>Clone the repository</li>
+					<li>Run &quot;yarn&quot; to install all dependencies.</li>
+					<li>Run &quot;yarn start&quot; and select the &quot;react-dag-editor&quot; in prompt selection.</li>
+					<li>It won&#39;t take long to load the sample page. If not, try to open localhost:5000 on your browser or submit an issue.</li>
+					<li>Checkout ./packages/ReactDagEditor/stories/components/FeatureDemo.tsx for api usage(Detail API Doc WIP)</li>
+				</ol>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>Feature</th>
+							<th>Description</th>
+							<th>Demo</th>
+							<th>Is in default feature set?</th>
+							<th>Is in read only mode feature set?</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td>GraphFeatures.nodeDraggable</td>
+							<td>Node drag-and-drop to relocate</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.nodeResizable</td>
+							<td>Double clicking on a node to enable the anchors to resize it</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.clickNodeToSelect</td>
+							<td>Node click-to-select</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.panCanvas</td>
+							<td>Drag-n-drop on canvas to pan</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.multipleSelect</td>
+							<td>Ctrl click multi selection</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.lassoSelect</td>
+							<td>Lasso select</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.delete</td>
+							<td>Use delete key to delete a node</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.addNewNodes</td>
+							<td>Adding new nodes</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.addNewEdges</td>
+							<td>Adding new edges</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.addNewPorts</td>
+							<td>Adding new ports</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.sidePanel,</td>
+							<td>Built-in side panel</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.autoFit</td>
+							<td>Auto pan/zoom the whole canvas to fit the viewport on every move</td>
+							<td>(WIP)</td>
+							<td>No</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.editNode</td>
+							<td>Node inline editing mode</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.autoAlign</td>
+							<td>Auto aligning hint on node drag-n-drop</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.undoStack</td>
+							<td>Undo stack to support undo/redo</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>No</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.ctrlKeyZoom</td>
+							<td>Zooming by ctrl clicking + mousewheel</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+						<tr>
+							<td>GraphFeatures.limitBoundary</td>
+							<td>Constraint the allowed drag-n-drop area</td>
+							<td>(WIP)</td>
+							<td>Yes</td>
+							<td>Yes</td>
+						</tr>
+				</tbody></table>
+				<a href="#compatibility" id="compatibility" style="color: inherit; text-decoration: none;">
+					<h2>compatibility</h2>
+				</a>
+				<a href="#touch-screentouch-pad-support" id="touch-screentouch-pad-support" style="color: inherit; text-decoration: none;">
+					<h3>Touch screen/touch pad support</h3>
+				</a>
+				<a href="#deceeded-rendering-on-old-browsers" id="deceeded-rendering-on-old-browsers" style="color: inherit; text-decoration: none;">
+					<h3>Deceeded rendering on old browsers</h3>
+				</a>
+				<a href="#extensibility-amp-customization" id="extensibility-amp-customization" style="color: inherit; text-decoration: none;">
+					<h2>Extensibility &amp; customization</h2>
+				</a>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p>This project welcomes contributions and suggestions. Most contributions require you to agree to a
+					Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+				the rights to use your contribution. For details, visit <a href="https://cla.opensource.microsoft.com">https://cla.opensource.microsoft.com</a>.</p>
+				<p>When you submit a pull request, a CLA bot will automatically determine whether you need to provide
+					a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
+				provided by the bot. You will only need to do this once across all repos using our CLA.</p>
+				<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>.
+					For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or
+				contact <a href="mailto:opencode@microsoft.com">opencode@microsoft.com</a> with any additional questions or comments.</p>
+				<a href="#trademarks" id="trademarks" style="color: inherit; text-decoration: none;">
+					<h2>Trademarks</h2>
+				</a>
+				<p>This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft
+					trademarks or logos is subject to and must follow
+					<a href="https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general">Microsoft&#39;s Trademark &amp; Brand Guidelines</a>.
+					Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
+				Any use of third-party trademarks or logos are subject to those third-party&#39;s policies.</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum">
+						<a href="enums/BrowserType.html" class="tsd-kind-icon">Browser<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/CanvasMouseMode.html" class="tsd-kind-icon">Canvas<wbr>Mouse<wbr>Mode</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/Direction.html" class="tsd-kind-icon">Direction</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphBehavior.html" class="tsd-kind-icon">Graph<wbr>Behavior</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphCanvasEvent.html" class="tsd-kind-icon">Graph<wbr>Canvas<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphContextMenuEvent.html" class="tsd-kind-icon">Graph<wbr>Context<wbr>Menu<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphEdgeEvent.html" class="tsd-kind-icon">Graph<wbr>Edge<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphEdgeState.html" class="tsd-kind-icon">Graph<wbr>Edge<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphFeatures.html" class="tsd-kind-icon">Graph<wbr>Features</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphMinimapEvent.html" class="tsd-kind-icon">Graph<wbr>Minimap<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphNodeEvent.html" class="tsd-kind-icon">Graph<wbr>Node<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphNodeState.html" class="tsd-kind-icon">Graph<wbr>Node<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphNodeStateConst.html" class="tsd-kind-icon">Graph<wbr>Node<wbr>State<wbr>Const</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphPortEvent.html" class="tsd-kind-icon">Graph<wbr>Port<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphPortState.html" class="tsd-kind-icon">Graph<wbr>Port<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/GraphScrollBarEvent.html" class="tsd-kind-icon">Graph<wbr>Scroll<wbr>Bar<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-enum">
+						<a href="enums/MenuType.html" class="tsd-kind-icon">Menu<wbr>Type</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/ContextMenuConfig.html" class="tsd-kind-icon">Context<wbr>Menu<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/Debug.html" class="tsd-kind-icon">Debug</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/DefaultClipboard.html" class="tsd-kind-icon">Default<wbr>Clipboard</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/DefaultStorage.html" class="tsd-kind-icon">Default<wbr>Storage</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/EdgeModel.html" class="tsd-kind-icon">Edge<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/GraphConfig.html" class="tsd-kind-icon">Graph<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/GraphConfigBuilder.html" class="tsd-kind-icon">Graph<wbr>Config<wbr>Builder</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/GraphModel.html" class="tsd-kind-icon">Graph<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/LinearEquation.html" class="tsd-kind-icon">Linear<wbr>Equation</a>
+					</li>
+					<li class=" tsd-kind-class tsd-has-type-parameter">
+						<a href="classes/NodeModel.html" class="tsd-kind-icon">Node<wbr>Model</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/TestAPI.html" class="tsd-kind-icon">TestAPI</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/GestureEvent.html" class="tsd-kind-icon">Gesture<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IBoundingBox.html" class="tsd-kind-icon">IBounding<wbr>Box</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasAddEndNodeEvent.html" class="tsd-kind-icon">ICanvas<wbr>Add<wbr>End<wbr>Node<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasAddNodeEvent.html" class="tsd-kind-icon">ICanvas<wbr>Add<wbr>Node<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasCommonEvent.html" class="tsd-kind-icon">ICanvas<wbr>Common<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasData.html" class="tsd-kind-icon">ICanvas<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasEdge.html" class="tsd-kind-icon">ICanvas<wbr>Edge</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasGroup.html" class="tsd-kind-icon">ICanvas<wbr>Group</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasKeyboardEvent.html" class="tsd-kind-icon">ICanvas<wbr>Keyboard<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasNavigateEvent.html" class="tsd-kind-icon">ICanvas<wbr>Navigate<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasNode.html" class="tsd-kind-icon">ICanvas<wbr>Node</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasPanEvent.html" class="tsd-kind-icon">ICanvas<wbr>Pan<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasPasteEvent.html" class="tsd-kind-icon">ICanvas<wbr>Paste<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasPinchEvent.html" class="tsd-kind-icon">ICanvas<wbr>Pinch<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasPort.html" class="tsd-kind-icon">ICanvas<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasPortInit.html" class="tsd-kind-icon">ICanvas<wbr>Port<wbr>Init</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasResetViewportEvent.html" class="tsd-kind-icon">ICanvas<wbr>Reset<wbr>Viewport<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasScrollToEvent.html" class="tsd-kind-icon">ICanvas<wbr>Scroll<wbr>ToEvent</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasSelectMoveEvent.html" class="tsd-kind-icon">ICanvas<wbr>Select<wbr>Move<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasSelectStartEvent.html" class="tsd-kind-icon">ICanvas<wbr>Select<wbr>Start<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasSetDataEvent.html" class="tsd-kind-icon">ICanvas<wbr>Set<wbr>Data<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasSimpleEvent.html" class="tsd-kind-icon">ICanvas<wbr>Simple<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasUpdateDataEvent.html" class="tsd-kind-icon">ICanvas<wbr>Update<wbr>Data<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasUpdateNodeSelectionBySelectBoxEvent.html" class="tsd-kind-icon">ICanvas<wbr>Update<wbr>Node<wbr>Selection<wbr>BySelect<wbr>Box<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/ICanvasUpdateSettingsEvent.html" class="tsd-kind-icon">ICanvas<wbr>Update<wbr>Settings<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasViewportResizeEvent.html" class="tsd-kind-icon">ICanvas<wbr>Viewport<wbr>Resize<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasVirtualizationEvent.html" class="tsd-kind-icon">ICanvas<wbr>Virtualization<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasZoomEvent.html" class="tsd-kind-icon">ICanvas<wbr>Zoom<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasZoomToEvent.html" class="tsd-kind-icon">ICanvas<wbr>Zoom<wbr>ToEvent</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/ICanvasZoomToFitEvent.html" class="tsd-kind-icon">ICanvas<wbr>Zoom<wbr>ToFit<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IClickOptions.html" class="tsd-kind-icon">IClick<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IConnectTwoNodesConfig.html" class="tsd-kind-icon">IConnect<wbr>Two<wbr>Nodes<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IConnectingState.html" class="tsd-kind-icon">IConnecting<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IContextMenuCloseEvent.html" class="tsd-kind-icon">IContext<wbr>Menu<wbr>Close<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IContextMenuConfig.html" class="tsd-kind-icon">IContext<wbr>Menu<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IContextMenuOpenEvent.html" class="tsd-kind-icon">IContext<wbr>Menu<wbr>Open<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IContextMenuProps.html" class="tsd-kind-icon">IContext<wbr>Menu<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDebounceOptions.html" class="tsd-kind-icon">IDebounce<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDeferredValueConfig.html" class="tsd-kind-icon">IDeferred<wbr>Value<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IDeleteItemPredicates.html" class="tsd-kind-icon">IDelete<wbr>Item<wbr>Predicates</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDiffGraphEdge.html" class="tsd-kind-icon">IDiff<wbr>Graph<wbr>Edge</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDiffGraphNode.html" class="tsd-kind-icon">IDiff<wbr>Graph<wbr>Node</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDiffGraphPort.html" class="tsd-kind-icon">IDiff<wbr>Graph<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDiffPort.html" class="tsd-kind-icon">IDiff<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDomElement.html" class="tsd-kind-icon">IDom<wbr>Element</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDriverAdapter.html" class="tsd-kind-icon">IDriver<wbr>Adapter</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IDuration.html" class="tsd-kind-icon">IDuration</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeAddEvent.html" class="tsd-kind-icon">IEdge<wbr>Add<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeCommonEvent.html" class="tsd-kind-icon">IEdge<wbr>Common<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeConfig.html" class="tsd-kind-icon">IEdge<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeConnectEndEvent.html" class="tsd-kind-icon">IEdge<wbr>Connect<wbr>End<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeConnectMoveEvent.html" class="tsd-kind-icon">IEdge<wbr>Connect<wbr>Move<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeConnectNavigateEvent.html" class="tsd-kind-icon">IEdge<wbr>Connect<wbr>Navigate<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeConnectStartEvent.html" class="tsd-kind-icon">IEdge<wbr>Connect<wbr>Start<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IEdgeDrawArgs.html" class="tsd-kind-icon">IEdge<wbr>Draw<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IGap.html" class="tsd-kind-icon">IGap</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGetConnectableParams.html" class="tsd-kind-icon">IGet<wbr>Connectable<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGetNearestConnectablePortParams.html" class="tsd-kind-icon">IGet<wbr>Nearest<wbr>Connectable<wbr>Port<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IGraphClasses.html" class="tsd-kind-icon">IGraph<wbr>Classes</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphClipBoard.html" class="tsd-kind-icon">IGraph<wbr>Clip<wbr>Board</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphClipboard.html" class="tsd-kind-icon">IGraph<wbr>Clipboard</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphConfig.html" class="tsd-kind-icon">IGraph<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphDataState.html" class="tsd-kind-icon">IGraph<wbr>Data<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IGraphDomObject.html" class="tsd-kind-icon">IGraph<wbr>Dom<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IGraphObject.html" class="tsd-kind-icon">IGraph<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphProps.html" class="tsd-kind-icon">IGraph<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphReducerInitializerParams.html" class="tsd-kind-icon">IGraph<wbr>Reducer<wbr>Initializer<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphSettings.html" class="tsd-kind-icon">IGraph<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphState.html" class="tsd-kind-icon">IGraph<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IGraphStateContext.html" class="tsd-kind-icon">IGraph<wbr>State<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IGraphStyles.html" class="tsd-kind-icon">IGraph<wbr>Styles</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IGroupConfig.html" class="tsd-kind-icon">IGroup<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IGroupDrawArgs.html" class="tsd-kind-icon">IGroup<wbr>Draw<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IHistory.html" class="tsd-kind-icon">IHistory</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IHistoryNode.html" class="tsd-kind-icon">IHistory<wbr>Node</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IItemConfigArgs.html" class="tsd-kind-icon">IItem<wbr>Config<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IItemProps.html" class="tsd-kind-icon">IItem<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IMiniMapProps.html" class="tsd-kind-icon">IMini<wbr>Map<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IMinimapCommonEvent.html" class="tsd-kind-icon">IMinimap<wbr>Common<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IMinimapPanEvent.html" class="tsd-kind-icon">IMinimap<wbr>Pan<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeAddEvent.html" class="tsd-kind-icon">INode<wbr>Add<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeCentralizeEvent.html" class="tsd-kind-icon">INode<wbr>Centralize<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeClickEvent.html" class="tsd-kind-icon">INode<wbr>Click<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeCommonEvent.html" class="tsd-kind-icon">INode<wbr>Common<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeConfig.html" class="tsd-kind-icon">INode<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeContextMenuEvent.html" class="tsd-kind-icon">INode<wbr>Context<wbr>Menu<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeDragEndEvent.html" class="tsd-kind-icon">INode<wbr>Drag<wbr>End<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeDragEvent.html" class="tsd-kind-icon">INode<wbr>Drag<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeDragStartEvent.html" class="tsd-kind-icon">INode<wbr>Drag<wbr>Start<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeDrawArgs.html" class="tsd-kind-icon">INode<wbr>Draw<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/INodeGeometryDelta.html" class="tsd-kind-icon">INode<wbr>Geometry<wbr>Delta</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeLocateEvent.html" class="tsd-kind-icon">INode<wbr>Locate<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/INodeRect.html" class="tsd-kind-icon">INode<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/INodeResizeEvent.html" class="tsd-kind-icon">INode<wbr>Resize<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/INodeSelectEvent.html" class="tsd-kind-icon">INode<wbr>Select<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/INodeSimpleEvent.html" class="tsd-kind-icon">INode<wbr>Simple<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IOffsetLimit.html" class="tsd-kind-icon">IOffset<wbr>Limit</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IOffsetLimitParams.html" class="tsd-kind-icon">IOffset<wbr>Limit<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IPoint.html" class="tsd-kind-icon">IPoint</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IPortConfig.html" class="tsd-kind-icon">IPort<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IPortDrawArgs.html" class="tsd-kind-icon">IPort<wbr>Draw<wbr>Args</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IPortEvent.html" class="tsd-kind-icon">IPort<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IPosition.html" class="tsd-kind-icon">IPosition</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/IReactDagEditorProps.html" class="tsd-kind-icon">IReact<wbr>Dag<wbr>Editor<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IReadonlyGraphProps.html" class="tsd-kind-icon">IReadonly<wbr>Graph<wbr>Props</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IRectShape.html" class="tsd-kind-icon">IRect<wbr>Shape</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IRectSize.html" class="tsd-kind-icon">IRect<wbr>Size</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IScrollBarCommonEvent.html" class="tsd-kind-icon">IScroll<wbr>Bar<wbr>Common<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IScrollBarScrollEvent.html" class="tsd-kind-icon">IScroll<wbr>Bar<wbr>Scroll<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IScrollIntoViewEvent.html" class="tsd-kind-icon">IScroll<wbr>Into<wbr>View<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IShapePosition.html" class="tsd-kind-icon">IShape<wbr>Position</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IShapeRect.html" class="tsd-kind-icon">IShape<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IUseSafariScaleParams.html" class="tsd-kind-icon">IUse<wbr>Safari<wbr>Scale<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IViewport.html" class="tsd-kind-icon">IViewport</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IWheelOptions.html" class="tsd-kind-icon">IWheel<wbr>Options</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IZoomCommonParams.html" class="tsd-kind-icon">IZoom<wbr>Common<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IZoomFitParams.html" class="tsd-kind-icon">IZoom<wbr>Fit<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IZoomFixPublicParams.html" class="tsd-kind-icon">IZoom<wbr>Fix<wbr>Public<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="interfaces/IZoomParams.html" class="tsd-kind-icon">IZoom<wbr>Params</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#ICanvasEvent" class="tsd-kind-icon">ICanvas<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#IContainerRect" class="tsd-kind-icon">IContainer<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#IContextMenuEvent" class="tsd-kind-icon">IContext<wbr>Menu<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IDispatch" class="tsd-kind-icon">IDispatch</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IDispatchCallback" class="tsd-kind-icon">IDispatch<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IEdgeEvent" class="tsd-kind-icon">IEdge<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IEvent" class="tsd-kind-icon">IEvent</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IGraphAction" class="tsd-kind-icon">IGraph<wbr>Action</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IGraphReactReducer" class="tsd-kind-icon">IGraph<wbr>React<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#IGraphReducer" class="tsd-kind-icon">IGraph<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#IMinimapEvent" class="tsd-kind-icon">IMinimap<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#INodeEvent" class="tsd-kind-icon">INode<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#IScrollBarEvent" class="tsd-kind-icon">IScroll<wbr>Bar<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#ITransformMatrix" class="tsd-kind-icon">ITransform<wbr>Matrix</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#TDataPatch" class="tsd-kind-icon">TData<wbr>Patch</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#ValueOrCallback" class="tsd-kind-icon">Value<wbr>OrCallback</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#Writable" class="tsd-kind-icon">Writable</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#CanvasMenu" class="tsd-kind-icon">Canvas<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#ContextMenu" class="tsd-kind-icon">Context<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#ContextMenuConfigContext" class="tsd-kind-icon">Context<wbr>Menu<wbr>Config<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#DEFAULT_GRAPH_SETTINGS" class="tsd-kind-icon">DEFAULT_<wbr>GRAPH_<wbr>SETTINGS</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#DEFAULT_NODE_MAX_VISIBLE_SIZE" class="tsd-kind-icon">DEFAULT_<wbr>NODE_<wbr>MAX_<wbr>VISIBLE_<wbr>SIZE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#DEFAULT_NODE_MIN_VISIBLE_SIZE" class="tsd-kind-icon">DEFAULT_<wbr>NODE_<wbr>MIN_<wbr>VISIBLE_<wbr>SIZE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#EMPTY_CONNECT_STATE" class="tsd-kind-icon">EMPTY_<wbr>CONNECT_<wbr>STATE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#EMPTY_GAP" class="tsd-kind-icon">EMPTY_<wbr>GAP</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#EMPTY_GRAPH_STATE" class="tsd-kind-icon">EMPTY_<wbr>GRAPH_<wbr>STATE</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#EMPTY_TRANSFORM_MATRIX" class="tsd-kind-icon">EMPTY_<wbr>TRANSFORM_<wbr>MATRIX</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#EMPTY_VIEW_PORT" class="tsd-kind-icon">EMPTY_<wbr>VIEW_<wbr>PORT</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#EdgeMenu" class="tsd-kind-icon">Edge<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#GanttChartFeatures" class="tsd-kind-icon">Gantt<wbr>Chart<wbr>Features</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#GraphConfigContext" class="tsd-kind-icon">Graph<wbr>Config<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#GraphStateContext" class="tsd-kind-icon">Graph<wbr>State<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#GraphValueContext" class="tsd-kind-icon">Graph<wbr>Value<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#Item" class="tsd-kind-icon">Item</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#Minimap" class="tsd-kind-icon">Minimap</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#MultiMenu" class="tsd-kind-icon">Multi<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#NodeMenu" class="tsd-kind-icon">Node<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#PortMenu" class="tsd-kind-icon">Port<wbr>Menu</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#ReactDagEditor" class="tsd-kind-icon">React<wbr>Dag<wbr>Editor</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#SELECTED" class="tsd-kind-icon">SELECTED</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#StaticGraph" class="tsd-kind-icon">Static<wbr>Graph</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#ViewportContext" class="tsd-kind-icon">Viewport<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#allFeatures" class="tsd-kind-icon">all<wbr>Features</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#dataReadonlyMode" class="tsd-kind-icon">data<wbr>Readonly<wbr>Mode</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#defaultFeatures" class="tsd-kind-icon">default<wbr>Features</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#defaultGraphStateContext" class="tsd-kind-icon">default<wbr>Graph<wbr>State<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#defaultPort" class="tsd-kind-icon">default<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#isMacOs" class="tsd-kind-icon">is<wbr>Mac<wbr>Os</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#line" class="tsd-kind-icon">line</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#previewMode" class="tsd-kind-icon">preview<wbr>Mode</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#rect" class="tsd-kind-icon">rect</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#Graph" class="tsd-kind-icon">Graph</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#addState" class="tsd-kind-icon">add<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#applyDefaultPortsPosition" class="tsd-kind-icon">apply<wbr>Default<wbr>Ports<wbr>Position</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#applyHorizontalGraphPortsPosition" class="tsd-kind-icon">apply<wbr>Horizontal<wbr>Graph<wbr>Ports<wbr>Position</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#arrayEquals" class="tsd-kind-icon">array<wbr>Equals</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#canRedo" class="tsd-kind-icon">can<wbr>Redo</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#canUndo" class="tsd-kind-icon">can<wbr>Undo</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#checkRectIntersect" class="tsd-kind-icon">check<wbr>Rect<wbr>Intersect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#clamp" class="tsd-kind-icon">clamp</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#composeReducers" class="tsd-kind-icon">compose<wbr>Reducers</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#constantEmptyArray" class="tsd-kind-icon">constant<wbr>Empty<wbr>Array</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#createGraphState" class="tsd-kind-icon">create<wbr>Graph<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#debounce" class="tsd-kind-icon">debounce</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#deepClone" class="tsd-kind-icon">deep<wbr>Clone</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#defaultGetPositionFromEvent" class="tsd-kind-icon">default<wbr>Get<wbr>Position<wbr>From<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#diffGraphEdge" class="tsd-kind-icon">diff<wbr>Graph<wbr>Edge</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#diffGraphNode" class="tsd-kind-icon">diff<wbr>Graph<wbr>Node</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#diffGraphPort" class="tsd-kind-icon">diff<wbr>Graph<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#distance" class="tsd-kind-icon">distance</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#filterSelectedItems" class="tsd-kind-icon">filter<wbr>Selected<wbr>Items</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#focusArea" class="tsd-kind-icon">focus<wbr>Area</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getBrowser" class="tsd-kind-icon">get<wbr>Browser</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getClientDeltaByPointDelta" class="tsd-kind-icon">get<wbr>Client<wbr>Delta<wbr>ByPoint<wbr>Delta</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getClientPointFromRealPoint" class="tsd-kind-icon">get<wbr>Client<wbr>Point<wbr>From<wbr>Real<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getContainer" class="tsd-kind-icon">get<wbr>Container</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getContainerCenter" class="tsd-kind-icon">get<wbr>Container<wbr>Center</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getContainerClientPoint" class="tsd-kind-icon">get<wbr>Container<wbr>Client<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getContentArea" class="tsd-kind-icon">get<wbr>Content<wbr>Area</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getCriticalPath" class="tsd-kind-icon">get<wbr>Critical<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getCurvePathD" class="tsd-kind-icon">get<wbr>Curve<wbr>PathD</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getEdgeSourceTargetCoordinate" class="tsd-kind-icon">get<wbr>Edge<wbr>Source<wbr>Target<wbr>Coordinate</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getEdgeUid" class="tsd-kind-icon">get<wbr>Edge<wbr>Uid</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getGraphReducer" class="tsd-kind-icon">get<wbr>Graph<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getGroupRect" class="tsd-kind-icon">get<wbr>Group<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getLinearFunction" class="tsd-kind-icon">get<wbr>Linear<wbr>Function</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getMinimapRect" class="tsd-kind-icon">get<wbr>Minimap<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getNearestConnectablePort" class="tsd-kind-icon">get<wbr>Nearest<wbr>Connectable<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getNeighborPorts" class="tsd-kind-icon">get<wbr>Neighbor<wbr>Ports</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getNodeAutomationId" class="tsd-kind-icon">get<wbr>Node<wbr>Automation<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getNodeConfig" class="tsd-kind-icon">get<wbr>Node<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getNodeRect" class="tsd-kind-icon">get<wbr>Node<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getNodeSize" class="tsd-kind-icon">get<wbr>Node<wbr>Size</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getNodeUid" class="tsd-kind-icon">get<wbr>Node<wbr>Uid</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getOffsetLimit" class="tsd-kind-icon">get<wbr>Offset<wbr>Limit</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getPointDeltaByClientDelta" class="tsd-kind-icon">get<wbr>Point<wbr>Delta<wbr>ByClient<wbr>Delta</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getPortAutomationId" class="tsd-kind-icon">get<wbr>Port<wbr>Automation<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getPortPosition" class="tsd-kind-icon">get<wbr>Port<wbr>Position</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getPortPositionByPortId" class="tsd-kind-icon">get<wbr>Port<wbr>Position<wbr>ByPort<wbr>Id</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getPortUid" class="tsd-kind-icon">get<wbr>Port<wbr>Uid</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getRealPointFromClientPoint" class="tsd-kind-icon">get<wbr>Real<wbr>Point<wbr>From<wbr>Client<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getRectHeight" class="tsd-kind-icon">get<wbr>Rect<wbr>Height</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getRectWidth" class="tsd-kind-icon">get<wbr>Rect<wbr>Width</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getRelativePoint" class="tsd-kind-icon">get<wbr>Relative<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getRenderedArea" class="tsd-kind-icon">get<wbr>Rendered<wbr>Area</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getRenderedEdges" class="tsd-kind-icon">get<wbr>Rendered<wbr>Edges</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getRenderedNodes" class="tsd-kind-icon">get<wbr>Rendered<wbr>Nodes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getScaleLimit" class="tsd-kind-icon">get<wbr>Scale<wbr>Limit</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getScaleRange" class="tsd-kind-icon">get<wbr>Scale<wbr>Range</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getTopoSortingNodes" class="tsd-kind-icon">get<wbr>Topo<wbr>Sorting<wbr>Nodes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getVisibleArea" class="tsd-kind-icon">get<wbr>Visible<wbr>Area</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#getVisibleNodes" class="tsd-kind-icon">get<wbr>Visible<wbr>Nodes</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#getZoomFitMatrix" class="tsd-kind-icon">get<wbr>Zoom<wbr>Fit<wbr>Matrix</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#hasSelectedPort" class="tsd-kind-icon">has<wbr>Selected<wbr>Port</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#hasState" class="tsd-kind-icon">has<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#isCanvasEvent" class="tsd-kind-icon">is<wbr>Canvas<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#isConnectable" class="tsd-kind-icon">is<wbr>Connectable</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#isEdgeEvent" class="tsd-kind-icon">is<wbr>Edge<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isMobile" class="tsd-kind-icon">is<wbr>Mobile</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isNodeActivated" class="tsd-kind-icon">is<wbr>Node<wbr>Activated</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isNodeEditing" class="tsd-kind-icon">is<wbr>Node<wbr>Editing</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#isNodeEvent" class="tsd-kind-icon">is<wbr>Node<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isNodeVisible" class="tsd-kind-icon">is<wbr>Node<wbr>Visible</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isPointInRect" class="tsd-kind-icon">is<wbr>Point<wbr>InRect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isPointVisible" class="tsd-kind-icon">is<wbr>Point<wbr>Visible</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#isPortEvent" class="tsd-kind-icon">is<wbr>Port<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isRectVisible" class="tsd-kind-icon">is<wbr>Rect<wbr>Visible</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isSelected" class="tsd-kind-icon">is<wbr>Selected</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isSupported" class="tsd-kind-icon">is<wbr>Supported</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isViewportComplete" class="tsd-kind-icon">is<wbr>Viewport<wbr>Complete</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isViewportEmpty" class="tsd-kind-icon">is<wbr>Viewport<wbr>Empty</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isWithinRect" class="tsd-kind-icon">is<wbr>Within<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#isWithinThreshold" class="tsd-kind-icon">is<wbr>Within<wbr>Threshold</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#markCriticalPath" class="tsd-kind-icon">mark<wbr>Critical<wbr>Path</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#markEdgeDirty" class="tsd-kind-icon">mark<wbr>Edge<wbr>Dirty</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#minimapPan" class="tsd-kind-icon">minimap<wbr>Pan</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#nodeSelection" class="tsd-kind-icon">node<wbr>Selection</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#notSelected" class="tsd-kind-icon">not<wbr>Selected</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#pan" class="tsd-kind-icon">pan</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#pickState" class="tsd-kind-icon">pick<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#pushHistory" class="tsd-kind-icon">push<wbr>History</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#redo" class="tsd-kind-icon">redo</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#removeState" class="tsd-kind-icon">remove<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#resetConnectState" class="tsd-kind-icon">reset<wbr>Connect<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#resetNodePortsState" class="tsd-kind-icon">reset<wbr>Node<wbr>Ports<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#resetState" class="tsd-kind-icon">reset<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#resetUndoStack" class="tsd-kind-icon">reset<wbr>Undo<wbr>Stack</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#resolveValueOrCallback" class="tsd-kind-icon">resolve<wbr>Value<wbr>OrCallback</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#reverseTransformPoint" class="tsd-kind-icon">reverse<wbr>Transform<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#scrollIntoView" class="tsd-kind-icon">scroll<wbr>Into<wbr>View</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#setData" class="tsd-kind-icon">set<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#stopPropagation" class="tsd-kind-icon">stop<wbr>Propagation</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#toggleState" class="tsd-kind-icon">toggle<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#transformPoint" class="tsd-kind-icon">transform<wbr>Point</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#unSelectAllEntity" class="tsd-kind-icon">un<wbr>Select<wbr>All<wbr>Entity</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#undo" class="tsd-kind-icon">undo</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#updateData" class="tsd-kind-icon">update<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#updateNodeState" class="tsd-kind-icon">update<wbr>Node<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#updateState" class="tsd-kind-icon">update<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useClientRect" class="tsd-kind-icon">use<wbr>Client<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useContainerRect" class="tsd-kind-icon">use<wbr>Container<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useContextMenuConfigContext" class="tsd-kind-icon">use<wbr>Context<wbr>Menu<wbr>Config<wbr>Context</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#useDeferredValue" class="tsd-kind-icon">use<wbr>Deferred<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#useGraphData" class="tsd-kind-icon">use<wbr>Graph<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#useGraphReducer" class="tsd-kind-icon">use<wbr>Graph<wbr>Reducer</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#useGraphState" class="tsd-kind-icon">use<wbr>Graph<wbr>State</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useGraphTouchHandler" class="tsd-kind-icon">use<wbr>Graph<wbr>Touch<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useMinimapRect" class="tsd-kind-icon">use<wbr>Minimap<wbr>Rect</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useRenderedArea" class="tsd-kind-icon">use<wbr>Rendered<wbr>Area</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useSafariScale" class="tsd-kind-icon">use<wbr>Safari<wbr>Scale</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useSelectBox" class="tsd-kind-icon">use<wbr>Select<wbr>Box</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#useThrottle" class="tsd-kind-icon">use<wbr>Throttle</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useUpdateViewportCallback" class="tsd-kind-icon">use<wbr>Update<wbr>Viewport<wbr>Callback</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#useWheelHandler" class="tsd-kind-icon">use<wbr>Wheel<wbr>Handler</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#zoom" class="tsd-kind-icon">zoom</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#zoomTo" class="tsd-kind-icon">zoom<wbr>To</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

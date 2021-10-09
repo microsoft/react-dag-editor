@@ -1,0 +1,1147 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>GraphModel | react-dag-editor</title>
+	<meta name="description" content="Documentation for react-dag-editor">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">react-dag-editor</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">react-dag-editor</a>
+				</li>
+				<li>
+					<a href="GraphModel.html">GraphModel</a>
+				</li>
+			</ul>
+			<h1>Class GraphModel&lt;NodeData, EdgeData, PortData&gt;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Things preferred to be implemented as methods here:</p>
+						<ul>
+							<li>widely shared functions, eg. <code>updateNode</code></li>
+							<li>including multiple operations that must happen atomically</li>
+							<li>improve performance by internal mutability</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>NodeData = <span class="tsd-signature-type">unknown</span></h4>
+					</li>
+					<li>
+						<h4>EdgeData = <span class="tsd-signature-type">unknown</span></h4>
+					</li>
+					<li>
+						<h4>PortData = <span class="tsd-signature-type">unknown</span></h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="target">GraphModel</span>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-type">IGraphModel</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section tsd-is-private tsd-is-private-protected">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-private"><a href="GraphModel.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#edges" class="tsd-kind-icon">edges</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#edgesBySource" class="tsd-kind-icon">edges<wbr>BySource</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#edgesByTarget" class="tsd-kind-icon">edges<wbr>ByTarget</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#groups" class="tsd-kind-icon">groups</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#head" class="tsd-kind-icon">head</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#nodes" class="tsd-kind-icon">nodes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#selectedNodes" class="tsd-kind-icon">selected<wbr>Nodes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="GraphModel.html#tail" class="tsd-kind-icon">tail</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#deleteEdge" class="tsd-kind-icon">delete<wbr>Edge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#deleteItems" class="tsd-kind-icon">delete<wbr>Items</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#getEdgesBySource" class="tsd-kind-icon">get<wbr>Edges<wbr>BySource</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#getEdgesByTarget" class="tsd-kind-icon">get<wbr>Edges<wbr>ByTarget</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#getNavigationFirstNode" class="tsd-kind-icon">get<wbr>Navigation<wbr>First<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#insertEdge" class="tsd-kind-icon">insert<wbr>Edge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#insertNode" class="tsd-kind-icon">insert<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#isEdgeExist" class="tsd-kind-icon">is<wbr>Edge<wbr>Exist</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#isPortConnectedAsSource" class="tsd-kind-icon">is<wbr>Port<wbr>Connected<wbr>AsSource</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#isPortConnectedAsTarget" class="tsd-kind-icon">is<wbr>Port<wbr>Connected<wbr>AsTarget</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#mapEdges" class="tsd-kind-icon">map<wbr>Edges</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#mapNodes" class="tsd-kind-icon">map<wbr>Nodes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="GraphModel.html#merge" class="tsd-kind-icon">merge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#selectNodes" class="tsd-kind-icon">select<wbr>Nodes</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#shallow" class="tsd-kind-icon">shallow</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#toJSON" class="tsd-kind-icon">toJSON</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#updateEdge" class="tsd-kind-icon">update<wbr>Edge</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#updateNode" class="tsd-kind-icon">update<wbr>Node</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#updateNodeData" class="tsd-kind-icon">update<wbr>Node<wbr>Data</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#updateNodesPositionAndSize" class="tsd-kind-icon">update<wbr>Nodes<wbr>Position<wbr>And<wbr>Size</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="GraphModel.html#updatePort" class="tsd-kind-icon">update<wbr>Port</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="GraphModel.html#empty" class="tsd-kind-icon">empty</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="GraphModel.html#fromJSON" class="tsd-kind-icon">fromJSON</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group tsd-is-private tsd-is-private-protected">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Graph<wbr>Model&lt;NodeData, EdgeData, PortData&gt;<span class="tsd-signature-symbol">(</span>init<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IGraphModel</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L59">packages/ReactDagEditor/src/models/GraphModel.ts:59</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>NodeData = <span class="tsd-signature-type">unknown</span></h4>
+								</li>
+								<li>
+									<h4>EdgeData = <span class="tsd-signature-type">unknown</span></h4>
+								</li>
+								<li>
+									<h4>PortData = <span class="tsd-signature-type">unknown</span></h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>init: <span class="tsd-signature-type">IGraphModel</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="edges" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> edges</h3>
+					<div class="tsd-signature tsd-kind-icon">edges<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HashMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.edges</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L51">packages/ReactDagEditor/src/models/GraphModel.ts:51</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="edgesBySource" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> edges<wbr>BySource</h3>
+					<div class="tsd-signature tsd-kind-icon">edges<wbr>BySource<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EdgesByPort</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.edgesBySource</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L55">packages/ReactDagEditor/src/models/GraphModel.ts:55</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="edgesByTarget" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> edges<wbr>ByTarget</h3>
+					<div class="tsd-signature tsd-kind-icon">edges<wbr>ByTarget<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">EdgesByPort</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.edgesByTarget</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L56">packages/ReactDagEditor/src/models/GraphModel.ts:56</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="groups" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> groups</h3>
+					<div class="tsd-signature tsd-kind-icon">groups<span class="tsd-signature-symbol">:</span> <a href="../interfaces/ICanvasGroup.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasGroup</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.groups</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L52">packages/ReactDagEditor/src/models/GraphModel.ts:52</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="head" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> head</h3>
+					<div class="tsd-signature tsd-kind-icon">head<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.head</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L53">packages/ReactDagEditor/src/models/GraphModel.ts:53</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="nodes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> nodes</h3>
+					<div class="tsd-signature tsd-kind-icon">nodes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OrderedMap</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.nodes</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L50">packages/ReactDagEditor/src/models/GraphModel.ts:50</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="selectedNodes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> selected<wbr>Nodes</h3>
+					<div class="tsd-signature tsd-kind-icon">selected<wbr>Nodes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.selectedNodes</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L57">packages/ReactDagEditor/src/models/GraphModel.ts:57</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="tail" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> tail</h3>
+					<div class="tsd-signature tsd-kind-icon">tail<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of IGraphModel.tail</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L54">packages/ReactDagEditor/src/models/GraphModel.ts:54</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deleteEdge" class="tsd-anchor"></a>
+					<h3>delete<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Edge<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L300">packages/ReactDagEditor/src/models/GraphModel.ts:300</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="deleteItems" class="tsd-anchor"></a>
+					<h3>delete<wbr>Items</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">delete<wbr>Items<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><a href="../interfaces/IDeleteItemPredicates.html" class="tsd-signature-type" data-tsd-kind="Interface">IDeleteItemPredicates</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L206">packages/ReactDagEditor/src/models/GraphModel.ts:206</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>predicate: <a href="../interfaces/IDeleteItemPredicates.html" class="tsd-signature-type" data-tsd-kind="Interface">IDeleteItemPredicates</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getEdgesBySource" class="tsd-anchor"></a>
+					<h3>get<wbr>Edges<wbr>BySource</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Edges<wbr>BySource<span class="tsd-signature-symbol">(</span>nodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L408">packages/ReactDagEditor/src/models/GraphModel.ts:408</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>nodeId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>portId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getEdgesByTarget" class="tsd-anchor"></a>
+					<h3>get<wbr>Edges<wbr>ByTarget</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Edges<wbr>ByTarget<span class="tsd-signature-symbol">(</span>nodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L412">packages/ReactDagEditor/src/models/GraphModel.ts:412</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>nodeId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>portId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ReadonlySet</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getNavigationFirstNode" class="tsd-anchor"></a>
+					<h3>get<wbr>Navigation<wbr>First<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Navigation<wbr>First<wbr>Node<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L138">packages/ReactDagEditor/src/models/GraphModel.ts:138</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="insertEdge" class="tsd-anchor"></a>
+					<h3>insert<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">insert<wbr>Edge<span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L269">packages/ReactDagEditor/src/models/GraphModel.ts:269</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>edge: <a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="insertNode" class="tsd-anchor"></a>
+					<h3>insert<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">insert<wbr>Node<span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L190">packages/ReactDagEditor/src/models/GraphModel.ts:190</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>node: <a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isEdgeExist" class="tsd-anchor"></a>
+					<h3>is<wbr>Edge<wbr>Exist</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Edge<wbr>Exist<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, sourcePortId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, targetPortId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L442">packages/ReactDagEditor/src/models/GraphModel.ts:442</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>source: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>sourcePortId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>target: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>targetPortId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isPortConnectedAsSource" class="tsd-anchor"></a>
+					<h3>is<wbr>Port<wbr>Connected<wbr>AsSource</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Port<wbr>Connected<wbr>AsSource<span class="tsd-signature-symbol">(</span>nodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L416">packages/ReactDagEditor/src/models/GraphModel.ts:416</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>nodeId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>portId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isPortConnectedAsTarget" class="tsd-anchor"></a>
+					<h3>is<wbr>Port<wbr>Connected<wbr>AsTarget</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Port<wbr>Connected<wbr>AsTarget<span class="tsd-signature-symbol">(</span>nodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L420">packages/ReactDagEditor/src/models/GraphModel.ts:420</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>nodeId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>portId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="mapEdges" class="tsd-anchor"></a>
+					<h3>map<wbr>Edges</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">map<wbr>Edges<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L347">packages/ReactDagEditor/src/models/GraphModel.ts:347</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>node: <a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <a href="EdgeModel.html" class="tsd-signature-type" data-tsd-kind="Class">EdgeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="mapNodes" class="tsd-anchor"></a>
+					<h3>map<wbr>Nodes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">map<wbr>Nodes<span class="tsd-signature-symbol">(</span>f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L339">packages/ReactDagEditor/src/models/GraphModel.ts:339</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>node: <a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <a href="NodeModel.html" class="tsd-signature-type" data-tsd-kind="Class">NodeModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="merge" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> merge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">merge<span class="tsd-signature-symbol">(</span>partial<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IGraphModel</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L457">packages/ReactDagEditor/src/models/GraphModel.ts:457</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>partial: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">IGraphModel</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="selectNodes" class="tsd-anchor"></a>
+					<h3>select<wbr>Nodes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">select<wbr>Nodes<span class="tsd-signature-symbol">(</span>predicate<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, topNode<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L353">packages/ReactDagEditor/src/models/GraphModel.ts:353</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>predicate: <span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>node: <a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> topNode: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="shallow" class="tsd-anchor"></a>
+					<h3>shallow</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">shallow<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L424">packages/ReactDagEditor/src/models/GraphModel.ts:424</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="toJSON" class="tsd-anchor"></a>
+					<h3>toJSON</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasData.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasData</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L428">packages/ReactDagEditor/src/models/GraphModel.ts:428</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/ICanvasData.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasData</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateEdge" class="tsd-anchor"></a>
+					<h3>update<wbr>Edge</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Edge<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L291">packages/ReactDagEditor/src/models/GraphModel.ts:291</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>edge<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>edge: <a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <a href="../interfaces/ICanvasEdge.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasEdge</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateNode" class="tsd-anchor"></a>
+					<h3>update<wbr>Node</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Node<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L145">packages/ReactDagEditor/src/models/GraphModel.ts:145</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>node<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>node: <a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateNodeData" class="tsd-anchor"></a>
+					<h3>update<wbr>Node<wbr>Data</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Node<wbr>Data<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L171">packages/ReactDagEditor/src/models/GraphModel.ts:171</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>id: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">NodeData</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NodeData</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>data: <span class="tsd-signature-type">NodeData</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NodeData</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateNodesPositionAndSize" class="tsd-anchor"></a>
+					<h3>update<wbr>Nodes<wbr>Position<wbr>And<wbr>Size</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Nodes<wbr>Position<wbr>And<wbr>Size<span class="tsd-signature-symbol">(</span>dummies<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">readonly </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L315">packages/ReactDagEditor/src/models/GraphModel.ts:315</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<dl class="tsd-comment-tags">
+									<dt>internal</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>dummies: <span class="tsd-signature-symbol">readonly </span><a href="../interfaces/ICanvasNode.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasNode</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updatePort" class="tsd-anchor"></a>
+					<h3>update<wbr>Port</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Port<span class="tsd-signature-symbol">(</span>nodeId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, portId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, f<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>port<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L177">packages/ReactDagEditor/src/models/GraphModel.ts:177</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>nodeId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>portId: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>f: <span class="tsd-signature-symbol">(</span>port<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>port<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>port: <a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <a href="../interfaces/ICanvasPort.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasPort</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NodeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">EdgeData</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">PortData</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="empty" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> empty</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">empty&lt;N, E, P&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L71">packages/ReactDagEditor/src/models/GraphModel.ts:71</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>N</h4>
+								</li>
+								<li>
+									<h4>E</h4>
+								</li>
+								<li>
+									<h4>P</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+					<a name="fromJSON" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> fromJSON</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">fromJSON&lt;N, E, P&gt;<span class="tsd-signature-symbol">(</span>init<span class="tsd-signature-symbol">: </span><a href="../interfaces/ICanvasData.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasData</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/microsoft/react-dag-editor/blob/71bac47/packages/ReactDagEditor/src/models/GraphModel.ts#L84">packages/ReactDagEditor/src/models/GraphModel.ts:84</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>N</h4>
+								</li>
+								<li>
+									<h4>E</h4>
+								</li>
+								<li>
+									<h4>P</h4>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>init: <a href="../interfaces/ICanvasData.html" class="tsd-signature-type" data-tsd-kind="Interface">ICanvasData</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="GraphModel.html" class="tsd-signature-type" data-tsd-kind="Class">GraphModel</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">P</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Exports</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-has-type-parameter">
+						<a href="GraphModel.html" class="tsd-kind-icon">Graph<wbr>Model</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-has-type-parameter tsd-is-private">
+								<a href="GraphModel.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#edges" class="tsd-kind-icon">edges</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#edgesBySource" class="tsd-kind-icon">edges<wbr>BySource</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#edgesByTarget" class="tsd-kind-icon">edges<wbr>ByTarget</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#groups" class="tsd-kind-icon">groups</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#head" class="tsd-kind-icon">head</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#nodes" class="tsd-kind-icon">nodes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#selectedNodes" class="tsd-kind-icon">selected<wbr>Nodes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="GraphModel.html#tail" class="tsd-kind-icon">tail</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#deleteEdge" class="tsd-kind-icon">delete<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#deleteItems" class="tsd-kind-icon">delete<wbr>Items</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#getEdgesBySource" class="tsd-kind-icon">get<wbr>Edges<wbr>BySource</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#getEdgesByTarget" class="tsd-kind-icon">get<wbr>Edges<wbr>ByTarget</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#getNavigationFirstNode" class="tsd-kind-icon">get<wbr>Navigation<wbr>First<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#insertEdge" class="tsd-kind-icon">insert<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#insertNode" class="tsd-kind-icon">insert<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#isEdgeExist" class="tsd-kind-icon">is<wbr>Edge<wbr>Exist</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#isPortConnectedAsSource" class="tsd-kind-icon">is<wbr>Port<wbr>Connected<wbr>AsSource</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#isPortConnectedAsTarget" class="tsd-kind-icon">is<wbr>Port<wbr>Connected<wbr>AsTarget</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#mapEdges" class="tsd-kind-icon">map<wbr>Edges</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#mapNodes" class="tsd-kind-icon">map<wbr>Nodes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="GraphModel.html#merge" class="tsd-kind-icon">merge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#selectNodes" class="tsd-kind-icon">select<wbr>Nodes</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#shallow" class="tsd-kind-icon">shallow</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#toJSON" class="tsd-kind-icon">toJSON</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#updateEdge" class="tsd-kind-icon">update<wbr>Edge</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#updateNode" class="tsd-kind-icon">update<wbr>Node</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#updateNodeData" class="tsd-kind-icon">update<wbr>Node<wbr>Data</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#updateNodesPositionAndSize" class="tsd-kind-icon">update<wbr>Nodes<wbr>Position<wbr>And<wbr>Size</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="GraphModel.html#updatePort" class="tsd-kind-icon">update<wbr>Port</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="GraphModel.html#empty" class="tsd-kind-icon">empty</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
+								<a href="GraphModel.html#fromJSON" class="tsd-kind-icon">fromJSON</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

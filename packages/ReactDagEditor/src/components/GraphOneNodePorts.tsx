@@ -1,6 +1,5 @@
 import * as React from "react";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
-import { useTheme } from "../hooks";
 import { useGraphConfig } from "../hooks/context";
 import { GraphPortEvent } from "../models/event";
 import { GraphModel } from "../models/GraphModel";
@@ -18,10 +17,9 @@ export interface IGraphOneNodePortsProps
   getPortAriaLabel: Required<IGraphProps>["getPortAriaLabel"];
 }
 
-export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps> = props => {
+export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps> = (props) => {
   const { data, node, getPortAriaLabel, eventChannel, viewport, graphId } = props;
   const graphConfig = useGraphConfig();
-  const { theme } = useTheme();
 
   const ports = node.ports;
 
@@ -29,19 +27,21 @@ export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps>
     return null;
   }
 
-  const portEvent = (type: GraphPortEvent, port: ICanvasPort) => (e: React.SyntheticEvent): void => {
-    e.persist();
-    eventChannel.trigger({
-      type,
-      node,
-      port,
-      rawEvent: e
-    });
-  };
+  const portEvent =
+    (type: GraphPortEvent, port: ICanvasPort) =>
+    (e: React.SyntheticEvent): void => {
+      e.persist();
+      eventChannel.trigger({
+        type,
+        node,
+        port,
+        rawEvent: e,
+      });
+    };
 
   return (
     <g>
-      {ports.map(p => {
+      {ports.map((p) => {
         const portShape = p.shape ? p.shape : graphConfig.defaultPortShape;
         const portConfig = graphConfig.getPortConfigByName(portShape);
 
@@ -91,11 +91,10 @@ export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps>
                   model: p,
                   data,
                   parentNode: node,
-                  theme,
                   anotherNode: sourceNode,
                   anotherPort: sourcePort,
                   viewport,
-                  ...pos
+                  ...pos,
                 })
               }
             </ConnectingStateContext.Consumer>

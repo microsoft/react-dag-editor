@@ -1,10 +1,11 @@
 import * as React from "react";
+import { defaultColors } from "../../common/constants";
 import { DragController, ITouchHandler, TouchController } from "../../controllers";
 import { TouchDragAdapter } from "../../controllers/TouchDragAdapter";
 import { EMPTY_TRANSFORM_MATRIX } from "../../createGraphState";
 import { MouseMoveEventProvider } from "../../event-provider/MouseMoveEventProvider";
 import { IEventProvider, IGlobalMoveEventTypes } from "../../event-provider/types";
-import { useGraphData, useMinimapRect, useTheme } from "../../hooks";
+import { useGraphData, useMinimapRect } from "../../hooks";
 import { useGraphConfig, useGraphController, useViewport } from "../../hooks/context";
 import { useRefValue } from "../../hooks/useRefValue";
 import { GraphCanvasEvent, GraphMinimapEvent } from "../../models/event";
@@ -63,10 +64,9 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
 
   const graphViewport = useViewport();
   const graphController = useGraphController();
-  const { theme } = useTheme();
   const data = useGraphData();
   const minimapContainerStyle: React.CSSProperties = {
-    background: theme.minimapBackground,
+    background: defaultColors.minimapBackground,
     ...props.style,
   };
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useTheme } from "../../hooks";
+import { defaultColors } from "../../common/constants";
 import { stopPropagation } from "../../utils/stopPropagation";
 
 interface IProps {
@@ -20,22 +20,20 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
   containerRect: rect,
   viewport,
   shadowPadding = 0,
-  onClick
+  onClick,
 }) => {
-  const { theme } = useTheme();
-
   if (!rect) {
     return null;
   }
 
   const shadowStyle = {
-    fill: theme.minimapShadow,
-    opacity: 0.1
+    fill: defaultColors.minimapShadow,
+    opacity: 0.1,
   };
 
   const lineStyle = {
-    stroke: theme.inputFocusBorderAlt,
-    strokeWidth: 1
+    stroke: defaultColors.inputFocusBorderAlt,
+    strokeWidth: 1,
   };
 
   const viewportStartX = Math.max(viewport.startX, shadowPadding);

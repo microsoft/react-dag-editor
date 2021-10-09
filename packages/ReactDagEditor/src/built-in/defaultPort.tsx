@@ -1,30 +1,29 @@
 import * as React from "react";
-import type { ITheme } from "../contexts";
 import type { ICanvasNode } from "../models/node";
 import type { ICanvasPort } from "../models/port";
 import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { hasState } from "../utils/state";
 import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
+import { defaultColors } from "../common/constants";
 
 class DefaultPort implements IPortConfig {
   public getStyle(
     port: ICanvasPort,
     parentNode: ICanvasNode,
     data: GraphModel,
-    theme: ITheme,
     connectedAsSource: boolean,
     connectedAsTarget: boolean
   ): Partial<React.CSSProperties> {
-    const stroke = theme.portStroke;
-    let fill = theme.portFill;
+    const stroke = defaultColors.portStroke;
+    let fill = defaultColors.portFill;
 
     if (connectedAsSource || connectedAsTarget) {
-      fill = theme.connectedPortColor;
+      fill = defaultColors.connectedPortColor;
     }
 
     if (hasState(GraphPortState.activated)(port.state)) {
-      fill = theme.primaryColor;
+      fill = defaultColors.primaryColor;
     }
 
     return {
@@ -43,7 +42,7 @@ class DefaultPort implements IPortConfig {
     const connectedAsSource = data.isPortConnectedAsSource(parentNode.id, port.id);
     const connectedAsTarget = data.isPortConnectedAsTarget(parentNode.id, port.id);
 
-    const style = this.getStyle(port, parentNode, data, args.theme, connectedAsSource, connectedAsTarget);
+    const style = this.getStyle(port, parentNode, data, connectedAsSource, connectedAsTarget);
 
     const { x, y } = args;
     const polygonPoints = `${x - 5} ${y}, ${x + 7} ${y}, ${x + 1} ${y + 8}`;

@@ -1,5 +1,4 @@
 import type * as React from "react";
-import type { ITheme } from "../../contexts";
 import type { ICanvasData, ICanvasGroup } from "../canvas";
 import type { ICanvasEdge } from "../edge";
 import type { EdgeModel } from "../EdgeModel";
@@ -11,7 +10,6 @@ import type { ICanvasPort } from "../port";
 
 export interface IItemConfigArgs<T> {
   model: T;
-  theme: ITheme;
   viewport: Required<IViewport>;
 }
 
@@ -20,9 +18,9 @@ export interface INodeDrawArgs<NodeData = unknown, PortData = unknown>
 
 export interface INodeConfig<NodeData = unknown, PortData = unknown> {
   render(args: INodeDrawArgs<NodeData, PortData>): React.ReactNode;
-  renderDummy?(rect: ICanvasNode<NodeData, PortData>, theme: ITheme): React.ReactNode;
+  renderDummy?(rect: ICanvasNode<NodeData, PortData>): React.ReactNode;
   renderStatic?(args: Omit<INodeDrawArgs<NodeData, PortData>, "viewport">): React.ReactNode;
-  getStyle?(rect: ICanvasNode<NodeData, PortData>, theme: ITheme): React.CSSProperties;
+  getStyle?(rect: ICanvasNode<NodeData, PortData>): React.CSSProperties;
   getMinWidth(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
   getMinHeight(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
   renderTooltips?(args: INodeDrawArgs<NodeData, PortData>): React.ReactNode;
@@ -40,7 +38,6 @@ export interface IEdgeConfig<T = unknown> {
   render(args: IEdgeDrawArgs<T>): React.ReactNode;
   renderWithTargetHint?(args: IEdgeDrawArgs<T>): React.ReactNode;
   renderWithSourceHint?(args: IEdgeDrawArgs<T>): React.ReactNode;
-  getStyle?(edge: ICanvasEdge, theme: ITheme): React.CSSProperties;
 }
 
 export interface IGetConnectableParams<NodeData = unknown, EdgeData = unknown, PortData = unknown> {

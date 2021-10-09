@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
 import * as React from "react";
-import { useTheme } from "../hooks";
 import { useGraphConfig } from "../hooks/context";
 import { GraphNodeEvent, INodeCommonEvent, INodeContextMenuEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
@@ -24,32 +23,30 @@ export interface IGraphNodeProps extends IGraphNodeCommonProps {
   node: NodeModel;
 }
 
-const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
+const GraphNode: React.FunctionComponent<IGraphNodeProps> = (props) => {
   const { node, eventChannel, getNodeAriaLabel, viewport, graphId } = props;
   const graphConfig = useGraphConfig();
   const shape = node.shape ? node.shape : graphConfig.defaultNodeShape;
   const nodeConfig = getNodeConfig(node, graphConfig);
-  const { theme } = useTheme();
 
-  const nodeEvent = (type: (INodeCommonEvent | INodeContextMenuEvent)["type"]) => (
-    evt: React.SyntheticEvent | React.MouseEvent
-  ) => {
-    evt.persist();
-    const e = {
-      type,
-      node,
-      rawEvent: evt
-    } as INodeCommonEvent | INodeContextMenuEvent;
-    eventChannel.trigger(e);
-  };
+  const nodeEvent =
+    (type: (INodeCommonEvent | INodeContextMenuEvent)["type"]) => (evt: React.SyntheticEvent | React.MouseEvent) => {
+      evt.persist();
+      const e = {
+        type,
+        node,
+        rawEvent: evt,
+      } as INodeCommonEvent | INodeContextMenuEvent;
+      eventChannel.trigger(e);
+    };
 
-  const clickEvent: React.MouseEventHandler = e => {
+  const clickEvent: React.MouseEventHandler = (e) => {
     e.persist();
     eventChannel.trigger({
       type: GraphNodeEvent.Click,
       rawEvent: e,
       isMultiSelect: checkIsMultiSelect(e),
-      node
+      node,
     });
   };
 
@@ -94,8 +91,7 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
       <g className="node-box-container">
         {nodeConfig.render({
           model: node,
-          theme,
-          viewport
+          viewport,
         })}
       </g>
     </g>

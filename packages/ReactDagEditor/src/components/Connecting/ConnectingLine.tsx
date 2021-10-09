@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useTheme } from "../../hooks";
+import { defaultColors } from "../../common/constants";
 import { getCurvePathD } from "../../utils";
 import { ILine } from "../Line";
 
@@ -9,12 +9,10 @@ interface IConnectingLineProps {
   styles?: React.CSSProperties;
 }
 
-export const ConnectingLine: React.FunctionComponent<IConnectingLineProps> = props => {
+export const ConnectingLine: React.FunctionComponent<IConnectingLineProps> = (props) => {
   const { autoAttachLine, connectingLine, styles } = props;
 
-  const { theme } = useTheme();
-
-  const strokeColor = styles?.stroke || theme.primaryColor;
+  const strokeColor = styles?.stroke || defaultColors.primaryColor;
   const fill = styles?.fill || "none";
   const strokeDasharray = styles?.strokeDasharray || "4,4";
 
@@ -49,7 +47,7 @@ export const ConnectingLine: React.FunctionComponent<IConnectingLineProps> = pro
         d={getCurvePathD(autoAttachLine.x2, autoAttachLine.x1, autoAttachLine.y2, autoAttachLine.y1)}
         style={{
           stroke: autoAttachLine.visible ? strokeColor : "none",
-          fill: "none"
+          fill: "none",
         }}
       />
     </g>

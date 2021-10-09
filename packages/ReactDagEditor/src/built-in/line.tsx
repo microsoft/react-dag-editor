@@ -1,22 +1,18 @@
 import * as React from "react";
-import type { ITheme } from "../contexts";
+import { defaultColors } from "../common/constants";
 import type { IEdgeConfig } from "../models/config/types";
-import type { ICanvasEdge } from "../models/edge";
 import { GraphEdgeState } from "../models/element-state";
 import { getCurvePathD } from "../utils/getCurvePathD";
 import { hasState } from "../utils/state";
 
 export const line: IEdgeConfig = {
-  getStyle(edge: ICanvasEdge, theme: ITheme): React.CSSProperties {
-    return {
-      cursor: "crosshair",
-      stroke: hasState(GraphEdgeState.selected)(edge.state) ? theme.edgeColorSelected : theme.edgeColor,
-      strokeWidth: "2",
-    };
-  },
   render(args): React.ReactNode {
     const edge = args.model;
-    const style = line.getStyle ? line.getStyle(edge, args.theme) : {};
+    const style = {
+      cursor: "crosshair",
+      stroke: hasState(GraphEdgeState.selected)(edge.state) ? defaultColors.edgeColorSelected : defaultColors.edgeColor,
+      strokeWidth: "2",
+    };
 
     return (
       <path

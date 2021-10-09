@@ -1,6 +1,5 @@
 import type * as React from "react";
 import type { ICanvasData, ICanvasGroup } from "../canvas";
-import type { ICanvasEdge } from "../edge";
 import type { EdgeModel } from "../EdgeModel";
 import type { IViewport } from "../geometry";
 import type { GraphModel } from "../GraphModel";

@@ -3,7 +3,6 @@ import { useGraphConfig, useVirtualization } from "../hooks/context";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
 import { GraphEdgeState } from "../models/element-state";
-import { useTheme } from "../hooks";
 import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { getEdgeUid, getLinearFunction, hasState, isPointInRect } from "../utils";
@@ -34,7 +33,7 @@ function getHintPoints(
   if (source.x === target.x) {
     return {
       x: source.x,
-      y: source.y < target.y ? maxY : minY
+      y: source.y < target.y ? maxY : minY,
     };
   }
   if (source.x < target.x) {
@@ -52,21 +51,19 @@ function getHintPoints(
 
 export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
   // eslint-disable-next-line complexity
-  props => {
+  (props) => {
     const { edge, data: graphModel, eventChannel, source, target, graphId } = props;
     const graphConfig = useGraphConfig();
 
     const virtualization = useVirtualization();
     const { viewport, renderedArea, visibleArea } = virtualization;
 
-    const { theme } = useTheme();
-
     const edgeEvent = (type: IEdgeCommonEvent["type"]) => (e: React.SyntheticEvent) => {
       e.persist();
       eventChannel.trigger({
         type,
         edge,
-        rawEvent: e
+        rawEvent: e,
       });
     };
 
@@ -109,8 +106,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       y1: source.y,
       x2: target.x,
       y2: target.y,
-      theme,
-      viewport
+      viewport,
     });
 
     if (hasState(GraphEdgeState.connectedToSelected)(edge.state) && (!isSourceVisible || !isTargetVisible)) {
@@ -139,8 +135,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
           y1: source.y,
           x2: hintPoint.x,
           y2: hintPoint.y,
-          theme,
-          viewport
+          viewport,
         });
       } else if (isTargetVisible && edgeConfig.renderWithSourceHint) {
         edgeNode = edgeConfig.renderWithSourceHint({
@@ -150,8 +145,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
           y1: hintPoint.y,
           x2: target.x,
           y2: target.y,
-          theme,
-          viewport
+          viewport,
         });
       }
     }

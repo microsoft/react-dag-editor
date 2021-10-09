@@ -7,13 +7,11 @@ import { Debug } from "../utils/debug";
 import { noop } from "../utils/noop";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 import { GraphStateStore } from "./Graph/GraphStateStore";
-import { IThemeProviderProps, ThemeProvider } from "./ThemeProvider";
 
 /**
  * ReactDagEditor props
  */
-export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>
-  extends IThemeProviderProps {
+export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> {
   /**
    * Additional css styles to apply to the container element.
    */
@@ -55,7 +53,7 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = (pr
 
   const handleError = props.handleError?.bind(null);
 
-  const { theme, setTheme, state, dispatch, getGlobalEventTarget } = props;
+  const { state, dispatch, getGlobalEventTarget } = props;
 
   const graphController = useConst(() => new GraphController(state, dispatch));
   graphController.UNSAFE_latestState = state;
@@ -74,11 +72,9 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = (pr
     <ErrorBoundary renderOnError={handleError}>
       <GraphStateStore state={state} dispatch={dispatch} graphController={graphController}>
         <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
-          <ThemeProvider theme={theme} setTheme={setTheme}>
-            <div style={props.style} className={props.className}>
-              {props.children}
-            </div>
-          </ThemeProvider>
+          <div style={props.style} className={props.className}>
+            {props.children}
+          </div>
         </ContextMenuConfigContext.Provider>
       </GraphStateStore>
     </ErrorBoundary>

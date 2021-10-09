@@ -1,31 +1,31 @@
 import { mergeStyleSets } from "@fluentui/merge-styles";
 import * as React from "react";
+import { defaultColors } from "../../../common/constants";
 import { IContextMenuProps } from "../../../contexts";
-import { useContextMenuConfigContext, useTheme } from "../../../hooks";
+import { useContextMenuConfigContext } from "../../../hooks";
 
-export const ContextMenu: React.FunctionComponent<IContextMenuProps> = props => {
-  const { theme } = useTheme();
+export const ContextMenu: React.FunctionComponent<IContextMenuProps> = (props) => {
   const classes = mergeStyleSets({
     contextMenu: {
       fontSize: 14,
-      background: theme.contextMenuBackground,
-      color: theme.fontColor,
-      border: `1px solid ${theme.contextMenuBorder}`,
+      background: defaultColors.contextMenuBackground,
+      color: defaultColors.fontColor,
+      border: `1px solid ${defaultColors.contextMenuBorder}`,
       width: 193,
       lineHeight: "20px",
       cursor: "default",
       "> *": {
         padding: 8,
         ":hover": {
-          background: theme.contextMenuHoverBackground
-        }
-      }
-    }
+          background: defaultColors.contextMenuHoverBackground,
+        },
+      },
+    },
   });
 
   const propsMerged = {
     ...props,
-    ...{ className: `${classes.contextMenu} ${props.className}` }
+    ...{ className: `${classes.contextMenu} ${props.className}` },
   };
 
   const contextMenuConfig = useContextMenuConfigContext();

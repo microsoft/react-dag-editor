@@ -1,12 +1,11 @@
 import * as React from "react";
 import { createUseStyles } from "react-jss";
+import { defaultColors } from "../common/constants";
 import { IDispatch } from "../contexts/GraphStateContext";
-import { ITheme } from "../contexts/ThemeContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers/DragController";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { useGraphController } from "../hooks/context";
 import { useRefValue } from "../hooks/useRefValue";
-import { useTheme } from "../hooks/useTheme";
 import { GraphScrollBarEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
 import { EventChannel } from "../utils/eventChannel";
@@ -34,7 +33,7 @@ interface IProps {
 
 const wrapperCommonStyle: React.CSSProperties = {
   position: "absolute",
-  cursor: "initial"
+  cursor: "initial",
 };
 
 const useStyles = createUseStyles({
@@ -43,44 +42,43 @@ const useStyles = createUseStyles({
     height: "100%",
     width: SCROLL_BAR_WIDTH,
     top: 0,
-    right: 0
+    right: 0,
   },
   horizontalScrollWrapper: {
     ...wrapperCommonStyle,
     height: SCROLL_BAR_WIDTH,
     width: "100%",
     bottom: 0,
-    left: 0
+    left: 0,
   },
-  verticalScrollStyle: (args: { scrollbarLayout: IScrollbarLayout; theme: ITheme }) => ({
+  verticalScrollStyle: (args: { scrollbarLayout: IScrollbarLayout }) => ({
     height: args.scrollbarLayout.verticalScrollHeight,
     width: "100%",
-    backgroundColor: args.theme.scrollbarColor,
+    backgroundColor: defaultColors.scrollbarColor,
     position: "absolute",
     top: 0,
     right: 0,
-    transform: `translateY(${args.scrollbarLayout.verticalScrollTop}px)`
+    transform: `translateY(${args.scrollbarLayout.verticalScrollTop}px)`,
   }),
-  horizontalScrollStyle: (args: { scrollbarLayout: IScrollbarLayout; theme: ITheme }) => ({
+  horizontalScrollStyle: (args: { scrollbarLayout: IScrollbarLayout }) => ({
     width: args.scrollbarLayout.horizontalScrollWidth - SCROLL_BAR_WIDTH,
     height: "100%",
-    backgroundColor: args.theme.scrollbarColor,
+    backgroundColor: defaultColors.scrollbarColor,
     position: "absolute",
     left: 0,
     bottom: 0,
-    transform: `translateX(${args.scrollbarLayout.horizontalScrollLeft}px)`
-  })
+    transform: `translateX(${args.scrollbarLayout.horizontalScrollLeft}px)`,
+  }),
 });
 
-export const Scrollbar: React.FC<IProps> = props => {
+export const Scrollbar: React.FC<IProps> = (props) => {
   const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewport } = props;
 
   const graphController = useGraphController();
-  const { theme } = useTheme();
 
   const scrollbarLayout = getScrollbarLayout(viewport, offsetLimit);
 
-  const classes = useStyles({ scrollbarLayout, theme });
+  const classes = useStyles({ scrollbarLayout });
 
   const scrollbarLayoutRef = useRefValue(scrollbarLayout);
 
@@ -103,18 +101,18 @@ export const Scrollbar: React.FC<IProps> = props => {
         type: GraphScrollBarEvent.Scroll,
         rawEvent,
         dx: 0,
-        dy
+        dy,
       });
     };
     dragging.onEnd = () => {
       eventChannel.trigger({
-        type: GraphScrollBarEvent.ScrollEnd
+        type: GraphScrollBarEvent.ScrollEnd,
       });
     };
     dragging.start(e.nativeEvent);
 
     eventChannel.trigger({
-      type: GraphScrollBarEvent.ScrollStart
+      type: GraphScrollBarEvent.ScrollStart,
     });
   }
 
@@ -137,19 +135,19 @@ export const Scrollbar: React.FC<IProps> = props => {
         type: GraphScrollBarEvent.Scroll,
         rawEvent,
         dx,
-        dy: 0
+        dy: 0,
       });
     };
     dragging.onEnd = () => {
       eventChannel.trigger({
-        type: GraphScrollBarEvent.ScrollEnd
+        type: GraphScrollBarEvent.ScrollEnd,
       });
     };
 
     dragging.start(e.nativeEvent);
 
     eventChannel.trigger({
-      type: GraphScrollBarEvent.ScrollStart
+      type: GraphScrollBarEvent.ScrollStart,
     });
   }
 
@@ -228,6 +226,6 @@ function getScrollbarLayout(viewport: Required<IViewport>, offsetLimit: IOffsetL
     verticalScrollHeight: (rect.height * rect.height) / totalContentHeight,
     horizontalScrollWidth: (rect.width * rect.width) / totalContentWidth,
     verticalScrollTop: ((offsetLimit.maxY - transformMatrix[5]) * rect.height) / totalContentHeight,
-    horizontalScrollLeft: ((offsetLimit.maxX - transformMatrix[4]) * rect.width) / totalContentWidth
+    horizontalScrollLeft: ((offsetLimit.maxX - transformMatrix[4]) * rect.width) / totalContentWidth,
   };
 }

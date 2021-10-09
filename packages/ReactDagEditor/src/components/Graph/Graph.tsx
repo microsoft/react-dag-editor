@@ -7,9 +7,8 @@ import {
   useGraphTouchHandler,
   useSafariScale,
   useSelectBox,
-  useTheme,
   useUpdateViewportCallback,
-  useWheelHandler
+  useWheelHandler,
 } from "../../hooks";
 import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { useConst } from "../../hooks/useConst";
@@ -58,10 +57,9 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     zoomSensitivity = 0.1,
     scrollSensitivity = 0.5,
     svgRef = defaultSVGRef,
-    virtualizationDelay = 500
+    virtualizationDelay = 500,
   } = props;
 
-  const { theme } = useTheme();
   const graphConfig = useGraphConfig();
   const featureControl = useFeatureControl(state.settings.features);
 
@@ -86,7 +84,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     setCurHoverPort,
     updateViewport,
     eventChannel,
-    graphController
+    graphController,
   });
 
   useContainerRect(svgRef, containerRef, updateViewport);
@@ -103,25 +101,24 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     isA11yEnable,
     isCtrlKeyZoomEnable,
     isLimitBoundary,
-    isVirtualizationEnabled
+    isVirtualizationEnabled,
   } = featureControl;
 
   useSelectBox(dispatch, state.selectBoxPosition);
 
-  const canvasEventHandler = <T extends (ICanvasCommonEvent | ICanvasKeyboardEvent)["type"]>(type: T) => (
-    rawEvent: T extends ICanvasCommonEvent["type"] ? React.SyntheticEvent : React.KeyboardEvent
-  ) => {
-    rawEvent.persist();
-    eventChannel.trigger({
-      type,
-      rawEvent
-    } as ICanvasCommonEvent | ICanvasKeyboardEvent);
-  };
+  const canvasEventHandler =
+    <T extends (ICanvasCommonEvent | ICanvasKeyboardEvent)["type"]>(type: T) =>
+    (rawEvent: T extends ICanvasCommonEvent["type"] ? React.SyntheticEvent : React.KeyboardEvent) => {
+      rawEvent.persist();
+      eventChannel.trigger({
+        type,
+        rawEvent,
+      } as ICanvasCommonEvent | ICanvasKeyboardEvent);
+    };
 
   const classes = getGraphStyles(
     props,
     state,
-    theme,
     isPanDisabled,
     isNodesDraggable,
     focusedWithoutMouse,
@@ -139,7 +136,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     isVerticalScrollDisabled,
     isCtrlKeyZoomEnable,
     eventChannel,
-    graphConfig
+    graphConfig,
   });
 
   const onContextMenuClick = React.useCallback(
@@ -148,7 +145,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       evt.stopPropagation();
 
       eventChannel.trigger({
-        type: GraphContextMenuEvent.Close
+        type: GraphContextMenuEvent.Close,
       });
 
       if (svgRef.current) {
@@ -170,7 +167,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   useSafariScale({
     rectRef,
     svgRef,
-    eventChannel
+    eventChannel,
   });
 
   const accessKey = isA11yEnable ? focusCanvasAccessKey : undefined;
@@ -295,7 +292,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
               rect: state.viewport.rect,
               transformMatrix: viewport.transformMatrix,
               canvasBoundaryPadding: state.settings.canvasBoundaryPadding,
-              groupPadding: data.groups[0]?.padding
+              groupPadding: data.groups[0]?.padding,
             })}
             dispatch={dispatch}
             horizontal={!isHorizontalScrollDisabled}

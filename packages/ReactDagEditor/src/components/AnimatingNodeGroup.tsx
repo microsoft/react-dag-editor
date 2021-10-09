@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useTheme } from "../hooks";
+import { defaultColors } from "../common/constants";
 import { useGraphConfig } from "../hooks/context";
 import type { IDummyNodes } from "../models/dummy-node";
 import type { GraphModel } from "../models/GraphModel";
@@ -10,16 +10,15 @@ interface IAnimatingNodeGroup {
   graphData: GraphModel;
 }
 
-export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = props => {
+export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = (props) => {
   const { dummyNodes, graphData } = props;
   const graphConfig = useGraphConfig();
-  const { theme } = useTheme();
   const { dWidth, dHeight } = dummyNodes;
   const dx = dummyNodes.alignedDX ?? dummyNodes.dx;
   const dy = dummyNodes.alignedDY ?? dummyNodes.dy;
   return (
     <g>
-      {dummyNodes.nodes.map(dummyNode => {
+      {dummyNodes.nodes.map((dummyNode) => {
         const node = graphData.nodes.get(dummyNode.id);
         if (!node) {
           return null;
@@ -31,16 +30,13 @@ export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = 
         const nodeConfig = getNodeConfig(node, graphConfig);
 
         if (nodeConfig?.renderDummy) {
-          return nodeConfig.renderDummy(
-            {
-              ...node.inner,
-              x,
-              y,
-              width,
-              height
-            },
-            theme
-          );
+          return nodeConfig.renderDummy({
+            ...node.inner,
+            x,
+            y,
+            width,
+            height,
+          });
         }
         return (
           <rect
@@ -48,7 +44,7 @@ export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = 
             transform={`translate(${x},${y})`}
             height={height}
             width={width}
-            stroke={theme.dummyNodeStroke}
+            stroke={defaultColors.dummyNodeStroke}
             strokeDasharray="4"
             fill="none"
           />

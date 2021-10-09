@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useGraphConfig } from "../hooks/context";
 import { GraphNodeState } from "../models/element-state";
-import { useTheme } from "../hooks";
 import type { IViewport } from "../models/geometry";
 import type { NodeModel } from "../models/NodeModel";
 import { getNodeConfig, hasState } from "../utils";
@@ -11,10 +10,9 @@ interface IProps {
   viewport: Required<IViewport>;
 }
 
-export const NodeTooltips: React.FunctionComponent<IProps> = props => {
+export const NodeTooltips: React.FunctionComponent<IProps> = (props) => {
   const { node, viewport } = props;
   const graphConfig = useGraphConfig();
-  const { theme } = useTheme();
 
   if (!node) {
     return null;
@@ -34,8 +32,7 @@ export const NodeTooltips: React.FunctionComponent<IProps> = props => {
     <div className="node-tooltips">
       {nodeConfig.renderTooltips({
         model: node,
-        theme,
-        viewport
+        viewport,
       })}
     </div>
   );

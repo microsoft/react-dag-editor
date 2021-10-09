@@ -1,8 +1,7 @@
 import * as React from "react";
-import { ITheme } from "../contexts";
+import { defaultColors } from "../common/constants";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
-import { useTheme } from "../hooks";
 import { useGraphConfig, useGraphController } from "../hooks/context";
 import { GraphNodeEvent } from "../models/event";
 import { INodeGeometryDelta } from "../models/GraphModel";
@@ -23,18 +22,18 @@ interface IResizePointProps {
   cursor: string;
   x: number;
   y: number;
-  theme: ITheme;
   onMouseDown: React.MouseEventHandler;
 }
 
-const ResizePoint: React.FunctionComponent<IResizePointProps> = ({ x, y, cursor, theme, onMouseDown }) => {
+const ResizePoint: React.FunctionComponent<IResizePointProps> = ({ x, y, cursor, onMouseDown }) => {
   return (
     <rect
       x={x}
       y={y}
       height={8}
       width={8}
-      stroke={theme.controlPointColor}
+      // todo
+      stroke={defaultColors.controlPointColor}
       fill="transparent"
       cursor={cursor}
       onMouseDown={onMouseDown}
@@ -42,7 +41,7 @@ const ResizePoint: React.FunctionComponent<IResizePointProps> = ({ x, y, cursor,
   );
 };
 
-export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPointsProps> = props => {
+export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPointsProps> = (props) => {
   const { node, eventChannel } = props;
 
   const graphConfig = useGraphConfig();
@@ -51,8 +50,6 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
 
   const minWidth = nodeConfig?.getMinWidth(node) ?? 0;
   const minHeight = nodeConfig?.getMinHeight(node) ?? 0;
-
-  const { theme } = useTheme();
 
   const height = getRectHeight(nodeConfig, node);
   const width = getRectWidth(nodeConfig, node);
@@ -64,7 +61,7 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
     eventChannel.trigger({
       type: GraphNodeEvent.ResizingStart,
       rawEvent: evt,
-      node
+      node,
     });
 
     const drag = new DragController(
@@ -80,20 +77,20 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
         dy: 0,
         dWidth: 0,
         dHeight: 0,
-        ...f(totalDX, totalDY)
+        ...f(totalDX, totalDY),
       });
     };
     drag.onEnd = ({ e: rawEvent }) => {
       eventChannel.trigger({
         type: GraphNodeEvent.ResizingEnd,
         rawEvent,
-        node
+        node,
       });
     };
     eventChannel.trigger({
       type: GraphNodeEvent.ResizingStart,
       rawEvent: evt,
-      node
+      node,
     });
     drag.start(evt.nativeEvent);
   };
@@ -105,7 +102,7 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
       dx: +finalDx,
       dy: +finalDy,
       dWidth: -finalDx,
-      dHeight: -finalDy
+      dHeight: -finalDy,
     };
   });
 
@@ -113,7 +110,7 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
     const finalDy = Math.min(dy, height - minHeight);
     return {
       dy: +finalDy,
-      dHeight: -finalDy
+      dHeight: -finalDy,
     };
   });
 
@@ -123,14 +120,14 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
     return {
       dy: +finalDy,
       dWidth: +finalDx,
-      dHeight: -finalDy
+      dHeight: -finalDy,
     };
   });
 
-  const e = getMouseDown(dx => {
+  const e = getMouseDown((dx) => {
     const finalDx = Math.max(dx, minWidth - width);
     return {
-      dWidth: +finalDx
+      dWidth: +finalDx,
     };
   });
 
@@ -139,14 +136,14 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
     const finalDy = Math.max(dy, minHeight - height);
     return {
       dWidth: +finalDx,
-      dHeight: +finalDy
+      dHeight: +finalDy,
     };
   });
 
   const s = getMouseDown((dx, dy) => {
     const finalDy = Math.max(dy, minHeight - height);
     return {
-      dHeight: +finalDy
+      dHeight: +finalDy,
     };
   });
 
@@ -156,64 +153,33 @@ export const GraphNodeControlPoints: React.FunctionComponent<IGraphNodeControlPo
     return {
       dx: +finalDx,
       dWidth: -finalDx,
-      dHeight: +finalDy
+      dHeight: +finalDy,
     };
   });
 
-  const w = getMouseDown(dx => {
+  const w = getMouseDown((dx) => {
     const finalDx = Math.min(dx, width - minWidth);
     return {
       dx: finalDx,
-      dWidth: -finalDx
+      dWidth: -finalDx,
     };
   });
 
   return (
     <>
+      <ResizePoint cursor="nw-resize" x={node.x - BBOX_PADDING} y={node.y - BBOX_PADDING} onMouseDown={nw} />
+      <ResizePoint x={node.x + width / 2} y={node.y - BBOX_PADDING} cursor="n-resize" onMouseDown={n} />
+      <ResizePoint x={node.x + width + BBOX_PADDING} y={node.y - BBOX_PADDING} cursor="ne-resize" onMouseDown={ne} />
+      <ResizePoint x={node.x + width + BBOX_PADDING} y={node.y + height / 2} cursor="e-resize" onMouseDown={e} />
       <ResizePoint
-        theme={theme}
-        cursor="nw-resize"
-        x={node.x - BBOX_PADDING}
-        y={node.y - BBOX_PADDING}
-        onMouseDown={nw}
-      />
-      <ResizePoint theme={theme} x={node.x + width / 2} y={node.y - BBOX_PADDING} cursor="n-resize" onMouseDown={n} />
-      <ResizePoint
-        theme={theme}
-        x={node.x + width + BBOX_PADDING}
-        y={node.y - BBOX_PADDING}
-        cursor="ne-resize"
-        onMouseDown={ne}
-      />
-      <ResizePoint
-        theme={theme}
-        x={node.x + width + BBOX_PADDING}
-        y={node.y + height / 2}
-        cursor="e-resize"
-        onMouseDown={e}
-      />
-      <ResizePoint
-        theme={theme}
         x={node.x + width + BBOX_PADDING}
         y={node.y + height + BBOX_PADDING}
         cursor="se-resize"
         onMouseDown={se}
       />
-      <ResizePoint
-        theme={theme}
-        x={node.x + width / 2}
-        y={node.y + height + BBOX_PADDING}
-        cursor="s-resize"
-        onMouseDown={s}
-      />
-      <ResizePoint
-        theme={theme}
-        x={node.x - BBOX_PADDING}
-        y={node.y + height + BBOX_PADDING}
-        cursor="sw-resize"
-        onMouseDown={sw}
-      />
-      <ResizePoint theme={theme} x={node.x - BBOX_PADDING} y={node.y + height / 2} cursor="w-resize" onMouseDown={w} />
+      <ResizePoint x={node.x + width / 2} y={node.y + height + BBOX_PADDING} cursor="s-resize" onMouseDown={s} />
+      <ResizePoint x={node.x - BBOX_PADDING} y={node.y + height + BBOX_PADDING} cursor="sw-resize" onMouseDown={sw} />
+      <ResizePoint x={node.x - BBOX_PADDING} y={node.y + height / 2} cursor="w-resize" onMouseDown={w} />
     </>
   );
   // tslint:enable:use-simple-attributes

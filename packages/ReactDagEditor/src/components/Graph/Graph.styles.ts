@@ -1,5 +1,5 @@
 import { mergeStyleSets } from "@fluentui/merge-styles";
-import { ITheme } from "../../contexts";
+import { defaultColors } from "../../common/constants";
 import { CanvasMouseMode, GraphBehavior, IGraphState } from "../../models/state";
 import classes from "../Graph.styles.m.scss";
 import { IGraphProps } from "./IGraphProps";
@@ -16,7 +16,7 @@ const getCursorStyle = ({ canvasMouseMode, state, isPanDisabled, isMultiSelectin
     return "initial";
   }
 
-  const isClickMultipleSelect = ["meta", "control"].some(key => state.activeKeys.has(key));
+  const isClickMultipleSelect = ["meta", "control"].some((key) => state.activeKeys.has(key));
 
   if (isClickMultipleSelect) {
     return "initial";
@@ -62,7 +62,6 @@ interface IGraphStyles {
 export const getGraphStyles = (
   props: IGraphProps,
   state: IGraphState,
-  theme: ITheme,
   isPanDisabled: boolean,
   isNodeDraggable: boolean,
   focusedWithoutMouse: boolean,
@@ -75,12 +74,12 @@ export const getGraphStyles = (
       props.styles?.svg,
       {
         "& *:focus": {
-          outline: theme.outlineStyle
+          outline: defaultColors.outlineStyle,
         },
         [`& .${classes.node}`]: {
-          cursor: getNodeCursor(isNodeDraggable)
-        }
-      }
+          cursor: getNodeCursor(isNodeDraggable),
+        },
+      },
     ],
     container: [
       "react-dag-editor-container",
@@ -90,19 +89,19 @@ export const getGraphStyles = (
           canvasMouseMode: props.canvasMouseMode,
           state,
           isPanDisabled,
-          isMultiSelecting
+          isMultiSelecting,
         }),
         [`&.${classes.container}`]: {
-          background: theme.canvasBackground,
+          background: defaultColors.canvasBackground,
           ...props.style,
-          ...props.styles?.root
-        }
+          ...props.styles?.root,
+        },
       },
       focusedWithoutMouse && {
-        outline: `${theme.focusOutlineColor} solid 1px`
-      }
+        outline: `${defaultColors.focusOutlineColor} solid 1px`,
+      },
     ],
     buttonA11y: ["react-dag-editor-a11y-help-button", classes.buttonA11Y],
-    node: [classes.node]
+    node: [classes.node],
   });
 };

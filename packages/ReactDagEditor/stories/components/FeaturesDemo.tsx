@@ -243,7 +243,7 @@ class MyPortConfig implements IPortConfig {
   }
 }
 
-const graphConfig = GraphConfigBuilder.default()
+export const graphConfig = GraphConfigBuilder.default()
   .registerNode("source", sourceNodeConfig)
   .registerNode("step", stepNodeConfig)
   .registerPort("myPort", new MyPortConfig())

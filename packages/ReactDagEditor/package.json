@@ -4,7 +4,7 @@
   "repository": {
     "url": "https://github.com/microsoft/react-dag-editor.git"
   },
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "files": [
@@ -98,6 +98,5 @@
       "last 1 edge version",
       "last 1 ie version"
     ]
-  },
-  "gitHead": "a0d1b6742c2d5e3178538db44bff88ade12d3cc0"
+  }
 }

@@ -1,11 +1,20 @@
 /* eslint-disable import/no-default-export */
 import * as React from "react";
 import { FeaturesDemo } from "./components/FeaturesDemo";
+import { NodeFrameCustomization, NodeResizeHandlerCustomization } from "./components/WidgetsCustomization";
 
 export default {
-  title: "react-dag-editor"
+  title: "react-dag-editor",
 };
 
 export const Features = () => <FeaturesDemo />;
 
 Features.storyName = "features";
+
+export const NodeFrameCustomizationDemo = () => <NodeFrameCustomization />;
+
+NodeFrameCustomizationDemo.storyName = "Custom Widgets/Node frame on dragging";
+
+export const NodeResizeHandlerCustomizationDemo = () => <NodeResizeHandlerCustomization />;
+
+NodeResizeHandlerCustomizationDemo.storyName = "Custom Widgets/Node reize handler on double-clicking on node";

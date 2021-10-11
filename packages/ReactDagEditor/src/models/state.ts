@@ -13,12 +13,12 @@ export enum CanvasMouseMode {
 }
 
 export enum GraphBehavior {
-  Default = "Default",
-  Dragging = "Dragging",
-  Panning = "Panning",
-  MultiSelect = "MultiSelect",
-  Connecting = "Connecting",
-  AddingNode = "AddingNode",
+  Default = "default",
+  Dragging = "dragging",
+  Panning = "panning",
+  MultiSelect = "multiSelect",
+  Connecting = "connecting",
+  AddingNode = "addingNode",
 }
 
 export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortData = unknown>

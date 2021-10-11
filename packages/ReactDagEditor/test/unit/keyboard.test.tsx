@@ -2,14 +2,14 @@ import { fireEvent, render, RenderResult } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
 import {
-  add,
   allFeatures,
+  Bitset,
   GraphCanvasEvent,
   GraphEdgeStatus,
   GraphFeatures,
   GraphModel,
   GraphNodeStatus,
-  updateState,
+  updateStatus,
 } from "../../src";
 import { GraphController } from "../../src/controllers/GraphController";
 import { findDOMElement } from "../../src/utils/a11yUtils";
@@ -71,12 +71,12 @@ it("should focus first node", () => {
     throw new Error();
   }
   const node = data.nodes.get(id);
-  expect(node?.state).toBe(GraphNodeStatus.Selected);
+  expect(node?.status).toBe(GraphNodeStatus.Selected);
 });
 
 it("should delete selected edge", () => {
   const id = "0";
-  updateData((data) => data.updateEdge(id, updateState(add(GraphEdgeStatus.Selected))));
+  updateData((data) => data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected))));
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete",
@@ -87,7 +87,7 @@ it("should delete selected edge", () => {
 
 it("should undo, redo", () => {
   const id = "0";
-  updateData((data) => data.updateEdge(id, updateState(add(GraphEdgeStatus.Selected))));
+  updateData((data) => data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected))));
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete",

@@ -1,9 +1,9 @@
-import { GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortState, ICanvasData } from "../../src";
+import { GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortStatus, ICanvasData } from "../../src";
 import { MouseEventButton } from "../../src/common/constants";
 import { nodeSelection } from "../../src/utils";
 import { makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 
-const ports = makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default]);
+const ports = makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]);
 
 function proceed(init: GraphModel, steps: Array<[(value: GraphModel) => GraphModel, ICanvasData]>): void {
   let data = init;

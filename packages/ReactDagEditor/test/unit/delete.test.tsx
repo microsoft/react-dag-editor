@@ -6,14 +6,14 @@ import {
   GraphEdgeStatus,
   GraphModel,
   GraphNodeStatus,
-  GraphPortState,
+  GraphPortStatus,
   notSelected,
 } from "../../src";
 import { GraphController } from "../../src/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { makeEdge, makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 
-const ports = makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default]);
+const ports = makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]);
 
 const deleteSelectedItems = (data: GraphModel) => {
   return data.deleteItems({

@@ -1,4 +1,4 @@
-import { filterSelectedItems, GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortState } from "../../src";
+import { filterSelectedItems, GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortStatus } from "../../src";
 import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
 import { getNeighborPorts } from "../../src/utils";
 import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
@@ -17,7 +17,7 @@ describe("test getNeighborPorts", () => {
       ]),
       nodes: makeNodes(
         [GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default],
-        makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
+        makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
       ),
     });
   }
@@ -53,7 +53,7 @@ describe("test filterSelectedItems", () => {
         ]),
         nodes: makeNodes(
           [GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default],
-          makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
         ),
       })
     );
@@ -72,7 +72,7 @@ describe("test filterSelectedItems", () => {
         ]),
         nodes: makeNodes(
           [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
-          makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
         ),
       })
     );
@@ -91,7 +91,7 @@ describe("test filterSelectedItems", () => {
         ]),
         nodes: makeNodes(
           [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
-          makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
         ),
       })
     );
@@ -174,7 +174,7 @@ describe("test updateNodeBySelectBox", () => {
           y: 50,
           width: 50,
           height: 50,
-          state: GraphNodeStatus.UnconnectedToSelected,
+          status: GraphNodeStatus.UnconnectedToSelected,
         },
         {
           id: "1",
@@ -182,7 +182,7 @@ describe("test updateNodeBySelectBox", () => {
           y: 150,
           width: 100,
           height: 100,
-          state: GraphNodeStatus.Selected,
+          status: GraphNodeStatus.Selected,
         },
         {
           id: "2",
@@ -190,7 +190,7 @@ describe("test updateNodeBySelectBox", () => {
           y: 350,
           width: 150,
           height: 150,
-          state: GraphNodeStatus.UnconnectedToSelected,
+          status: GraphNodeStatus.UnconnectedToSelected,
         },
       ],
     };

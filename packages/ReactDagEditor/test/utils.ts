@@ -26,13 +26,13 @@ export function makePorts(list: number[]): ICanvasPort[] {
 
 export function makeEdge(
   id: string,
-  state: number,
+  status: number,
   [source, sourcePortId]: [string, string],
   [target, targetPortId]: [string, string]
 ): ICanvasEdge {
   return {
     id,
-    status: state,
+    status,
     source,
     sourcePortId,
     target,
@@ -44,12 +44,12 @@ export function makeEdges(list: Array<[number, [string, string], [string, string
   return list.map(([state, source, target], index) => makeEdge(index.toString(), state, source, target));
 }
 
-export function makeNode(id: string, state?: number, ports?: ICanvasPort[], x = 0, y = 0): ICanvasNode {
+export function makeNode(id: string, status?: number, ports?: ICanvasPort[], x = 0, y = 0): ICanvasNode {
   return {
     x,
     y,
     id,
-    status: state,
+    status,
     ports,
   };
 }
@@ -59,10 +59,10 @@ export function makeNodes(stateList: number[], ports?: ICanvasPort[]): ICanvasNo
 }
 
 export function makeNodesWithPosition(
-  list: Array<{ state: number; x?: number; y?: number }>,
+  list: Array<{ status: number; x?: number; y?: number }>,
   ports?: ICanvasPort[]
 ): ICanvasNode[] {
-  return list.map(({ state, x, y }, index) => makeNode(index.toString(), state, ports, x, y));
+  return list.map(({ status, x, y }, index) => makeNode(index.toString(), status, ports, x, y));
 }
 
 export function getGraphConfig(): IGraphConfig {

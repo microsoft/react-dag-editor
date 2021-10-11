@@ -4,6 +4,7 @@ import { useGraphConfig } from "../hooks/context";
 import type { IDummyNodes } from "../models/dummy-node";
 import type { GraphModel } from "../models/GraphModel";
 import { getNodeConfig } from "../utils";
+import { Slots } from "./Slots/Slots";
 
 interface IAnimatingNodeGroup {
   dummyNodes: IDummyNodes;
@@ -39,15 +40,17 @@ export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = 
           });
         }
         return (
-          <rect
-            key={node.id}
-            transform={`translate(${x},${y})`}
-            height={height}
-            width={width}
-            stroke={defaultColors.dummyNodeStroke}
-            strokeDasharray="4"
-            fill="none"
-          />
+          <Slots.NodeFrame height={height} width={width} key="node-frame">
+            <rect
+              key={node.id}
+              transform={`translate(${x},${y})`}
+              height={height}
+              width={width}
+              stroke={defaultColors.dummyNodeStroke}
+              strokeDasharray="4"
+              fill="none"
+            />
+          </Slots.NodeFrame>
         );
       })}
     </g>

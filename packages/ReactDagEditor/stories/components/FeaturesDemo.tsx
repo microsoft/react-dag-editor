@@ -243,7 +243,7 @@ class MyPortConfig implements IPortConfig {
   }
 }
 
-const graphConfig = GraphConfigBuilder.default()
+export const graphConfig = GraphConfigBuilder.default()
   .registerNode("source", sourceNodeConfig)
   .registerNode("step", stepNodeConfig)
   .registerPort("myPort", new MyPortConfig())
@@ -262,44 +262,6 @@ export const FeaturesDemo: React.FC = () => {
 
   return (
     <ReactDagEditor style={{ width: "900px", height: "600px" }} state={state} dispatch={dispatch}>
-      <Graph />
-    </ReactDagEditor>
-  );
-};
-
-export const NodeFrameCustomization: React.FC = () => {
-  const [state, dispatch] = useGraphReducer(
-    {
-      settings: {
-        graphConfig,
-      },
-      data: GraphModel.fromJSON(sampleGraphData),
-    },
-    undefined
-  );
-
-  const renderNodeFrame = React.useCallback(({ height, width, x, y }) => {
-    console.log("renderNodeFrame");
-
-    return (
-      <rect
-        transform={`translate(${x},${y})`}
-        height={height}
-        width={width}
-        stroke={"blue"}
-        strokeDasharray="4"
-        fill="red"
-      />
-    );
-  }, []);
-
-  return (
-    <ReactDagEditor
-      style={{ width: "900px", height: "600px" }}
-      state={state}
-      dispatch={dispatch}
-      renderNodeFrame={renderNodeFrame}
-    >
       <Graph />
     </ReactDagEditor>
   );

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { defaultColors } from "../common/constants";
+import { INodeResizeHandlerProps } from "../contexts/SlotsContext";
 import { defaultGetPositionFromEvent, DragController } from "../controllers";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { useGraphConfig, useGraphController } from "../hooks/context";
@@ -8,6 +9,7 @@ import { INodeGeometryDelta } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 import { getNodeConfig, getRectHeight, getRectWidth } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
+import { Slots } from "./Slots/Slots";
 
 interface IGraphNodeControlPointsProps {
   node: NodeModel;
@@ -18,26 +20,20 @@ const BBOX_PADDING = 15;
 
 type Handler = (dx: number, dy: number) => Partial<INodeGeometryDelta>;
 
-interface IResizePointProps {
-  cursor: string;
-  x: number;
-  y: number;
-  onMouseDown: React.MouseEventHandler;
-}
-
-const ResizePoint: React.FunctionComponent<IResizePointProps> = ({ x, y, cursor, onMouseDown }) => {
+const ResizePoint: React.FunctionComponent<INodeResizeHandlerProps> = ({ x, y, cursor, onMouseDown }) => {
   return (
-    <rect
-      x={x}
-      y={y}
-      height={8}
-      width={8}
-      // todo
-      stroke={defaultColors.controlPointColor}
-      fill="transparent"
-      cursor={cursor}
-      onMouseDown={onMouseDown}
-    />
+    <Slots.NodeResizeHandler x={x} y={y} cursor={cursor} onMouseDown={onMouseDown}>
+      <rect
+        x={x}
+        y={y}
+        height={8}
+        width={8}
+        stroke={defaultColors.controlPointColor}
+        fill="transparent"
+        cursor={cursor}
+        onMouseDown={onMouseDown}
+      />
+    </Slots.NodeResizeHandler>
   );
 };
 

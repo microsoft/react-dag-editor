@@ -2,13 +2,13 @@ import { fireEvent, render, RenderResult } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
 import {
-  addState,
+  add,
   allFeatures,
   GraphCanvasEvent,
-  GraphEdgeState,
+  GraphEdgeStatus,
   GraphFeatures,
   GraphModel,
-  GraphNodeState,
+  GraphNodeStatus,
   updateState,
 } from "../../src";
 import { GraphController } from "../../src/controllers/GraphController";
@@ -35,7 +35,7 @@ const updateData = (f: (prev: GraphModel) => GraphModel) =>
 beforeEach(() => {
   const graphControllerRef = React.createRef<GraphController>();
   const features = new Set(allFeatures);
-  features.add(GraphFeatures.autoFit); // disable virtualization
+  features.add(GraphFeatures.AutoFit); // disable virtualization
   wrapper = render(
     <TestComponent
       data={GraphModel.fromJSON(getSample1Data())}
@@ -71,12 +71,12 @@ it("should focus first node", () => {
     throw new Error();
   }
   const node = data.nodes.get(id);
-  expect(node?.state).toBe(GraphNodeState.selected);
+  expect(node?.state).toBe(GraphNodeStatus.Selected);
 });
 
 it("should delete selected edge", () => {
   const id = "0";
-  updateData((data) => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
+  updateData((data) => data.updateEdge(id, updateState(add(GraphEdgeStatus.Selected))));
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete",
@@ -87,7 +87,7 @@ it("should delete selected edge", () => {
 
 it("should undo, redo", () => {
   const id = "0";
-  updateData((data) => data.updateEdge(id, updateState(addState(GraphEdgeState.selected))));
+  updateData((data) => data.updateEdge(id, updateState(add(GraphEdgeStatus.Selected))));
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete",

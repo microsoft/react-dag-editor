@@ -56,7 +56,7 @@ export function createGraphState<NodeData = unknown, EdgeData = unknown, PortDat
       rect: undefined,
       transformMatrix: transformMatrix ?? EMPTY_TRANSFORM_MATRIX,
     },
-    behavior: GraphBehavior.default,
+    behavior: GraphBehavior.Default,
     dummyNodes: emptyDummyNodes(),
     alignmentLines: [],
     activeKeys: new Set<string>(),

@@ -107,7 +107,7 @@ const adjustPosition = (
  * @param props type IItemProps
  * @returns
  */
-export const Item: React.FunctionComponent<IItemProps> = props => {
+export const Item: React.FunctionComponent<IItemProps> = (props) => {
   const graphConfig = useGraphConfig();
   const graphController = useGraphController();
   const [workingModel, setWorkingModel] = React.useState<ICanvasNode | null>(null);
@@ -121,7 +121,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
       evt.stopPropagation();
       if (
         (evt.pointerType === "mouse" && evt.button !== MouseEventButton.Primary) ||
-        !graphController.getEnabledFeatures().has(GraphFeatures.addNewNodes)
+        !graphController.getEnabledFeatures().has(GraphFeatures.AddNewNodes)
       ) {
         return;
       }
@@ -138,7 +138,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
           model,
           nodeConfig
         ),
-        id: model.id || uuid()
+        id: model.id || uuid(),
       };
 
       const drag = new DragController(
@@ -150,11 +150,11 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
 
       eventChannel.trigger({
         type: GraphCanvasEvent.DraggingNodeFromItemPanelStart,
-        rawEvent: evt
+        rawEvent: evt,
       });
 
       drag.onMove = ({ e }) => {
-        setWorkingModel(n => {
+        setWorkingModel((n) => {
           if (!n) {
             return n;
           }
@@ -167,7 +167,7 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
               graphController.state.viewport.transformMatrix,
               model,
               nodeConfig
-            )
+            ),
           };
         });
       };
@@ -178,19 +178,19 @@ export const Item: React.FunctionComponent<IItemProps> = props => {
           setWorkingModel(null);
           eventChannel.trigger({
             type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,
-            node: null
+            node: null,
           });
           return;
         }
         nextNodeRef.current = null;
         nextNode = {
           ...nextNode,
-          ...adjustPosition(e.clientX, e.clientY, viewport.rect, viewport.transformMatrix, model, nodeConfig)
+          ...adjustPosition(e.clientX, e.clientY, viewport.rect, viewport.transformMatrix, model, nodeConfig),
         };
         nextNode = nodeWillAdd(nextNode);
         eventChannel.trigger({
           type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,
-          node: nextNode
+          node: nextNode,
         });
         nodeDidAdd(nextNode);
         setWorkingModel(null);

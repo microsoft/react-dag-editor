@@ -159,7 +159,7 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
       }
       const { transformMatrix, rect } = viewport;
       let { dx, dy } = action;
-      const limitBoundary = features.has(GraphFeatures.limitBoundary);
+      const limitBoundary = features.has(GraphFeatures.LimitBoundary);
       const groupPadding = data.groups?.[0]?.padding; // TODO: this is not precise
       if (limitBoundary) {
         const { minX, maxX, minY, maxY } = getOffsetLimit({

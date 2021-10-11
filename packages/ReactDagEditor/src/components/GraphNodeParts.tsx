@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useVirtualization } from "../hooks/context";
 import { NodeModel } from "../models/NodeModel";
-import { isNodeEditing, isPointInRect } from "../utils";
+import { isNodeEditing } from "../models/status";
+import { isPointInRect } from "../utils";
 import { GraphNode, IGraphNodeCommonProps } from "./GraphNode";
 import { GraphNodeControlPoints } from "./GraphNodeControlPoints";
 import { GraphOneNodePorts, IGraphOneNodePortsProps } from "./GraphOneNodePorts";

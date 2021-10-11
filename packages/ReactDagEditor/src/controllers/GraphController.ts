@@ -29,7 +29,7 @@ export class GraphController {
   public dispatchDelegate: IDispatch;
   public getGlobalEventTargetImpl?: () => Window | Element | null | undefined;
   private mouseClientPoint?: IPoint;
-  private behavior = GraphBehavior.default;
+  private behavior = GraphBehavior.Default;
 
   public constructor(state: IGraphState, dispatch: IDispatch) {
     this.state = state;

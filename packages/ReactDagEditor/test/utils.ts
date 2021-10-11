@@ -8,7 +8,7 @@ import {
   IGetConnectableParams,
   IGraphConfig,
   INodeDrawArgs,
-  IPortDrawArgs
+  IPortDrawArgs,
 } from "../src";
 
 function makePort(id: string, state: number): ICanvasPort {
@@ -16,7 +16,7 @@ function makePort(id: string, state: number): ICanvasPort {
     id,
     position: [0, 0],
     name: id,
-    state
+    status: state,
   };
 }
 
@@ -32,11 +32,11 @@ export function makeEdge(
 ): ICanvasEdge {
   return {
     id,
-    state,
+    status: state,
     source,
     sourcePortId,
     target,
-    targetPortId
+    targetPortId,
   };
 }
 
@@ -49,8 +49,8 @@ export function makeNode(id: string, state?: number, ports?: ICanvasPort[], x = 
     x,
     y,
     id,
-    state,
-    ports
+    status: state,
+    ports,
   };
 }
 
@@ -76,7 +76,7 @@ export function getGraphConfig(): IGraphConfig {
       },
       getMinHeight(rect: ICanvasNode): number {
         return 50;
-      }
+      },
     })
     .registerPort("default", {
       render(args: IPortDrawArgs): React.ReactNode {
@@ -88,7 +88,7 @@ export function getGraphConfig(): IGraphConfig {
       getIsConnectable({ model }: IGetConnectableParams): boolean | undefined {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (model.data as any)?.isConnectable;
-      }
+      },
     })
     .build();
 }
@@ -120,15 +120,15 @@ export const mockClientRect = {
   top: 100,
   right: 900,
   bottom: 700,
-  left: 100
+  left: 100,
 };
 
 export const mockBoundingBox = (rect = mockClientRect) => {
   const old = Element.prototype.getBoundingClientRect;
-  Element.prototype.getBoundingClientRect = function(): DOMRect {
+  Element.prototype.getBoundingClientRect = function (): DOMRect {
     return {
       ...old.call(this),
-      ...rect
+      ...rect,
     };
   };
   Element.prototype.releasePointerCapture = () => {

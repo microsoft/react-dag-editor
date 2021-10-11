@@ -17,7 +17,7 @@ import {
   GraphScrollBarEvent,
   IEvent,
   INodeCommonEvent,
-  IPortEvent
+  IPortEvent,
 } from "../models/event";
 import { IContainerRect } from "../models/geometry";
 import { GraphBehavior } from "../models/state";
@@ -34,7 +34,7 @@ import {
   focusUpNode,
   getNextItem,
   getPrevItem,
-  goToConnectedPort
+  goToConnectedPort,
 } from "../utils/a11yUtils";
 import { EventChannel } from "../utils/eventChannel";
 import { animationFramed } from "../utils/scheduling";
@@ -73,14 +73,14 @@ export function useEventChannel({
   setCurHoverPort,
   eventChannel,
   updateViewport,
-  graphController
+  graphController,
 }: IUseEventChannelParams): void {
   const {
     dragThreshold = 10,
     autoAlignThreshold = DEFAULT_AUTO_ALIGN_THRESHOLD,
     getPositionFromEvent = defaultGetPositionFromEvent,
     canvasMouseMode,
-    edgeWillAdd
+    edgeWillAdd,
   } = props;
   const {
     isNodesDraggable,
@@ -92,7 +92,7 @@ export function useEventChannel({
     isConnectDisabled,
     isPortHoverViewEnable,
     isNodeEditDisabled,
-    isA11yEnable
+    isA11yEnable,
   } = featureControl;
 
   const animationFramedDispatch = React.useMemo(() => animationFramed(dispatch), [dispatch]);
@@ -102,7 +102,7 @@ export function useEventChannel({
     eventChannel,
     graphConfig,
     setCurHoverNode,
-    setCurHoverPort
+    setCurHoverPort,
   });
 
   const focusFirstNode = (e: React.KeyboardEvent) => {
@@ -207,7 +207,7 @@ export function useEventChannel({
             containerRef,
             getPositionFromEvent: defaultGetPositionFromEvent,
             eventChannel,
-            graphController
+            graphController,
           });
         }
         break;
@@ -218,7 +218,7 @@ export function useEventChannel({
           if (evt.target instanceof Node && svgRef.current?.contains(evt.target) && evt.target.nodeName === "svg") {
             eventChannel.trigger({
               type: GraphCanvasEvent.Click,
-              rawEvent: event.rawEvent
+              rawEvent: event.rawEvent,
             });
           }
         }
@@ -233,7 +233,7 @@ export function useEventChannel({
           const evt = event.rawEvent as MouseEvent;
           graphController.setMouseClientPosition({
             x: evt.clientX,
-            y: evt.clientY
+            y: evt.clientY,
           });
         }
         break;
@@ -256,8 +256,8 @@ export function useEventChannel({
     const { isNodeHoverViewEnabled } = featureControl;
     const behavior = graphController.getBehavior();
     switch (behavior) {
-      case GraphBehavior.connecting:
-      case GraphBehavior.default:
+      case GraphBehavior.Connecting:
+      case GraphBehavior.Default:
         if (isNodeHoverViewEnabled) {
           setCurHoverNode(node.id);
           setCurHoverPort(undefined);
@@ -342,7 +342,7 @@ export function useEventChannel({
       case GraphNodeEvent.PointerDown:
         {
           graphController.nodeClickOnce = null;
-          if (graphController.getBehavior() !== GraphBehavior.default) {
+          if (graphController.getBehavior() !== GraphBehavior.Default) {
             return;
           }
           const evt = event.rawEvent as React.PointerEvent;
@@ -357,7 +357,7 @@ export function useEventChannel({
             isClickNodeToSelectDisabled,
             autoAlignThreshold,
             eventChannel,
-            graphController
+            graphController,
           });
         }
         break;
@@ -430,7 +430,7 @@ export function useEventChannel({
           type: GraphEdgeEvent.ConnectMove,
           rawEvent: e,
           clientX,
-          clientY
+          clientY,
         });
       };
       dragging.onEnd = ({ e }) => {
@@ -438,7 +438,7 @@ export function useEventChannel({
           type: GraphEdgeEvent.ConnectEnd,
           rawEvent: e,
           edgeWillAdd,
-          isCancel: false
+          isCancel: false,
         });
         graphController.pointerId = null;
       };
@@ -449,8 +449,8 @@ export function useEventChannel({
         rawEvent: evt,
         clientPoint: {
           x: evt.clientX,
-          y: evt.clientY
-        }
+          y: evt.clientY,
+        },
       });
       if (evt.target instanceof Element && evt.pointerType !== "mouse") {
         evt.target.releasePointerCapture(evt.pointerId);
@@ -465,7 +465,7 @@ export function useEventChannel({
       graphController,
       isConnectDisabled,
       setFocusedWithoutMouse,
-      updateViewport
+      updateViewport,
     ]
   );
 
@@ -482,7 +482,7 @@ export function useEventChannel({
           type: GraphPortEvent.Click,
           node,
           port,
-          rawEvent: evt
+          rawEvent: evt,
         });
       }
     },
@@ -492,7 +492,7 @@ export function useEventChannel({
   const onPortPointerEnter = (event: IPortEvent) => {
     const behavior = graphController.getBehavior();
     switch (behavior) {
-      case GraphBehavior.default:
+      case GraphBehavior.Default:
         setCurHoverPort([event.node.id, event.port.id]);
         break;
       default:
@@ -523,7 +523,7 @@ export function useEventChannel({
         type: GraphEdgeEvent.ConnectStart,
         nodeId: event.node.id,
         portId: event.port.id,
-        rawEvent: evt
+        rawEvent: evt,
       });
       return;
     }
@@ -531,12 +531,12 @@ export function useEventChannel({
     const { node, port } = event;
     switch (evt.key) {
       case "Tab":
-        if (isA11yEnable && graphController.getBehavior() === GraphBehavior.connecting) {
+        if (isA11yEnable && graphController.getBehavior() === GraphBehavior.Connecting) {
           evt.preventDefault();
           evt.stopPropagation();
           eventChannel.trigger({
             type: GraphEdgeEvent.ConnectNavigate,
-            rawEvent: evt
+            rawEvent: evt,
           });
         } else {
           const nextItem = evt.shiftKey ? getPrevItem(data, node, port) : getNextItem(data, node, port);
@@ -561,7 +561,7 @@ export function useEventChannel({
         goToConnectedPort(data, node, port, svgRef, evt, eventChannel);
         break;
       case "Escape":
-        if (graphController.getBehavior() === GraphBehavior.connecting) {
+        if (graphController.getBehavior() === GraphBehavior.Connecting) {
           evt.preventDefault();
           evt.stopPropagation();
           if (svgRef.current) {
@@ -576,7 +576,7 @@ export function useEventChannel({
           type: GraphEdgeEvent.ConnectEnd,
           rawEvent: evt.nativeEvent,
           edgeWillAdd,
-          isCancel: false
+          isCancel: false,
         });
         break;
       default:
@@ -610,12 +610,12 @@ export function useEventChannel({
         dispatch(event);
         break;
       case GraphPortEvent.Blur:
-        if (graphController.getBehavior() === GraphBehavior.connecting) {
+        if (graphController.getBehavior() === GraphBehavior.Connecting) {
           eventChannel.trigger({
             type: GraphEdgeEvent.ConnectEnd,
             rawEvent: (event.rawEvent as React.FocusEvent).nativeEvent,
             edgeWillAdd,
-            isCancel: true
+            isCancel: true,
           });
         }
         break;

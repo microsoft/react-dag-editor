@@ -1,4 +1,4 @@
-import { GraphEdgeState, GraphModel, GraphNodeState, GraphPortState, ICanvasData } from "../../src";
+import { GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortState, ICanvasData } from "../../src";
 import { MouseEventButton } from "../../src/common/constants";
 import { nodeSelection } from "../../src/utils";
 import { makeEdges, makeNode, makeNodes, makePorts } from "../utils";
@@ -7,7 +7,7 @@ const ports = makePorts([GraphPortState.default, GraphPortState.default, GraphPo
 
 function proceed(init: GraphModel, steps: Array<[(value: GraphModel) => GraphModel, ICanvasData]>): void {
   let data = init;
-  steps.forEach(step => {
+  steps.forEach((step) => {
     data = step[0](data);
     expect(data.toJSON()).toEqual(step[1]);
   });
@@ -16,200 +16,200 @@ function proceed(init: GraphModel, steps: Array<[(value: GraphModel) => GraphMod
 describe("node selection", () => {
   it("do nothing for editing node", () => {
     const event = new MouseEvent("mousedown", {
-      shiftKey: false
+      shiftKey: false,
     });
     proceed(
       GraphModel.fromJSON({
         edges: makeEdges([
-          [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-          [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
+          [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+          [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
-        nodes: makeNodes([GraphNodeState.default, GraphNodeState.editing, GraphNodeState.default], ports)
+        nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
       }),
       [
         [
-          nodeSelection(event, makeNode("1", GraphNodeState.editing)),
+          nodeSelection(event, makeNode("1", GraphNodeStatus.Editing)),
           {
             edges: makeEdges([
-              [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
             ]),
-            nodes: makeNodes([GraphNodeState.default, GraphNodeState.editing, GraphNodeState.default], ports)
-          }
-        ]
+            nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
+          },
+        ],
       ]
     );
   });
 
   it("test single selection", () => {
     const event = new MouseEvent("mousedown", {
-      shiftKey: false
+      shiftKey: false,
     });
     proceed(
       GraphModel.fromJSON({
         edges: makeEdges([
-          [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-          [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
+          [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+          [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
-        nodes: makeNodes([GraphNodeState.default, GraphNodeState.default, GraphNodeState.default], ports)
+        nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
       }),
       [
         [
-          nodeSelection(event, makeNode("1", GraphNodeState.default)),
+          nodeSelection(event, makeNode("1", GraphNodeStatus.Default)),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
               ports
-            )
-          }
+            ),
+          },
         ],
         [
-          nodeSelection(event, makeNode("1", GraphNodeState.selected)),
+          nodeSelection(event, makeNode("1", GraphNodeStatus.Selected)),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
               ports
-            )
-          }
+            ),
+          },
         ],
         [
-          nodeSelection(event, makeNode("0", GraphNodeState.unconnectedToSelected)),
+          nodeSelection(event, makeNode("0", GraphNodeStatus.UnconnectedToSelected)),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.connectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.selected, GraphNodeState.connectedToSelected, GraphNodeState.connectedToSelected],
+              [GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.ConnectedToSelected],
               ports
-            )
-          }
-        ]
+            ),
+          },
+        ],
       ]
     );
   });
 
   it("test multiple selection", () => {
     const event = new MouseEvent("mousedown", {
-      ctrlKey: true
+      ctrlKey: true,
     });
     proceed(
       GraphModel.fromJSON({
         edges: makeEdges([
-          [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-          [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
+          [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+          [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
-        nodes: makeNodes([GraphNodeState.default, GraphNodeState.default, GraphNodeState.default], ports)
+        nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
       }),
       [
         [
-          nodeSelection(event, makeNode("1", GraphNodeState.default)),
+          nodeSelection(event, makeNode("1", GraphNodeStatus.Default)),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
               ports
-            )
-          }
+            ),
+          },
         ],
         [
-          nodeSelection(event, makeNode("1", GraphNodeState.selected)),
+          nodeSelection(event, makeNode("1", GraphNodeStatus.Selected)),
           {
             edges: makeEdges([
-              [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
             ]),
-            nodes: makeNodes([GraphNodeState.default, GraphNodeState.default, GraphNodeState.default], ports)
-          }
+            nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
+          },
         ],
         [
-          nodeSelection(event, makeNode("1", GraphNodeState.default)),
+          nodeSelection(event, makeNode("1", GraphNodeStatus.Default)),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]]
-            ]),
-            nodes: makeNodes(
-              [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
-              ports
-            )
-          }
-        ],
-        [
-          nodeSelection(event, makeNode("0", GraphNodeState.unconnectedToSelected)),
-          {
-            edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.connectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.selected, GraphNodeState.selected, GraphNodeState.connectedToSelected],
+              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
               ports
-            )
-          }
+            ),
+          },
         ],
         [
-          nodeSelection(event, makeNode("0", GraphNodeState.selected)),
+          nodeSelection(event, makeNode("0", GraphNodeStatus.UnconnectedToSelected)),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+              [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
               ports
-            )
-          }
+            ),
+          },
         ],
         [
-          nodeSelection(
-            new MouseEvent("mousedown", {
-              ctrlKey: true,
-              button: MouseEventButton.Secondary
-            }),
-            makeNode("0", GraphNodeState.unconnectedToSelected)
-          ),
+          nodeSelection(event, makeNode("0", GraphNodeStatus.Selected)),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.connectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.selected, GraphNodeState.selected, GraphNodeState.connectedToSelected],
+              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
               ports
-            )
-          }
+            ),
+          },
         ],
         [
           nodeSelection(
             new MouseEvent("mousedown", {
               ctrlKey: true,
-              button: MouseEventButton.Secondary
+              button: MouseEventButton.Secondary,
             }),
-            makeNode("0", GraphNodeState.selected)
+            makeNode("0", GraphNodeStatus.UnconnectedToSelected)
           ),
           {
             edges: makeEdges([
-              [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-              [GraphEdgeState.connectedToSelected, ["0", "1"], ["2", "0"]]
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeState.selected, GraphNodeState.selected, GraphNodeState.connectedToSelected],
+              [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
               ports
-            )
-          }
-        ]
+            ),
+          },
+        ],
+        [
+          nodeSelection(
+            new MouseEvent("mousedown", {
+              ctrlKey: true,
+              button: MouseEventButton.Secondary,
+            }),
+            makeNode("0", GraphNodeStatus.Selected)
+          ),
+          {
+            edges: makeEdges([
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+              [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
+            ]),
+            nodes: makeNodes(
+              [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
+              ports
+            ),
+          },
+        ],
       ]
     );
   });

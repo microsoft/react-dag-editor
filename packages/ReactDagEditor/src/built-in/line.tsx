@@ -1,16 +1,18 @@
 import * as React from "react";
 import { defaultColors } from "../common/constants";
 import type { IEdgeConfig } from "../models/config/types";
-import { GraphEdgeState } from "../models/element-state";
+import { GraphEdgeStatus } from "../models/status";
 import { getCurvePathD } from "../utils/getCurvePathD";
-import { hasState } from "../utils/state";
+import * as Bitset from "../utils/bitset";
 
 export const line: IEdgeConfig = {
   render(args): React.ReactNode {
     const edge = args.model;
     const style = {
       cursor: "crosshair",
-      stroke: hasState(GraphEdgeState.selected)(edge.state) ? defaultColors.edgeColorSelected : defaultColors.edgeColor,
+      stroke: Bitset.has(GraphEdgeStatus.Selected)(edge.status)
+        ? defaultColors.edgeColorSelected
+        : defaultColors.edgeColor,
       strokeWidth: "2",
     };
 

@@ -2,11 +2,11 @@ import * as React from "react";
 import { MenuType } from "../contexts/ContextMenuConfigContext";
 import { useContextMenuConfigContext } from "../hooks/useContextMenuConfigContext";
 import { IGraphState } from "../models/state";
-import { isSelected } from "../utils/state";
+import { isSelected } from "../models/status";
 
 const defaultStyle: React.CSSProperties = {
   position: "fixed",
-  userSelect: "none"
+  userSelect: "none",
 };
 
 interface IProps {
@@ -17,7 +17,7 @@ interface IProps {
 export const GraphContextMenu: React.FunctionComponent<IProps> = ({ state, onClick }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [style, setStyle] = React.useState<React.CSSProperties>({
-    ...defaultStyle
+    ...defaultStyle,
   });
 
   React.useLayoutEffect((): void => {
@@ -53,17 +53,17 @@ export const GraphContextMenu: React.FunctionComponent<IProps> = ({ state, onCli
     let selectedNodesCount = 0;
     let selectedPortsCount = 0;
     let selectedEdgesCount = 0;
-    data.nodes.forEach(node => {
+    data.nodes.forEach((node) => {
       if (isSelected(node)) {
         selectedNodesCount += 1;
       }
-      node.ports?.forEach(port => {
+      node.ports?.forEach((port) => {
         if (isSelected(port)) {
           selectedPortsCount += 1;
         }
       });
     });
-    data.edges.forEach(edge => {
+    data.edges.forEach((edge) => {
       if (isSelected(edge)) {
         selectedEdgesCount += 1;
       }
@@ -86,7 +86,7 @@ export const GraphContextMenu: React.FunctionComponent<IProps> = ({ state, onCli
     setContent(menu);
   }, [state.data.present, contextMenuConfig]);
 
-  const handleContextMenu: React.MouseEventHandler<HTMLDivElement> = React.useCallback(evt => {
+  const handleContextMenu: React.MouseEventHandler<HTMLDivElement> = React.useCallback((evt) => {
     evt.stopPropagation();
     evt.preventDefault();
   }, []);

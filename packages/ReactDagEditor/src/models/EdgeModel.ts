@@ -1,8 +1,7 @@
 import { $Complete } from "../utils/complete";
 import { preventSpread } from "../utils/preventSpread";
-import { updateState } from "../utils/state";
 import { ICanvasEdge } from "./edge";
-import { GraphEdgeState } from "./element-state";
+import { GraphEdgeStatus, updateStatus } from "./status";
 
 export class EdgeModel<T = unknown> implements $Complete<ICanvasEdge> {
   public readonly inner: ICanvasEdge<T>;
@@ -35,8 +34,8 @@ export class EdgeModel<T = unknown> implements $Complete<ICanvasEdge> {
     return this.inner.targetPortId;
   }
 
-  public get state(): GraphEdgeState | undefined {
-    return this.inner.state;
+  public get status(): GraphEdgeStatus | undefined {
+    return this.inner.status;
   }
 
   public get data(): Readonly<T> | undefined {
@@ -52,8 +51,8 @@ export class EdgeModel<T = unknown> implements $Complete<ICanvasEdge> {
     return new EdgeModel(inner);
   }
 
-  public updateState(f: (state: number | undefined) => number): EdgeModel<T> {
-    return this.update(updateState(f));
+  public updateStatus(f: (state: number | undefined) => number): EdgeModel<T> {
+    return this.update(updateStatus(f));
   }
 
   public update(f: (curEdge: ICanvasEdge<T>) => ICanvasEdge<T>): EdgeModel<T> {

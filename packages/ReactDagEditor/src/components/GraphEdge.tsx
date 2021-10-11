@@ -2,12 +2,13 @@ import * as React from "react";
 import { useGraphConfig, useVirtualization } from "../hooks/context";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
-import { GraphEdgeState } from "../models/element-state";
 import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
-import { getEdgeUid, getLinearFunction, hasState, isPointInRect } from "../utils";
+import { GraphEdgeStatus } from "../models/status";
+import { getEdgeUid, getLinearFunction, isPointInRect } from "../utils";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
+import * as Bitset from "../utils/bitset";
 
 export interface IGraphEdgeCommonProps {
   data: GraphModel;
@@ -109,7 +110,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       viewport,
     });
 
-    if (hasState(GraphEdgeState.connectedToSelected)(edge.state) && (!isSourceVisible || !isTargetVisible)) {
+    if (Bitset.has(GraphEdgeStatus.ConnectedToSelected)(edge.status) && (!isSourceVisible || !isTargetVisible)) {
       const linearFunction = getLinearFunction(source.x, source.y, target.x, target.y);
       const inverseLinearFunction = getLinearFunction(source.y, source.x, target.y, target.x);
       const hintSource = isSourceVisible ? source : target;

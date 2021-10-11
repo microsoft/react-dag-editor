@@ -17,7 +17,8 @@ import { useFeatureControl } from "../../hooks/useFeatureControl";
 import { GraphCanvasEvent, GraphContextMenuEvent, ICanvasCommonEvent, ICanvasKeyboardEvent } from "../../models/event";
 import type { IContainerRect, IViewport } from "../../models/geometry";
 import { GraphBehavior } from "../../models/state";
-import { isSelected, isSupported, isViewportComplete } from "../../utils";
+import { isSelected } from "../../models/status";
+import { isSupported, isViewportComplete } from "../../utils";
 import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";
 import { getOffsetLimit } from "../../utils/getOffsetLimit";
@@ -122,7 +123,7 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     isPanDisabled,
     isNodesDraggable,
     focusedWithoutMouse,
-    state.behavior === GraphBehavior.multiSelect
+    state.behavior === GraphBehavior.MultiSelect
   );
 
   useWheelHandler({

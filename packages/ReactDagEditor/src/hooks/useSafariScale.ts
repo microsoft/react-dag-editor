@@ -9,7 +9,7 @@ export interface GestureEvent extends UIEvent {
   scale: number;
 }
 
-const isSafari = getBrowser() === BrowserType.safari;
+const isSafari = getBrowser() === BrowserType.Safari;
 
 let prevScale = 0;
 
@@ -35,7 +35,7 @@ export function useSafariScale({ rectRef, svgRef, eventChannel }: IUseSafariScal
         type: GraphCanvasEvent.Zoom,
         rawEvent: e,
         scale: delta,
-        anchor: getContainerCenter(rectRef)
+        anchor: getContainerCenter(rectRef),
       });
     });
     const onGestureStart = (e: GestureEvent): void => {
@@ -47,7 +47,7 @@ export function useSafariScale({ rectRef, svgRef, eventChannel }: IUseSafariScal
         type: GraphCanvasEvent.Zoom,
         rawEvent: e,
         scale: e.scale,
-        anchor: getContainerCenter(rectRef)
+        anchor: getContainerCenter(rectRef),
       });
     };
     const onGestureChange = (e: GestureEvent) => {

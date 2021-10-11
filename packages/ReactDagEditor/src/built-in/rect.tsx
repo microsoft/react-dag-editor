@@ -1,8 +1,8 @@
 import * as React from "react";
 import type { INodeConfig, INodeDrawArgs } from "../models/config/types";
 import type { ICanvasNode } from "../models/node";
-import { GraphNodeState } from "../models/element-state";
-import { hasState } from "../utils/state";
+import { GraphNodeStatus } from "../models/status";
+import { has } from "../utils/bitset";
 import { getRectHeight, getRectWidth } from "../utils/layout";
 import { defaultColors } from "../common/constants";
 import { RectComponent } from "./RectComponent";
@@ -19,7 +19,7 @@ export const rect: INodeConfig = {
     const node = args.model as ICanvasNode<any, any>;
     const width = getRectWidth(rect, node);
     const height = getRectHeight(rect, node);
-    const style = hasState(GraphNodeState.selected | GraphNodeState.activated)(node.state)
+    const style = has(GraphNodeStatus.Selected | GraphNodeStatus.Activated)(node.status)
       ? {
           fill: defaultColors.nodeActivateFill,
           stroke: defaultColors.nodeActivateStroke,

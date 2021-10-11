@@ -22,29 +22,27 @@ export interface IContainerMouseDownParams {
   getPositionFromEvent(e: MouseEvent): IPoint;
 }
 
-const withSimulatedClick = (params: IContainerMouseDownParams, type: ICanvasCommonEvent["type"]) => ({
-  totalDX,
-  totalDY,
-  e: rawEvent
-}: IOnDragEnd) => {
-  const { eventChannel, dragThreshold, containerRef } = params;
-  const events: IEvent[] = [];
-  events.push({
-    type,
-    rawEvent
-  });
-  if (
-    rawEvent.target instanceof Node &&
-    containerRef.current?.contains(rawEvent.target) &&
-    isWithinThreshold(totalDX, totalDY, dragThreshold)
-  ) {
+const withSimulatedClick =
+  (params: IContainerMouseDownParams, type: ICanvasCommonEvent["type"]) =>
+  ({ totalDX, totalDY, e: rawEvent }: IOnDragEnd) => {
+    const { eventChannel, dragThreshold, containerRef } = params;
+    const events: IEvent[] = [];
     events.push({
-      type: GraphCanvasEvent.Click,
-      rawEvent
+      type,
+      rawEvent,
     });
-  }
-  eventChannel.batch(events);
-};
+    if (
+      rawEvent.target instanceof Node &&
+      containerRef.current?.contains(rawEvent.target) &&
+      isWithinThreshold(totalDX, totalDY, dragThreshold)
+    ) {
+      events.push({
+        type: GraphCanvasEvent.Click,
+        rawEvent,
+      });
+    }
+    eventChannel.batch(events);
+  };
 
 const dragMultiSelect = (e: MouseEvent, params: IContainerMouseDownParams): void => {
   const { getPositionFromEvent, graphController, eventChannel } = params;
@@ -57,14 +55,14 @@ const dragMultiSelect = (e: MouseEvent, params: IContainerMouseDownParams): void
       type: GraphCanvasEvent.SelectMove,
       rawEvent,
       dx,
-      dy
+      dy,
     });
   };
   dragging.onEnd = withSimulatedClick(params, GraphCanvasEvent.SelectEnd);
 
   eventChannel.trigger({
     type: GraphCanvasEvent.SelectStart,
-    rawEvent: e
+    rawEvent: e,
   });
 
   dragging.start(e);
@@ -82,14 +80,14 @@ const dragPan = (e: MouseEvent, params: IContainerMouseDownParams): void => {
       type: GraphCanvasEvent.Drag,
       rawEvent,
       dx,
-      dy
+      dy,
     });
   };
   dragging.onEnd = withSimulatedClick(params, GraphCanvasEvent.DragEnd);
   dragging.start(e);
   eventChannel.trigger({
     type: GraphCanvasEvent.DragStart,
-    rawEvent: e
+    rawEvent: e,
   });
 };
 
@@ -105,7 +103,7 @@ export const onContainerMouseDown = (e: React.MouseEvent, params: IContainerMous
   // in pan mode, hold ctrl or shift to perform select.
   // in select mode, hold space to perform pan
   const isPanMode =
-    (canvasMouseMode === CanvasMouseMode.pan && !e.ctrlKey && !e.shiftKey && !e.metaKey) || state.activeKeys?.has(" ");
+    (canvasMouseMode === CanvasMouseMode.Pan && !e.ctrlKey && !e.shiftKey && !e.metaKey) || state.activeKeys?.has(" ");
 
   if (!isPanDisabled && isPanMode) {
     dragPan(e.nativeEvent, params);

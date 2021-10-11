@@ -1,6 +1,8 @@
 import { createContext } from "react";
 
 export interface INodeFrameProps {
+  x: number;
+  y: number;
   height: number;
   width: number;
 }

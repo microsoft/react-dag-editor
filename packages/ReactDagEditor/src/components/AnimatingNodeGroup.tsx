@@ -40,7 +40,7 @@ export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = 
           });
         }
         return (
-          <Slots.NodeFrame height={height} width={width} key="node-frame">
+          <Slots.NodeFrame height={height} width={width} x={x} y={y} key="node-frame">
             <rect
               key={node.id}
               transform={`translate(${x},${y})`}

@@ -1,5 +1,6 @@
 import * as React from "react";
 import { ContextMenuConfig, ContextMenuConfigContext, IDispatch } from "../contexts";
+import { ISlotsContext } from "../contexts/SlotsContext";
 import { GraphController } from "../controllers/GraphController";
 import { useConst } from "../hooks/useConst";
 import type { IGraphState } from "../models/state";
@@ -7,11 +8,13 @@ import { Debug } from "../utils/debug";
 import { noop } from "../utils/noop";
 import { ErrorBoundary } from "./ErrorBoundary/ErrorBoundary";
 import { GraphStateStore } from "./Graph/GraphStateStore";
+import { Slots } from "./Slots/Slots";
 
 /**
  * ReactDagEditor props
  */
-export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never> {
+export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>
+  extends ISlotsContext {
   /**
    * Additional css styles to apply to the container element.
    */
@@ -70,13 +73,15 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = (pr
 
   return (
     <ErrorBoundary renderOnError={handleError}>
-      <GraphStateStore state={state} dispatch={dispatch} graphController={graphController}>
-        <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
-          <div style={props.style} className={props.className}>
-            {props.children}
-          </div>
-        </ContextMenuConfigContext.Provider>
-      </GraphStateStore>
+      <Slots.Provider renderNodeFrame={props.renderNodeFrame}>
+        <GraphStateStore state={state} dispatch={dispatch} graphController={graphController}>
+          <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
+            <div style={props.style} className={props.className}>
+              {props.children}
+            </div>
+          </ContextMenuConfigContext.Provider>
+        </GraphStateStore>
+      </Slots.Provider>
     </ErrorBoundary>
   );
 };

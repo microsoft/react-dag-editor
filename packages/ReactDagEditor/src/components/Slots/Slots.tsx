@@ -8,11 +8,7 @@ const Provider: React.FC<ISlotsContext> = ({ children, renderNodeFrame }) => {
     };
   }, [renderNodeFrame]);
 
-  return (
-    <>
-      <SlotsContext.Provider value={context}>{children}</SlotsContext.Provider>
-    </>
-  );
+  return <SlotsContext.Provider value={context}>{children}</SlotsContext.Provider>;
 };
 
 const NodeFrame: React.FC<INodeFrameProps> = (props) => {

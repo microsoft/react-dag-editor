@@ -8,7 +8,7 @@ import {
   isViewportComplete,
   notSelected,
   resetUndoStack,
-  unSelectAllEntity
+  unSelectAllEntity,
 } from "../utils";
 import { pushHistory, redo, undo } from "../utils/history";
 
@@ -20,7 +20,7 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
         return state;
       }
       const { rect } = state.viewport;
-      let pasteNodes = action.data.nodes;
+      let pasteNodes = action.data?.nodes ?? [];
 
       if (position && rect) {
         const realPoint = getRealPointFromClientPoint(position.x, position.y, state.viewport);
@@ -39,21 +39,21 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
             ...n,
             x: dx ? n.x - COPIED_NODE_SPACING + dx : n.x,
             y: dy ? n.y - COPIED_NODE_SPACING + dy : n.y,
-            state: GraphNodeState.selected
+            state: GraphNodeState.selected,
           };
         });
       }
 
       let next = unSelectAllEntity()(state.data.present);
-      pasteNodes.forEach(node => {
+      pasteNodes.forEach((node) => {
         next = next.insertNode(node);
       });
-      action.data.edges.forEach(edge => {
+      action.data?.edges.forEach((edge) => {
         next = next.insertEdge(edge);
       });
       return {
         ...state,
-        data: pushHistory(state.data, next)
+        data: pushHistory(state.data, next),
       };
     }
     case GraphCanvasEvent.Delete:
@@ -66,20 +66,20 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
           state.data,
           state.data.present.deleteItems({
             node: notSelected,
-            edge: notSelected
+            edge: notSelected,
           }),
           unSelectAllEntity()
-        )
+        ),
       };
     case GraphCanvasEvent.Undo:
       return {
         ...state,
-        data: undo(state.data)
+        data: undo(state.data),
       };
     case GraphCanvasEvent.Redo:
       return {
         ...state,
-        data: redo(state.data)
+        data: redo(state.data),
       };
     case GraphCanvasEvent.KeyDown: {
       const key = action.rawEvent.key.toLowerCase();
@@ -90,7 +90,7 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
       set.add(key);
       return {
         ...state,
-        activeKeys: set
+        activeKeys: set,
       };
     }
     case GraphCanvasEvent.KeyUp: {
@@ -102,13 +102,13 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
       set.delete(key);
       return {
         ...state,
-        activeKeys: set
+        activeKeys: set,
       };
     }
     case GraphCanvasEvent.SetData:
       return {
         ...state,
-        data: resetUndoStack(action.data)
+        data: resetUndoStack(action.data),
       };
     case GraphCanvasEvent.UpdateData:
       return {
@@ -117,13 +117,13 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
           ? pushHistory(state.data, action.updater(state.data.present))
           : {
               ...state.data,
-              present: action.updater(state.data.present)
-            }
+              present: action.updater(state.data.present),
+            },
       };
     case GraphCanvasEvent.ResetUndoStack:
       return {
         ...state,
-        data: resetUndoStack(state.data.present)
+        data: resetUndoStack(state.data.present),
       };
     case GraphCanvasEvent.UpdateSettings: {
       const { type, ...settings } = action;
@@ -131,8 +131,8 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
         ...state,
         settings: {
           ...state.settings,
-          ...settings
-        }
+          ...settings,
+        },
       };
     }
     default:

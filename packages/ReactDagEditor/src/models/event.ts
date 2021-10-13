@@ -42,7 +42,7 @@ export enum GraphNodeEvent {
   SelectAll = "[Node]SelectAll",
   Centralize = "[Node]Centralize",
   Locate = "[Node]Locate",
-  Add = "[Node]Add"
+  Add = "[Node]Add",
 }
 
 export enum GraphEdgeEvent {
@@ -60,7 +60,7 @@ export enum GraphEdgeEvent {
   ConnectMove = "[Edge]ConnectMove",
   ConnectEnd = "[Edge]ConnectEnd",
   ConnectNavigate = "[Edge]ConnectNavigate",
-  Add = "[Edge]Add"
+  Add = "[Edge]Add",
 }
 
 export enum GraphPortEvent {
@@ -80,7 +80,7 @@ export enum GraphPortEvent {
   ContextMenu = "[Port]ContextMenu",
   KeyDown = "[Port]KeyDown",
   Focus = "[Port]Focus",
-  Blur = "[Port]Blur"
+  Blur = "[Port]Blur",
 }
 
 export enum GraphCanvasEvent {
@@ -129,25 +129,25 @@ export enum GraphCanvasEvent {
   SetData = "[Canvas]SetData",
   UpdateData = "[Canvas]UpdateData",
   ScrollTo = "[Canvas]ScrollTo",
-  UpdateSettings = "[Canvas]UpdateSettings"
+  UpdateSettings = "[Canvas]UpdateSettings",
 }
 
 export enum GraphScrollBarEvent {
   ScrollStart = "[ScrollBar]ScrollStart",
   Scroll = "[ScrollBar]Scroll",
-  ScrollEnd = "[ScrollBar]ScrollEnd"
+  ScrollEnd = "[ScrollBar]ScrollEnd",
 }
 
 export enum GraphMinimapEvent {
   PanStart = "[Minimap]PanStart",
   Pan = "[Minimap]Pan",
   PanEnd = "[Minimap]PanEnd",
-  Click = "[Minimap]Click"
+  Click = "[Minimap]Click",
 }
 
 export enum GraphContextMenuEvent {
   Open = "[ContextMenu]Open",
-  Close = "[ContextMenu]Close"
+  Close = "[ContextMenu]Close",
 }
 
 export interface ICanvasCommonEvent extends IEventBase {
@@ -255,7 +255,7 @@ export interface ICanvasSimpleEvent {
 
 export interface ICanvasPasteEvent<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   type: GraphCanvasEvent.Paste;
-  data: ICanvasData<NodeData, EdgeData, PortData>;
+  data: ICanvasData<NodeData, EdgeData, PortData> | null;
   position?: IPoint;
 }
 

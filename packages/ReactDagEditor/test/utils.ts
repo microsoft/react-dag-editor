@@ -8,7 +8,7 @@ import {
   IGetConnectableParams,
   IGraphConfig,
   INodeDrawArgs,
-  IPortDrawArgs
+  IPortDrawArgs,
 } from "../src";
 
 function makePort(id: string, state: number): ICanvasPort {
@@ -16,7 +16,7 @@ function makePort(id: string, state: number): ICanvasPort {
     id,
     position: [0, 0],
     name: id,
-    state
+    status: state,
   };
 }
 
@@ -26,17 +26,17 @@ export function makePorts(list: number[]): ICanvasPort[] {
 
 export function makeEdge(
   id: string,
-  state: number,
+  status: number,
   [source, sourcePortId]: [string, string],
   [target, targetPortId]: [string, string]
 ): ICanvasEdge {
   return {
     id,
-    state,
+    status,
     source,
     sourcePortId,
     target,
-    targetPortId
+    targetPortId,
   };
 }
 
@@ -44,13 +44,13 @@ export function makeEdges(list: Array<[number, [string, string], [string, string
   return list.map(([state, source, target], index) => makeEdge(index.toString(), state, source, target));
 }
 
-export function makeNode(id: string, state?: number, ports?: ICanvasPort[], x = 0, y = 0): ICanvasNode {
+export function makeNode(id: string, status?: number, ports?: ICanvasPort[], x = 0, y = 0): ICanvasNode {
   return {
     x,
     y,
     id,
-    state,
-    ports
+    status,
+    ports,
   };
 }
 
@@ -59,10 +59,10 @@ export function makeNodes(stateList: number[], ports?: ICanvasPort[]): ICanvasNo
 }
 
 export function makeNodesWithPosition(
-  list: Array<{ state: number; x?: number; y?: number }>,
+  list: Array<{ status: number; x?: number; y?: number }>,
   ports?: ICanvasPort[]
 ): ICanvasNode[] {
-  return list.map(({ state, x, y }, index) => makeNode(index.toString(), state, ports, x, y));
+  return list.map(({ status, x, y }, index) => makeNode(index.toString(), status, ports, x, y));
 }
 
 export function getGraphConfig(): IGraphConfig {
@@ -76,7 +76,7 @@ export function getGraphConfig(): IGraphConfig {
       },
       getMinHeight(rect: ICanvasNode): number {
         return 50;
-      }
+      },
     })
     .registerPort("default", {
       render(args: IPortDrawArgs): React.ReactNode {
@@ -88,7 +88,7 @@ export function getGraphConfig(): IGraphConfig {
       getIsConnectable({ model }: IGetConnectableParams): boolean | undefined {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (model.data as any)?.isConnectable;
-      }
+      },
     })
     .build();
 }
@@ -120,15 +120,15 @@ export const mockClientRect = {
   top: 100,
   right: 900,
   bottom: 700,
-  left: 100
+  left: 100,
 };
 
 export const mockBoundingBox = (rect = mockClientRect) => {
   const old = Element.prototype.getBoundingClientRect;
-  Element.prototype.getBoundingClientRect = function(): DOMRect {
+  Element.prototype.getBoundingClientRect = function (): DOMRect {
     return {
       ...old.call(this),
-      ...rect
+      ...rect,
     };
   };
   Element.prototype.releasePointerCapture = () => {

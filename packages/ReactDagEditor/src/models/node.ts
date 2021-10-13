@@ -1,5 +1,5 @@
-import { ICanvasPort } from "./port";
-import { GraphNodeState } from "./element-state";
+import type { ICanvasPort } from "./port";
+import type { GraphNodeStatus } from "./status";
 
 export interface ICanvasNode<T = unknown, P = unknown> {
   readonly shape?: string;
@@ -7,7 +7,7 @@ export interface ICanvasNode<T = unknown, P = unknown> {
   readonly y: number;
   readonly name?: string;
   readonly id: string;
-  readonly state?: GraphNodeState;
+  readonly status?: GraphNodeStatus;
   readonly height?: number;
   readonly width?: number;
   readonly automationId?: string;

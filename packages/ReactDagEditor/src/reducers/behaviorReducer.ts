@@ -8,21 +8,21 @@ import { GraphBehavior } from "../models/state";
 export const handleBehaviorChange = (prevBehavior: GraphBehavior, event: IEvent): GraphBehavior => {
   switch (event.type) {
     case GraphNodeEvent.DragStart:
-      return GraphBehavior.dragging;
+      return GraphBehavior.Dragging;
     case GraphEdgeEvent.ConnectStart:
-      return GraphBehavior.connecting;
+      return GraphBehavior.Connecting;
     case GraphCanvasEvent.SelectStart:
-      return GraphBehavior.multiSelect;
+      return GraphBehavior.MultiSelect;
     case GraphCanvasEvent.DragStart:
-      return GraphBehavior.panning;
+      return GraphBehavior.Panning;
     case GraphCanvasEvent.DraggingNodeFromItemPanelStart:
-      return GraphBehavior.addingNode;
+      return GraphBehavior.AddingNode;
     case GraphNodeEvent.DragEnd:
     case GraphEdgeEvent.ConnectEnd:
     case GraphCanvasEvent.SelectEnd:
     case GraphCanvasEvent.DragEnd:
     case GraphCanvasEvent.DraggingNodeFromItemPanelEnd:
-      return GraphBehavior.default;
+      return GraphBehavior.Default;
     default:
       return prevBehavior;
   }
@@ -37,6 +37,6 @@ export const behaviorReducer: IGraphReactReducer = (prevState, action) => {
 
   return {
     ...prevState,
-    behavior: nextBehavior
+    behavior: nextBehavior,
   };
 };

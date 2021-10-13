@@ -1,4 +1,4 @@
-import { filterSelectedItems, GraphEdgeState, GraphModel, GraphNodeState, GraphPortState } from "../../src";
+import { filterSelectedItems, GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortStatus } from "../../src";
 import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
 import { getNeighborPorts } from "../../src/utils";
 import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
@@ -12,13 +12,13 @@ describe("test getNeighborPorts", () => {
   function mockData(): GraphModel {
     return GraphModel.fromJSON({
       edges: makeEdges([
-        [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-        [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
+        [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+        [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
       ]),
       nodes: makeNodes(
-        [GraphNodeState.default, GraphNodeState.default, GraphNodeState.default],
-        makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
-      )
+        [GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default],
+        makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
+      ),
     });
   }
 
@@ -27,8 +27,8 @@ describe("test getNeighborPorts", () => {
     expect(neighbors).toEqual([
       {
         nodeId: "1",
-        portId: "1"
-      }
+        portId: "1",
+      },
     ]);
   });
 
@@ -37,8 +37,8 @@ describe("test getNeighborPorts", () => {
     expect(neighbors).toEqual([
       {
         nodeId: "0",
-        portId: "0"
-      }
+        portId: "0",
+      },
     ]);
   });
 });
@@ -48,18 +48,18 @@ describe("test filterSelectedItems", () => {
     const selected = filterSelectedItems(
       GraphModel.fromJSON({
         edges: makeEdges([
-          [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-          [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
+          [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+          [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
         nodes: makeNodes(
-          [GraphNodeState.default, GraphNodeState.default, GraphNodeState.default],
-          makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
-        )
+          [GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default],
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
+        ),
       })
     );
     expect(selected).toEqual({
       nodes: [],
-      edges: []
+      edges: [],
     });
   });
 
@@ -67,13 +67,13 @@ describe("test filterSelectedItems", () => {
     const selected = filterSelectedItems(
       GraphModel.fromJSON({
         edges: makeEdges([
-          [GraphEdgeState.connectedToSelected | GraphEdgeState.selected, ["0", "0"], ["1", "1"]],
-          [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]]
+          [GraphEdgeStatus.ConnectedToSelected | GraphEdgeStatus.Selected, ["0", "0"], ["1", "1"]],
+          [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
         ]),
         nodes: makeNodes(
-          [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
-          makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
-        )
+          [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
+        ),
       })
     );
     expect(selected.nodes.length).toBe(1);
@@ -86,13 +86,13 @@ describe("test filterSelectedItems", () => {
     const selected = filterSelectedItems(
       GraphModel.fromJSON({
         edges: makeEdges([
-          [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-          [GraphEdgeState.connectedToSelected, ["0", "1"], ["2", "0"]]
+          [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+          [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
         ]),
         nodes: makeNodes(
-          [GraphNodeState.selected, GraphNodeState.selected, GraphNodeState.connectedToSelected],
-          makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default])
-        )
+          [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default])
+        ),
       })
     );
     expect(selected.nodes.length).toBe(2);
@@ -113,7 +113,7 @@ describe("test updateNodeBySelectBox", () => {
         y: 50,
         width: 50,
         height: 50,
-        state: GraphNodeState.default
+        status: GraphNodeStatus.Default,
       },
       {
         id: "1",
@@ -121,7 +121,7 @@ describe("test updateNodeBySelectBox", () => {
         y: 150,
         width: 100,
         height: 100,
-        state: GraphNodeState.default
+        status: GraphNodeStatus.Default,
       },
       {
         id: "2",
@@ -129,9 +129,9 @@ describe("test updateNodeBySelectBox", () => {
         y: 350,
         width: 150,
         height: 150,
-        state: GraphNodeState.default
-      }
-    ]
+        status: GraphNodeStatus.Default,
+      },
+    ],
   });
   const transformMatrix = [1, 0, 0, 1, 0, 0] as const;
   const select = (selectBox: ISelectBoxPosition) => {
@@ -143,7 +143,7 @@ describe("test updateNodeBySelectBox", () => {
         startX: 10,
         startY: 10,
         width: 10,
-        height: 10
+        height: 10,
       })
     ).toEqual(mockData.toJSON());
     expect(
@@ -151,7 +151,7 @@ describe("test updateNodeBySelectBox", () => {
         startX: 160,
         startY: 160,
         width: 0,
-        height: 10
+        height: 10,
       })
     ).toEqual(mockData.toJSON());
     expect(
@@ -159,7 +159,7 @@ describe("test updateNodeBySelectBox", () => {
         startX: 160,
         startY: 160,
         width: 10,
-        height: 0
+        height: 0,
       })
     ).toEqual(mockData.toJSON());
   });
@@ -174,7 +174,7 @@ describe("test updateNodeBySelectBox", () => {
           y: 50,
           width: 50,
           height: 50,
-          state: GraphNodeState.unconnectedToSelected
+          status: GraphNodeStatus.UnconnectedToSelected,
         },
         {
           id: "1",
@@ -182,7 +182,7 @@ describe("test updateNodeBySelectBox", () => {
           y: 150,
           width: 100,
           height: 100,
-          state: GraphNodeState.selected
+          status: GraphNodeStatus.Selected,
         },
         {
           id: "2",
@@ -190,16 +190,16 @@ describe("test updateNodeBySelectBox", () => {
           y: 350,
           width: 150,
           height: 150,
-          state: GraphNodeState.unconnectedToSelected
-        }
-      ]
+          status: GraphNodeStatus.UnconnectedToSelected,
+        },
+      ],
     };
     expect(
       select({
         startX: 140,
         startY: 140,
         width: 20,
-        height: 20
+        height: 20,
       })
     ).toEqual(expected);
     expect(
@@ -207,7 +207,7 @@ describe("test updateNodeBySelectBox", () => {
         startX: 140,
         startY: 160,
         width: 20,
-        height: 20
+        height: 20,
       })
     ).toEqual(expected);
     expect(
@@ -215,7 +215,7 @@ describe("test updateNodeBySelectBox", () => {
         startX: 160,
         startY: 140,
         width: 20,
-        height: 20
+        height: 20,
       })
     ).toEqual(expected);
     expect(
@@ -223,7 +223,7 @@ describe("test updateNodeBySelectBox", () => {
         startX: 160,
         startY: 160,
         width: 20,
-        height: 20
+        height: 20,
       })
     ).toEqual(expected);
     expect(
@@ -231,7 +231,7 @@ describe("test updateNodeBySelectBox", () => {
         startX: 240,
         startY: 240,
         width: 20,
-        height: 20
+        height: 20,
       })
     ).toEqual(expected);
   });
@@ -242,7 +242,7 @@ describe("test history", () => {
     expect(resetUndoStack(0)).toEqual({
       present: 0,
       past: null,
-      future: null
+      future: null,
     });
   });
 
@@ -253,9 +253,9 @@ describe("test history", () => {
       present: 1,
       past: {
         value: 0,
-        next: null
+        next: null,
       },
-      future: null
+      future: null,
     });
     stack = pushHistory(stack, 2);
     expect(stack).toEqual({
@@ -264,10 +264,10 @@ describe("test history", () => {
         value: 1,
         next: {
           value: 0,
-          next: null
-        }
+          next: null,
+        },
       },
-      future: null
+      future: null,
     });
   });
 
@@ -278,22 +278,22 @@ describe("test history", () => {
         value: 1,
         next: {
           value: 0,
-          next: null
-        }
+          next: null,
+        },
       },
-      future: null
+      future: null,
     };
     stack = undo(stack);
     expect(stack).toEqual({
       present: 1,
       past: {
         value: 0,
-        next: null
+        next: null,
       },
       future: {
         value: 2,
-        next: null
-      }
+        next: null,
+      },
     });
   });
 
@@ -302,12 +302,12 @@ describe("test history", () => {
       present: 1,
       past: {
         value: 0,
-        next: null
+        next: null,
       },
       future: {
         value: 2,
-        next: null
-      }
+        next: null,
+      },
     };
     stack = redo(stack);
     expect(stack).toEqual({
@@ -316,10 +316,10 @@ describe("test history", () => {
         value: 1,
         next: {
           value: 0,
-          next: null
-        }
+          next: null,
+        },
       },
-      future: null
+      future: null,
     });
   });
 
@@ -330,10 +330,10 @@ describe("test history", () => {
         value: 1,
         next: {
           value: 0,
-          next: null
-        }
+          next: null,
+        },
       },
-      past: null
+      past: null,
     };
     stack = undo(stack);
     expect(stack).toEqual({
@@ -342,10 +342,10 @@ describe("test history", () => {
         value: 1,
         next: {
           value: 0,
-          next: null
-        }
+          next: null,
+        },
       },
-      past: null
+      past: null,
     });
   });
 
@@ -356,10 +356,10 @@ describe("test history", () => {
         value: 1,
         next: {
           value: 0,
-          next: null
-        }
+          next: null,
+        },
       },
-      future: null
+      future: null,
     };
     stack = redo(stack);
     expect(stack).toEqual({
@@ -368,10 +368,10 @@ describe("test history", () => {
         value: 1,
         next: {
           value: 0,
-          next: null
-        }
+          next: null,
+        },
       },
-      future: null
+      future: null,
     });
   });
 });

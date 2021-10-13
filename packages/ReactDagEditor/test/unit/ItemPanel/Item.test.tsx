@@ -11,7 +11,7 @@ import { TestItemContent } from "./TestItemContent";
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
   useSvgRect: () => {
     return mockClientRect;
-  }
+  },
 }));
 
 describe("ItemPanel - Item", () => {
@@ -30,12 +30,10 @@ describe("ItemPanel - Item", () => {
 
   beforeEach(() => {
     dragWillStart = jest.fn();
-    const graphConfig = GraphConfigBuilder.default()
-      .registerNode("nodeShape", rect)
-      .build();
+    const graphConfig = GraphConfigBuilder.default().registerNode("nodeShape", rect).build();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
-      <TestComponent data={GraphModel.empty()} graph={false} graphConfig={graphConfig}>
+      <TestComponent data={GraphModel.empty()} graph={false} settings={{ graphConfig }}>
         <Item
           model={{ name: "node1", shape: "nodeShape" }}
           dragWillStart={dragWillStart}
@@ -52,7 +50,7 @@ describe("ItemPanel - Item", () => {
     act(() => {
       graphController.dispatch({
         type: GraphCanvasEvent.ViewportResize,
-        viewportRect: mockClientRect
+        viewportRect: mockClientRect,
       });
     });
     (graphController.eventChannel.listenersRef as any).current = graphController.dispatch;

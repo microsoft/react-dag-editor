@@ -4,28 +4,28 @@ import { GraphFeatures } from "../Features";
 
 export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
   return React.useMemo(() => {
-    const isNodesDraggable = features.has(GraphFeatures.nodeDraggable);
-    const isNodeResizable = features.has(GraphFeatures.nodeResizable);
-    const isAutoFitDisabled = !features.has(GraphFeatures.autoFit);
-    const isPanDisabled = !features.has(GraphFeatures.panCanvas);
-    const isMultiSelectDisabled = !features.has(GraphFeatures.multipleSelect);
-    const isLassoSelectEnable = features.has(GraphFeatures.lassoSelect);
-    const isNodeHoverViewEnabled = features.has(GraphFeatures.nodeHoverView);
-    const isClickNodeToSelectDisabled = !features.has(GraphFeatures.clickNodeToSelect);
-    const isConnectDisabled = !features.has(GraphFeatures.addNewEdges);
-    const isPortHoverViewEnable = features.has(GraphFeatures.portHoverView);
-    const isNodeEditDisabled = !features.has(GraphFeatures.editNode);
-    const isVerticalScrollDisabled = !features.has(GraphFeatures.canvasVerticalScrollable);
-    const isHorizontalScrollDisabled = !features.has(GraphFeatures.canvasHorizontalScrollable);
-    const isA11yEnable = features.has(GraphFeatures.a11yFeatures);
-    const isAutoAlignEnable = features.has(GraphFeatures.autoAlign);
-    const isCtrlKeyZoomEnable = features.has(GraphFeatures.ctrlKeyZoom);
-    const isLimitBoundary = features.has(GraphFeatures.limitBoundary);
-    const isVirtualizationEnabled = !features.has(GraphFeatures.autoFit);
-    const isEdgeEditable = features.has(GraphFeatures.editEdge);
-    const isDeleteDisabled = !features.has(GraphFeatures.delete);
-    const isPasteDisabled = !features.has(GraphFeatures.addNewNodes) || !features.has(GraphFeatures.addNewEdges);
-    const isUndoEnabled = features.has(GraphFeatures.undoStack);
+    const isNodesDraggable = features.has(GraphFeatures.NodeDraggable);
+    const isNodeResizable = features.has(GraphFeatures.NodeResizable);
+    const isAutoFitDisabled = !features.has(GraphFeatures.AutoFit);
+    const isPanDisabled = !features.has(GraphFeatures.PanCanvas);
+    const isMultiSelectDisabled = !features.has(GraphFeatures.MultipleSelect);
+    const isLassoSelectEnable = features.has(GraphFeatures.LassoSelect);
+    const isNodeHoverViewEnabled = features.has(GraphFeatures.NodeHoverView);
+    const isClickNodeToSelectDisabled = !features.has(GraphFeatures.ClickNodeToSelect);
+    const isConnectDisabled = !features.has(GraphFeatures.AddNewEdges);
+    const isPortHoverViewEnable = features.has(GraphFeatures.PortHoverView);
+    const isNodeEditDisabled = !features.has(GraphFeatures.EditNode);
+    const isVerticalScrollDisabled = !features.has(GraphFeatures.CanvasVerticalScrollable);
+    const isHorizontalScrollDisabled = !features.has(GraphFeatures.CanvasHorizontalScrollable);
+    const isA11yEnable = features.has(GraphFeatures.A11yFeatures);
+    const isAutoAlignEnable = features.has(GraphFeatures.AutoAlign);
+    const isCtrlKeyZoomEnable = features.has(GraphFeatures.CtrlKeyZoom);
+    const isLimitBoundary = features.has(GraphFeatures.LimitBoundary);
+    const isVirtualizationEnabled = !features.has(GraphFeatures.AutoFit);
+    const isEdgeEditable = features.has(GraphFeatures.EditEdge);
+    const isDeleteDisabled = !features.has(GraphFeatures.Delete);
+    const isPasteDisabled = !features.has(GraphFeatures.AddNewNodes) || !features.has(GraphFeatures.AddNewEdges);
+    const isUndoEnabled = features.has(GraphFeatures.UndoStack);
 
     return {
       isNodesDraggable,
@@ -49,7 +49,7 @@ export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
       isEdgeEditable,
       isDeleteDisabled,
       isPasteDisabled,
-      isUndoEnabled
+      isUndoEnabled,
     };
   }, [features]);
 };

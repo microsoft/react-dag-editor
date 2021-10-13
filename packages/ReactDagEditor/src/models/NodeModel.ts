@@ -2,12 +2,11 @@ import { mapCow } from "../utils/array";
 import type { $Complete } from "../utils/complete";
 import { getPortPositionByPortId } from "../utils/getPortPosition";
 import { preventSpread } from "../utils/preventSpread";
-import { updateState } from "../utils/state";
 import type { IGraphConfig } from "./config/types";
-import type { GraphNodeState } from "./element-state";
 import type { IPoint } from "./geometry";
 import type { ICanvasNode } from "./node";
 import type { ICanvasPort } from "./port";
+import { GraphNodeStatus, updateStatus } from "./status";
 
 export class NodeModel<NodeData = unknown, PortData = unknown> implements $Complete<ICanvasNode<NodeData, PortData>> {
   public readonly inner: ICanvasNode<NodeData, PortData>;
@@ -19,8 +18,8 @@ export class NodeModel<NodeData = unknown, PortData = unknown> implements $Compl
     return this.inner.id;
   }
 
-  public get state(): GraphNodeState | undefined {
-    return this.inner.state;
+  public get status(): GraphNodeStatus | undefined {
+    return this.inner.status;
   }
 
   public get shape(): string | undefined {
@@ -93,7 +92,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown> implements $Compl
   }
 
   public getPort(id: string): ICanvasPort<PortData> | undefined {
-    return this.ports?.find(port => port.id === id);
+    return this.ports?.find((port) => port.id === id);
   }
 
   public link({ prev, next }: { prev?: string | undefined; next?: string | undefined }): NodeModel<NodeData, PortData> {
@@ -103,8 +102,8 @@ export class NodeModel<NodeData = unknown, PortData = unknown> implements $Compl
     return new NodeModel(this.inner, this.portPositionCache, prev ?? this.prev, next ?? this.next);
   }
 
-  public updateState(f: (state: number | undefined) => number): NodeModel<NodeData, PortData> {
-    return this.update(updateState(f));
+  public updateStatus(f: (state: number | undefined) => number): NodeModel<NodeData, PortData> {
+    return this.update(updateStatus(f));
   }
 
   public update(
@@ -118,14 +117,14 @@ export class NodeModel<NodeData = unknown, PortData = unknown> implements $Compl
     if (!this.data) {
       return this;
     }
-    return this.update(inner => {
+    return this.update((inner) => {
       const data = f(inner.data as Readonly<NodeData>);
       if (data === inner.data) {
         return inner;
       }
       return {
         ...inner,
-        data
+        data,
       };
     });
   }
@@ -140,7 +139,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown> implements $Compl
   }
 
   public hasPort(id: string): boolean {
-    return Boolean(this.inner.ports?.find(port => port.id === id));
+    return Boolean(this.inner.ports?.find((port) => port.id === id));
   }
 
   /**
@@ -153,7 +152,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown> implements $Compl
       x,
       y,
       width: width ?? this.inner.width,
-      height: height ?? this.inner.height
+      height: height ?? this.inner.height,
     };
     return new NodeModel(node, new Map(), this.prev, this.next);
   }
@@ -170,7 +169,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown> implements $Compl
         ? this.inner
         : {
             ...this.inner,
-            ports
+            ports,
           };
     return node === this.inner ? this : new NodeModel(node, new Map(), this.prev, this.next);
   }

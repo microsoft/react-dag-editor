@@ -1,14 +1,21 @@
 import { HashMap, HashMapBuilder, OrderedMap } from "../collections";
 import { markEdgeDirty } from "../utils/graphDataUtils";
 import { preventSpread } from "../utils/preventSpread";
-import { hasState, isSelected, resetConnectState, resetState, updateState } from "../utils/state";
+import * as Bitset from "../utils/bitset";
 import { ICanvasData, ICanvasGroup } from "./canvas";
 import { ICanvasEdge } from "./edge";
 import { EdgeModel } from "./EdgeModel";
-import { GraphEdgeState, GraphNodeState, GraphPortState } from "./element-state";
 import { ICanvasNode } from "./node";
 import { NodeModel } from "./NodeModel";
 import { ICanvasPort } from "./port";
+import {
+  GraphEdgeStatus,
+  GraphNodeStatus,
+  GraphPortStatus,
+  isSelected,
+  resetConnectStatus,
+  updateStatus,
+} from "./status";
 
 export interface IDeleteItemPredicates<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   node?(node: ICanvasNode<NodeData, PortData>): boolean;
@@ -46,7 +53,8 @@ interface IGraphModel<NodeData = unknown, EdgeData = unknown, PortData = unknown
  * * improve performance by internal mutability
  */
 export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  implements IGraphModel<NodeData, EdgeData, PortData> {
+  implements IGraphModel<NodeData, EdgeData, PortData>
+{
   public readonly nodes: OrderedMap<string, NodeModel<NodeData, PortData>>;
   public readonly edges: HashMap<string, EdgeModel<EdgeData>>;
   public readonly groups: ICanvasGroup[];
@@ -232,12 +240,12 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
       } else {
         nodes.update(node.id, (current) =>
           current.link({ prev: prev?.id }).update((n) => {
-            if (hasState(GraphNodeState.editing)(n.state)) {
+            if (Bitset.has(GraphNodeStatus.Editing)(n.status)) {
               return n;
             }
             return {
               ...n,
-              state: GraphNodeState.default,
+              status: GraphNodeStatus.Default,
             };
           })
         );
@@ -248,7 +256,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     const edges = this.edges.mutate();
     this.edges.forEach((edge) => {
       if (!deleted.has(edge.source) && !deleted.has(edge.target) && (predicate.edge?.(edge) ?? true)) {
-        edges.update(edge.id, (e) => e.update(updateState(resetState(GraphEdgeState.default))));
+        edges.update(edge.id, (e) => e.update(updateStatus(Bitset.replace(GraphEdgeStatus.Default))));
       } else {
         edges.delete(edge.id);
         deleteEdgeByPort(edgesBySource, edge.id, edge.source, edge.sourcePortId);
@@ -282,7 +290,7 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
         .update(edge.target, (node) => node.invalidCache()),
       edges: this.edges
         .set(edge.id, EdgeModel.fromJSON(edge))
-        .map((e) => e.updateState(resetState(GraphEdgeState.default))),
+        .map((e) => e.updateStatus(Bitset.replace(GraphEdgeStatus.Default))),
       edgesBySource,
       edgesByTarget,
     });
@@ -362,14 +370,14 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
           selected.add(node.id);
         }
         return node
-          .updatePorts(updateState(resetState(GraphPortState.default)))
-          .updateState(
-            resetConnectState(isNodeSelected ? GraphNodeState.selected : GraphNodeState.unconnectedToSelected)
+          .updatePorts(updateStatus(Bitset.replace(GraphPortStatus.Default)))
+          .updateStatus(
+            resetConnectStatus(isNodeSelected ? GraphNodeStatus.Selected : GraphNodeStatus.UnconnectedToSelected)
           );
       })
       .mutate();
     if (selected.size === 0) {
-      this.nodes.forEach((n) => nodes.update(n.id, (it) => it.updateState(resetState(GraphNodeState.default))));
+      this.nodes.forEach((n) => nodes.update(n.id, (it) => it.updateStatus(Bitset.replace(GraphNodeStatus.Default))));
     } else if (topNode) {
       const n = nodes.get(topNode);
       if (n) {
@@ -379,25 +387,25 @@ export class GraphModel<NodeData = unknown, EdgeData = unknown, PortData = unkno
     }
     const setConnected = (id: string) => {
       nodes.update(id, (node) =>
-        node.update(
-          updateState(resetState(isSelected(node) ? GraphNodeState.selected : GraphNodeState.connectedToSelected))
+        node.updateStatus(
+          Bitset.replace(isSelected(node) ? GraphNodeStatus.Selected : GraphNodeStatus.ConnectedToSelected)
         )
       );
     };
     const edges = selected.size
       ? this.edges.map((edge) => {
-          let state = GraphEdgeState.unconnectedToSelected;
+          let state = GraphEdgeStatus.UnconnectedToSelected;
           if (selected.has(edge.source)) {
             setConnected(edge.target);
-            state = GraphEdgeState.connectedToSelected;
+            state = GraphEdgeStatus.ConnectedToSelected;
           }
           if (selected.has(edge.target)) {
             setConnected(edge.source);
-            state = GraphEdgeState.connectedToSelected;
+            state = GraphEdgeStatus.ConnectedToSelected;
           }
-          return edge.update(updateState(resetState(state)));
+          return edge.updateStatus(Bitset.replace(state));
         })
-      : this.edges.map((edge) => edge.updateState(resetState(GraphEdgeState.default)));
+      : this.edges.map((edge) => edge.updateStatus(Bitset.replace(GraphEdgeStatus.Default)));
     return this.merge({
       nodes: nodes.finish(),
       edges,

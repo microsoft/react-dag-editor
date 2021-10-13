@@ -8,9 +8,9 @@ import {
   Graph,
   GraphConfigBuilder,
   GraphModel,
-  GraphNodeState,
-  GraphPortState,
-  hasState,
+  GraphNodeStatus,
+  GraphPortStatus,
+  Bitset,
   ICanvasNode,
   ICanvasPort,
   IGetConnectableParams,
@@ -18,8 +18,8 @@ import {
   IPortConfig,
   IPortDrawArgs,
   ReactDagEditor,
+  useGraphReducer,
 } from "../../src";
-import { useGraphReducer } from "../../src/hooks/useGraphReducer";
 import { sampleGraphData } from "../data/sample-graph-1";
 
 /** How to customize a node by "shape" by data.nodes[].shape */
@@ -56,8 +56,8 @@ const sourceNodeConfig: INodeConfig = {
     const height = getRectHeight(sourceNodeConfig, args.model);
     const width = getRectWidth(sourceNodeConfig, args.model);
 
-    const fill = hasState(GraphNodeState.activated)(args.model.state) ? "red" : "blue";
-    const stroke = hasState(GraphNodeState.selected)(args.model.state) ? "green" : "none";
+    const fill = Bitset.has(GraphNodeStatus.Activated)(args.model.status) ? "red" : "blue";
+    const stroke = Bitset.has(GraphNodeStatus.Selected)(args.model.status) ? "green" : "none";
 
     return (
       <ellipse
@@ -124,13 +124,13 @@ export const Port: React.FunctionComponent<IPortProps> = (props) => {
     return <circle r={r} cx={x} cy={y} style={circleStyle} />;
   };
 
-  const opacity = hasState(GraphNodeState.unconnectedToSelected)(parentNode.state) ? "60%" : "100%";
+  const opacity = Bitset.has(GraphNodeStatus.UnconnectedToSelected)(parentNode.status) ? "60%" : "100%";
 
   return (
     <g opacity={opacity}>
       {isConnectable === undefined ? ( // isConnectable === undefined is when the graph is not in connecting state
-        <>{hasState(GraphPortState.activated)(port.state) ? renderCircle(7, style) : renderCircle(5, style)}</>
-      ) : hasState(GraphPortState.connectingAsTarget)(port.state) ? (
+        <>{Bitset.has(GraphPortStatus.Activated)(port.status) ? renderCircle(7, style) : renderCircle(5, style)}</>
+      ) : Bitset.has(GraphPortStatus.ConnectingAsTarget)(port.status) ? (
         renderCircle(7, style)
       ) : (
         <>
@@ -161,12 +161,12 @@ class MyPortConfig implements IPortConfig {
       fill = "#B3B0AD";
     }
 
-    if (hasState(GraphPortState.activated | GraphPortState.selected | GraphPortState.connecting)(port.state)) {
+    if (Bitset.has(GraphPortStatus.Activated | GraphPortStatus.Selected | GraphPortStatus.Connecting)(port.status)) {
       fill = "#0078D4";
       stroke = "#0078D4";
     }
 
-    if (hasState(GraphPortState.connecting)(port.state)) {
+    if (Bitset.has(GraphPortStatus.Connecting)(port.status)) {
       switch (isConnectable) {
         case true:
           fill = "#ffffff";
@@ -175,7 +175,7 @@ class MyPortConfig implements IPortConfig {
           break;
         case false:
           fill = "#E1DFDD";
-          if (hasState(GraphPortState.activated)(port.state)) {
+          if (Bitset.has(GraphPortStatus.Activated)(port.status)) {
             stroke = "#B3B0AD";
           }
           break;

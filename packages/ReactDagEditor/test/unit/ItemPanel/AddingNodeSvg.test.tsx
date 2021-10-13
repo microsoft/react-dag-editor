@@ -15,7 +15,7 @@ import { TestItemContent } from "./TestItemContent";
 jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
   useSvgRect: () => {
     return mockClientRect;
-  }
+  },
 }));
 
 describe("ItemPanel - AddingNodeSvg", () => {
@@ -36,12 +36,10 @@ describe("ItemPanel - AddingNodeSvg", () => {
   beforeEach(() => {
     nodeWillAdd = jest.fn();
     nodeDidAdd = jest.fn();
-    const graphConfig = GraphConfigBuilder.default()
-      .registerNode("nodeShape", rect)
-      .build();
+    const graphConfig = GraphConfigBuilder.default().registerNode("nodeShape", rect).build();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
-      <TestComponent graph={false} graphConfig={graphConfig}>
+      <TestComponent graph={false} settings={{ graphConfig }}>
         <Item
           model={{ name: "node1", shape: "nodeShape" }}
           dragWillStart={jest.fn()}
@@ -58,7 +56,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
     act(() => {
       graphController.dispatch({
         type: GraphCanvasEvent.ViewportResize,
-        viewportRect: mockClientRect
+        viewportRect: mockClientRect,
       });
     });
   });
@@ -85,7 +83,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
         clientX: first[0],
         clientY: first[1],
         button: mouseEventButton,
-        pointerType: "mouse"
+        pointerType: "mouse",
       });
       jest.runAllTimers();
     });
@@ -96,7 +94,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
           clientX,
           clientY,
           button: mouseEventButton,
-          pointerType: "mouse"
+          pointerType: "mouse",
         });
       });
     });
@@ -108,7 +106,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
         clientX: last[0],
         clientY: last[1],
         button: mouseEventButton,
-        pointerType: "mouse"
+        pointerType: "mouse",
       });
     });
   }
@@ -123,7 +121,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
           shape: "nodeShape",
           x: 0,
           y: 0,
-          id: "mock-id"
+          id: "mock-id",
         }}
         svgRef={React.createRef<SVGSVGElement>()}
       />
@@ -134,7 +132,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
   it("adding node", () => {
     simulateDragging(screen.getByRole("button"), MouseEventButton.Primary, [
       [100, 100],
-      [105, 105]
+      [105, 105],
     ]);
 
     expect(nodeWillAdd).toBeCalledTimes(1);
@@ -151,12 +149,12 @@ describe("ItemPanel - AddingNodeSvg", () => {
       width: 150,
       height: 150,
       x: 50,
-      y: 50
+      y: 50,
     } as any);
 
     simulateDragging(screen.getByRole("button"), MouseEventButton.Primary, [
       [25, 25],
-      [30, 30]
+      [30, 30],
     ]);
 
     expect(nodeWillAdd).not.toBeCalled();
@@ -167,7 +165,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
   it("without left mouse down when dragging", () => {
     simulateDragging(screen.getByRole("button"), MouseEventButton.Secondary, [
       [100, 100],
-      [105, 105]
+      [105, 105],
     ]);
 
     expect(nodeWillAdd).not.toBeCalled();

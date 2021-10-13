@@ -115,6 +115,14 @@
       {
         "selector": "function",
         "format": ["camelCase", "PascalCase"]
+      },
+      {
+        "selector": "typeLike",
+        "format": ["PascalCase"]
+      },
+      {
+        "selector": "enumMember",
+        "format": ["PascalCase"]
       }
     ],
     "@typescript-eslint/no-empty-function": "error",

@@ -9,7 +9,7 @@ export * from "./models/EdgeModel";
 export * from "./models/GraphModel";
 export * from "./models/NodeModel";
 export * from "./reducers/composeReducers";
-export * from "./models/element-state";
+export * from "./models/status";
 export * from "./models/port";
 export * from "./models/node";
 export * from "./models/edge";

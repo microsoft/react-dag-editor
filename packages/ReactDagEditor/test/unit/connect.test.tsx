@@ -4,15 +4,14 @@ import * as React from "react";
 import { act } from "react-dom/test-utils";
 import {
   applyDefaultPortsPosition,
+  Bitset,
   GraphCanvasEvent,
   GraphEdgeEvent,
-  GraphEdgeState,
   GraphModel,
   GraphNodeEvent,
-  GraphNodeState,
+  GraphNodeStatus,
   GraphPortEvent,
-  GraphPortState,
-  hasState,
+  GraphPortStatus,
   ICanvasData,
   ICanvasNode,
   ICanvasPort,
@@ -21,9 +20,9 @@ import {
   IGraphState,
   NodeModel,
 } from "../../src";
+import { GraphController } from "../../src/controllers/GraphController";
 import { getNearestConnectablePort } from "../../src/utils";
 import { EventChannel } from "../../src/utils/eventChannel";
-import { GraphController } from "../../src/controllers/GraphController";
 import { identical } from "../../src/utils/identical";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { getGraphConfig, mockClientRect, patchPointerEvent } from "../utils";
@@ -233,7 +232,7 @@ describe("test Connecting", () => {
       {
         id: "0",
         name: "0",
-        state: GraphPortState.default,
+        status: GraphPortStatus.Default,
         isInputDisabled: false,
         isOutputDisabled: true,
         data: {
@@ -243,7 +242,7 @@ describe("test Connecting", () => {
       {
         id: "1",
         name: "1",
-        state: GraphPortState.default,
+        status: GraphPortStatus.Default,
         isInputDisabled: true,
         isOutputDisabled: false,
         data: {
@@ -315,7 +314,7 @@ describe("test Connecting", () => {
       connecting.start(mockData.nodes.get(mockData.head!)!, ports[0]);
     });
     const port = getData().nodes.get(mockData.head!)?.ports?.[0];
-    expect(hasState(GraphPortState.connecting)(port?.state)).toBe(true);
+    expect(Bitset.has(GraphPortStatus.Connecting)(port?.status)).toBe(true);
     expect(connecting.sourceNode).toBe("0");
     expect(connecting.sourcePort).toBe("0");
     act(() => {
@@ -336,63 +335,14 @@ describe("test Connecting", () => {
     act(() => {
       connecting.attach(mockData.nodes.get("1")!, mockData.nodes.get("1")!.ports![1]);
     });
-    expect(hasState(GraphPortState.connectingAsTarget)(connecting.data?.nodes.get("1")!.ports![1].state)).toBe(true);
+    expect(Bitset.has(GraphPortStatus.ConnectingAsTarget)(connecting.data?.nodes.get("1")!.ports![1].status)).toBe(
+      true
+    );
     expect(getConnectLineElement()).toMatchSnapshot();
     act(() => {
       connecting.clearAttach(mockData.nodes.get("1")!, mockData.nodes.get("1")!.ports![1]);
     });
-    expect(getData().toJSON()).toEqual({
-      edges: [],
-      nodes: [
-        {
-          id: "0",
-          x: 50,
-          y: 50,
-          width: 100,
-          height: 100,
-          ports: [
-            {
-              id: "0",
-              name: "0",
-              state: GraphPortState.default,
-              position: [0.5, 0],
-              isInputDisabled: false,
-              isOutputDisabled: true,
-              data: {
-                isConnectable: false,
-              },
-            },
-            {
-              id: "1",
-              name: "1",
-              state: GraphPortState.connecting,
-              position: [0.5, 1],
-              isInputDisabled: true,
-              isOutputDisabled: false,
-              data: {
-                isConnectable: true,
-              },
-            },
-          ],
-        },
-        {
-          id: "1",
-          x: 150,
-          y: 150,
-          width: 100,
-          height: 100,
-          ports,
-        },
-        {
-          id: "2",
-          x: 250,
-          y: 250,
-          width: 150,
-          height: 150,
-          ports,
-        },
-      ],
-    });
+    expect(getData().toJSON()).toMatchSnapshot();
     expect(getConnectLineElement()).toMatchSnapshot();
   });
 
@@ -408,91 +358,7 @@ describe("test Connecting", () => {
     act(() => {
       connecting.finish();
     });
-    expect(connecting.data?.toJSON()).toEqual({
-      edges: [
-        {
-          id: "mock-uuid",
-          source: "0",
-          sourcePortId: "1",
-          target: "1",
-          targetPortId: "1",
-          shape: "default",
-          state: GraphEdgeState.default,
-        },
-      ],
-      nodes: [
-        {
-          id: "0",
-          x: 50,
-          y: 50,
-          width: 100,
-          height: 100,
-          ports: [
-            {
-              id: "0",
-              name: "0",
-              state: GraphPortState.default,
-              position: [0.5, 0],
-              isInputDisabled: false,
-              isOutputDisabled: true,
-              data: {
-                isConnectable: false,
-              },
-            },
-            {
-              id: "1",
-              name: "1",
-              state: GraphPortState.default,
-              position: [0.5, 1],
-              isInputDisabled: true,
-              isOutputDisabled: false,
-              data: {
-                isConnectable: true,
-              },
-            },
-          ],
-        },
-        {
-          id: "1",
-          x: 150,
-          y: 150,
-          width: 100,
-          height: 100,
-          ports: [
-            {
-              id: "0",
-              name: "0",
-              state: GraphPortState.default,
-              position: [0.5, 0],
-              isInputDisabled: false,
-              isOutputDisabled: true,
-              data: {
-                isConnectable: false,
-              },
-            },
-            {
-              id: "1",
-              name: "1",
-              state: GraphPortState.default,
-              position: [0.5, 1],
-              isInputDisabled: true,
-              isOutputDisabled: false,
-              data: {
-                isConnectable: true,
-              },
-            },
-          ],
-        },
-        {
-          id: "2",
-          x: 250,
-          y: 250,
-          width: 150,
-          height: 150,
-          ports,
-        },
-      ],
-    });
+    expect(connecting.data?.toJSON()).toMatchSnapshot();
     expect(connecting.sourceNode).toBeUndefined();
     expect(connecting.sourcePort).toBeUndefined();
     expect(connecting.targetNode).toBeUndefined();
@@ -511,19 +377,19 @@ describe("test Connecting", () => {
           y: 50,
           width: 100,
           height: 100,
-          state: GraphNodeState.default,
+          status: GraphNodeStatus.Default,
           ports: applyDefaultPortsPosition([
             {
               id: "0",
               name: "0",
-              state: GraphPortState.default,
+              status: GraphPortStatus.Default,
               isInputDisabled: false,
               isOutputDisabled: true,
             },
             {
               id: "1",
               name: "1",
-              state: GraphPortState.default,
+              status: GraphPortStatus.Default,
               isInputDisabled: true,
               isOutputDisabled: false,
             },
@@ -535,12 +401,12 @@ describe("test Connecting", () => {
           y: 150,
           width: 100,
           height: 100,
-          state: GraphNodeState.default,
+          status: GraphNodeStatus.Default,
           ports: applyDefaultPortsPosition([
             {
               id: "0",
               name: "0",
-              state: GraphPortState.default,
+              status: GraphPortStatus.Default,
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
@@ -550,7 +416,7 @@ describe("test Connecting", () => {
             {
               id: "1",
               name: "1",
-              state: GraphPortState.default,
+              status: GraphPortStatus.Default,
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
@@ -560,7 +426,7 @@ describe("test Connecting", () => {
             {
               id: "2",
               name: "2",
-              state: GraphPortState.default,
+              status: GraphPortStatus.Default,
               isInputDisabled: false,
               isOutputDisabled: true,
               data: {
@@ -570,7 +436,7 @@ describe("test Connecting", () => {
             {
               id: "3",
               name: "3",
-              state: GraphPortState.default,
+              status: GraphPortStatus.Default,
               isInputDisabled: true,
               isOutputDisabled: false,
               data: {

@@ -1,6 +1,135 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test Connecting should add edge 1`] = `undefined`;
+exports[`test Connecting should add edge 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "mock-uuid",
+      "shape": "default",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 0,
+      "target": "1",
+      "targetPortId": "1",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "height": 100,
+      "id": "0",
+      "ports": Array [
+        Object {
+          "data": Object {
+            "isConnectable": false,
+          },
+          "id": "0",
+          "isInputDisabled": false,
+          "isOutputDisabled": true,
+          "name": "0",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "data": Object {
+            "isConnectable": true,
+          },
+          "id": "1",
+          "isInputDisabled": true,
+          "isOutputDisabled": false,
+          "name": "1",
+          "position": Array [
+            0.5,
+            1,
+          ],
+          "status": 0,
+        },
+      ],
+      "width": 100,
+      "x": 50,
+      "y": 50,
+    },
+    Object {
+      "height": 100,
+      "id": "1",
+      "ports": Array [
+        Object {
+          "data": Object {
+            "isConnectable": false,
+          },
+          "id": "0",
+          "isInputDisabled": false,
+          "isOutputDisabled": true,
+          "name": "0",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "data": Object {
+            "isConnectable": true,
+          },
+          "id": "1",
+          "isInputDisabled": true,
+          "isOutputDisabled": false,
+          "name": "1",
+          "position": Array [
+            0.5,
+            1,
+          ],
+          "status": 0,
+        },
+      ],
+      "width": 100,
+      "x": 150,
+      "y": 150,
+    },
+    Object {
+      "height": 150,
+      "id": "2",
+      "ports": Array [
+        Object {
+          "data": Object {
+            "isConnectable": false,
+          },
+          "id": "0",
+          "isInputDisabled": false,
+          "isOutputDisabled": true,
+          "name": "0",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "data": Object {
+            "isConnectable": true,
+          },
+          "id": "1",
+          "isInputDisabled": true,
+          "isOutputDisabled": false,
+          "name": "1",
+          "position": Array [
+            0.5,
+            1,
+          ],
+          "status": 0,
+        },
+      ],
+      "width": 150,
+      "x": 250,
+      "y": 250,
+    },
+  ],
+}
+`;
+
+exports[`test Connecting should add edge 2`] = `undefined`;
 
 exports[`test Connecting should add edge: events 1`] = `
 Array [
@@ -92,6 +221,125 @@ exports[`test Connecting should attach to port 2`] = `
 `;
 
 exports[`test Connecting should attach to port 3`] = `
+Object {
+  "edges": Array [],
+  "nodes": Array [
+    Object {
+      "height": 100,
+      "id": "0",
+      "ports": Array [
+        Object {
+          "data": Object {
+            "isConnectable": false,
+          },
+          "id": "0",
+          "isInputDisabled": false,
+          "isOutputDisabled": true,
+          "name": "0",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "data": Object {
+            "isConnectable": true,
+          },
+          "id": "1",
+          "isInputDisabled": true,
+          "isOutputDisabled": false,
+          "name": "1",
+          "position": Array [
+            0.5,
+            1,
+          ],
+          "status": 4,
+        },
+      ],
+      "width": 100,
+      "x": 50,
+      "y": 50,
+    },
+    Object {
+      "height": 100,
+      "id": "1",
+      "ports": Array [
+        Object {
+          "data": Object {
+            "isConnectable": false,
+          },
+          "id": "0",
+          "isInputDisabled": false,
+          "isOutputDisabled": true,
+          "name": "0",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "data": Object {
+            "isConnectable": true,
+          },
+          "id": "1",
+          "isInputDisabled": true,
+          "isOutputDisabled": false,
+          "name": "1",
+          "position": Array [
+            0.5,
+            1,
+          ],
+          "status": 0,
+        },
+      ],
+      "width": 100,
+      "x": 150,
+      "y": 150,
+    },
+    Object {
+      "height": 150,
+      "id": "2",
+      "ports": Array [
+        Object {
+          "data": Object {
+            "isConnectable": false,
+          },
+          "id": "0",
+          "isInputDisabled": false,
+          "isOutputDisabled": true,
+          "name": "0",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "data": Object {
+            "isConnectable": true,
+          },
+          "id": "1",
+          "isInputDisabled": true,
+          "isOutputDisabled": false,
+          "name": "1",
+          "position": Array [
+            0.5,
+            1,
+          ],
+          "status": 0,
+        },
+      ],
+      "width": 150,
+      "x": 250,
+      "y": 250,
+    },
+  ],
+}
+`;
+
+exports[`test Connecting should attach to port 4`] = `
 <g>
   <defs>
     <marker

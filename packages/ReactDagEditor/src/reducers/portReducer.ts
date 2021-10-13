@@ -1,7 +1,8 @@
 import { IGraphReactReducer } from "../contexts";
-import { GraphPortState } from "../models/element-state";
 import { GraphPortEvent } from "../models/event";
-import { addState, removeState, unSelectAllEntity, updateState } from "../utils";
+import { GraphPortStatus, updateStatus } from "../models/status";
+import { unSelectAllEntity } from "../utils";
+import * as Bitset from "../utils/bitset";
 
 export const portReducer: IGraphReactReducer = (state, action) => {
   switch (action.type) {
@@ -14,9 +15,9 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: state.data.present.updatePort(
             action.node.id,
             action.port.id,
-            updateState(addState(GraphPortState.activated))
-          )
-        }
+            updateStatus(Bitset.add(GraphPortStatus.Activated))
+          ),
+        },
       };
     case GraphPortEvent.Blur:
     case GraphPortEvent.PointerLeave:
@@ -27,9 +28,9 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: state.data.present.updatePort(
             action.node.id,
             action.port.id,
-            updateState(removeState(GraphPortState.activated))
-          )
-        }
+            updateStatus(Bitset.remove(GraphPortStatus.Activated))
+          ),
+        },
       };
     case GraphPortEvent.Click:
     case GraphPortEvent.ContextMenu:
@@ -40,9 +41,9 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: unSelectAllEntity()(state.data.present).updatePort(
             action.node.id,
             action.port.id,
-            updateState(addState(GraphPortState.selected))
-          )
-        }
+            updateStatus(Bitset.add(GraphPortStatus.Selected))
+          ),
+        },
       };
     default:
       return state;

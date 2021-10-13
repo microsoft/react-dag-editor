@@ -3,10 +3,10 @@ import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
 import { useGraphConfig } from "../hooks/context";
 import { IViewport } from "../models/geometry";
 import { ICanvasPort } from "../models/port";
-import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
-import { hasState } from "../utils";
+import { GraphPortStatus } from "../models/status";
+import * as Bitset from "../utils/bitset";
 
 interface IPortTooltipsProps {
   port: ICanvasPort;
@@ -20,7 +20,7 @@ export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = (props)
 
   const { parentNode, port, viewport } = props;
 
-  const isPortTooltipsVisible = hasState(GraphPortState.activated)(port.state);
+  const isPortTooltipsVisible = Bitset.has(GraphPortStatus.Activated)(port.status);
 
   if (!isPortTooltipsVisible) {
     return null;

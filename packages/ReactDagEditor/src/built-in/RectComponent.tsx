@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ICanvasNode } from "../models/node";
-import { isNodeEditing } from "../utils/state";
+import { isNodeEditing } from "../models/status";
 
 export interface IRectComponentProps {
   style: React.CSSProperties;
@@ -11,7 +11,7 @@ export interface IRectComponentProps {
   textY: number;
 }
 
-export const RectComponent: React.FC<IRectComponentProps> = props => {
+export const RectComponent: React.FC<IRectComponentProps> = (props) => {
   const { style, node, width, height, textY } = props;
 
   const comment = node.data && node.data.comment ? node.data.comment : "";

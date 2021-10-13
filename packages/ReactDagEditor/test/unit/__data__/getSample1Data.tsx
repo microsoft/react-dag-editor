@@ -18,8 +18,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.5, 0]
+            status: 0,
+            position: [0.5, 0],
           },
           {
             id: "port-1",
@@ -28,11 +28,11 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.5, 1]
-          }
+            status: 0,
+            position: [0.5, 1],
+          },
         ],
-        state: 0
+        status: 0,
       },
       {
         id: "f6dc0eb1",
@@ -49,8 +49,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.5, 0]
+            status: 0,
+            position: [0.5, 0],
           },
           {
             id: "port-1",
@@ -59,8 +59,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.3333333333333333, 1]
+            status: 0,
+            position: [0.3333333333333333, 1],
           },
           {
             id: "port-2",
@@ -69,11 +69,11 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.6666666666666666, 1]
-          }
+            status: 0,
+            position: [0.6666666666666666, 1],
+          },
         ],
-        state: 0
+        status: 0,
       },
       {
         id: "d1647408",
@@ -90,8 +90,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.5, 0]
+            status: 0,
+            position: [0.5, 0],
           },
           {
             id: "port-1",
@@ -100,8 +100,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.3333333333333333, 1]
+            status: 0,
+            position: [0.3333333333333333, 1],
           },
           {
             id: "port-2",
@@ -110,11 +110,11 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.6666666666666666, 1]
-          }
+            status: 0,
+            position: [0.6666666666666666, 1],
+          },
         ],
-        state: 0
+        status: 0,
       },
       {
         id: "4b199015",
@@ -131,11 +131,11 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.5, 1]
-          }
+            status: 0,
+            position: [0.5, 1],
+          },
         ],
-        state: 0
+        status: 0,
       },
       {
         id: "fb404f70",
@@ -152,8 +152,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.3333333333333333, 0]
+            status: 0,
+            position: [0.3333333333333333, 0],
           },
           {
             id: "port-1",
@@ -162,8 +162,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.6666666666666666, 0]
+            status: 0,
+            position: [0.6666666666666666, 0],
           },
           {
             id: "port-2",
@@ -172,11 +172,11 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.5, 1]
-          }
+            status: 0,
+            position: [0.5, 1],
+          },
         ],
-        state: 0
+        status: 0,
       },
       {
         id: "c4ee5025",
@@ -193,8 +193,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.3333333333333333, 0]
+            status: 0,
+            position: [0.3333333333333333, 0],
           },
           {
             id: "port-1",
@@ -203,8 +203,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.6666666666666666, 0]
+            status: 0,
+            position: [0.6666666666666666, 0],
           },
           {
             id: "port-2",
@@ -213,11 +213,11 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.5, 1]
-          }
+            status: 0,
+            position: [0.5, 1],
+          },
         ],
-        state: 0
+        status: 0,
       },
       {
         id: "81777c66",
@@ -234,8 +234,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.3333333333333333, 0]
+            status: 0,
+            position: [0.3333333333333333, 0],
           },
           {
             id: "port-1",
@@ -244,8 +244,8 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: false,
             isOutputDisabled: true,
             shape: "default",
-            state: 0,
-            position: [0.6666666666666666, 0]
+            status: 0,
+            position: [0.6666666666666666, 0],
           },
           {
             id: "port-2",
@@ -254,11 +254,11 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.5, 1]
-          }
+            status: 0,
+            position: [0.5, 1],
+          },
         ],
-        state: 0
+        status: 0,
       },
       {
         id: "1fd27f80",
@@ -275,22 +275,22 @@ export const getSample1Data = (): ICanvasData => {
             isInputDisabled: true,
             isOutputDisabled: false,
             shape: "default",
-            state: 0,
-            position: [0.5, 1]
-          }
+            status: 0,
+            position: [0.5, 1],
+          },
         ],
-        state: 0
-      }
+        status: 0,
+      },
     ],
     edges: [
-      { source: "d1647408", target: "fb404f70", sourcePortId: "port-1", targetPortId: "port-1", id: "0", state: 0 },
-      { source: "47566002", target: "f6dc0eb1", sourcePortId: "port-1", targetPortId: "port-0", id: "1", state: 0 },
-      { source: "f6dc0eb1", target: "d1647408", sourcePortId: "port-1", targetPortId: "port-0", id: "2", state: 0 },
-      { source: "4b199015", target: "fb404f70", sourcePortId: "port-0", targetPortId: "port-0", id: "3", state: 0 },
-      { source: "fb404f70", target: "c4ee5025", sourcePortId: "port-2", targetPortId: "port-0", id: "4", state: 0 },
-      { source: "d1647408", target: "c4ee5025", sourcePortId: "port-2", targetPortId: "port-1", id: "5", state: 0 },
-      { source: "c4ee5025", target: "81777c66", sourcePortId: "port-2", targetPortId: "port-0", id: "6", state: 0 },
-      { source: "1fd27f80", target: "47566002", sourcePortId: "port-0", targetPortId: "port-0", id: "7", state: 0 }
-    ]
+      { source: "d1647408", target: "fb404f70", sourcePortId: "port-1", targetPortId: "port-1", id: "0", status: 0 },
+      { source: "47566002", target: "f6dc0eb1", sourcePortId: "port-1", targetPortId: "port-0", id: "1", status: 0 },
+      { source: "f6dc0eb1", target: "d1647408", sourcePortId: "port-1", targetPortId: "port-0", id: "2", status: 0 },
+      { source: "4b199015", target: "fb404f70", sourcePortId: "port-0", targetPortId: "port-0", id: "3", status: 0 },
+      { source: "fb404f70", target: "c4ee5025", sourcePortId: "port-2", targetPortId: "port-0", id: "4", status: 0 },
+      { source: "d1647408", target: "c4ee5025", sourcePortId: "port-2", targetPortId: "port-1", id: "5", status: 0 },
+      { source: "c4ee5025", target: "81777c66", sourcePortId: "port-2", targetPortId: "port-0", id: "6", status: 0 },
+      { source: "1fd27f80", target: "47566002", sourcePortId: "port-0", targetPortId: "port-0", id: "7", status: 0 },
+    ],
   };
 };

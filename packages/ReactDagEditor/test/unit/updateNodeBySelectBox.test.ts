@@ -1,12 +1,14 @@
 import {
-  GraphEdgeState,
+  Bitset,
+  GraphEdgeStatus,
   GraphModel,
-  GraphNodeState,
-  GraphPortState,
+  GraphNodeStatus,
+  GraphPortStatus,
   ICanvasNode,
   ICanvasPort,
   IGraphConfig,
-  pan
+  pan,
+  updateStatus,
 } from "../../src";
 import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
 import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
@@ -19,24 +21,24 @@ describe("test updateNodeBySelectBox", () => {
   const transformMatrix = [1, 0, 0, 1, 0, 0] as const;
   beforeEach(() => {
     graphConfig = getGraphConfig();
-    ports = makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default]);
+    ports = makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]);
     initNodes = makeNodesWithPosition(
       [
         {
-          state: GraphNodeState.default,
+          status: GraphNodeStatus.Default,
           x: 100,
-          y: 100
+          y: 100,
         },
         {
-          state: GraphNodeState.default,
+          status: GraphNodeStatus.Default,
           x: 160,
-          y: 160
+          y: 160,
         },
         {
-          state: GraphNodeState.default,
+          status: GraphNodeStatus.Default,
           x: 300,
-          y: 300
-        }
+          y: 300,
+        },
       ],
       ports
     );
@@ -47,15 +49,15 @@ describe("test updateNodeBySelectBox", () => {
       startX: 100,
       startY: 100,
       width: 100,
-      height: 0
+      height: 0,
     };
 
     const data = GraphModel.fromJSON({
       nodes: initNodes,
       edges: makeEdges([
-        [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-        [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
-      ])
+        [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+        [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
+      ]),
     });
     expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(
       data.toJSON()
@@ -67,34 +69,25 @@ describe("test updateNodeBySelectBox", () => {
       startX: 100,
       startY: 100,
       width: 30,
-      height: 10
+      height: 10,
     };
 
     const data = GraphModel.fromJSON({
       nodes: initNodes,
       edges: makeEdges([
-        [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-        [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
-      ])
+        [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+        [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
+      ]),
     });
 
     const [firstNode, ...restNodes] = [...initNodes];
     const nodes = [
-      {
-        ...firstNode,
-        state: GraphNodeState.selected
-      },
-      ...restNodes.map(n => ({
-        ...n,
-        state: GraphNodeState.connectedToSelected
-      }))
+      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
+      ...restNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))),
     ];
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(e => ({
-        ...e,
-        state: GraphEdgeState.connectedToSelected
-      }))
+      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
     };
 
     expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
@@ -105,34 +98,25 @@ describe("test updateNodeBySelectBox", () => {
       startX: 50,
       startY: 50,
       width: 30,
-      height: 10
+      height: 10,
     };
 
     const data = GraphModel.fromJSON({
       nodes: initNodes,
       edges: makeEdges([
-        [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-        [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
-      ])
+        [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+        [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
+      ]),
     });
 
     const [firstNode, ...restNodes] = [...initNodes];
     const nodes = [
-      {
-        ...firstNode,
-        state: GraphNodeState.selected
-      },
-      ...restNodes.map(n => ({
-        ...n,
-        state: GraphNodeState.connectedToSelected
-      }))
+      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
+      ...restNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))),
     ];
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(e => ({
-        ...e,
-        state: GraphEdgeState.connectedToSelected
-      }))
+      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
     };
 
     expect(
@@ -150,38 +134,26 @@ describe("test updateNodeBySelectBox", () => {
       startX: 100,
       startY: 100,
       width: 70,
-      height: 70
+      height: 70,
     };
 
     const data = GraphModel.fromJSON({
       nodes: initNodes,
       edges: makeEdges([
-        [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-        [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
-      ])
+        [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+        [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
+      ]),
     });
 
     const [firstNode, secondNode, ...restNodes] = [...initNodes];
     const nodes = [
-      {
-        ...firstNode,
-        state: GraphNodeState.selected
-      },
-      {
-        ...secondNode,
-        state: GraphNodeState.selected
-      },
-      ...restNodes.map(n => ({
-        ...n,
-        state: GraphNodeState.connectedToSelected
-      }))
+      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
+      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(secondNode),
+      ...restNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))),
     ];
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(e => ({
-        ...e,
-        state: GraphEdgeState.connectedToSelected
-      }))
+      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
     };
 
     expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
@@ -192,27 +164,21 @@ describe("test updateNodeBySelectBox", () => {
       startX: 100,
       startY: 100,
       width: 300,
-      height: 300
+      height: 300,
     };
 
     const data = GraphModel.fromJSON({
       nodes: initNodes,
       edges: makeEdges([
-        [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-        [GraphEdgeState.default, ["0", "1"], ["2", "0"]]
-      ])
+        [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+        [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
+      ]),
     });
 
-    const nodes = initNodes.map(n => ({
-      ...n,
-      state: GraphNodeState.selected
-    }));
+    const nodes = initNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.Selected)));
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(e => ({
-        ...e,
-        state: GraphEdgeState.connectedToSelected
-      }))
+      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
     };
 
     expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);

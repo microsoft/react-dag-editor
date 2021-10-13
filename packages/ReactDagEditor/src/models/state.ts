@@ -8,17 +8,17 @@ import type { IGap, IPoint, ITransformMatrix, IViewport } from "./geometry";
 import { GraphModel } from "./GraphModel";
 
 export enum CanvasMouseMode {
-  pan = "pan",
-  select = "select",
+  Pan = "Pan",
+  Select = "Select",
 }
 
 export enum GraphBehavior {
-  default = "default",
-  dragging = "dragging",
-  panning = "panning",
-  multiSelect = "multiSelect",
-  connecting = "connecting",
-  addingNode = "addingNode",
+  Default = "default",
+  Dragging = "dragging",
+  Panning = "panning",
+  MultiSelect = "multiSelect",
+  Connecting = "connecting",
+  AddingNode = "addingNode",
 }
 
 export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortData = unknown>

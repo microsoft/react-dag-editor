@@ -3,17 +3,17 @@ import * as React from "react";
 import {
   dataReadonlyMode,
   GraphCanvasEvent,
-  GraphEdgeState,
+  GraphEdgeStatus,
   GraphModel,
-  GraphNodeState,
-  GraphPortState,
+  GraphNodeStatus,
+  GraphPortStatus,
   notSelected,
 } from "../../src";
 import { GraphController } from "../../src/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { makeEdge, makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 
-const ports = makePorts([GraphPortState.default, GraphPortState.default, GraphPortState.default]);
+const ports = makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]);
 
 const deleteSelectedItems = (data: GraphModel) => {
   return data.deleteItems({
@@ -25,11 +25,11 @@ const deleteSelectedItems = (data: GraphModel) => {
 it("should do nothing if delete disabled", () => {
   const data = GraphModel.fromJSON({
     edges: makeEdges([
-      [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-      [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]],
+      [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+      [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
     ]),
     nodes: makeNodes(
-      [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+      [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
       ports
     ),
   });
@@ -57,11 +57,11 @@ it("should do nothing if delete disabled", () => {
 
   expect(graphController.state.data.present.toJSON()).toEqual({
     edges: makeEdges([
-      [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-      [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]],
+      [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+      [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
     ]),
     nodes: makeNodes(
-      [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+      [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
       ports
     ),
   });
@@ -70,19 +70,19 @@ it("should do nothing if delete disabled", () => {
 it("should do nothing if nothing selected", () => {
   const data = GraphModel.fromJSON({
     edges: makeEdges([
-      [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-      [GraphEdgeState.default, ["0", "1"], ["2", "0"]],
+      [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+      [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
     ]),
-    nodes: makeNodes([GraphNodeState.default, GraphNodeState.editing, GraphNodeState.default], ports),
+    nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
   });
 
   expect(deleteSelectedItems(data).toJSON()).toEqual(
     GraphModel.fromJSON({
       edges: makeEdges([
-        [GraphEdgeState.default, ["0", "0"], ["1", "1"]],
-        [GraphEdgeState.default, ["0", "1"], ["2", "0"]],
+        [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
+        [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
       ]),
-      nodes: makeNodes([GraphNodeState.default, GraphNodeState.editing, GraphNodeState.default], ports),
+      nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
     }).toJSON()
   );
 });
@@ -90,19 +90,19 @@ it("should do nothing if nothing selected", () => {
 it("should delete related edges", () => {
   const data = GraphModel.fromJSON({
     edges: makeEdges([
-      [GraphEdgeState.connectedToSelected, ["0", "0"], ["1", "1"]],
-      [GraphEdgeState.unconnectedToSelected, ["0", "1"], ["2", "0"]],
+      [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
+      [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
     ]),
     nodes: makeNodes(
-      [GraphNodeState.connectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+      [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
       ports
     ),
   });
 
   expect(deleteSelectedItems(data).toJSON()).toEqual(
     GraphModel.fromJSON({
-      edges: [makeEdge("1", GraphEdgeState.default, ["0", "1"], ["2", "0"])],
-      nodes: [makeNode("0", GraphNodeState.default, ports), makeNode("2", GraphNodeState.default, ports)],
+      edges: [makeEdge("1", GraphEdgeStatus.Default, ["0", "1"], ["2", "0"])],
+      nodes: [makeNode("0", GraphNodeStatus.Default, ports), makeNode("2", GraphNodeStatus.Default, ports)],
     }).toJSON()
   );
 });
@@ -111,29 +111,29 @@ it("should only delete node", () => {
   const data = GraphModel.fromJSON({
     edges: [],
     nodes: makeNodes(
-      [GraphNodeState.unconnectedToSelected, GraphNodeState.selected, GraphNodeState.unconnectedToSelected],
+      [GraphNodeStatus.UnconnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
       ports
     ),
   });
 
   expect(deleteSelectedItems(data).toJSON()).toEqual({
     edges: [],
-    nodes: [makeNode("0", GraphNodeState.default, ports), makeNode("2", GraphNodeState.default, ports)],
+    nodes: [makeNode("0", GraphNodeStatus.Default, ports), makeNode("2", GraphNodeStatus.Default, ports)],
   });
 });
 
 it("should only delete edge", () => {
   const data = GraphModel.fromJSON({
     edges: makeEdges([
-      [GraphEdgeState.selected, ["0", "0"], ["1", "1"]],
-      [GraphEdgeState.default, ["0", "1"], ["2", "0"]],
+      [GraphEdgeStatus.Selected, ["0", "0"], ["1", "1"]],
+      [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
     ]),
-    nodes: makeNodes([GraphNodeState.default, GraphNodeState.default, GraphNodeState.default], ports),
+    nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
   });
   expect(deleteSelectedItems(data).toJSON()).toEqual(
     GraphModel.fromJSON({
-      edges: [makeEdge("1", GraphEdgeState.default, ["0", "1"], ["2", "0"])],
-      nodes: makeNodes([GraphNodeState.default, GraphNodeState.default, GraphNodeState.default], ports),
+      edges: [makeEdge("1", GraphEdgeStatus.Default, ["0", "1"], ["2", "0"])],
+      nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
     }).toJSON()
   );
 });

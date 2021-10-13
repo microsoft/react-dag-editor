@@ -1,9 +1,10 @@
 import * as React from "react";
 import { useGraphConfig } from "../hooks/context";
-import { GraphNodeState } from "../models/element-state";
 import type { IViewport } from "../models/geometry";
 import type { NodeModel } from "../models/NodeModel";
-import { getNodeConfig, hasState } from "../utils";
+import { GraphNodeStatus } from "../models/status";
+import { getNodeConfig } from "../utils";
+import * as Bitset from "../utils/bitset";
 
 interface IProps {
   node?: NodeModel;
@@ -18,7 +19,7 @@ export const NodeTooltips: React.FunctionComponent<IProps> = (props) => {
     return null;
   }
 
-  if (!hasState(GraphNodeState.activated)(node.state)) {
+  if (!Bitset.has(GraphNodeStatus.Activated)(node.status)) {
     return null;
   }
 

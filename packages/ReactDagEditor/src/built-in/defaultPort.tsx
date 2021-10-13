@@ -1,9 +1,9 @@
 import * as React from "react";
 import type { ICanvasNode } from "../models/node";
 import type { ICanvasPort } from "../models/port";
-import { GraphPortState } from "../models/element-state";
 import { GraphModel } from "../models/GraphModel";
-import { hasState } from "../utils/state";
+import { GraphPortStatus } from "../models/status";
+import * as Bitset from "../utils/bitset";
 import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
 import { defaultColors } from "../common/constants";
 
@@ -22,7 +22,7 @@ class DefaultPort implements IPortConfig {
       fill = defaultColors.connectedPortColor;
     }
 
-    if (hasState(GraphPortState.activated)(port.state)) {
+    if (Bitset.has(GraphPortStatus.Activated)(port.status)) {
       fill = defaultColors.primaryColor;
     }
 

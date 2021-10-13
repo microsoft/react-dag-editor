@@ -1,4 +1,4 @@
-import { GraphEdgeState } from "./element-state";
+import type { GraphEdgeStatus } from "./status";
 
 export interface ICanvasEdge<T = unknown> {
   readonly shape?: string;
@@ -13,7 +13,7 @@ export interface ICanvasEdge<T = unknown> {
   readonly sourcePortId: string;
   readonly targetPortId: string;
   readonly id: string;
-  readonly state?: GraphEdgeState;
+  readonly status?: GraphEdgeStatus;
   readonly data?: Readonly<T>;
   readonly automationId?: string;
 }

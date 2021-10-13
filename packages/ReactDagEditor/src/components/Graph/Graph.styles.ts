@@ -12,7 +12,7 @@ interface IGetCursorStyleArgs {
 }
 
 const getCursorStyle = ({ canvasMouseMode, state, isPanDisabled, isMultiSelecting }: IGetCursorStyleArgs): string => {
-  if (state.behavior === GraphBehavior.connecting) {
+  if (state.behavior === GraphBehavior.Connecting) {
     return "initial";
   }
 
@@ -29,7 +29,7 @@ const getCursorStyle = ({ canvasMouseMode, state, isPanDisabled, isMultiSelectin
   }
 
   // selection mode
-  if (canvasMouseMode !== CanvasMouseMode.pan) {
+  if (canvasMouseMode !== CanvasMouseMode.Pan) {
     if (state.activeKeys.has(" ") && !isPanDisabled) {
       return "grab";
     }

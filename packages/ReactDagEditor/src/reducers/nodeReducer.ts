@@ -2,7 +2,6 @@ import type { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import type { IGraphConfig } from "../models/config/types";
 import { emptyDummyNodes, IDummyNode, IDummyNodes } from "../models/dummy-node";
-import { GraphNodeState } from "../models/element-state";
 import {
   GraphCanvasEvent,
   GraphNodeEvent,
@@ -16,8 +15,8 @@ import {
 import { Direction } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
+import { GraphNodeStatus, isSelected, updateStatus } from "../models/status";
 import {
-  addState,
   focusArea,
   getContentArea,
   getNodeSize,
@@ -25,18 +24,16 @@ import {
   getRelativePoint,
   getRenderedNodes,
   getScaleLimit,
-  isSelected,
   isViewportComplete,
   pan,
   pushHistory,
-  removeState,
   scrollIntoView,
   transformPoint,
   unSelectAllEntity,
-  updateState,
   zoom,
 } from "../utils";
 import { getAlignmentLines, getAutoAlignDisplacement } from "../utils/autoAlign";
+import * as Bitset from "../utils/bitset";
 import { pipe } from "../utils/pipe";
 
 const getDelta = (start: number, end: number, value: number): number => {
@@ -139,7 +136,7 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
 }
 
 function handleDraggingNewNode(state: IGraphState, action: ICanvasAddNodeEvent): IGraphState {
-  if (!state.settings.features.has(GraphFeatures.autoAlign)) {
+  if (!state.settings.features.has(GraphFeatures.AutoAlign)) {
     return state;
   }
   const data = state.data.present;
@@ -312,12 +309,12 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
 
     case GraphNodeEvent.PointerEnter:
       switch (state.behavior) {
-        case GraphBehavior.default:
+        case GraphBehavior.Default:
           return {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(action.node.id, updateState(addState(GraphNodeState.activated))),
+              present: data.updateNode(action.node.id, updateStatus(Bitset.add(GraphNodeStatus.Activated))),
             },
           };
         default:
@@ -325,13 +322,13 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
       }
     case GraphNodeEvent.PointerLeave:
       switch (state.behavior) {
-        case GraphBehavior.default:
-        case GraphBehavior.connecting:
+        case GraphBehavior.Default:
+        case GraphBehavior.Connecting:
           return {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(action.node.id, updateState(removeState(GraphNodeState.activated))),
+              present: data.updateNode(action.node.id, updateStatus(Bitset.remove(GraphNodeStatus.Activated))),
             },
           };
         default:
@@ -348,7 +345,7 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             state.data,
             state.data.present.insertNode({
               ...action.node,
-              state: GraphNodeState.selected,
+              status: GraphNodeStatus.Selected,
             }),
             unSelectAllEntity()
           ),
@@ -372,7 +369,7 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateNode(action.node.id, updateState(addState(GraphNodeState.editing))),
+          present: state.data.present.updateNode(action.node.id, updateStatus(Bitset.add(GraphNodeStatus.Editing))),
         },
       };
     default:

@@ -1,7 +1,7 @@
 import * as React from "react";
-import { NodeModel } from "../..";
 import { OrderedMap } from "../../collections";
 import { INode, NodeType } from "../../collections/b-tree";
+import { NodeModel } from "../../models/NodeModel";
 import { StaticNode } from "../StaticGraph/StaticNode";
 
 export interface IReadonlyNodeTreeNodeProps {
@@ -14,7 +14,7 @@ export interface IReadonlyNodeTreeProps {
 
 const ReadonlyNodeTreeNode = React.memo<IReadonlyNodeTreeNodeProps>(
   ({ node }) => {
-    const values = node.values.map(it => (
+    const values = node.values.map((it) => (
       <StaticNode key={it[1].id} node={it[1]} />
     ));
     const children =
@@ -36,8 +36,7 @@ const ReadonlyNodeTreeNode = React.memo<IReadonlyNodeTreeNodeProps>(
 
 ReadonlyNodeTreeNode.displayName = "ReadonlyNodeTreeNode";
 
-export const ReadonlyNodeTree: React.FunctionComponent<IReadonlyNodeTreeProps> = ({
-  tree
-}) => {
-  return <ReadonlyNodeTreeNode node={tree.sortedRoot} />;
-};
+export const ReadonlyNodeTree: React.FunctionComponent<IReadonlyNodeTreeProps> =
+  ({ tree }) => {
+    return <ReadonlyNodeTreeNode node={tree.sortedRoot} />;
+  };

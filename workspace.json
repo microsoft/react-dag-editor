@@ -19,7 +19,12 @@
             "extractCss": false,
             "assets": [
               {
-                "glob": "packages/react-dag-editor/README.md",
+                "glob": "README.md",
+                "input": ".",
+                "output": "."
+              },
+              {
+                "glob": "packages/react-dag-editor/src",
                 "input": ".",
                 "output": "."
               }

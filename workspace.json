@@ -15,7 +15,7 @@
             "project": "packages/react-dag-editor/package.json",
             "entryFile": "packages/react-dag-editor/src/index.ts",
             "external": ["react/jsx-runtime"],
-            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "rollupConfig": "packages/react-dag-editor/rollup.config.js",
             "extractCss": false,
             "assets": [
               {

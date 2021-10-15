@@ -7,7 +7,6 @@ export * from "./layout";
 export * from "./browsers";
 export * from "./isWithinThreshold";
 export * from "./geometric";
-export * from "./deepClone";
 export * from "./diffGraphNode";
 export * from "./diffGraphEdge";
 export * from "./diffGraphPort";

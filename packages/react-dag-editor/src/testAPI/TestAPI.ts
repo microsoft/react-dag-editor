@@ -1,4 +1,3 @@
-/* eslint-disable compat/compat */
 import { IBoundingBox, IDriverAdapter } from "./DriverAdapter";
 
 export interface IPosition {

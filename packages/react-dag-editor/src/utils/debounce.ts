@@ -1,20 +1,14 @@
 import { isDef } from "./assert";
 
-type ArgumentsType<F extends (...args: unknown[]) => void> = F extends (
-  ...args: infer args
-) => void
-  ? args
-  : never;
 export interface IDebounceOptions {
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   instance?: any;
   maxWait?: number;
 }
 export const debounce = <
-  FN extends (...args: unknown[]) => void,
-  Args extends ArgumentsType<FN>
+  Args extends unknown[]
 >(
-  callback: FN,
+  callback: (...args: Args) => void,
   timeout: number,
   options?: IDebounceOptions
 ) => {

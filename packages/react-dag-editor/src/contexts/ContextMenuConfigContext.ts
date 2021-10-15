@@ -20,18 +20,19 @@ export interface IContextMenuConfig {
 }
 
 export class ContextMenuConfig implements IContextMenuConfig {
-  private readonly contextMenu = {};
-  private contextMenuProps: IContextMenuProps;
+  private readonly contextMenu = new Map<string, React.ReactNode>();
+  private contextMenuProps: IContextMenuProps | undefined;
 
   public registerContextMenu(props: IContextMenuProps): void {
     this.contextMenuProps = { ...props };
   }
 
   public registerMenu(element: React.ReactNode, menuType: MenuType): void {
-    this.contextMenu[menuType] = element;
+    this.contextMenu.set(menuType, element);
   }
+
   public getMenu(menuType: MenuType): React.ReactNode {
-    if (this.contextMenuProps && this.contextMenu[menuType]) {
+    if (this.contextMenuProps && this.contextMenu.has(menuType)) {
       const { className, styles } = this.contextMenuProps;
       const reactElement = React.createElement(
         "div",
@@ -39,7 +40,7 @@ export class ContextMenuConfig implements IContextMenuConfig {
           className,
           style: styles
         },
-        this.contextMenu[menuType]
+        this.contextMenu.get(menuType)
       );
       return reactElement;
     }

@@ -1,14 +1,17 @@
 /* eslint-disable no-console */
+
+import { isDev } from "./env";
+
 // eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class Debug {
   public static log(message: string): void {
-    if (process.env.NODE_ENV !== "production") {
+    if (isDev) {
       console.log(message);
     }
   }
 
   public static warn(message: string): void {
-    if (process.env.NODE_ENV !== "production") {
+    if (isDev) {
       console.warn(message);
     }
   }

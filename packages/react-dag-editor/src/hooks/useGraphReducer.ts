@@ -34,8 +34,8 @@ export function getGraphReducer<NodeData = unknown, EdgeData = unknown, PortData
   middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined = undefined,
   finalReducer: IGraphReactReducer<NodeData, EdgeData, PortData, Action> = identical
 ): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
-  const finalMiddleware = middleware ? composeReducers([middleware, builtinReducer]) : builtinReducer;
-  return finalMiddleware(finalReducer) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+  const finalMiddleware = middleware ? composeReducers([middleware as IGraphReducer, builtinReducer]) : builtinReducer;
+  return finalMiddleware(finalReducer as IGraphReactReducer) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
 }
 
 export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(

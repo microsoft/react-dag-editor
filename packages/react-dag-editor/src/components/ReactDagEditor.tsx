@@ -37,7 +37,7 @@ export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, Po
   /**
    * Fallback to `window` if this is not provided or returns null or undefined
    */
-  getGlobalEventTarget?(): Window | Element | null | undefined;
+  getGlobalEventTarget?(): Window | HTMLElement | null | undefined;
 }
 
 /**
@@ -62,7 +62,7 @@ export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = (pr
   React.useLayoutEffect(() => {
     graphController.state = state;
     graphController.dispatchDelegate = dispatch;
-    graphController.getGlobalEventTargetImpl = getGlobalEventTarget;
+    graphController.getGlobalEventTargetDelegate = getGlobalEventTarget;
   }, [dispatch, getGlobalEventTarget, graphController, state]);
   React.useEffect(() => {
     return () => {

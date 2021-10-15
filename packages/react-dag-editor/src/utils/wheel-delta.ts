@@ -4,8 +4,6 @@
  * https://stackoverflow.com/questions/20110224/what-is-the-height-of-a-line-in-a-wheel-event-deltamode-dom-delta-line
  */
 
-/* eslint-disable compat/compat */
-
 import { Debug } from "./debug";
 
 /**
@@ -44,7 +42,6 @@ function getScrollLineHeight(): number {
 const scrollLineHeight = getScrollLineHeight();
 
 export const normalizeWheelDelta =
-  // eslint-disable-next-line @typescript-eslint/tslint/config
   typeof WheelEvent === "function"
     ? (deltaMode: number, delta: number): number => {
         switch (deltaMode) {

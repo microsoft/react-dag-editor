@@ -10,7 +10,7 @@ import { defaultGetNodeAriaLabel } from "../../utils/a11yUtils";
 import { getAutoAlignDisplacement } from "../../utils/autoAlign";
 import { EventChannel } from "../../utils/eventChannel";
 import { GraphNode } from "../GraphNode";
-import classes from "../Graph.styles.m.scss";
+import classes from "../Graph.styles.module.scss";
 import { Transform } from "../Transform";
 import { useSvgRect } from "./useSvgRect";
 

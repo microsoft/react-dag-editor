@@ -27,14 +27,18 @@ export class GraphController {
   public state: IGraphState;
   public UNSAFE_latestState: IGraphState;
   public dispatchDelegate: IDispatch;
-  public getGlobalEventTargetImpl?: () => Window | Element | null | undefined;
+  public getGlobalEventTargetDelegate?: () =>
+    | Window
+    | HTMLElement
+    | null
+    | undefined;
   private mouseClientPoint?: IPoint;
   private behavior = GraphBehavior.Default;
 
   public constructor(state: IGraphState, dispatch: IDispatch) {
     this.state = state;
     this.UNSAFE_latestState = state;
-    this.dispatch = dispatch;
+    this.dispatchDelegate = dispatch;
   }
 
   public readonly dispatch: IDispatch = (action, callback) => {
@@ -69,7 +73,7 @@ export class GraphController {
     return this.state.data.present;
   }
 
-  public getGlobalEventTarget(): Element | Window {
-    return this.getGlobalEventTargetImpl?.() ?? window;
+  public getGlobalEventTarget(): HTMLElement | Window {
+    return this.getGlobalEventTargetDelegate?.() ?? window;
   }
 }

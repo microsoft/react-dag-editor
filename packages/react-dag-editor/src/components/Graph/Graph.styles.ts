@@ -1,7 +1,7 @@
 import { mergeStyleSets } from "@fluentui/merge-styles";
 import { defaultColors } from "../../common/constants";
 import { CanvasMouseMode, GraphBehavior, IGraphState } from "../../models/state";
-import classes from "../Graph.styles.m.scss";
+import classes from "../Graph.styles.module.scss";
 import { IGraphProps } from "./IGraphProps";
 
 interface IGetCursorStyleArgs {

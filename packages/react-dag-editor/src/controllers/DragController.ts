@@ -59,14 +59,14 @@ export class DragController<T extends MouseEvent = MouseEvent> {
     this.prevClientX = x;
     this.prevClientY = y;
 
-    this.eventProvider.on("move", this.onMouseMove);
-    this.eventProvider.on("end", this.onMouseUp);
+    this.eventProvider.on("move", this.onMouseMove as (e: MouseEvent) => void);
+    this.eventProvider.on("end", this.onMouseUp as (e: MouseEvent) => void);
   }
 
   public stop(): void {
     this.mouseMove.cancel();
-    this.eventProvider.off("move", this.onMouseMove);
-    this.eventProvider.off("end", this.onMouseUp);
+    this.eventProvider.off("move", this.onMouseMove as (e: MouseEvent) => void);
+    this.eventProvider.off("end", this.onMouseUp as (e: MouseEvent) => void);
   }
 
   protected getDelta(x: number, y: number): IPoint {
@@ -76,7 +76,7 @@ export class DragController<T extends MouseEvent = MouseEvent> {
     this.prevClientY = y;
     return {
       x: clientDX,
-      y: clientDY
+      y: clientDY,
     };
   }
 
@@ -85,7 +85,7 @@ export class DragController<T extends MouseEvent = MouseEvent> {
     const y = e.clientY - this.startY;
     return {
       x,
-      y
+      y,
     };
   }
 
@@ -100,7 +100,7 @@ export class DragController<T extends MouseEvent = MouseEvent> {
       dy,
       totalDX,
       totalDY,
-      e
+      e,
     });
   }
 
@@ -125,9 +125,11 @@ export class DragController<T extends MouseEvent = MouseEvent> {
   };
 }
 
-export function defaultGetPositionFromEvent<T extends MouseEvent>(e: T): IPoint {
+export function defaultGetPositionFromEvent<T extends MouseEvent>(
+  e: T
+): IPoint {
   return {
     x: e.clientX,
-    y: e.clientY
+    y: e.clientY,
   };
 }

@@ -8,7 +8,7 @@ import { getNodeAutomationId, getNodeConfig, getNodeUid } from "../utils";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
 import { checkIsMultiSelect } from "../utils/keyboard";
-import classes from "./Graph.styles.m.scss";
+import classes from "./Graph.styles.module.scss";
 import { IGraphProps } from "./Graph/IGraphProps";
 
 export interface IGraphNodeCommonProps {

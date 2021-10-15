@@ -7,17 +7,17 @@ let maxCost: number;
 export class Task {
   public name: string;
   // the earliest start
-  public earlyStart: number;
+  public earlyStart = 0;
   // the earliest finish
   public earlyFinish: number;
   // the latest start
-  public latestStart: number;
+  public latestStart = 0;
   // the latest finish
-  public latestFinish: number;
+  public latestFinish = 0;
   // the actual cost of the task
   public cost: number;
   // the cost of the task along the critical path
-  public criticalCost: number;
+  public criticalCost = 0;
   // the tasks on which this task is dependant
   public dependencies = new Set<Task>();
 

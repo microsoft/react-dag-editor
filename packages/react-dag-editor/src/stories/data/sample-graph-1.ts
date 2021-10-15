@@ -1,4 +1,4 @@
-import { ICanvasData } from "../../src";
+import { ICanvasData } from "../..";
 
 export const sampleGraphData: ICanvasData = {
   nodes: [

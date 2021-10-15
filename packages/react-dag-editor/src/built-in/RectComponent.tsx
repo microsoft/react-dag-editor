@@ -18,7 +18,7 @@ export const RectComponent: React.FC<IRectComponentProps> = (props) => {
   const isEditing = isNodeEditing(node);
   return (
     <g key={node.id}>
-      <rect width={width} height={height} x={node.x} y={node.y} style={style} rx={style.borderRadius} />
+      <rect width={width} height={height} x={node.x} y={node.y} style={style} />
       <text x={node.x} y={textY} fontSize={12}>
         {node.name}
       </text>

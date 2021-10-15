@@ -61,7 +61,6 @@ export const useContainerRect = (
       LIMIT
     );
 
-    // eslint-disable-next-line @typescript-eslint/tslint/config
     if (typeof ResizeObserver !== "undefined") {
       const resizeObserver = new ResizeObserver(onResize);
       resizeObserver.observe(container);
@@ -79,7 +78,7 @@ export const useContainerRect = (
   }, [containerRef, updateViewport]);
 
   useEffect(() => {
-    const listener = debounce((e: UIEvent) => {
+    const listener = debounce((e: Event) => {
       const svg = svgRef.current;
       if (!svg || !(e.target instanceof Element) || !e.target.contains(svg)) {
         return;

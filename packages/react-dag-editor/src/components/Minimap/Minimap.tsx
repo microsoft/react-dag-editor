@@ -19,7 +19,7 @@ import {
   transformPoint,
 } from "../../utils";
 import { clamp } from "../../utils/clamp";
-import classes from "../Graph.styles.m.scss";
+import classes from "../Graph.styles.module.scss";
 import { StaticGraph } from "../StaticGraph/StaticGraph";
 import { IRect, MiniMapShadow } from "./Shadow";
 

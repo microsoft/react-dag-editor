@@ -1,0 +1,30 @@
+{
+  "extends": "@nrwl/workspace/presets/npm.json",
+  "npmScope": "react-dag-editor",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "build-storybook"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "react-dag-editor": {
+      "tags": []
+    },
+    "react-dag-editor-e2e": {
+      "tags": [],
+      "implicitDependencies": ["react-dag-editor"]
+    }
+  }
+}

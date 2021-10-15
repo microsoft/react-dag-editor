@@ -1,4 +1,5 @@
 import { mergeStyles } from "@fluentui/merge-styles";
+import { cloneDeep } from "lodash-es";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { v4 as uuid } from "uuid";
@@ -12,10 +13,10 @@ import { INodeConfig } from "../../models/config/types";
 import { GraphCanvasEvent } from "../../models/event";
 import { IContainerRect, IPoint, ITransformMatrix } from "../../models/geometry";
 import { ICanvasNode } from "../../models/node";
-import { deepClone, getRectHeight, getRectWidth, isViewportComplete, reverseTransformPoint } from "../../utils";
+import { getRectHeight, getRectWidth, isViewportComplete, reverseTransformPoint } from "../../utils";
 import { identical } from "../../utils/identical";
 import { noop } from "../../utils/noop";
-import classes from "../Graph.styles.m.scss";
+import classes from "../Graph.styles.module.scss";
 import { AddingNodeSvg } from "./AddingNodeSvg";
 
 export interface IItemProps {
@@ -129,7 +130,7 @@ export const Item: React.FunctionComponent<IItemProps> = (props) => {
       const nodeConfig = graphConfig.getNodeConfigByName(shape);
 
       const node: ICanvasNode = {
-        ...deepClone(model),
+        ...cloneDeep(model),
         ...adjustPosition(
           evt.clientX,
           evt.clientY,

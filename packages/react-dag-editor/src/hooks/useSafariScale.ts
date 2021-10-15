@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { RefObject, useEffect } from "react";
 import { GraphCanvasEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
@@ -60,12 +61,18 @@ export function useSafariScale({ rectRef, svgRef, eventChannel }: IUseSafariScal
       e.preventDefault();
       onGestureEvent(e);
     };
+    // @ts-ignore
     el.addEventListener("gesturestart", onGestureStart);
+    // @ts-ignore
     el.addEventListener("gesturechange", onGestureChange);
+    // @ts-ignore
     el.addEventListener("gestureend", onGestureEnd);
     return () => {
+      // @ts-ignore
       el.removeEventListener("gesturestart", onGestureStart);
+      // @ts-ignore
       el.removeEventListener("gesturechange", onGestureChange);
+      // @ts-ignore
       el.removeEventListener("gestureend", onGestureEnd);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

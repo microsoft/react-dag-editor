@@ -3,7 +3,7 @@ import { ConnectingState } from "../../ConnectingState";
 import { GraphConfigContext, IDispatch, ViewportContext } from "../../contexts";
 import { AlignmentLinesContext } from "../../contexts/AlignmentLinesContext";
 import { GraphControllerContext } from "../../contexts/GraphControllerContext";
-import { GraphStateContext, GraphValueContext } from "../../contexts/GraphStateContext";
+import { GraphStateContext, GraphValueContext, IGraphStateContext } from "../../contexts/GraphStateContext";
 import type { GraphController } from "../../controllers/GraphController";
 import type { IGraphState } from "../../models/state";
 
@@ -17,9 +17,9 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
   props: React.PropsWithChildren<IGraphStateStoreProps<NodeData, EdgeData, PortData, Action>>
 ): React.ReactElement {
   const { graphController, state, dispatch, children } = props;
-  const contextValue = React.useMemo(
+  const contextValue = React.useMemo<IGraphStateContext<NodeData, EdgeData, PortData, Action>>(
     () => ({
-      state,
+      state: state,
       dispatch
     }),
     [state, dispatch]
@@ -29,7 +29,7 @@ export function GraphStateStore<NodeData = unknown, EdgeData = unknown, PortData
     <GraphConfigContext.Provider value={state.settings.graphConfig}>
       <GraphControllerContext.Provider value={graphController}>
         <ConnectingState data={state.data.present} connectState={state.connectState}>
-          <GraphStateContext.Provider value={contextValue}>
+          <GraphStateContext.Provider value={contextValue as IGraphStateContext}>
             <ViewportContext.Provider value={state.viewport}>
               <GraphValueContext.Provider value={state.data.present}>
                 <AlignmentLinesContext.Provider value={state.alignmentLines}>

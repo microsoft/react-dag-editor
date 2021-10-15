@@ -64,7 +64,7 @@ export const GraphValueContext = React.createContext<GraphModel>(
       // eslint-disable-next-line no-console
       console.warn("Default graph data value is being used. Please check if you forget rendering Graph component");
 
-      return target[prop];
+      return Reflect.get(target, prop);
     },
   })
 );

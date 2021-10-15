@@ -2,27 +2,27 @@ export class DefaultStorage implements Storage {
   public get length(): number {
     return Object.keys(this.items || {}).length;
   }
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  public items: object;
+
+  public items: Map<string, string>;
 
   public constructor() {
-    this.items = {};
+    this.items = new Map();
   }
   public key = () => "DefaultLocalStorage";
 
   public clear(): void {
-    this.items = {};
+    this.items = new Map();
   }
 
   public setItem(key: string, data: string): void {
-    this.items[key] = data;
+    this.items.set(key, data);
   }
 
-  public getItem(key: string): string {
-    return this.items[key];
+  public getItem(key: string): string | null {
+    return this.items.get(key) ?? null;
   }
 
   public removeItem(key: string): void {
-    this.items[key] = undefined;
+    this.items.delete(key);
   }
 }

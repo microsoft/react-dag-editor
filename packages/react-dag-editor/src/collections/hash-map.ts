@@ -84,7 +84,7 @@ export class HashMap<K, V> implements IMap<K, V> {
     return new HashMap<K, T>(this.root.map(uid.peek(), f));
   }
 
-  public filter<T>(predicate: (value: V, key: K) => boolean): HashMap<K, V> {
+  public filter(predicate: (value: V, key: K) => boolean): HashMap<K, V> {
     const map = this.mutate();
     this.forEach((value, key) => {
       if (!predicate(value, key)) {

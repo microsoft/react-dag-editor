@@ -23,7 +23,11 @@ export interface INodePointerDownParams {
   graphController: GraphController;
 }
 
-export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, params: INodePointerDownParams) => {
+export const onNodePointerDown = (
+  evt: React.PointerEvent,
+  target: NodeModel,
+  params: INodePointerDownParams
+) => {
   evt.preventDefault();
 
   const {
@@ -36,14 +40,15 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
     rectRef,
     isAutoAlignEnable,
     autoAlignThreshold,
-    graphController
+    graphController,
   } = params;
 
   if (isNodesDraggable) {
     evt.stopPropagation();
   }
 
-  const isMouseRight = evt.pointerType === "mouse" && evt.button !== MouseEventButton.Primary;
+  const isMouseRight =
+    evt.pointerType === "mouse" && evt.button !== MouseEventButton.Primary;
 
   if (isClickNodeToSelectDisabled || isMouseRight) {
     return;
@@ -56,7 +61,10 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
   const isMultiSelect = checkIsMultiSelect(evt);
 
   const dragging = new DragNodeController(
-    new PointerEventProvider(graphController.getGlobalEventTarget(), evt.pointerId),
+    new PointerEventProvider(
+      graphController.getGlobalEventTarget(),
+      evt.pointerId
+    ),
     getPositionFromEvent,
     rectRef
   );
@@ -71,7 +79,7 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
         rawEvent: e,
         isVisible: !isWithinThreshold(totalDX, totalDY, dragThreshold),
         isAutoAlignEnable,
-        autoAlignThreshold
+        autoAlignThreshold,
       });
     }
   };
@@ -84,7 +92,7 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
       type: GraphNodeEvent.DragEnd,
       node: target,
       rawEvent: e,
-      isDragCanceled
+      isDragCanceled,
     });
     if (isDragCanceled || !isNodesDraggable) {
       graphController.nodeClickOnce = target;
@@ -99,7 +107,7 @@ export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, pa
     type: GraphNodeEvent.DragStart,
     node: target,
     rawEvent: evt,
-    isMultiSelect
+    isMultiSelect,
   });
   dragging.start(evt.nativeEvent);
 };

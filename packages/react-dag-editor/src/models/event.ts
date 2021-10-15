@@ -398,12 +398,12 @@ export interface INodeSimpleEvent {
   type: GraphNodeEvent.SelectAll;
 }
 
-export interface INodeCentralizeEvent<NodeData = unknown, PortData = unknown> {
+export interface INodeCentralizeEvent {
   type: GraphNodeEvent.Centralize;
   nodes: string[];
 }
 
-export interface INodeLocateEvent<NodeData = unknown, PortData = unknown> {
+export interface INodeLocateEvent {
   type: GraphNodeEvent.Locate;
   nodes: string[];
   position: IPoint;
@@ -426,8 +426,8 @@ export type INodeEvent<NodeData = unknown, PortData = unknown> =
   | INodeDragEvent<NodeData, PortData>
   | INodeDragEndEvent<NodeData, PortData>
   | INodeSimpleEvent
-  | INodeCentralizeEvent<NodeData, PortData>
-  | INodeLocateEvent<NodeData, PortData>
+  | INodeCentralizeEvent
+  | INodeLocateEvent
   | INodeContextMenuEvent<NodeData, PortData>
   | INodeClickEvent<NodeData, PortData>
   | INodeAddEvent<NodeData, PortData>
@@ -445,7 +445,7 @@ export interface IEdgeCommonEvent<T = unknown> extends IEventBase {
   edge: EdgeModel<T>;
 }
 
-export interface IEdgeConnectStartEvent<T = unknown> extends IEventBase<React.PointerEvent | React.KeyboardEvent> {
+export interface IEdgeConnectStartEvent extends IEventBase<React.PointerEvent | React.KeyboardEvent> {
   type: GraphEdgeEvent.ConnectStart;
   nodeId: string;
   portId: string;
@@ -455,19 +455,19 @@ export interface IEdgeConnectStartEvent<T = unknown> extends IEventBase<React.Po
   clientPoint?: IPoint;
 }
 
-export interface IEdgeConnectMoveEvent<T = unknown> extends IEventBase<MouseEvent> {
+export interface IEdgeConnectMoveEvent extends IEventBase<MouseEvent> {
   type: GraphEdgeEvent.ConnectMove;
   clientX: number;
   clientY: number;
 }
 
-export interface IEdgeConnectEndEvent<T = unknown> extends IEventBase<MouseEvent | KeyboardEvent | FocusEvent> {
+export interface IEdgeConnectEndEvent extends IEventBase<MouseEvent | KeyboardEvent | FocusEvent> {
   type: GraphEdgeEvent.ConnectEnd;
   isCancel: boolean;
   edgeWillAdd: ((edge: ICanvasEdge, data: GraphModel) => ICanvasEdge) | undefined;
 }
 
-export interface IEdgeConnectNavigateEvent<T = unknown> extends IEventBase {
+export interface IEdgeConnectNavigateEvent extends IEventBase {
   type: GraphEdgeEvent.ConnectNavigate;
 }
 
@@ -478,10 +478,10 @@ export interface IEdgeAddEvent<T = unknown> {
 
 export type IEdgeEvent<T> =
   | IEdgeCommonEvent<T>
-  | IEdgeConnectStartEvent<T>
-  | IEdgeConnectMoveEvent<T>
-  | IEdgeConnectEndEvent<T>
-  | IEdgeConnectNavigateEvent<T>
+  | IEdgeConnectStartEvent
+  | IEdgeConnectMoveEvent
+  | IEdgeConnectEndEvent
+  | IEdgeConnectNavigateEvent
   | IEdgeAddEvent<T>;
 
 export interface IPortEvent<NodeData = unknown, PortData = unknown> extends IEventBase {

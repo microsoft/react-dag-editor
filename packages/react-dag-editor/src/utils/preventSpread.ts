@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/tslint/config,@typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/ban-types */
 import { Debug } from "./debug";
 
 /**

@@ -66,6 +66,6 @@ export function notSelected<S extends number, T extends IWithStatus<S>>(value: T
   return !isSelected(value);
 }
 
-export const resetConnectStatus = (mask: number) => (prevStatus: number) => {
-  return (prevStatus & GraphNodeStatus.Activated) | mask;
+export const resetConnectStatus = (mask: number) => (prevStatus: number | undefined) => {
+  return ((prevStatus || 0) & GraphNodeStatus.Activated) | mask;
 };

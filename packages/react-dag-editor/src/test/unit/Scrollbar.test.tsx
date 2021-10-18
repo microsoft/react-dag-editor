@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react";
 import * as React from "react";
 import { EMPTY_GRAPH_STATE, IEvent, IGraphState, IViewport } from "../../index";
-import { Scrollbar } from "../../src/components/Scrollbar";
-import { viewportReducer } from "../../src/reducers/viewportReducer";
-import { EventChannel } from "../../src/utils/eventChannel";
+import { Scrollbar } from "../../lib/components/Scrollbar";
+import { viewportReducer } from "../../lib/reducers/viewportReducer";
+import { EventChannel } from "../../lib/utils/eventChannel";
 
 describe("Scrollbar", () => {
   const ScrollbarComponent = () => {

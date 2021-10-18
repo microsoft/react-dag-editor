@@ -11,8 +11,9 @@ import {
   scrollIntoView,
   zoom as zoomImpl,
   zoomTo as zoomToImpl,
-} from "../../src/utils";
-import { identical } from "../../src/utils/identical";
+} from "../../lib/utils";
+import { identical } from "../../lib/utils/identical";
+import { mockClientRect } from "../utils";
 
 const zoomTo = (
   anchor: IPoint,
@@ -134,6 +135,7 @@ describe("test zoom", () => {
 
 describe("test scrollIntoView", () => {
   const rect: DOMRect | ClientRect = {
+    ...mockClientRect,
     bottom: 200,
     height: 200,
     left: 0,
@@ -166,6 +168,7 @@ describe("test scrollIntoView", () => {
 
 describe("test focusArea", () => {
   const rect: DOMRect | ClientRect = {
+    ...mockClientRect,
     bottom: 200,
     height: 200,
     left: 0,

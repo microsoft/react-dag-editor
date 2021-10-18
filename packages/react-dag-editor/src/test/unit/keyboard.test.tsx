@@ -11,8 +11,8 @@ import {
   GraphNodeStatus,
   updateStatus,
 } from "../../index";
-import { GraphController } from "../../src/controllers/GraphController";
-import { findDOMElement } from "../../src/utils/a11yUtils";
+import { GraphController } from "../../lib/controllers/GraphController";
+import { findDOMElement } from "../../lib/utils/a11yUtils";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { mockBoundingBox, mockClientRect } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";

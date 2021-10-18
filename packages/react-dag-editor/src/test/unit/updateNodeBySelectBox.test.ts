@@ -10,8 +10,8 @@ import {
   pan,
   updateStatus,
 } from "../../index";
-import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
-import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
+import { ISelectBoxPosition } from "../../lib/components/Graph/SelectBox";
+import { selectNodeBySelectBox } from "../../lib/utils/updateNodeBySelectBox";
 import {
   getGraphConfig,
   makeEdges,

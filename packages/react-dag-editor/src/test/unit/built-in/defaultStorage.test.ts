@@ -1,4 +1,4 @@
-import { DefaultStorage } from "../../../src/built-in";
+import { DefaultStorage } from "../../../lib/built-in";
 
 describe("DefaultStorage", () => {
   it("manipulate storage as expected", () => {
@@ -12,7 +12,7 @@ describe("DefaultStorage", () => {
     expect(storage.getItem("s_key")).toBe("some_data");
 
     storage.removeItem("s_key");
-    expect(storage.getItem("s_key")).toBe(undefined);
+    expect(storage.getItem("s_key")).toBe(null);
 
     storage.clear();
     expect(storage.length).toBe(0);

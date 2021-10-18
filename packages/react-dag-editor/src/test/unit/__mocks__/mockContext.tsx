@@ -1,6 +1,6 @@
 import * as React from "react";
 import { GraphConfigBuilder, IGraphConfig } from "../../../index";
-import { GraphConfigContext } from "../../../src/contexts/GraphConfigContext";
+import { GraphConfigContext } from "../../../lib/contexts/GraphConfigContext";
 
 export const defaultConfig = GraphConfigBuilder.default().build();
 

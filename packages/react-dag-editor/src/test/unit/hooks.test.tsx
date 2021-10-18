@@ -1,6 +1,6 @@
 import * as React from "react";
 import { act, renderIntoDocument } from "react-dom/test-utils";
-import { useDeferredValue } from "../../src/hooks/useDeferredValue";
+import { useDeferredValue } from "../../lib/hooks/useDeferredValue";
 
 interface IUseDeferredValueRef {
   getValue(): number;
@@ -10,7 +10,7 @@ interface IUseDeferredValueRef {
 it("test useDeferredValue", () => {
   jest.useFakeTimers();
 
-  const App = React.forwardRef<IUseDeferredValueRef>(({}, ref) => {
+  const App = React.forwardRef<IUseDeferredValueRef>((_, ref) => {
     const [state, setState] = React.useState(0);
     const value = useDeferredValue(state, { timeout: 200 });
     React.useImperativeHandle(
@@ -21,7 +21,7 @@ it("test useDeferredValue", () => {
         },
         setValue(nextValue: number): void {
           setState(nextValue);
-        }
+        },
       }),
       [value, setState]
     );

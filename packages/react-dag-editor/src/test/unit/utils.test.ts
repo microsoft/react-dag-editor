@@ -5,9 +5,9 @@ import {
   GraphNodeStatus,
   GraphPortStatus,
 } from "../../index";
-import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
-import { getNeighborPorts } from "../../src/utils";
-import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
+import { ISelectBoxPosition } from "../../lib/components/Graph/SelectBox";
+import { getNeighborPorts } from "../../lib/utils";
+import { selectNodeBySelectBox } from "../../lib/utils/updateNodeBySelectBox";
 import { getGraphConfig, makeEdges, makeNodes, makePorts } from "../utils";
 import {
   IHistory,
@@ -15,7 +15,7 @@ import {
   redo,
   resetUndoStack,
   undo,
-} from "../../src/utils/history";
+} from "../../lib/utils/history";
 
 describe("test getNeighborPorts", () => {
   /**

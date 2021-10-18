@@ -2,7 +2,7 @@
 
 exports[`ItemPanel - Item Should work well when mousedown and mouseup 1`] = `
 <div
-  class="module-item"
+  class="moduleItem"
   role="button"
 >
   <p>
@@ -13,7 +13,7 @@ exports[`ItemPanel - Item Should work well when mousedown and mouseup 1`] = `
 
 exports[`ItemPanel - Item Should work well when mousedown and mouseup 2`] = `
 <div
-  class="module-item"
+  class="moduleItem"
   role="button"
 >
   <p>
@@ -24,7 +24,7 @@ exports[`ItemPanel - Item Should work well when mousedown and mouseup 2`] = `
 
 exports[`ItemPanel - Item Should work well when mousedown and mouseup 3`] = `
 <div
-  class="module-item"
+  class="moduleItem"
   role="button"
 >
   <p>

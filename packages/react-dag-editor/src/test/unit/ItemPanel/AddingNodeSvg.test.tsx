@@ -10,16 +10,16 @@ import {
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
 import { GraphCanvasEvent, GraphConfigBuilder, rect } from "../../../index";
-import { MouseEventButton } from "../../../src/common/constants";
-import { Item } from "../../../src/components/ItemPanel";
-import { AddingNodeSvg } from "../../../src/components/ItemPanel/AddingNodeSvg";
-import { GraphController } from "../../../src/controllers/GraphController";
-import { ICanvasNode } from "../../../src/models/node";
+import { MouseEventButton } from "../../../lib/common/constants";
+import { Item } from "../../../lib/components/ItemPanel";
+import { AddingNodeSvg } from "../../../lib/components/ItemPanel/AddingNodeSvg";
+import { GraphController } from "../../../lib/controllers/GraphController";
+import { ICanvasNode } from "../../../lib/models/node";
 import { GraphControllerRef, TestComponent } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
 import { TestItemContent } from "./TestItemContent";
 
-jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
+jest.mock("../../../lib/components/ItemPanel/useSvgRect", () => ({
   useSvgRect: () => {
     return mockClientRect;
   },

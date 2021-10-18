@@ -2,7 +2,7 @@
 
 exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
 <svg
-  className="adding-node-svg"
+  className="addingNodeSvg"
   id="mock-uuid"
   preserveAspectRatio="xMidYMid meet"
 >
@@ -44,16 +44,7 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
       }
       viewport={
         Object {
-          "rect": Object {
-            "bottom": 700,
-            "height": 600,
-            "left": 100,
-            "right": 900,
-            "top": 100,
-            "width": 800,
-            "x": 100,
-            "y": 100,
-          },
+          "rect": [Circular],
           "transformMatrix": Array [
             1,
             0,
@@ -73,7 +64,7 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot: events 1`] = `Arra
 
 exports[`ItemPanel - AddingNodeSvg adding node 1`] = `
 <div
-  class="module-item"
+  class="moduleItem"
   role="button"
 >
   <p>
@@ -86,7 +77,7 @@ exports[`ItemPanel - AddingNodeSvg adding node: events 1`] = `Array []`;
 
 exports[`ItemPanel - AddingNodeSvg not adding node if out of graph 1`] = `
 <div
-  class="module-item"
+  class="moduleItem"
   role="button"
 >
   <p>
@@ -99,7 +90,7 @@ exports[`ItemPanel - AddingNodeSvg not adding node if out of graph: events 1`] =
 
 exports[`ItemPanel - AddingNodeSvg without left mouse down when dragging 1`] = `
 <div
-  class="module-item"
+  class="moduleItem"
   role="button"
 >
   <p>

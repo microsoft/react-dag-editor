@@ -1,4 +1,4 @@
-import { debounce } from "../../src/utils/debounce";
+import { debounce } from "../../lib/utils/debounce";
 
 jest.useFakeTimers("modern");
 

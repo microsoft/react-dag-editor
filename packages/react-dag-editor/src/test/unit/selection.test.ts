@@ -5,8 +5,8 @@ import {
   GraphPortStatus,
   ICanvasData,
 } from "../../index";
-import { MouseEventButton } from "../../src/common/constants";
-import { nodeSelection } from "../../src/utils";
+import { MouseEventButton } from "../../lib/common/constants";
+import { nodeSelection } from "../../lib/utils";
 import { makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 
 const ports = makePorts([

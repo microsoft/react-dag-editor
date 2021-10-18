@@ -1,16 +1,16 @@
-import { range } from "lodash";
+import { range } from "lodash-es";
 import {
   binaryFind,
   INode,
   InternalNode,
-  LeafNode
-} from "../../src/collections/b-tree";
+  LeafNode,
+} from "../../lib/collections/b-tree";
 
 function leaf(values: number[], owner = 0): LeafNode<number, number> {
   return new LeafNode(
     owner,
     values,
-    values.map(it => it * 10)
+    values.map((it) => it * 10)
   );
 }
 
@@ -20,9 +20,9 @@ function internal(
 ): InternalNode<number, number> {
   const node = new InternalNode(
     owner,
-    values.slice(0, values.length - 1).map(it => it[1]!),
-    values.slice(0, values.length - 1).map(it => it[1]! * 10),
-    values.map(it => it[0]),
+    values.slice(0, values.length - 1).map((it) => it[1]!),
+    values.slice(0, values.length - 1).map((it) => it[1]! * 10),
+    values.map((it) => it[0]),
     0
   );
   node["updateSize"].call(node);
@@ -63,7 +63,7 @@ describe("test find", () => {
       [leaf([1, 3, 5, 6, 7, 9]), 11],
       [leaf([13, 15, 16, 17, 19]), 20],
       [leaf([21, 23, 26, 27]), 29],
-      [leaf([31, 33, 36, 37]), null]
+      [leaf([31, 33, 36, 37]), null],
     ]);
 
   it("should find value from leaf", () => {
@@ -115,7 +115,7 @@ describe("test update leaf", () => {
       leaf(
         [2, 4, 6, 8, 10, 11, 12, 14, 16, 17, 18, 20, 23, 24, 25, 26, 28, 33],
         1
-      )
+      ),
     ]);
   });
 
@@ -190,7 +190,7 @@ describe("test update internal", () => {
     internal([
       [leaf(range(0, 31)), 31],
       [leaf(range(32, 63)), 63],
-      [leaf(range(64, 95)), null]
+      [leaf(range(64, 95)), null],
     ]);
 
   it("should update internal value", () => {
@@ -216,7 +216,7 @@ describe("test update internal", () => {
   it("should update leaf value", () => {
     const node = mock1();
     const result = node.update(1, 33, (prev = 0) => prev + 1);
-    const expValues = range(32, 63).map(it => (it === 33 ? 331 : it * 10));
+    const expValues = range(32, 63).map((it) => (it === 33 ? 331 : it * 10));
     const exp = new InternalNode(
       1,
       [31, 63],
@@ -224,7 +224,7 @@ describe("test update internal", () => {
       [
         leaf(range(0, 31)),
         new LeafNode<number, number>(1, range(32, 63), expValues),
-        leaf(range(64, 95))
+        leaf(range(64, 95)),
       ],
       95
     );
@@ -242,7 +242,7 @@ describe("test update internal", () => {
     const node = internal([
       [leaf(range(0, 62, 2)), 62],
       [leaf(range(64, 126, 2)), 126],
-      [leaf(range(128, 190, 2)), null]
+      [leaf(range(128, 190, 2)), null],
     ]);
     const result = node.insert(1, 125, 1250);
     const newKeys = range(96, 126, 2);
@@ -255,7 +255,7 @@ describe("test update internal", () => {
         leaf(range(0, 62, 2)),
         leaf(range(64, 94, 2), 1),
         leaf(newKeys, 1),
-        leaf(range(128, 190, 2))
+        leaf(range(128, 190, 2)),
       ],
       96
     );
@@ -273,18 +273,18 @@ describe("test update internal", () => {
     ): readonly [LeafNode<number, number>, number] {
       return [
         leaf(
-          range(start, end).map(l => l + it * 32),
+          range(start, end).map((l) => l + it * 32),
           owner
         ),
-        it * 32 + end
+        it * 32 + end,
       ] as const;
     }
-    const node = internal(range(0, 32).map(it => mockLeaves(it)));
+    const node = internal(range(0, 32).map((it) => mockLeaves(it)));
     const [next1, next2, newKey, newValue] = node.insert(1, 1023, 1023);
     expect(newKey).toBe(16 * 32 - 1);
     expect(newValue).toBe((16 * 32 - 1) * 10);
     const exp1 = internal(
-      range(0, 16).map(it => mockLeaves(it)),
+      range(0, 16).map((it) => mockLeaves(it)),
       1
     );
     const last = mockLeaves(31, 16, 31, 1);
@@ -292,9 +292,9 @@ describe("test update internal", () => {
     lastLeaf.insert(1, 1023, 1023);
     const exp2 = internal(
       [
-        ...range(16, 31).map(it => mockLeaves(it)),
+        ...range(16, 31).map((it) => mockLeaves(it)),
         mockLeaves(31, 0, 15, 1),
-        last
+        last,
       ],
       1
     );
@@ -308,14 +308,14 @@ describe("test remove", () => {
     expect(leaf(range(0, 32)).removeMostRight(1)).toEqual([
       31,
       310,
-      leaf(range(0, 31), 1)
+      leaf(range(0, 31), 1),
     ]);
   });
 
   it("should remove most right", () => {
     const node = internal([
       [leaf(range(0, 15)), 15],
-      [leaf(range(16, 31)), null]
+      [leaf(range(16, 31)), null],
     ]);
     const result = node.removeMostRight(1);
     const exp = new InternalNode(1, [], [], [leaf(range(0, 30), 1)], 30);
@@ -343,7 +343,7 @@ describe("test remove", () => {
     const node = internal([
       [leaf(range(0, 62, 2)), 62],
       [leaf(range(64, 126, 2)), 126],
-      [leaf(range(128, 190, 2)), null]
+      [leaf(range(128, 190, 2)), null],
     ]);
     const next = node.remove(0, 0);
     expect(next).toBe(node);
@@ -351,7 +351,7 @@ describe("test remove", () => {
       internal([
         [leaf(range(2, 62, 2)), 62],
         [leaf(range(64, 126, 2)), 126],
-        [leaf(range(128, 190, 2)), null]
+        [leaf(range(128, 190, 2)), null],
       ])
     );
   });
@@ -360,7 +360,7 @@ describe("test remove", () => {
     const node = internal([
       [leaf(range(0, 62, 2)), 62],
       [leaf(range(64, 126, 2)), 126],
-      [leaf(range(128, 190, 2)), null]
+      [leaf(range(128, 190, 2)), null],
     ]);
     const next = node.remove(1, 1000);
     expect(next).toBe(node);
@@ -368,7 +368,7 @@ describe("test remove", () => {
       internal([
         [leaf(range(0, 62, 2)), 62],
         [leaf(range(64, 126, 2)), 126],
-        [leaf(range(128, 190, 2)), null]
+        [leaf(range(128, 190, 2)), null],
       ])
     );
   });
@@ -377,7 +377,7 @@ describe("test remove", () => {
     const node = internal([
       [leaf(range(0, 62, 2)), 62],
       [leaf(range(64, 126, 2)), 126],
-      [leaf(range(128, 190, 2)), null]
+      [leaf(range(128, 190, 2)), null],
     ]);
     const next = node.remove(1, 0);
     expect(next).not.toBe(node);
@@ -386,7 +386,7 @@ describe("test remove", () => {
         [
           [leaf(range(2, 62, 2), 1), 62],
           [leaf(range(64, 126, 2)), 126],
-          [leaf(range(128, 190, 2)), null]
+          [leaf(range(128, 190, 2)), null],
         ],
         1
       )
@@ -394,14 +394,14 @@ describe("test remove", () => {
   });
 
   function mockLeaves(i: number): readonly [LeafNode<number, number>, number] {
-    return [leaf(range(0, 15).map(it => it + i * 16)), i * 16 + 15] as const;
+    return [leaf(range(0, 15).map((it) => it + i * 16)), i * 16 + 15] as const;
   }
 
   it("should merge most right node", () => {
     const node = internal([
       [internal(range(0, 16).map(mockLeaves)), 255],
       [internal(range(16, 32).map(mockLeaves)), 511],
-      [internal(range(32, 48).map(mockLeaves)), null]
+      [internal(range(32, 48).map(mockLeaves)), null],
     ]);
     const result = node.remove(1, 766);
     const exp = new InternalNode(
@@ -413,7 +413,7 @@ describe("test remove", () => {
         internal(
           [...range(16, 46).map(mockLeaves), [leaf(range(736, 766), 1), null]],
           1
-        )
+        ),
       ],
       0
     );
@@ -426,7 +426,7 @@ describe("test remove", () => {
     const node = internal([
       [internal(range(0, 16).map(mockLeaves)), 255],
       [internal(range(16, 32).map(mockLeaves)), 511],
-      [internal(range(32, 48).map(mockLeaves)), null]
+      [internal(range(32, 48).map(mockLeaves)), null],
     ]);
     const result = node.remove(1, 0);
     const exp = new InternalNode(
@@ -438,7 +438,7 @@ describe("test remove", () => {
           [[leaf(range(1, 31), 1), 31], ...range(2, 32).map(mockLeaves)],
           1
         ),
-        internal(range(32, 48).map(mockLeaves))
+        internal(range(32, 48).map(mockLeaves)),
       ],
       0
     );
@@ -451,7 +451,7 @@ describe("test remove", () => {
     const node = internal([
       [internal(range(0, 16).map(mockLeaves)), 255],
       [internal(range(16, 32).map(mockLeaves)), 511],
-      [internal(range(32, 49).map(mockLeaves)), null]
+      [internal(range(32, 49).map(mockLeaves)), null],
     ]);
     const result = node.remove(1, 256);
     const exp = internal(
@@ -462,9 +462,9 @@ describe("test remove", () => {
             [[leaf(range(257, 287), 1), 287], ...range(18, 33).map(mockLeaves)],
             1
           ),
-          527
+          527,
         ],
-        [internal(range(33, 49).map(mockLeaves), 1), null]
+        [internal(range(33, 49).map(mockLeaves), 1), null],
       ],
       1
     );
@@ -476,7 +476,7 @@ describe("test remove", () => {
     const node = internal([
       [internal(range(0, 17).map(mockLeaves)), 271],
       [internal(range(17, 33).map(mockLeaves)), 511],
-      [internal(range(33, 49).map(mockLeaves)), null]
+      [internal(range(33, 49).map(mockLeaves)), null],
     ]);
     const result = node.remove(1, 272);
     const exp = internal(
@@ -487,13 +487,13 @@ describe("test remove", () => {
             [
               [leaf(range(256, 271), 0), 271],
               [leaf(range(273, 303), 1), 303],
-              ...range(19, 33).map(mockLeaves)
+              ...range(19, 33).map(mockLeaves),
             ],
             1
           ),
-          511
+          511,
         ],
-        [internal(range(33, 49).map(mockLeaves)), null]
+        [internal(range(33, 49).map(mockLeaves)), null],
       ],
       1
     );
@@ -505,7 +505,7 @@ describe("test remove", () => {
     const node = internal([
       [internal(range(0, 16).map(mockLeaves)), 255],
       [internal(range(16, 33).map(mockLeaves)), 527],
-      [internal(range(33, 49).map(mockLeaves)), null]
+      [internal(range(33, 49).map(mockLeaves)), null],
     ]);
     const result = node.remove(1, 254);
     const exp = internal(
@@ -515,14 +515,14 @@ describe("test remove", () => {
             [
               ...range(0, 14).map(mockLeaves),
               [leaf(range(224, 254), 1), 255],
-              [leaf(range(256, 271)), 271]
+              [leaf(range(256, 271)), 271],
             ],
             1
           ),
-          271
+          271,
         ],
         [internal(range(17, 33).map(mockLeaves), 1), 527],
-        [internal(range(33, 49).map(mockLeaves)), null]
+        [internal(range(33, 49).map(mockLeaves)), null],
       ],
       1
     );
@@ -534,7 +534,7 @@ describe("test remove", () => {
     const node = internal([
       [internal(range(0, 16).map(mockLeaves)), 255],
       [internal(range(16, 33).map(mockLeaves)), 527],
-      [internal(range(33, 49).map(mockLeaves)), null]
+      [internal(range(33, 49).map(mockLeaves)), null],
     ]);
     const result = node.remove(1, 528);
     const exp = internal(
@@ -546,12 +546,12 @@ describe("test remove", () => {
             [
               [leaf(range(512, 527)), 527],
               [leaf(range(529, 559), 1), 559],
-              ...range(35, 49).map(mockLeaves)
+              ...range(35, 49).map(mockLeaves),
             ],
             1
           ),
-          null
-        ]
+          null,
+        ],
       ],
       1
     );
@@ -563,7 +563,7 @@ describe("test remove", () => {
     const node = internal([
       [internal(range(0, 16).map(mockLeaves)), 255],
       [internal(range(16, 32).map(mockLeaves)), 511],
-      [internal(range(32, 48).map(mockLeaves)), null]
+      [internal(range(32, 48).map(mockLeaves)), null],
     ]);
     const result = node.remove(1, 256);
     const exp = internal(
@@ -573,14 +573,14 @@ describe("test remove", () => {
             [
               ...range(0, 16).map(mockLeaves),
               [leaf(range(257, 287), 1), 287],
-              ...range(18, 25).map(mockLeaves)
+              ...range(18, 25).map(mockLeaves),
             ],
             1
           ),
-          399
+          399,
         ],
 
-        [internal(range(25, 48).map(mockLeaves), 1), null]
+        [internal(range(25, 48).map(mockLeaves), 1), null],
       ],
       1
     );
@@ -591,7 +591,7 @@ describe("test remove", () => {
   it("should remove from internal node", () => {
     const node = internal([
       [leaf(range(0, 15)), 15],
-      [leaf(range(16, 31)), null]
+      [leaf(range(16, 31)), null],
     ]);
     const result = node.remove(1, 15);
     const exp = new InternalNode(

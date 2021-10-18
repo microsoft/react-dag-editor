@@ -1,6 +1,6 @@
 export class DefaultStorage implements Storage {
   public get length(): number {
-    return Object.keys(this.items || {}).length;
+    return this.items.size;
   }
 
   public items: Map<string, string>;
@@ -19,7 +19,10 @@ export class DefaultStorage implements Storage {
   }
 
   public getItem(key: string): string | null {
-    return this.items.get(key) ?? null;
+    if (!this.items.has(key)) {
+      return null;
+    }
+    return this.items.get(key) as string;
   }
 
   public removeItem(key: string): void {

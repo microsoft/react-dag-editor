@@ -9,7 +9,7 @@ import {
   getNextItem,
   getPrevItem,
   nextConnectablePort,
-} from "../../src/utils/a11yUtils";
+} from "../../lib/utils/a11yUtils";
 import { getGraphConfig, makeNodes } from "../utils";
 
 function ports(list: boolean[]): ICanvasPort[] {

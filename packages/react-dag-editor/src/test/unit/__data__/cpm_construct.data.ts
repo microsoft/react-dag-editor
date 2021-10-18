@@ -1,4 +1,4 @@
-import { Task } from "../../../src/utils/gantt/cpm";
+import { Task } from "../../../lib/utils/gantt/cpm";
 import { inputData, outputData } from "./cpm_sample1.data";
 
 /**
@@ -12,7 +12,7 @@ const constructInputData = (): Set<Task> => {
   ): Set<Task> => {
     const successors = new Set<Task>();
 
-    names.forEach(name => {
+    names.forEach((name) => {
       const task = allTasksMap.get(name);
       if (task) {
         successors.add(task);
@@ -25,8 +25,8 @@ const constructInputData = (): Set<Task> => {
   const allTasks = new Set<Task>();
   const curAllTasksMap = new Map<string, Task>();
 
-  inputData.forEach(item => {
-    allTasks?.forEach(t => {
+  inputData.forEach((item) => {
+    allTasks?.forEach((t) => {
       if (!curAllTasksMap.has(t.name)) {
         curAllTasksMap.set(t.name, t);
       }

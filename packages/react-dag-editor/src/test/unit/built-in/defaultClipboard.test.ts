@@ -1,5 +1,5 @@
 import { applyDefaultPortsPosition, ICanvasData } from "../../../index";
-import { DefaultClipboard, DefaultStorage } from "./defaultClipboard.test";
+import { DefaultClipboard, DefaultStorage } from "../../../lib/built-in";
 import dataRaw from "../__data__/sampleICanvasData.json";
 
 describe("defaultClipboard", () => {

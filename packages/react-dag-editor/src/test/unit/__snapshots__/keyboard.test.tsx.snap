@@ -10,7 +10,7 @@ exports[`should copy and paste with edge 1`] = `
     >
       <button
         accesskey="f"
-        class="react-dag-editor-a11y-help-button button-a11-y"
+        class="react-dag-editor-a11y-help-button buttonA11Y"
         hidden=""
       />
       <svg

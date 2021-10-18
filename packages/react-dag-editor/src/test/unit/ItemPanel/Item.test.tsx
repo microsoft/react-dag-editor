@@ -14,13 +14,13 @@ import {
   GraphModel,
   rect,
 } from "../../../index";
-import { Item } from "../../../src/components/ItemPanel";
-import { GraphController } from "../../../src/controllers/GraphController";
+import { Item } from "../../../lib/components/ItemPanel";
+import { GraphController } from "../../../lib/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
 import { TestItemContent } from "./TestItemContent";
 
-jest.mock("../../../src/components/ItemPanel/useSvgRect", () => ({
+jest.mock("../../../lib/components/ItemPanel/useSvgRect", () => ({
   useSvgRect: () => {
     return mockClientRect;
   },

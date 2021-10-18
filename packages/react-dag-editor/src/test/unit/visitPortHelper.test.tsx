@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cleanup, render, fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import { VisitPortHelper } from "../../src/components/A11yHelpers/VisitPortHelper";
+import { VisitPortHelper } from "../../lib/components/A11yHelpers/VisitPortHelper";
 import { getNeighborPorts, GraphModel } from "../../index";
 import { getSample4Data } from "./__data__/getSample4Data";
 

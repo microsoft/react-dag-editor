@@ -9,15 +9,16 @@ import {
   ITransformMatrix,
   IViewport,
 } from "../../index";
-import { Transform } from "../../src/components/Transform";
-import { GraphController } from "../../src/controllers/GraphController";
-import { getRenderedEdges, getRenderedNodes } from "../../src/utils/viewport";
+import { Transform } from "../../lib/components/Transform";
+import { GraphController } from "../../lib/controllers/GraphController";
+import { getRenderedEdges, getRenderedNodes } from "../../lib/utils/viewport";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
-import { getGraphConfig, mockBoundingBox } from "../utils";
+import { getGraphConfig, mockBoundingBox, mockClientRect } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";
 
 describe("viewport", () => {
   const rect: DOMRect | ClientRect = {
+    ...mockClientRect,
     bottom: 816,
     height: 800,
     left: 316,

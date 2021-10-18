@@ -9,7 +9,7 @@ import {
   GraphPortStatus,
   notSelected,
 } from "../../index";
-import { GraphController } from "../../src/controllers/GraphController";
+import { GraphController } from "../../lib/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { makeEdge, makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 

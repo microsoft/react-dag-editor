@@ -16,7 +16,7 @@ import {
   IGraphReducer,
   previewMode,
 } from "../../index";
-import { GraphController } from "../../src/controllers/GraphController";
+import { GraphController } from "../../lib/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { mockBoundingBox, patchPointerEvent } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";

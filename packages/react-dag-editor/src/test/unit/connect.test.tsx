@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-non-null-assertion,compat/compat */
+/* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-non-null-assertion */
 import { cleanup, render, RenderResult } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
@@ -20,10 +20,10 @@ import {
   IGraphState,
   NodeModel,
 } from "../../index";
-import { GraphController } from "../../src/controllers/GraphController";
-import { getNearestConnectablePort } from "../../src/utils";
-import { EventChannel } from "../../src/utils/eventChannel";
-import { identical } from "../../src/utils/identical";
+import { GraphController } from "../../lib/controllers/GraphController";
+import { getNearestConnectablePort } from "../../lib/utils";
+import { EventChannel } from "../../lib/utils/eventChannel";
+import { identical } from "../../lib/utils/identical";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { getGraphConfig, mockClientRect, patchPointerEvent } from "../utils";
 

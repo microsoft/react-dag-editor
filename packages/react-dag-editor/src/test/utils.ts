@@ -129,12 +129,12 @@ export const patchPointerEvent = () => {
       this.pointerType = init?.pointerType;
     }
   }
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  // eslint-disable-next-line compat/compat
   window.PointerEvent = PointerEvent;
 };
 
-export const mockClientRect = {
+export const mockClientRect: DOMRect = {
   x: 100,
   y: 100,
   width: 800,
@@ -143,6 +143,9 @@ export const mockClientRect = {
   right: 900,
   bottom: 700,
   left: 100,
+  toJSON(): any {
+    return this;
+  },
 };
 
 export const mockBoundingBox = (rect = mockClientRect) => {

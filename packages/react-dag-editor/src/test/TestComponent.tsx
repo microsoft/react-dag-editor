@@ -7,10 +7,10 @@ import {
   IGraphReducer,
   IGraphSettings,
 } from "../index";
-import { Graph, IGraphProps, ReactDagEditor } from "../src/components";
-import { GraphController } from "../src/controllers/GraphController";
-import { useGraphController } from "../src/hooks/context";
-import { useGraphReducer } from "../src/hooks/useGraphReducer";
+import { Graph, IGraphProps, ReactDagEditor } from "../lib/components";
+import { GraphController } from "../lib/controllers/GraphController";
+import { useGraphController } from "../lib/hooks/context";
+import { useGraphReducer } from "../lib/hooks/useGraphReducer";
 import Sample0 from "./unit/__data__/sample0.json";
 import { defaultConfig } from "./unit/__mocks__/mockContext";
 

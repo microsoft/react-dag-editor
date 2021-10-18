@@ -13,13 +13,25 @@ describe("test VisitPortHelper", () => {
 
   it("the port has no neighbor port", () => {
     const neighborPorts = getNeighborPorts(data, "24a8e253", "port-2");
-    const { container } = render(<VisitPortHelper neighborPorts={neighborPorts} onComplete={jest.fn()} data={data} />);
+    const { container } = render(
+      <VisitPortHelper
+        neighborPorts={neighborPorts}
+        onComplete={jest.fn()}
+        data={data}
+      />
+    );
     expect(container).toMatchSnapshot();
   });
 
   it("the port has one neighbor port", () => {
     const neighborPorts = getNeighborPorts(data, "24a8e253", "port-1");
-    const { container } = render(<VisitPortHelper neighborPorts={neighborPorts} onComplete={jest.fn()} data={data} />);
+    const { container } = render(
+      <VisitPortHelper
+        neighborPorts={neighborPorts}
+        onComplete={jest.fn()}
+        data={data}
+      />
+    );
     expect(container).toMatchSnapshot();
   });
 
@@ -27,7 +39,13 @@ describe("test VisitPortHelper", () => {
     const onComplete = jest.fn();
 
     const neighborPorts = getNeighborPorts(data, "8b2714dd", "port-1");
-    const { container } = render(<VisitPortHelper neighborPorts={neighborPorts} onComplete={onComplete} data={data} />);
+    const { container } = render(
+      <VisitPortHelper
+        neighborPorts={neighborPorts}
+        onComplete={onComplete}
+        data={data}
+      />
+    );
     expect(container).toMatchSnapshot();
 
     const selectEl = container.querySelector("select")!;
@@ -38,14 +56,14 @@ describe("test VisitPortHelper", () => {
         target: {
           value: JSON.stringify({
             nodeId: "fc9f8703",
-            portId: "port-0"
-          })
-        }
+            portId: "port-0",
+          }),
+        },
       });
     });
     act(() => {
       fireEvent.keyDown(selectEl, {
-        key: "Escape"
+        key: "Escape",
       });
     });
 

@@ -21,7 +21,9 @@ function makePort(id: string, state: number): ICanvasPort {
 }
 
 export function makePorts(list: number[]): ICanvasPort[] {
-  return applyDefaultPortsPosition(list.map((state, index) => makePort(index.toString(), state)));
+  return applyDefaultPortsPosition(
+    list.map((state, index) => makePort(index.toString(), state))
+  );
 }
 
 export function makeEdge(
@@ -40,11 +42,21 @@ export function makeEdge(
   };
 }
 
-export function makeEdges(list: Array<[number, [string, string], [string, string]]>): ICanvasEdge[] {
-  return list.map(([state, source, target], index) => makeEdge(index.toString(), state, source, target));
+export function makeEdges(
+  list: Array<[number, [string, string], [string, string]]>
+): ICanvasEdge[] {
+  return list.map(([state, source, target], index) =>
+    makeEdge(index.toString(), state, source, target)
+  );
 }
 
-export function makeNode(id: string, status?: number, ports?: ICanvasPort[], x = 0, y = 0): ICanvasNode {
+export function makeNode(
+  id: string,
+  status?: number,
+  ports?: ICanvasPort[],
+  x = 0,
+  y = 0
+): ICanvasNode {
   return {
     x,
     y,
@@ -54,15 +66,22 @@ export function makeNode(id: string, status?: number, ports?: ICanvasPort[], x =
   };
 }
 
-export function makeNodes(stateList: number[], ports?: ICanvasPort[]): ICanvasNode[] {
-  return stateList.map((state, index) => makeNode(index.toString(), state, ports));
+export function makeNodes(
+  stateList: number[],
+  ports?: ICanvasPort[]
+): ICanvasNode[] {
+  return stateList.map((state, index) =>
+    makeNode(index.toString(), state, ports)
+  );
 }
 
 export function makeNodesWithPosition(
   list: Array<{ status: number; x?: number; y?: number }>,
   ports?: ICanvasPort[]
 ): ICanvasNode[] {
-  return list.map(({ status, x, y }, index) => makeNode(index.toString(), status, ports, x, y));
+  return list.map(({ status, x, y }, index) =>
+    makeNode(index.toString(), status, ports, x, y)
+  );
 }
 
 export function getGraphConfig(): IGraphConfig {
@@ -101,7 +120,10 @@ export const patchPointerEvent = () => {
     public readonly pointerId: number | undefined;
     public readonly pointerType: string | undefined;
 
-    public constructor(type: string, init?: MouseEventInit & { pointerId: number; pointerType: string }) {
+    public constructor(
+      type: string,
+      init?: MouseEventInit & { pointerId: number; pointerType: string }
+    ) {
       super(type, init);
       this.pointerId = init?.pointerId;
       this.pointerType = init?.pointerType;

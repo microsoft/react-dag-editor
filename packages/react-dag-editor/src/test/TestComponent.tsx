@@ -1,5 +1,12 @@
 import * as React from "react";
-import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphReducer, IGraphSettings } from "../index";
+import {
+  applyDefaultPortsPosition,
+  GraphModel,
+  ICanvasData,
+  IEvent,
+  IGraphReducer,
+  IGraphSettings,
+} from "../index";
 import { Graph, IGraphProps, ReactDagEditor } from "../src/components";
 import { GraphController } from "../src/controllers/GraphController";
 import { useGraphController } from "../src/hooks/context";
@@ -33,16 +40,26 @@ afterEach(() => {
   expect(events).toMatchSnapshot("events");
 });
 
-export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => {
-  const graphController = useGraphController();
-  React.useImperativeHandle(ref, () => graphController, [graphController]);
-  return null;
-});
+export const GraphControllerRef = React.forwardRef<GraphController>(
+  (_, ref) => {
+    const graphController = useGraphController();
+    React.useImperativeHandle(ref, () => graphController, [graphController]);
+    return null;
+  }
+);
 
 const defaultData = GraphModel.fromJSON(data);
 
-export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps>) => {
-  const { graphProps, settings, middleware, graph = true, data = defaultData } = props;
+export const TestComponent = (
+  props: React.PropsWithChildren<ITestComponentProps>
+) => {
+  const {
+    graphProps,
+    settings,
+    middleware,
+    graph = true,
+    data = defaultData,
+  } = props;
   const onEvent = React.useCallback(
     (event: IEvent) => {
       graphProps?.onEvent?.(event);

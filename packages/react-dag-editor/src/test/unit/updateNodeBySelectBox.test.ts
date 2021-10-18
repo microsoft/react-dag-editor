@@ -12,7 +12,12 @@ import {
 } from "../../index";
 import { ISelectBoxPosition } from "../../src/components/Graph/SelectBox";
 import { selectNodeBySelectBox } from "../../src/utils/updateNodeBySelectBox";
-import { getGraphConfig, makeEdges, makeNodesWithPosition, makePorts } from "../utils";
+import {
+  getGraphConfig,
+  makeEdges,
+  makeNodesWithPosition,
+  makePorts,
+} from "../utils";
 
 describe("test updateNodeBySelectBox", () => {
   let graphConfig: IGraphConfig;
@@ -21,7 +26,11 @@ describe("test updateNodeBySelectBox", () => {
   const transformMatrix = [1, 0, 0, 1, 0, 0] as const;
   beforeEach(() => {
     graphConfig = getGraphConfig();
-    ports = makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]);
+    ports = makePorts([
+      GraphPortStatus.Default,
+      GraphPortStatus.Default,
+      GraphPortStatus.Default,
+    ]);
     initNodes = makeNodesWithPosition(
       [
         {
@@ -59,9 +68,14 @@ describe("test updateNodeBySelectBox", () => {
         [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
       ]),
     });
-    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(
-      data.toJSON()
-    );
+    expect(
+      selectNodeBySelectBox(
+        graphConfig,
+        transformMatrix,
+        selectBoxPosition,
+        data
+      ).toJSON()
+    ).toEqual(data.toJSON());
   });
 
   it("test select position (100,100) node", () => {
@@ -83,14 +97,27 @@ describe("test updateNodeBySelectBox", () => {
     const [firstNode, ...restNodes] = [...initNodes];
     const nodes = [
       updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
-      ...restNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))),
+      ...restNodes.map(
+        updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
+      ),
     ];
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
+      edges: data
+        .toJSON()
+        .edges.map(
+          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+        ),
     };
 
-    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
+    expect(
+      selectNodeBySelectBox(
+        graphConfig,
+        transformMatrix,
+        selectBoxPosition,
+        data
+      ).toJSON()
+    ).toEqual(nextData);
   });
 
   it("test select position (100,100) node with pan", () => {
@@ -112,11 +139,17 @@ describe("test updateNodeBySelectBox", () => {
     const [firstNode, ...restNodes] = [...initNodes];
     const nodes = [
       updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
-      ...restNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))),
+      ...restNodes.map(
+        updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
+      ),
     ];
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
+      edges: data
+        .toJSON()
+        .edges.map(
+          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+        ),
     };
 
     expect(
@@ -149,14 +182,27 @@ describe("test updateNodeBySelectBox", () => {
     const nodes = [
       updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
       updateStatus(Bitset.replace(GraphNodeStatus.Selected))(secondNode),
-      ...restNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))),
+      ...restNodes.map(
+        updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
+      ),
     ];
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
+      edges: data
+        .toJSON()
+        .edges.map(
+          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+        ),
     };
 
-    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
+    expect(
+      selectNodeBySelectBox(
+        graphConfig,
+        transformMatrix,
+        selectBoxPosition,
+        data
+      ).toJSON()
+    ).toEqual(nextData);
   });
 
   it("test select position all nodes", () => {
@@ -175,12 +221,25 @@ describe("test updateNodeBySelectBox", () => {
       ]),
     });
 
-    const nodes = initNodes.map(updateStatus(Bitset.replace(GraphNodeStatus.Selected)));
+    const nodes = initNodes.map(
+      updateStatus(Bitset.replace(GraphNodeStatus.Selected))
+    );
     const nextData = {
       nodes,
-      edges: data.toJSON().edges.map(updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))),
+      edges: data
+        .toJSON()
+        .edges.map(
+          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+        ),
     };
 
-    expect(selectNodeBySelectBox(graphConfig, transformMatrix, selectBoxPosition, data).toJSON()).toEqual(nextData);
+    expect(
+      selectNodeBySelectBox(
+        graphConfig,
+        transformMatrix,
+        selectBoxPosition,
+        data
+      ).toJSON()
+    ).toEqual(nextData);
   });
 });

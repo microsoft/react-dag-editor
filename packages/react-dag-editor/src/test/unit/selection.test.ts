@@ -1,11 +1,24 @@
-import { GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortStatus, ICanvasData } from "../../index";
+import {
+  GraphEdgeStatus,
+  GraphModel,
+  GraphNodeStatus,
+  GraphPortStatus,
+  ICanvasData,
+} from "../../index";
 import { MouseEventButton } from "../../src/common/constants";
 import { nodeSelection } from "../../src/utils";
 import { makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 
-const ports = makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]);
+const ports = makePorts([
+  GraphPortStatus.Default,
+  GraphPortStatus.Default,
+  GraphPortStatus.Default,
+]);
 
-function proceed(init: GraphModel, steps: Array<[(value: GraphModel) => GraphModel, ICanvasData]>): void {
+function proceed(
+  init: GraphModel,
+  steps: Array<[(value: GraphModel) => GraphModel, ICanvasData]>
+): void {
   let data = init;
   steps.forEach((step) => {
     data = step[0](data);
@@ -24,7 +37,14 @@ describe("node selection", () => {
           [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
           [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
-        nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
+        nodes: makeNodes(
+          [
+            GraphNodeStatus.Default,
+            GraphNodeStatus.Editing,
+            GraphNodeStatus.Default,
+          ],
+          ports
+        ),
       }),
       [
         [
@@ -34,7 +54,14 @@ describe("node selection", () => {
               [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
               [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
             ]),
-            nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
+            nodes: makeNodes(
+              [
+                GraphNodeStatus.Default,
+                GraphNodeStatus.Editing,
+                GraphNodeStatus.Default,
+              ],
+              ports
+            ),
           },
         ],
       ]
@@ -51,7 +78,14 @@ describe("node selection", () => {
           [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
           [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
-        nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
+        nodes: makeNodes(
+          [
+            GraphNodeStatus.Default,
+            GraphNodeStatus.Default,
+            GraphNodeStatus.Default,
+          ],
+          ports
+        ),
       }),
       [
         [
@@ -62,7 +96,11 @@ describe("node selection", () => {
               [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+              [
+                GraphNodeStatus.ConnectedToSelected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.UnconnectedToSelected,
+              ],
               ports
             ),
           },
@@ -75,20 +113,31 @@ describe("node selection", () => {
               [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+              [
+                GraphNodeStatus.ConnectedToSelected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.UnconnectedToSelected,
+              ],
               ports
             ),
           },
         ],
         [
-          nodeSelection(event, makeNode("0", GraphNodeStatus.UnconnectedToSelected)),
+          nodeSelection(
+            event,
+            makeNode("0", GraphNodeStatus.UnconnectedToSelected)
+          ),
           {
             edges: makeEdges([
               [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
               [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.ConnectedToSelected],
+              [
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.ConnectedToSelected,
+                GraphNodeStatus.ConnectedToSelected,
+              ],
               ports
             ),
           },
@@ -107,7 +156,14 @@ describe("node selection", () => {
           [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
           [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
-        nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
+        nodes: makeNodes(
+          [
+            GraphNodeStatus.Default,
+            GraphNodeStatus.Default,
+            GraphNodeStatus.Default,
+          ],
+          ports
+        ),
       }),
       [
         [
@@ -118,7 +174,11 @@ describe("node selection", () => {
               [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+              [
+                GraphNodeStatus.ConnectedToSelected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.UnconnectedToSelected,
+              ],
               ports
             ),
           },
@@ -130,7 +190,14 @@ describe("node selection", () => {
               [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
               [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
             ]),
-            nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
+            nodes: makeNodes(
+              [
+                GraphNodeStatus.Default,
+                GraphNodeStatus.Default,
+                GraphNodeStatus.Default,
+              ],
+              ports
+            ),
           },
         ],
         [
@@ -141,20 +208,31 @@ describe("node selection", () => {
               [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+              [
+                GraphNodeStatus.ConnectedToSelected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.UnconnectedToSelected,
+              ],
               ports
             ),
           },
         ],
         [
-          nodeSelection(event, makeNode("0", GraphNodeStatus.UnconnectedToSelected)),
+          nodeSelection(
+            event,
+            makeNode("0", GraphNodeStatus.UnconnectedToSelected)
+          ),
           {
             edges: makeEdges([
               [GraphEdgeStatus.ConnectedToSelected, ["0", "0"], ["1", "1"]],
               [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
+              [
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.ConnectedToSelected,
+              ],
               ports
             ),
           },
@@ -167,7 +245,11 @@ describe("node selection", () => {
               [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+              [
+                GraphNodeStatus.ConnectedToSelected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.UnconnectedToSelected,
+              ],
               ports
             ),
           },
@@ -186,7 +268,11 @@ describe("node selection", () => {
               [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
+              [
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.ConnectedToSelected,
+              ],
               ports
             ),
           },
@@ -205,7 +291,11 @@ describe("node selection", () => {
               [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
             ]),
             nodes: makeNodes(
-              [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
+              [
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.Selected,
+                GraphNodeStatus.ConnectedToSelected,
+              ],
               ports
             ),
           },

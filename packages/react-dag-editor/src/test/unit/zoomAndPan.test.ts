@@ -1,8 +1,24 @@
-import { IPoint, Direction, IViewport, ITransformMatrix, EMPTY_TRANSFORM_MATRIX } from "../../index";
-import { focusArea, pan, scrollIntoView, zoom as zoomImpl, zoomTo as zoomToImpl } from "../../src/utils";
+import {
+  IPoint,
+  Direction,
+  IViewport,
+  ITransformMatrix,
+  EMPTY_TRANSFORM_MATRIX,
+} from "../../index";
+import {
+  focusArea,
+  pan,
+  scrollIntoView,
+  zoom as zoomImpl,
+  zoomTo as zoomToImpl,
+} from "../../src/utils";
 import { identical } from "../../src/utils/identical";
 
-const zoomTo = (anchor: IPoint, transformMatrix: ITransformMatrix, direction?: Direction) => {
+const zoomTo = (
+  anchor: IPoint,
+  transformMatrix: ITransformMatrix,
+  direction?: Direction
+) => {
   return zoomToImpl({
     scale: 0.5,
     anchor,
@@ -78,7 +94,11 @@ describe("test zoom", () => {
     y: 100,
   };
 
-  const zoom = (scale: number, transformMatrix: ITransformMatrix, direction?: Direction) => {
+  const zoom = (
+    scale: number,
+    transformMatrix: ITransformMatrix,
+    direction?: Direction
+  ) => {
     return zoomImpl({
       scale,
       anchor,
@@ -123,13 +143,22 @@ describe("test scrollIntoView", () => {
   };
 
   it("should scroll", () => {
-    expect(scrollIntoView(150, 150, rect, true)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(
+      scrollIntoView(
+        150,
+        150,
+        rect,
+        true
+      )({ transformMatrix: [1, 0, 0, 1, 50, 50] })
+    ).toEqual({
       transformMatrix: [1, 0, 0, 1, 0, 0],
     });
   });
 
   it("should not scroll", () => {
-    expect(scrollIntoView(150, 150, rect)({ transformMatrix: [1, 0, 0, 1, 50, 50] })).toEqual({
+    expect(
+      scrollIntoView(150, 150, rect)({ transformMatrix: [1, 0, 0, 1, 50, 50] })
+    ).toEqual({
       transformMatrix: [1, 0, 0, 1, 50, 50],
     });
   });

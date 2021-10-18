@@ -9,7 +9,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 162,
         name: "Select Columns in Dataset",
         ariaLabel: "test aria label for node Select Columns in Dataset",
-        data: { comment: "", iconName: "TestUserSolid", status: "completed", statusIcon: "completed" },
+        data: {
+          comment: "",
+          iconName: "TestUserSolid",
+          status: "completed",
+          statusIcon: "completed",
+        },
         ports: [
           {
             id: "port-0",
@@ -40,7 +45,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 280,
         name: "Clean Missing Data",
         ariaLabel: "test aria label for node Clean Missing Data",
-        data: { comment: "", iconName: "TestUserSolid", status: "completed", statusIcon: "completed" },
+        data: {
+          comment: "",
+          iconName: "TestUserSolid",
+          status: "completed",
+          statusIcon: "completed",
+        },
         ports: [
           {
             id: "port-0",
@@ -81,7 +91,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 386,
         name: "Split Data",
         ariaLabel: "test aria label for node Split Data",
-        data: { comment: "", iconName: "TestUserSolid", status: "completed", statusIcon: "completed" },
+        data: {
+          comment: "",
+          iconName: "TestUserSolid",
+          status: "completed",
+          statusIcon: "completed",
+        },
         ports: [
           {
             id: "port-0",
@@ -122,7 +137,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 393.5,
         name: "Linear Regression",
         ariaLabel: "test aria label for node Linear Regression",
-        data: { comment: "", iconName: "MachineLearning", status: "completed", statusIcon: "completed" },
+        data: {
+          comment: "",
+          iconName: "MachineLearning",
+          status: "completed",
+          statusIcon: "completed",
+        },
         ports: [
           {
             id: "port-0",
@@ -143,7 +163,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 517,
         name: "Train Model",
         ariaLabel: "test aria label for node Train Model",
-        data: { comment: "", iconName: "ModelingView", status: "running", statusIcon: "running" },
+        data: {
+          comment: "",
+          iconName: "ModelingView",
+          status: "running",
+          statusIcon: "running",
+        },
         ports: [
           {
             id: "port-0",
@@ -184,7 +209,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 630,
         name: "Score Model",
         ariaLabel: "test aria label for node Score Model",
-        data: { comment: "", iconName: "WebAppBuilderModule", status: "running", statusIcon: "running" },
+        data: {
+          comment: "",
+          iconName: "WebAppBuilderModule",
+          status: "running",
+          statusIcon: "running",
+        },
         ports: [
           {
             id: "port-0",
@@ -225,7 +255,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 738,
         name: "Evaluate Model",
         ariaLabel: "test aria label for node Evaluate Model",
-        data: { comment: "", iconName: "WebAppBuilderModule", status: "running", statusIcon: "running" },
+        data: {
+          comment: "",
+          iconName: "WebAppBuilderModule",
+          status: "running",
+          statusIcon: "running",
+        },
         ports: [
           {
             id: "port-0",
@@ -266,7 +301,12 @@ export const getSample1Data = (): ICanvasData => {
         y: 49,
         name: "Automobile price data (Raw)",
         ariaLabel: "test aria label for node Automobile price data (Raw)",
-        data: { comment: "", iconName: "Database", status: "running", statusIcon: "running" },
+        data: {
+          comment: "",
+          iconName: "Database",
+          status: "running",
+          statusIcon: "running",
+        },
         ports: [
           {
             id: "port-0",
@@ -283,14 +323,70 @@ export const getSample1Data = (): ICanvasData => {
       },
     ],
     edges: [
-      { source: "d1647408", target: "fb404f70", sourcePortId: "port-1", targetPortId: "port-1", id: "0", status: 0 },
-      { source: "47566002", target: "f6dc0eb1", sourcePortId: "port-1", targetPortId: "port-0", id: "1", status: 0 },
-      { source: "f6dc0eb1", target: "d1647408", sourcePortId: "port-1", targetPortId: "port-0", id: "2", status: 0 },
-      { source: "4b199015", target: "fb404f70", sourcePortId: "port-0", targetPortId: "port-0", id: "3", status: 0 },
-      { source: "fb404f70", target: "c4ee5025", sourcePortId: "port-2", targetPortId: "port-0", id: "4", status: 0 },
-      { source: "d1647408", target: "c4ee5025", sourcePortId: "port-2", targetPortId: "port-1", id: "5", status: 0 },
-      { source: "c4ee5025", target: "81777c66", sourcePortId: "port-2", targetPortId: "port-0", id: "6", status: 0 },
-      { source: "1fd27f80", target: "47566002", sourcePortId: "port-0", targetPortId: "port-0", id: "7", status: 0 },
+      {
+        source: "d1647408",
+        target: "fb404f70",
+        sourcePortId: "port-1",
+        targetPortId: "port-1",
+        id: "0",
+        status: 0,
+      },
+      {
+        source: "47566002",
+        target: "f6dc0eb1",
+        sourcePortId: "port-1",
+        targetPortId: "port-0",
+        id: "1",
+        status: 0,
+      },
+      {
+        source: "f6dc0eb1",
+        target: "d1647408",
+        sourcePortId: "port-1",
+        targetPortId: "port-0",
+        id: "2",
+        status: 0,
+      },
+      {
+        source: "4b199015",
+        target: "fb404f70",
+        sourcePortId: "port-0",
+        targetPortId: "port-0",
+        id: "3",
+        status: 0,
+      },
+      {
+        source: "fb404f70",
+        target: "c4ee5025",
+        sourcePortId: "port-2",
+        targetPortId: "port-0",
+        id: "4",
+        status: 0,
+      },
+      {
+        source: "d1647408",
+        target: "c4ee5025",
+        sourcePortId: "port-2",
+        targetPortId: "port-1",
+        id: "5",
+        status: 0,
+      },
+      {
+        source: "c4ee5025",
+        target: "81777c66",
+        sourcePortId: "port-2",
+        targetPortId: "port-0",
+        id: "6",
+        status: 0,
+      },
+      {
+        source: "1fd27f80",
+        target: "47566002",
+        sourcePortId: "port-0",
+        targetPortId: "port-0",
+        id: "7",
+        status: 0,
+      },
     ],
   };
 };

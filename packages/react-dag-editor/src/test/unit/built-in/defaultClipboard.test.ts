@@ -12,10 +12,10 @@ describe("defaultClipboard", () => {
     clipboard = new DefaultClipboard(clipboardStorage);
     data = {
       ...dataRaw,
-      nodes: dataRaw.nodes.map(node => ({
+      nodes: dataRaw.nodes.map((node) => ({
         ...node,
-        ports: applyDefaultPortsPosition(node.ports || [])
-      }))
+        ports: applyDefaultPortsPosition(node.ports || []),
+      })),
     };
   });
   it("write", () => {
@@ -29,7 +29,7 @@ describe("defaultClipboard", () => {
           x: 100,
           y: 100,
           ports: applyDefaultPortsPosition([{ id: "port", name: "port" }]),
-          data: {}
+          data: {},
         },
         {
           id: "2",
@@ -37,8 +37,8 @@ describe("defaultClipboard", () => {
           x: 200,
           y: 200,
           ports: applyDefaultPortsPosition([{ id: "port", name: "port" }]),
-          data: {}
-        }
+          data: {},
+        },
       ],
       edges: [
         {
@@ -47,9 +47,9 @@ describe("defaultClipboard", () => {
           target: "2",
           sourcePortId: "port",
           targetPortId: "port",
-          data: {}
-        }
-      ]
+          data: {},
+        },
+      ],
     });
     expect(clipboardStorage.getItem("graph-clipboard")).toBe(expectedData);
   });
@@ -65,7 +65,7 @@ describe("defaultClipboard", () => {
           x: 150,
           y: 150,
           ports: applyDefaultPortsPosition([{ id: "port", name: "port" }]),
-          data: {}
+          data: {},
         },
         {
           id: "mock-uuid",
@@ -73,8 +73,8 @@ describe("defaultClipboard", () => {
           x: 250,
           y: 250,
           ports: applyDefaultPortsPosition([{ id: "port", name: "port" }]),
-          data: {}
-        }
+          data: {},
+        },
       ],
       edges: [
         {
@@ -83,9 +83,9 @@ describe("defaultClipboard", () => {
           target: "mock-uuid",
           sourcePortId: "port",
           targetPortId: "port",
-          data: {}
-        }
-      ]
+          data: {},
+        },
+      ],
     };
     expect(res).toEqual(expectedData);
   });

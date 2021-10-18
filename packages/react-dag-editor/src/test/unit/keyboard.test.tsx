@@ -46,7 +46,9 @@ beforeEach(() => {
       <GraphControllerRef ref={graphControllerRef} />
     </TestComponent>
   );
-  element = wrapper.container.querySelector(".react-dag-editor-container") as HTMLDivElement;
+  element = wrapper.container.querySelector(
+    ".react-dag-editor-container"
+  ) as HTMLDivElement;
   svg = element.querySelector("svg") as SVGSVGElement;
   graphController = graphControllerRef.current!;
   expect(graphController).toBeDefined();
@@ -76,24 +78,32 @@ it("should focus first node", () => {
 
 it("should delete selected edge", () => {
   const id = "0";
-  updateData((data) => data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected))));
+  updateData((data) =>
+    data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected)))
+  );
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete",
     });
   });
-  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON());
+  expect(getData().toJSON()).toEqual(
+    GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON()
+  );
 });
 
 it("should undo, redo", () => {
   const id = "0";
-  updateData((data) => data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected))));
+  updateData((data) =>
+    data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected)))
+  );
   act(() => {
     fireEvent.keyDown(element, {
       key: "Delete",
     });
   });
-  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON());
+  expect(getData().toJSON()).toEqual(
+    GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON()
+  );
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
@@ -101,7 +111,9 @@ it("should undo, redo", () => {
       key: "z",
     });
   });
-  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).toJSON());
+  expect(getData().toJSON()).toEqual(
+    GraphModel.fromJSON(getSample1Data()).toJSON()
+  );
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
@@ -109,7 +121,9 @@ it("should undo, redo", () => {
       key: "y",
     });
   });
-  expect(getData().toJSON()).toEqual(GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON());
+  expect(getData().toJSON()).toEqual(
+    GraphModel.fromJSON(getSample1Data()).deleteEdge(id).toJSON()
+  );
 });
 
 it("should select all", () => {
@@ -128,7 +142,9 @@ it("should select all", () => {
 });
 
 it("should copy and paste with edge", () => {
-  updateData((data) => data.selectNodes((node) => node.id === "4b199015" || node.id === "fb404f70"));
+  updateData((data) =>
+    data.selectNodes((node) => node.id === "4b199015" || node.id === "fb404f70")
+  );
   act(() => {
     fireEvent.keyDown(element, {
       ctrlKey: true,
@@ -149,7 +165,10 @@ it("should copy and paste with edge", () => {
 it("should navigate with keyboard", () => {
   const tab = (shiftKey = false) =>
     act(() => {
-      const target = document.activeElement!.tagName.toLowerCase() === "svg" ? element : document.activeElement!;
+      const target =
+        document.activeElement!.tagName.toLowerCase() === "svg"
+          ? element
+          : document.activeElement!;
       fireEvent.keyDown(target, {
         key: "Tab",
         shiftKey,
@@ -159,23 +178,33 @@ it("should navigate with keyboard", () => {
   const data = getData();
   const nodes = Array.from(data.nodes.values());
   tab();
-  expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port: undefined }));
+  expect(document.activeElement).toBe(
+    findDOMElement(svg, { node: nodes[0], port: undefined })
+  );
   const ports = nodes[0].ports!;
   ports.forEach((port) => {
     tab();
-    expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port }));
+    expect(document.activeElement).toBe(
+      findDOMElement(svg, { node: nodes[0], port })
+    );
   });
   tab();
-  expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[1], port: undefined }));
+  expect(document.activeElement).toBe(
+    findDOMElement(svg, { node: nodes[1], port: undefined })
+  );
   ports
     .slice()
     .reverse()
     .forEach((port) => {
       tab(true);
-      expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port }));
+      expect(document.activeElement).toBe(
+        findDOMElement(svg, { node: nodes[0], port })
+      );
     });
   tab(true);
-  expect(document.activeElement).toBe(findDOMElement(svg, { node: nodes[0], port: undefined }));
+  expect(document.activeElement).toBe(
+    findDOMElement(svg, { node: nodes[0], port: undefined })
+  );
 });
 
 it("should record keyup and keydown", () => {

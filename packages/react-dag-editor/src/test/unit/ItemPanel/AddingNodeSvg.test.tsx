@@ -1,5 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+  screen,
+} from "@testing-library/react";
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
 import { GraphCanvasEvent, GraphConfigBuilder, rect } from "../../../index";
@@ -36,7 +43,9 @@ describe("ItemPanel - AddingNodeSvg", () => {
   beforeEach(() => {
     nodeWillAdd = jest.fn();
     nodeDidAdd = jest.fn();
-    const graphConfig = GraphConfigBuilder.default().registerNode("nodeShape", rect).build();
+    const graphConfig = GraphConfigBuilder.default()
+      .registerNode("nodeShape", rect)
+      .build();
     const graphControllerRef = React.createRef<GraphController>();
     renderedWrapper = render(
       <TestComponent graph={false} settings={{ graphConfig }}>

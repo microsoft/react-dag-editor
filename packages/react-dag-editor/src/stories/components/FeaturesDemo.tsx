@@ -19,7 +19,7 @@ import {
   IPortDrawArgs,
   ReactDagEditor,
   useGraphReducer,
-} from "../../lib";
+} from "../..";
 import { sampleGraphData } from "../data/sample-graph-1";
 
 /** How to customize a node by "shape" by data.nodes[].shape */

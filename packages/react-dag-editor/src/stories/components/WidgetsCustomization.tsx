@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Graph, GraphModel, ReactDagEditor, useGraphReducer } from "../../lib";
+import { Graph, GraphModel, ReactDagEditor, useGraphReducer } from "../..";
 import { sampleGraphData } from "../data/sample-graph-1";
 import { graphConfig } from "./FeaturesDemo";
 

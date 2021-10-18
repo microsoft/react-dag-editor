@@ -10,10 +10,7 @@
     "../../../node_modules/@nrwl/react/typings/image.d.ts"
   ],
   "exclude": [
-    "../**/*.spec.ts",
-    "../**/*.spec.js",
-    "../**/*.spec.tsx",
-    "../**/*.spec.jsx"
+    "../src/test"
   ],
   "include": ["../src/**/*", "*.js"]
 }

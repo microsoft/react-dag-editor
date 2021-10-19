@@ -1,0 +1,140 @@
+{
+  "version": 2,
+  "projects": {
+    "react-dag-editor": {
+      "root": "packages/react-dag-editor",
+      "sourceRoot": "packages/react-dag-editor/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/react-dag-editor",
+            "tsConfig": "packages/react-dag-editor/tsconfig.lib.json",
+            "project": "packages/react-dag-editor/package.json",
+            "entryFile": "packages/react-dag-editor/src/index.ts",
+            "external": ["react/jsx-runtime"],
+            "rollupConfig": "packages/react-dag-editor/rollup.config.js",
+            "extractCss": false,
+            "assets": [
+              {
+                "glob": "README.md",
+                "input": ".",
+                "output": "."
+              },
+              {
+                "glob": "packages/react-dag-editor/src",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": [
+              "packages/react-dag-editor/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/react-dag-editor"],
+          "options": {
+            "jestConfig": "packages/react-dag-editor/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "packages/react-dag-editor/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/react-dag-editor",
+            "config": {
+              "configFolder": "packages/react-dag-editor/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "typedoc": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "yarn typedoc --tsconfig packages/react-dag-editor/tsconfig.lib.json --out dist/storybook/react-dag-editor/apidoc packages/react-dag-editor/src/index.ts"
+            ]
+          }
+        },
+        "site": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "parallel": false,
+            "commands": [
+              "yarn nx run react-dag-editor:build-storybook",
+              "yarn nx run react-dag-editor:typedoc"
+            ]
+          }
+        }
+      }
+    },
+    "react-dag-editor-e2e": {
+      "root": "packages/react-dag-editor-e2e",
+      "sourceRoot": "packages/react-dag-editor-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "packages/react-dag-editor-e2e/cypress.json",
+            "devServerTarget": "react-dag-editor:storybook",
+            "tsConfig": "packages/react-dag-editor-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "ci": {
+              "devServerTarget": "react-dag-editor:storybook:ci"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["packages/react-dag-editor-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    }
+  }
+}

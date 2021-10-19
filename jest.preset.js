@@ -1,0 +1,8 @@
+const nxPreset = require("@nrwl/jest/preset");
+
+module.exports = {
+  ...nxPreset,
+  moduleNameMapper: {
+    "^lodash-es$": "lodash",
+  },
+};

@@ -1,0 +1,18 @@
+{
+  "name": "react-dag-editor",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/microsoft/react-dag-editor.git"
+  },
+  "version": "0.1.2",
+  "dependencies": {
+    "react-jss": "~10.2.0",
+    "toposort": "^1.0.7",
+    "uuid": "^7.0.3"
+  },
+  "bundledDependencies": [
+    "@fluentui/merge-styles",
+    "eventemitter3",
+    "lodash-es"
+  ]
+}

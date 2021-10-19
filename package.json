@@ -1,57 +1,72 @@
 {
-  "private": true,
-  "repository": {
-    "url": "https://github.com/microsoft/react-dag-editor.git"
-  },
+  "name": "react-dag-editor",
+  "version": "0.0.0",
+  "license": "MIT",
   "scripts": {
-    "lint": "lerna run lint",
-    "lintfix": "lerna run lintfix",
-    "build": "lerna run build",
-    "test": "jest && lerna run test",
-    "publish-packages": "lerna publish from-package --yes --no-git-reset",
-    "start": "node ./scripts/run-demo.js",
-    "updatePackageJson": "node ./scripts/edit-package-json.js",
-    "run-demo": "node ./scripts/run-demo.js",
-    "build:site": "lerna run build:site",
-    "bump": "node ./scripts/bump-version.js",
-    "fix-audit": "yarn-audit-fix"
+    "lint": "nx run-many --all --target=lint",
+    "test": "nx run-many --all --target=test",
+    "build": "nx run-many --all --target=build",
+    "build:site": "nx run react-dag-editor:site"
   },
+  "private": true,
   "devDependencies": {
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-test-renderer": "^16.9.0",
-    "css-loader": "^5.0.0",
-    "execa": "^5.0.0",
-    "glob": "^7.1.6",
-    "glob-array": "^1.0.0",
-    "jest": "^27.0.0",
-    "lerna": "^4.0.0",
-    "prettier": "^2.2.1",
-    "prettier-package-json": "^2.0.0",
-    "prompts": "^2.4.1",
-    "semver": "^7.3.5",
-    "yarn-audit-fix": "^6.4.4"
+    "@babel/core": "7.12.13",
+    "@babel/preset-typescript": "7.12.13",
+    "@fluentui/merge-styles": "^8.2.0",
+    "@nrwl/cli": "12.10.0",
+    "@nrwl/eslint-plugin-nx": "12.10.0",
+    "@nrwl/jest": "12.10.0",
+    "@nrwl/linter": "12.10.0",
+    "@nrwl/react": "^12.10.0",
+    "@nrwl/storybook": "^12.10.0",
+    "@nrwl/tao": "12.10.0",
+    "@nrwl/web": "12.10.0",
+    "@nrwl/workspace": "12.10.0",
+    "@storybook/addon-essentials": "~6.3.0",
+    "@storybook/react": "~6.3.0",
+    "@svgr/webpack": "^5.4.0",
+    "@testing-library/react": "11.2.6",
+    "@testing-library/react-hooks": "7.0.1",
+    "@types/jest": "27.0.2",
+    "@types/lodash": "^4.14.175",
+    "@types/lodash-es": "^4.17.5",
+    "@types/node": "14.14.33",
+    "@types/react": "^17.0.3",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-test-renderer": "^17.0.1",
+    "@types/toposort": "^2.0.3",
+    "@types/uuid": "^8.3.1",
+    "@typescript-eslint/eslint-plugin": "~4.31.1",
+    "@typescript-eslint/parser": "~4.31.1",
+    "babel-jest": "27.2.3",
+    "babel-loader": "8.1.0",
+    "eslint": "7.22.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-react": "7.23.1",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "jest": "27.2.3",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
+    "prettier": "^2.3.1",
+    "react-test-renderer": "^17.0.2",
+    "rollup-plugin-postcss": "^4.0.1",
+    "ts-jest": "27.0.5",
+    "typedoc": "^0.22.6",
+    "typescript": "~4.4.0",
+    "url-loader": "^3.0.0"
   },
-  "workspaces": [
-    "packages/*",
-    "shared/*"
-  ],
-  "engines": {
-    "node": ">=12.*",
-    "yarn": ">=1.12.*"
-  },
-  "jest": {
-    "testMatch": [
-      "<rootDir>/test/*.test.js"
-    ]
-  },
-  "resolutions": {
-    "lerna/**/meow": "^10.0.0",
-    "lerna/**/normalize-url": "^4.5.1",
-    "immer": "9.0.6",
-    "prismjs": "1.25.0",
-    "trim": "1.0.1",
-    "@types/react": "16.14.16",
-    "@types/react-dom": "16.9.14"
+  "dependencies": {
+    "core-js": "^3.6.5",
+    "eventemitter3": "^4.0.7",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-jss": "^10.8.0",
+    "regenerator-runtime": "0.13.7",
+    "toposort": "^2.0.2",
+    "tslib": "^2.0.0",
+    "uuid": "^8.3.2"
   }
 }

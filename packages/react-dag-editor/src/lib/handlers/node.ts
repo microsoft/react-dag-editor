@@ -1,5 +1,4 @@
 import * as React from "react";
-import { MouseEventButton } from "../common/constants";
 import { DragNodeController, TGetPositionFromEvent } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
 import { GraphNodeEvent, IEvent } from "../models/event";
@@ -9,6 +8,7 @@ import { isWithinThreshold } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { GraphController } from "../controllers/GraphController";
 import { checkIsMultiSelect } from "../utils/keyboard";
+import { isMouseButNotLeft } from "../utils/mouse";
 
 export interface INodePointerDownParams {
   svgRef: React.RefObject<SVGSVGElement>;
@@ -47,8 +47,7 @@ export const onNodePointerDown = (
     evt.stopPropagation();
   }
 
-  const isMouseRight =
-    evt.pointerType === "mouse" && evt.button !== MouseEventButton.Primary;
+  const isMouseRight = isMouseButNotLeft(evt);
 
   if (isClickNodeToSelectDisabled || isMouseRight) {
     return;

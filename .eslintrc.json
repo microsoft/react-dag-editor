@@ -33,8 +33,7 @@
       "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off",
-        "prefer-spread": "off",
-        "@typescript-eslint/no-non-null-assertion": "error"
+        "prefer-spread": "off"
       }
     },
     {

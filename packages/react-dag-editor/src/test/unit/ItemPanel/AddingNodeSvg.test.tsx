@@ -14,7 +14,6 @@ import { MouseEventButton } from "../../../lib/common/constants";
 import { Item } from "../../../lib/components/ItemPanel";
 import { AddingNodeSvg } from "../../../lib/components/ItemPanel/AddingNodeSvg";
 import { GraphController } from "../../../lib/controllers/GraphController";
-import { ICanvasNode } from "../../../lib/models/node";
 import { GraphControllerRef, TestComponent } from "../../TestComponent";
 import { mockClientRect, patchPointerEvent } from "../../utils";
 import { TestItemContent } from "./TestItemContent";
@@ -26,8 +25,6 @@ jest.mock("../../../lib/components/ItemPanel/useSvgRect", () => ({
 }));
 
 describe("ItemPanel - AddingNodeSvg", () => {
-  let nodeWillAdd: () => ICanvasNode;
-  let nodeDidAdd: () => void;
   let renderedWrapper: RenderResult;
   let graphController: GraphController;
   const getElement = () => renderedWrapper.getByRole("button");
@@ -41,25 +38,25 @@ describe("ItemPanel - AddingNodeSvg", () => {
   });
 
   beforeEach(() => {
-    nodeWillAdd = jest.fn();
-    nodeDidAdd = jest.fn();
     const graphConfig = GraphConfigBuilder.default()
       .registerNode("nodeShape", rect)
       .build();
     const graphControllerRef = React.createRef<GraphController>();
+    const getNode = () => {
+      return {
+        name: "node1",
+        shape: "nodeShape",
+      };
+    };
     renderedWrapper = render(
       <TestComponent graph={false} settings={{ graphConfig }}>
-        <Item
-          model={{ name: "node1", shape: "nodeShape" }}
-          dragWillStart={jest.fn()}
-          nodeWillAdd={nodeWillAdd}
-          nodeDidAdd={nodeDidAdd}
-        >
+        <Item getNode={getNode} dragWillStart={jest.fn()}>
           <TestItemContent text="test item for addingNodeSVG" />
         </Item>
         <GraphControllerRef ref={graphControllerRef} />
       </TestComponent>
     );
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();
     act(() => {
@@ -144,8 +141,6 @@ describe("ItemPanel - AddingNodeSvg", () => {
       [105, 105],
     ]);
 
-    expect(nodeWillAdd).toBeCalledTimes(1);
-    expect(nodeDidAdd).toBeCalledTimes(1);
     expect(getElement()).toMatchSnapshot();
   });
 
@@ -166,8 +161,6 @@ describe("ItemPanel - AddingNodeSvg", () => {
       [30, 30],
     ]);
 
-    expect(nodeWillAdd).not.toBeCalled();
-    expect(nodeDidAdd).not.toBeCalled();
     expect(getElement()).toMatchSnapshot();
   });
 
@@ -177,8 +170,6 @@ describe("ItemPanel - AddingNodeSvg", () => {
       [105, 105],
     ]);
 
-    expect(nodeWillAdd).not.toBeCalled();
-    expect(nodeDidAdd).not.toBeCalled();
     expect(getElement()).toMatchSnapshot();
   });
 });

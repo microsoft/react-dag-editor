@@ -1,17 +1,15 @@
 import { mergeStyles } from "@fluentui/merge-styles";
-import { cloneDeep } from "lodash-es";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { v4 as uuid } from "uuid";
-import { MouseEventButton } from "../../common/constants";
 import { defaultGetPositionFromEvent, DragController } from "../../controllers";
 import { PointerEventProvider } from "../../event-provider/PointerEventProvider";
 import { GraphFeatures } from "../../Features";
 import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { useRefValue } from "../../hooks/useRefValue";
-import { INodeConfig } from "../../models/config/types";
+import type { INodeConfig } from "../../models/config/types";
 import { GraphCanvasEvent } from "../../models/event";
-import {
+import type {
   IContainerRect,
   IPoint,
   ITransformMatrix,
@@ -23,12 +21,12 @@ import {
   isViewportComplete,
   reverseTransformPoint,
 } from "../../utils";
-import { identical } from "../../utils/identical";
+import { isMouseButNotLeft } from "../../utils/mouse";
 import { noop } from "../../utils/noop";
 import classes from "../Graph.styles.module.scss";
 import { AddingNodeSvg } from "./AddingNodeSvg";
 
-export interface IItemProps {
+export interface IItemProps<N = unknown, P = unknown> {
   /**
    * Custom styling for the Item
    */
@@ -38,25 +36,10 @@ export interface IItemProps {
    */
   className?: string;
   /**
-   * The node model of type ICanvasNode
-   */
-  model: Partial<ICanvasNode>;
-  /**
-   * The shape of the node model
-   */
-  shape?: string;
-  /**
    * Triggered just before drag the model node from the item panel
    */
   dragWillStart?(node: ICanvasNode): void;
-  /**
-   * Triggered just before the node will be added on the canvas
-   */
-  nodeWillAdd?(node: ICanvasNode): ICanvasNode;
-  /**
-   * Triggered just after the node added on the canvas
-   */
-  nodeDidAdd?(node: ICanvasNode): void;
+  getNode(): Partial<ICanvasNode<N, P>>;
 }
 
 const el = document.createElement("div");
@@ -139,39 +122,31 @@ export const Item: React.FunctionComponent<IItemProps> = (props) => {
   const nextNodeRef = useRefValue(workingModel);
   const svgRef = React.useRef<SVGSVGElement>(null);
 
-  const {
-    style,
-    children,
-    model,
-    nodeWillAdd = identical,
-    nodeDidAdd = noop,
-    dragWillStart = noop,
-  } = props;
+  const { style, children, getNode, dragWillStart = noop } = props;
 
   const onPointerDown = React.useCallback(
     (evt: React.PointerEvent) => {
       evt.stopPropagation();
       if (
-        (evt.pointerType === "mouse" &&
-          evt.button !== MouseEventButton.Primary) ||
+        isMouseButNotLeft(evt) ||
         !graphController.getEnabledFeatures().has(GraphFeatures.AddNewNodes)
       ) {
         return;
       }
-      const shape = props.shape || model.shape;
-      const nodeConfig = graphConfig.getNodeConfigByName(shape);
-
+      const partial = getNode();
+      const nodeConfig = graphConfig.getNodeConfigByName(partial.shape);
+      const position = adjustPosition(
+        evt.clientX,
+        evt.clientY,
+        undefined,
+        graphController.state.viewport.transformMatrix,
+        partial,
+        nodeConfig
+      );
       const node: ICanvasNode = {
-        ...cloneDeep(model),
-        ...adjustPosition(
-          evt.clientX,
-          evt.clientY,
-          undefined,
-          graphController.state.viewport.transformMatrix,
-          model,
-          nodeConfig
-        ),
-        id: model.id || uuid(),
+        ...partial,
+        ...position,
+        id: partial.id || uuid(),
       };
 
       const drag = new DragController(
@@ -198,7 +173,7 @@ export const Item: React.FunctionComponent<IItemProps> = (props) => {
               e.clientY,
               undefined,
               graphController.state.viewport.transformMatrix,
-              model,
+              n,
               nodeConfig
             ),
           };
@@ -227,32 +202,21 @@ export const Item: React.FunctionComponent<IItemProps> = (props) => {
             e.clientY,
             viewport.rect,
             viewport.transformMatrix,
-            model,
+            nextNode,
             nodeConfig
           ),
         };
-        nextNode = nodeWillAdd(nextNode);
         eventChannel.trigger({
           type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,
           node: nextNode,
         });
-        nodeDidAdd(nextNode);
         setWorkingModel(null);
       };
       dragWillStart(node);
       setWorkingModel(node);
       drag.start(evt.nativeEvent);
     },
-    [
-      graphController,
-      props.shape,
-      model,
-      graphConfig,
-      dragWillStart,
-      nextNodeRef,
-      nodeWillAdd,
-      nodeDidAdd,
-    ]
+    [graphController, getNode, graphConfig, dragWillStart, nextNodeRef]
   );
 
   const className = mergeStyles(classes.moduleItem, props.className);

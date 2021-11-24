@@ -46,23 +46,25 @@ describe("ItemPanel - Item", () => {
       .registerNode("nodeShape", rect)
       .build();
     const graphControllerRef = React.createRef<GraphController>();
+    const getNode = () => {
+      return {
+        name: "node1",
+        shape: "nodeShape",
+      };
+    };
     renderedWrapper = render(
       <TestComponent
         data={GraphModel.empty()}
         graph={false}
         settings={{ graphConfig }}
       >
-        <Item
-          model={{ name: "node1", shape: "nodeShape" }}
-          dragWillStart={dragWillStart}
-          nodeWillAdd={jest.fn()}
-          nodeDidAdd={jest.fn()}
-        >
+        <Item getNode={getNode} dragWillStart={dragWillStart}>
           <TestItemContent text="test item" />
         </Item>
         <GraphControllerRef ref={graphControllerRef} />
       </TestComponent>
     );
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();
     act(() => {

@@ -1,4 +1,10 @@
-import { ICanvasEvent, IEdgeEvent, IEvent, INodeEvent, IPortEvent } from "../models/event";
+import {
+  ICanvasEvent,
+  IEdgeEvent,
+  IEvent,
+  INodeEvent,
+  IPortEvent,
+} from "../models/event";
 
 export function isEdgeEvent<
   NodeData = unknown,
@@ -32,6 +38,8 @@ export function isCanvasEvent<
   NodeData = unknown,
   EdgeData = unknown,
   PortData = unknown
->(event: IEvent<NodeData, EdgeData, PortData>): event is ICanvasEvent<NodeData, EdgeData, PortData> {
+>(
+  event: IEvent<NodeData, EdgeData, PortData>
+): event is ICanvasEvent<NodeData, EdgeData, PortData> {
   return event.type.startsWith("onCanvas");
 }

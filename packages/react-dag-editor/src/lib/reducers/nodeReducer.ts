@@ -32,7 +32,10 @@ import {
   unSelectAllEntity,
   zoom,
 } from "../utils";
-import { getAlignmentLines, getAutoAlignDisplacement } from "../utils/autoAlign";
+import {
+  getAlignmentLines,
+  getAutoAlignDisplacement,
+} from "../utils/autoAlign";
 import * as Bitset from "../utils/bitset";
 import { pipe } from "../utils/pipe";
 
@@ -46,7 +49,10 @@ const getDelta = (start: number, end: number, value: number): number => {
   return 0;
 };
 
-function getSelectedNodes(data: GraphModel, graphConfig: IGraphConfig): IDummyNode[] {
+function getSelectedNodes(
+  data: GraphModel,
+  graphConfig: IGraphConfig
+): IDummyNode[] {
   const nodes: IDummyNode[] = [];
   data.nodes.forEach((node) => {
     if (!isSelected(node)) {
@@ -62,7 +68,10 @@ function getSelectedNodes(data: GraphModel, graphConfig: IGraphConfig): IDummyNo
   return nodes;
 }
 
-function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState {
+function dragNodeHandler(
+  state: IGraphState,
+  event: INodeDragEvent
+): IGraphState {
   if (!isViewportComplete(state.viewport)) {
     return state;
   }
@@ -116,8 +125,18 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
         state.viewport.transformMatrix[0] > 0.3 ? 2 : 5
       );
       if (alignmentLines.length) {
-        const dxAligned = getAutoAlignDisplacement(alignmentLines, nodes, state.settings.graphConfig, "x");
-        const dyAligned = getAutoAlignDisplacement(alignmentLines, nodes, state.settings.graphConfig, "y");
+        const dxAligned = getAutoAlignDisplacement(
+          alignmentLines,
+          nodes,
+          state.settings.graphConfig,
+          "x"
+        );
+        const dyAligned = getAutoAlignDisplacement(
+          alignmentLines,
+          nodes,
+          state.settings.graphConfig,
+          "y"
+        );
         dummyNodes.alignedDX = dummyNodes.dx + dxAligned;
         dummyNodes.alignedDY = dummyNodes.dy + dyAligned;
       } else {
@@ -135,7 +154,10 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
   return nextState;
 }
 
-function handleDraggingNewNode(state: IGraphState, action: ICanvasAddNodeEvent): IGraphState {
+function handleDraggingNewNode(
+  state: IGraphState,
+  action: ICanvasAddNodeEvent
+): IGraphState {
   if (!state.settings.features.has(GraphFeatures.AutoAlign)) {
     return state;
   }
@@ -153,7 +175,10 @@ function handleDraggingNewNode(state: IGraphState, action: ICanvasAddNodeEvent):
   };
 }
 
-function dragStart(state: IGraphState, action: INodeDragStartEvent): IGraphState {
+function dragStart(
+  state: IGraphState,
+  action: INodeDragStartEvent
+): IGraphState {
   let data = state.data.present;
   const targetNode = data.nodes.get(action.node.id);
   if (!targetNode) {
@@ -161,7 +186,9 @@ function dragStart(state: IGraphState, action: INodeDragStartEvent): IGraphState
   }
   let selectedNodes: IDummyNode[];
   if (action.isMultiSelect) {
-    data = data.selectNodes((node) => node.id === action.node.id || isSelected(node));
+    data = data.selectNodes(
+      (node) => node.id === action.node.id || isSelected(node)
+    );
     selectedNodes = getSelectedNodes(data, state.settings.graphConfig);
   } else if (!isSelected(targetNode)) {
     selectedNodes = [
@@ -217,7 +244,10 @@ function dragEnd(state: IGraphState, action: INodeDragEndEvent): IGraphState {
 }
 
 // centralize node or locate node to the specific position
-function locateNode(action: INodeCentralizeEvent | INodeLocateEvent, state: IGraphState): IGraphState {
+function locateNode(
+  action: INodeCentralizeEvent | INodeLocateEvent,
+  state: IGraphState
+): IGraphState {
   const data = state.data.present;
   if (!isViewportComplete(state.viewport) || !action.nodes.length) {
     return state;
@@ -230,15 +260,28 @@ function locateNode(action: INodeCentralizeEvent | INodeLocateEvent, state: IGra
     }
 
     const { width, height } = getNodeSize(node, state.settings.graphConfig);
-    const nodeX = action.type === GraphNodeEvent.Centralize ? node.x + width / 2 : node.x;
-    const nodeY = action.type === GraphNodeEvent.Centralize ? node.y + height / 2 : node.y;
+    const nodeX =
+      action.type === GraphNodeEvent.Centralize ? node.x + width / 2 : node.x;
+    const nodeY =
+      action.type === GraphNodeEvent.Centralize ? node.y + height / 2 : node.y;
 
-    const { x: clientX, y: clientY } = transformPoint(nodeX, nodeY, state.viewport.transformMatrix);
-    const position = action.type === GraphNodeEvent.Locate ? action.position : undefined;
+    const { x: clientX, y: clientY } = transformPoint(
+      nodeX,
+      nodeY,
+      state.viewport.transformMatrix
+    );
+    const position =
+      action.type === GraphNodeEvent.Locate ? action.position : undefined;
 
     return {
       ...state,
-      viewport: scrollIntoView(clientX, clientY, state.viewport.rect, true, position)(state.viewport),
+      viewport: scrollIntoView(
+        clientX,
+        clientY,
+        state.viewport.rect,
+        true,
+        position
+      )(state.viewport),
     };
   }
   const { minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(
@@ -314,7 +357,10 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(action.node.id, updateStatus(Bitset.add(GraphNodeStatus.Activated))),
+              present: data.updateNode(
+                action.node.id,
+                updateStatus(Bitset.add(GraphNodeStatus.Activated))
+              ),
             },
           };
         default:
@@ -328,7 +374,10 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(action.node.id, updateStatus(Bitset.remove(GraphNodeStatus.Activated))),
+              present: data.updateNode(
+                action.node.id,
+                updateStatus(Bitset.remove(GraphNodeStatus.Activated))
+              ),
             },
           };
         default:
@@ -369,7 +418,10 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateNode(action.node.id, updateStatus(Bitset.add(GraphNodeStatus.Editing))),
+          present: state.data.present.updateNode(
+            action.node.id,
+            updateStatus(Bitset.add(GraphNodeStatus.Editing))
+          ),
         },
       };
     default:

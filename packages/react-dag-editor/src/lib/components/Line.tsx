@@ -13,7 +13,7 @@ export const emptyLine = (): ILine => ({
   y1: 0,
   x2: 0,
   y2: 0,
-  visible: false
+  visible: false,
 });
 
 interface IAlignmentLineProps {
@@ -21,14 +21,14 @@ interface IAlignmentLineProps {
   style?: React.CSSProperties;
 }
 
-export const Line: React.FunctionComponent<IAlignmentLineProps> = props => {
+export const Line: React.FunctionComponent<IAlignmentLineProps> = (props) => {
   const { line, style } = props;
 
   const lineStyle: React.CSSProperties = {
     // strokeDasharray: "0,0",
     strokeWidth: 1,
     ...style,
-    stroke: line.visible ? style?.stroke ?? "#ea4300" : "none"
+    stroke: line.visible ? style?.stroke ?? "#ea4300" : "none",
   };
 
   return (

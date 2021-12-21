@@ -23,11 +23,16 @@ interface IProps {
 export const SelectBox: React.FC<IProps> = (props) => {
   const { selectBoxPosition, style } = props;
 
-  const selectBoxD = `m${selectBoxPosition.startX} ${selectBoxPosition.startY} v ${selectBoxPosition.height} h ${
+  const selectBoxD = `m${selectBoxPosition.startX} ${
+    selectBoxPosition.startY
+  } v ${selectBoxPosition.height} h ${
     selectBoxPosition.width
   } v${-selectBoxPosition.height} h ${-selectBoxPosition.width}`;
 
-  const pathStyle = style ?? { fill: "none", stroke: defaultColors.defaultColor };
+  const pathStyle = style ?? {
+    fill: "none",
+    stroke: defaultColors.defaultColor,
+  };
 
   return <path style={pathStyle} d={selectBoxD} />;
 };

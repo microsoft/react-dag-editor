@@ -21,8 +21,11 @@ export enum GraphBehavior {
   AddingNode = "addingNode",
 }
 
-export interface IGraphDataState<NodeData = unknown, EdgeData = unknown, PortData = unknown>
-  extends IHistory<GraphModel<NodeData, EdgeData, PortData>> {}
+export interface IGraphDataState<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> extends IHistory<GraphModel<NodeData, EdgeData, PortData>> {}
 
 export interface IConnectingState {
   sourceNode: string;
@@ -32,13 +35,21 @@ export interface IConnectingState {
   movingPoint: IPoint | undefined;
 }
 
-export interface IGraphSettings<NodeData = unknown, EdgeData = unknown, PortData = unknown> extends IZoomCommonParams {
+export interface IGraphSettings<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> extends IZoomCommonParams {
   canvasBoundaryPadding: IGap;
   graphConfig: IGraphConfig<NodeData, EdgeData, PortData>;
   features: ReadonlySet<GraphFeatures>;
 }
 
-export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+export interface IGraphState<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> {
   settings: IGraphSettings<NodeData, EdgeData, PortData>;
   data: IGraphDataState<NodeData, EdgeData, PortData>;
   viewport: IViewport;
@@ -51,7 +62,11 @@ export interface IGraphState<NodeData = unknown, EdgeData = unknown, PortData = 
   connectState: IConnectingState | undefined;
 }
 
-export interface IGraphReducerInitializerParams<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+export interface IGraphReducerInitializerParams<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> {
   data?: GraphModel<NodeData, EdgeData, PortData>;
   transformMatrix?: ITransformMatrix;
   settings?: Partial<IGraphSettings<NodeData, EdgeData, PortData>>;

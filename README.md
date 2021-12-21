@@ -2,7 +2,7 @@
 
 # react-dag-editor
 
-[Try it out!]( https://microsoft.github.io/react-dag-editor/)
+[Try it out!](https://microsoft.github.io/react-dag-editor/)
 
 ## Overview
 

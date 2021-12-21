@@ -5,7 +5,7 @@ import {
   GraphContextMenuEvent,
   GraphEdgeEvent,
   GraphNodeEvent,
-  GraphPortEvent
+  GraphPortEvent,
 } from "../models/event";
 
 export const contextMenuReducer: IGraphReactReducer = (prevState, action) => {
@@ -21,7 +21,7 @@ export const contextMenuReducer: IGraphReactReducer = (prevState, action) => {
         if (e.button === MouseEventButton.Secondary) {
           nextContextMenuPosition = {
             x: e.clientX,
-            y: e.clientY
+            y: e.clientY,
           };
         }
       }
@@ -35,7 +35,7 @@ export const contextMenuReducer: IGraphReactReducer = (prevState, action) => {
     case GraphContextMenuEvent.Open:
       nextContextMenuPosition = {
         x: action.x,
-        y: action.y
+        y: action.y,
       };
       break;
     case GraphContextMenuEvent.Close:
@@ -50,6 +50,6 @@ export const contextMenuReducer: IGraphReactReducer = (prevState, action) => {
 
   return {
     ...prevState,
-    contextMenuPosition: nextContextMenuPosition
+    contextMenuPosition: nextContextMenuPosition,
   };
 };

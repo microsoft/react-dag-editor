@@ -1,7 +1,12 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
 import { useConst } from "../../hooks/useConst";
-import { useAlignmentLines, useGraphConfig, useGraphController, useViewport } from "../../hooks/context";
+import {
+  useAlignmentLines,
+  useGraphConfig,
+  useGraphController,
+  useViewport,
+} from "../../hooks/context";
 import { GraphCanvasEvent } from "../../models/event";
 import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
@@ -20,11 +25,9 @@ interface IAddingNodeSvgProps<NodeData, PortData> {
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown, unknown>> = ({
-  model,
-  svgRef,
-  nextNodeRef
-}) => {
+export const AddingNodeSvg: React.FunctionComponent<
+  IAddingNodeSvgProps<unknown, unknown>
+> = ({ model, svgRef, nextNodeRef }) => {
   const rect = useSvgRect(svgRef);
   const graphConfig = useGraphConfig();
   const graphController = useGraphController();
@@ -43,7 +46,7 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
       id: model.id,
       x: model.x - diffLeft,
       y: model.y - diffTop,
-      ...getNodeSize(model, graphConfig)
+      ...getNodeSize(model, graphConfig),
     };
   }, [graphConfig, viewport, model]);
 
@@ -53,7 +56,7 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
     }
     graphController.eventChannel.trigger({
       type: GraphCanvasEvent.DraggingNodeFromItemPanel,
-      node: dummyNode
+      node: dummyNode,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dummyNode?.x, dummyNode?.y]);
@@ -63,13 +66,23 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
       return null;
     }
 
-    const dxAligned = getAutoAlignDisplacement(alignmentLines, [dummyNode], graphConfig, "x");
-    const dyAligned = getAutoAlignDisplacement(alignmentLines, [dummyNode], graphConfig, "y");
+    const dxAligned = getAutoAlignDisplacement(
+      alignmentLines,
+      [dummyNode],
+      graphConfig,
+      "x"
+    );
+    const dyAligned = getAutoAlignDisplacement(
+      alignmentLines,
+      [dummyNode],
+      graphConfig,
+      "y"
+    );
 
     return {
       ...model,
       x: model.x + dxAligned,
-      y: model.y + dyAligned
+      y: model.y + dyAligned,
     };
   }, [alignmentLines, dummyNode, graphConfig, model]);
 
@@ -81,13 +94,18 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
 
   const tempGraphId = useConst(uuid);
 
-  const node = React.useMemo(() => NodeModel.fromJSON(attachedNode ?? model, undefined, undefined), [
-    attachedNode,
-    model
-  ]);
+  const node = React.useMemo(
+    () => NodeModel.fromJSON(attachedNode ?? model, undefined, undefined),
+    [attachedNode, model]
+  );
 
   return (
-    <svg id={tempGraphId} ref={svgRef} className={classes.addingNodeSvg} preserveAspectRatio="xMidYMid meet">
+    <svg
+      id={tempGraphId}
+      ref={svgRef}
+      className={classes.addingNodeSvg}
+      preserveAspectRatio="xMidYMid meet"
+    >
       <Transform matrix={viewport.transformMatrix}>
         {rect && (
           <GraphNode
@@ -95,7 +113,7 @@ export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown,
             node={node}
             viewport={{
               rect,
-              transformMatrix: viewport.transformMatrix
+              transformMatrix: viewport.transformMatrix,
             }}
             eventChannel={eventChannel}
             getNodeAriaLabel={defaultGetNodeAriaLabel}

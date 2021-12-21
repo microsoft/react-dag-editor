@@ -12,7 +12,11 @@ export interface ICanvasGroup {
   shape?: string;
 }
 
-export interface ICanvasData<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+export interface ICanvasData<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> {
   readonly nodes: ReadonlyArray<ICanvasNode<NodeData, PortData>>;
   readonly edges: ReadonlyArray<ICanvasEdge<EdgeData>>;
   readonly groups?: ICanvasGroup[];

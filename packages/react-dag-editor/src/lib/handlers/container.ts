@@ -44,7 +44,10 @@ const withSimulatedClick =
     eventChannel.batch(events);
   };
 
-const dragMultiSelect = (e: MouseEvent, params: IContainerMouseDownParams): void => {
+const dragMultiSelect = (
+  e: MouseEvent,
+  params: IContainerMouseDownParams
+): void => {
   const { getPositionFromEvent, graphController, eventChannel } = params;
   const dragging = new DragController(
     new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
@@ -91,7 +94,10 @@ const dragPan = (e: MouseEvent, params: IContainerMouseDownParams): void => {
   });
 };
 
-export const onContainerMouseDown = (e: React.MouseEvent, params: IContainerMouseDownParams): void => {
+export const onContainerMouseDown = (
+  e: React.MouseEvent,
+  params: IContainerMouseDownParams
+): void => {
   e.preventDefault();
   e.stopPropagation();
 
@@ -99,15 +105,29 @@ export const onContainerMouseDown = (e: React.MouseEvent, params: IContainerMous
     return;
   }
 
-  const { canvasMouseMode, isPanDisabled, isMultiSelectDisabled, state, isLassoSelectEnable, graphController } = params;
+  const {
+    canvasMouseMode,
+    isPanDisabled,
+    isMultiSelectDisabled,
+    state,
+    isLassoSelectEnable,
+    graphController,
+  } = params;
   // in pan mode, hold ctrl or shift to perform select.
   // in select mode, hold space to perform pan
   const isPanMode =
-    (canvasMouseMode === CanvasMouseMode.Pan && !e.ctrlKey && !e.shiftKey && !e.metaKey) || state.activeKeys?.has(" ");
+    (canvasMouseMode === CanvasMouseMode.Pan &&
+      !e.ctrlKey &&
+      !e.shiftKey &&
+      !e.metaKey) ||
+    state.activeKeys?.has(" ");
 
   if (!isPanDisabled && isPanMode) {
     dragPan(e.nativeEvent, params);
-  } else if (!isMultiSelectDisabled || (isLassoSelectEnable && !e.ctrlKey && !e.metaKey)) {
+  } else if (
+    !isMultiSelectDisabled ||
+    (isLassoSelectEnable && !e.ctrlKey && !e.metaKey)
+  ) {
     dragMultiSelect(e.nativeEvent, params);
   } else {
     graphController.canvasClickOnce = true;

@@ -50,7 +50,9 @@ export const updateStatus =
     };
   };
 
-export function isActivated<S extends number, T extends IWithStatus<S>>(value: T): boolean {
+export function isActivated<S extends number, T extends IWithStatus<S>>(
+  value: T
+): boolean {
   return Bitset.has(ACTIVATED_STATUS)(value.status);
 }
 
@@ -58,14 +60,19 @@ export function isNodeEditing(node: ICanvasNode): boolean {
   return Bitset.has(GraphNodeStatus.Editing)(node.status);
 }
 
-export function isSelected<S extends number, T extends IWithStatus<S>>(value: T): boolean {
+export function isSelected<S extends number, T extends IWithStatus<S>>(
+  value: T
+): boolean {
   return Bitset.has(SELECTED_STATUS)(value.status);
 }
 
-export function notSelected<S extends number, T extends IWithStatus<S>>(value: T): boolean {
+export function notSelected<S extends number, T extends IWithStatus<S>>(
+  value: T
+): boolean {
   return !isSelected(value);
 }
 
-export const resetConnectStatus = (mask: number) => (prevStatus: number | undefined) => {
-  return ((prevStatus || 0) & GraphNodeStatus.Activated) | mask;
-};
+export const resetConnectStatus =
+  (mask: number) => (prevStatus: number | undefined) => {
+    return ((prevStatus || 0) & GraphNodeStatus.Activated) | mask;
+  };

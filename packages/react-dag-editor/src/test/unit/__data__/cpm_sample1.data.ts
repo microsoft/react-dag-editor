@@ -3,38 +3,38 @@ export const inputData = [
   {
     dependencies: ["81777c66"],
     name: "c4ee5025",
-    cost: 35
+    cost: 35,
   },
   {
     dependencies: ["c4ee5025"],
     name: "fb404f70",
-    cost: 37
+    cost: 37,
   },
   {
     dependencies: ["fb404f70", "c4ee5025"],
     name: "d1647408",
-    cost: 35
+    cost: 35,
   },
   {
     dependencies: ["d1647408"],
     name: "f6dc0eb1",
-    cost: 30
+    cost: 30,
   },
   {
     dependencies: ["f6dc0eb1"],
     name: "47566002",
-    cost: 22
+    cost: 22,
   },
   {
     dependencies: ["47566002"],
     name: "1fd27f80",
-    cost: 0
+    cost: 0,
   },
   {
     dependencies: ["fb404f70"],
     name: "4b199015",
-    cost: 0
-  }
+    cost: 0,
+  },
 ];
 
 export const outputData = {
@@ -99,11 +99,11 @@ export const outputData = {
                           latestStart: 159,
                           latestFinish: 191,
                           earlyStart: 159,
-                          dependencies: []
-                        }
-                      ]
-                    }
-                  ]
+                          dependencies: [],
+                        },
+                      ],
+                    },
+                  ],
                 },
                 {
                   name: "c4ee5025",
@@ -122,15 +122,15 @@ export const outputData = {
                       latestStart: 159,
                       latestFinish: 191,
                       earlyStart: 159,
-                      dependencies: []
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+                      dependencies: [],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
 };

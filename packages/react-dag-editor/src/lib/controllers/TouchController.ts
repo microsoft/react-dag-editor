@@ -45,7 +45,7 @@ export class TouchController<ExtraArgs extends unknown[] = []> {
       this.pointers = new Map(this.pointers);
       this.pointers.delete(e.pointerId);
       this.updateHandler(e.nativeEvent, ...args);
-    }
+    },
   };
 
   private pointers = new Map<number, PointerEvent>();

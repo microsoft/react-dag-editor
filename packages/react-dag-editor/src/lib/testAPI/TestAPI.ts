@@ -37,23 +37,39 @@ export class TestAPI {
   }
 
   public async getNodesCount(): Promise<number> {
-    return (await this.adapter.selectAll("g[data-automation-id*='node-container-']")).length;
+    return (
+      await this.adapter.selectAll("g[data-automation-id*='node-container-']")
+    ).length;
   }
 
   public async getEdgesCount(): Promise<number> {
-    return (await this.adapter.selectAll("g[data-automation-id*='edge-container-']")).length;
+    return (
+      await this.adapter.selectAll("g[data-automation-id*='edge-container-']")
+    ).length;
   }
 
-  public async addNodeFromItemPanel(options: { itemSelector: string; x: number; y: number }): Promise<void> {
-    const addColumnsModuleInPanelElPos = await this.getCentralPosBySelector(options.itemSelector);
+  public async addNodeFromItemPanel(options: {
+    itemSelector: string;
+    x: number;
+    y: number;
+  }): Promise<void> {
+    const addColumnsModuleInPanelElPos = await this.getCentralPosBySelector(
+      options.itemSelector
+    );
 
-    await this.adapter.mouseMove(addColumnsModuleInPanelElPos.x, addColumnsModuleInPanelElPos.y);
+    await this.adapter.mouseMove(
+      addColumnsModuleInPanelElPos.x,
+      addColumnsModuleInPanelElPos.y
+    );
 
     await this.adapter.mouseDown();
 
     const canvasBBOx = await this.getCanvasBoundingBox();
 
-    await this.adapter.mouseMove(canvasBBOx.x + options.x, canvasBBOx.y + options.y);
+    await this.adapter.mouseMove(
+      canvasBBOx.x + options.x,
+      canvasBBOx.y + options.y
+    );
     await this.adapter.mouseUp();
   }
 
@@ -61,27 +77,39 @@ export class TestAPI {
     sourceNodeName,
     sourcePortName,
     targetNodeName,
-    targetPortName
+    targetPortName,
   }: IConnectTwoNodesConfig): Promise<void> {
-    const sourcePos = await this.getCentralPosBySelector(this.getPortCssSelector(sourceNodeName, sourcePortName));
+    const sourcePos = await this.getCentralPosBySelector(
+      this.getPortCssSelector(sourceNodeName, sourcePortName)
+    );
     await this.adapter.mouseMove(sourcePos.x, sourcePos.y);
 
     await this.adapter.mouseDown();
-    const targetPos = await this.getCentralPosBySelector(this.getPortCssSelector(targetNodeName, targetPortName));
+    const targetPos = await this.getCentralPosBySelector(
+      this.getPortCssSelector(targetNodeName, targetPortName)
+    );
     await this.adapter.mouseMove(targetPos.x, targetPos.y);
 
     await this.adapter.mouseUp();
   }
 
-  public async draggingNode(nodeName: string, toPosition: IPosition): Promise<void> {
-    const nodeCenterPos = await this.getCentralPosBySelector(this.getNodeCssSelector(nodeName));
+  public async draggingNode(
+    nodeName: string,
+    toPosition: IPosition
+  ): Promise<void> {
+    const nodeCenterPos = await this.getCentralPosBySelector(
+      this.getNodeCssSelector(nodeName)
+    );
 
     await this.adapter.mouseMove(nodeCenterPos.x, nodeCenterPos.y);
     await this.adapter.mouseDown();
 
     const canvasBBOx = await this.getCanvasBoundingBox();
 
-    await this.adapter.mouseMove(toPosition.x + canvasBBOx.x, toPosition.y + canvasBBOx.y);
+    await this.adapter.mouseMove(
+      toPosition.x + canvasBBOx.x,
+      toPosition.y + canvasBBOx.y
+    );
   }
 
   public async rightClickOnNode(nodeName: string): Promise<void> {
@@ -123,7 +151,7 @@ export class TestAPI {
 
   public async rightClickOnCanvas(x: number, y: number): Promise<void> {
     await this.adapter.rightClick("svg.react-dag-editor-svg-container", {
-      position: { x, y }
+      position: { x, y },
     });
   }
 
@@ -230,16 +258,23 @@ export class TestAPI {
     await this.adapter.mouseUp();
   }
 
-  public async getElementBoundingBox(cssSelector: string): Promise<IBoundingBox> {
+  public async getElementBoundingBox(
+    cssSelector: string
+  ): Promise<IBoundingBox> {
     const el = await this.adapter.waitForSelector(cssSelector);
 
-    const { x = 0, y = 0, height = 0, width = 0 } = (await el.boundingBox()) || {};
+    const {
+      x = 0,
+      y = 0,
+      height = 0,
+      width = 0,
+    } = (await el.boundingBox()) || {};
 
     return {
       x,
       y,
       width,
-      height
+      height,
     };
   }
 
@@ -248,13 +283,15 @@ export class TestAPI {
   }
 
   public async getMinimapBoundingBox(): Promise<IBoundingBox> {
-    const { x, y, height, width } = await this.getElementBoundingBox("svg[data-automation-id*='minimap-id']");
+    const { x, y, height, width } = await this.getElementBoundingBox(
+      "svg[data-automation-id*='minimap-id']"
+    );
 
     return {
       x,
       y,
       width,
-      height
+      height,
     };
   }
 
@@ -263,7 +300,9 @@ export class TestAPI {
   }
 
   public async getNodeCentralPosition(nodeName: string): Promise<IPosition> {
-    const pos = await this.getCentralPosBySelector(this.getNodeCssSelector(nodeName));
+    const pos = await this.getCentralPosBySelector(
+      this.getNodeCssSelector(nodeName)
+    );
     return pos;
   }
 
@@ -299,17 +338,21 @@ export class TestAPI {
       edges,
       ports,
       nodeTooltips,
-      portTooltips
+      portTooltips,
     };
   }
 
-  protected async getCentralPosBySelector(cssSelector: string): Promise<IPosition> {
-    return this.getCentralPosByBBox(await this.getElementBoundingBox(cssSelector));
+  protected async getCentralPosBySelector(
+    cssSelector: string
+  ): Promise<IPosition> {
+    return this.getCentralPosByBBox(
+      await this.getElementBoundingBox(cssSelector)
+    );
   }
 
   protected async getDomElements(selector: string): Promise<IGraphDomObject[]> {
     return Promise.all(
-      (await this.adapter.selectAll(selector))?.map(async handle => {
+      (await this.adapter.selectAll(selector))?.map(async (handle) => {
         const bbox = await handle.boundingBox();
         const className = await handle.getAttribute("class");
         const innerHTML = await handle.innerHTML();
@@ -323,7 +366,7 @@ export class TestAPI {
           className,
           innerHTML,
           ariaLabel,
-          automationId
+          automationId,
         };
       })
     );
@@ -336,7 +379,7 @@ export class TestAPI {
 
     return {
       x: bbox.width / 2 + bbox.x,
-      y: bbox.height / 2 + bbox.y
+      y: bbox.height / 2 + bbox.y,
     };
   }
 

@@ -5,7 +5,10 @@ import { isNodeEditing } from "../models/status";
 import { isPointInRect } from "../utils";
 import { GraphNode, IGraphNodeCommonProps } from "./GraphNode";
 import { GraphNodeControlPoints } from "./GraphNodeControlPoints";
-import { GraphOneNodePorts, IGraphOneNodePortsProps } from "./GraphOneNodePorts";
+import {
+  GraphOneNodePorts,
+  IGraphOneNodePortsProps,
+} from "./GraphOneNodePorts";
 
 export interface IGraphNodePartsProps
   extends Required<Omit<IGraphNodeCommonProps, "viewport">>,
@@ -14,7 +17,11 @@ export interface IGraphNodePartsProps
   isNodeResizable: boolean;
 }
 
-const GraphNodeParts = ({ node, isNodeResizable, ...commonProps }: IGraphNodePartsProps) => {
+const GraphNodeParts = ({
+  node,
+  isNodeResizable,
+  ...commonProps
+}: IGraphNodePartsProps) => {
   const virtualization = useVirtualization();
   const { renderedArea, viewport } = virtualization;
 
@@ -36,7 +43,10 @@ const GraphNodeParts = ({ node, isNodeResizable, ...commonProps }: IGraphNodePar
       <GraphNode {...commonProps} node={node} viewport={viewport} />
       <GraphOneNodePorts {...commonProps} node={node} viewport={viewport} />
       {isNodeResizable && isNodeEditing(node) && (
-        <GraphNodeControlPoints node={node} eventChannel={commonProps.eventChannel} />
+        <GraphNodeControlPoints
+          node={node}
+          eventChannel={commonProps.eventChannel}
+        />
       )}
     </>
   );

@@ -24,7 +24,7 @@ export class Task {
   public constructor(name: string, cost: number, dependencies?: Set<Task>) {
     this.name = name;
     this.cost = cost;
-    dependencies?.forEach(t => {
+    dependencies?.forEach((t) => {
       this.dependencies.add(t);
     });
     this.earlyFinish = -1;
@@ -34,7 +34,7 @@ export class Task {
     if (this.dependencies.has(t)) {
       return true;
     }
-    return Array.from(this.dependencies).some(dep => dep.isDependent(t));
+    return Array.from(this.dependencies).some((dep) => dep.isDependent(t));
   }
 }
 
@@ -47,10 +47,10 @@ export const criticalPath = (tasks: Set<Task>): Task => {
     let progress = false;
 
     // find a new task to calculate
-    remaining.forEach(task => {
+    remaining.forEach((task) => {
       if (containAll(completed, task.dependencies)) {
         let critical = 0;
-        task.dependencies.forEach(t => {
+        task.dependencies.forEach((t) => {
           if (t.criticalCost > critical) {
             critical = t.criticalCost;
           }
@@ -90,7 +90,7 @@ export const criticalPath = (tasks: Set<Task>): Task => {
 
 const setEarly = (task: Task) => {
   const completionTime = task.earlyFinish;
-  task.dependencies.forEach(t => {
+  task.dependencies.forEach((t) => {
     if (completionTime >= t.earlyStart) {
       t.earlyStart = completionTime;
       t.earlyFinish = completionTime + t.cost;
@@ -105,7 +105,7 @@ const setLatest = (task: Task) => {
 };
 
 const calculateEarly = (tasks: Set<Task>) => {
-  tasks.forEach(t => {
+  tasks.forEach((t) => {
     t.earlyStart = 0;
     t.earlyFinish = t.cost;
     setEarly(t);
@@ -114,17 +114,17 @@ const calculateEarly = (tasks: Set<Task>) => {
 
 const getMaxCost = (tasks: Set<Task>) => {
   let max = -1;
-  tasks.forEach(t => {
+  tasks.forEach((t) => {
     if (t.criticalCost > max) {
       max = t.criticalCost;
     }
   });
   maxCost = max;
-  tasks.forEach(t => {
+  tasks.forEach((t) => {
     setLatest(t);
   });
 };
 
 const containAll = <T>(AllItems: Set<T>, items: Set<T>): boolean => {
-  return Array.from(items).every(item => AllItems.has(item));
+  return Array.from(items).every((item) => AllItems.has(item));
 };

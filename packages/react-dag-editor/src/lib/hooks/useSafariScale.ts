@@ -2,7 +2,12 @@
 import { RefObject, useEffect } from "react";
 import { GraphCanvasEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
-import { BrowserType, getBrowser, getContainerCenter, isMobile } from "../utils";
+import {
+  BrowserType,
+  getBrowser,
+  getContainerCenter,
+  isMobile,
+} from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { animationFramed } from "../utils/scheduling";
 
@@ -20,7 +25,11 @@ export interface IUseSafariScaleParams {
   eventChannel: EventChannel;
 }
 
-export function useSafariScale({ rectRef, svgRef, eventChannel }: IUseSafariScaleParams): void {
+export function useSafariScale({
+  rectRef,
+  svgRef,
+  eventChannel,
+}: IUseSafariScaleParams): void {
   useEffect(() => {
     const el = svgRef.current;
     if (!isSafari || !el || isMobile()) {

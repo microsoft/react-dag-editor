@@ -10,7 +10,7 @@ const dummy = new Proxy(
         return dummy;
       }
       return paramCase(prop);
-    }
+    },
   }
 );
 

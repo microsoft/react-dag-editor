@@ -1,3 +1,3 @@
-export function returnTrue (): true {
+export function returnTrue(): true {
   return true;
 }

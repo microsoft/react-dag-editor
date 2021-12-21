@@ -12,15 +12,15 @@ export const getTopoSortingNodes = (canvasData: ICanvasData): ICanvasNode[] => {
   }
 
   const edgesForTopo = edges.map(
-    edge => [edge.source, edge.target] as [string, string | undefined]
+    (edge) => [edge.source, edge.target] as [string, string | undefined]
   );
-  const nodesForTopo = nodes.map(node => node.id);
+  const nodesForTopo = nodes.map((node) => node.id);
 
   const orderOfNodeIds = toposort.array(nodesForTopo, edgesForTopo);
 
   const newNodes: ICanvasNode[] = [];
   orderOfNodeIds.map((id: string) => {
-    const node = nodes.find(it => it.id === id);
+    const node = nodes.find((it) => it.id === id);
     if (node) {
       newNodes.push(node);
     }

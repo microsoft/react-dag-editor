@@ -5,9 +5,7 @@ export interface IDebounceOptions {
   instance?: any;
   maxWait?: number;
 }
-export const debounce = <
-  Args extends unknown[]
->(
+export const debounce = <Args extends unknown[]>(
   callback: (...args: Args) => void,
   timeout: number,
   options?: IDebounceOptions

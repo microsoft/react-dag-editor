@@ -72,7 +72,13 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
 
   private readonly owner: Owner;
 
-  public constructor(owner: Owner, keys: K[], values: V[], children: Array<INode<K, V>>, size: number) {
+  public constructor(
+    owner: Owner,
+    keys: K[],
+    values: V[],
+    children: Array<INode<K, V>>,
+    size: number
+  ) {
     this.owner = owner;
     this.keys = keys;
     this.values = values;
@@ -87,7 +93,13 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
   public toOwned(owner: Owner): InternalNode<K, V> {
     return this.owner === owner
       ? this
-      : new InternalNode<K, V>(owner, this.keys.slice(), this.values.slice(), this.children.slice(), this.size);
+      : new InternalNode<K, V>(
+          owner,
+          this.keys.slice(),
+          this.values.slice(),
+          this.children.slice(),
+          this.size
+        );
   }
 
   public getKey(index: number): K {
@@ -150,7 +162,14 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
         next.children[index] = child;
         return [next];
       } else if (size === MAX_SIZE) {
-        return this.updateWithSplit(owner, insert[0], insert[1], insert[2], insert[3], index);
+        return this.updateWithSplit(
+          owner,
+          insert[0],
+          insert[1],
+          insert[2],
+          insert[3],
+          index
+        );
       } else {
         const next = this.toOwned(owner);
         next.keys.splice(index, 0, insert[2]);
@@ -162,7 +181,11 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
     }
   }
 
-  public update(owner: Owner, key: K, updater: (prev: V) => V): InternalNode<K, V> {
+  public update(
+    owner: Owner,
+    key: K,
+    updater: (prev: V) => V
+  ): InternalNode<K, V> {
     const index = binaryFind(this.keys, key);
     const key0 = this.getKey(index);
     const value0 = this.getValue(index);
@@ -249,7 +272,9 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
       children.push(child);
       same = same && (child0 as unknown) === (child as unknown);
     }
-    return same ? ((this as unknown) as INode<K, T>) : new InternalNode(owner, this.keys, values, children, this.size);
+    return same
+      ? (this as unknown as INode<K, T>)
+      : new InternalNode(owner, this.keys, values, children, this.size);
   }
 
   public forEach(f: (value: V, key: K) => void): void {
@@ -281,7 +306,13 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
     return undefined;
   }
 
-  private balanceChild(owner: Owner, child: INode<K, V>, key0: K, value0: V, index: number): InternalNode<K, V> {
+  private balanceChild(
+    owner: Owner,
+    child: INode<K, V>,
+    key0: K,
+    value0: V,
+    index: number
+  ): InternalNode<K, V> {
     if (index === 0) {
       this.balanceHead(child);
       return this;
@@ -305,13 +336,19 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
       right.keys.unshift(key0);
       right.values.unshift(value0);
       right.keys.unshift(...child.keys.slice(HALF_NODE_SPLIT + 1, MIN_SIZE));
-      right.values.unshift(...child.values.slice(HALF_NODE_SPLIT + 1, MIN_SIZE));
+      right.values.unshift(
+        ...child.values.slice(HALF_NODE_SPLIT + 1, MIN_SIZE)
+      );
       this.keys.splice(index - 1, 2, key);
       this.values.splice(index - 1, 2, value);
       this.children.splice(index - 1, 3, left, right);
       if (isChildInternal) {
-        (left as InternalNode<K, V>).children.push(...child.children.slice(0, HALF_NODE_SPLIT + 1));
-        (right as InternalNode<K, V>).children.unshift(...child.children.slice(HALF_NODE_SPLIT + 1, MIN_SIZE + 1));
+        (left as InternalNode<K, V>).children.push(
+          ...child.children.slice(0, HALF_NODE_SPLIT + 1)
+        );
+        (right as InternalNode<K, V>).children.unshift(
+          ...child.children.slice(HALF_NODE_SPLIT + 1, MIN_SIZE + 1)
+        );
         (left as InternalNode<K, V>).updateSize();
         (right as InternalNode<K, V>).updateSize();
       }
@@ -319,7 +356,12 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
     return this;
   }
 
-  private rotateLeft(child: INode<K, V>, right0: INode<K, V>, index: number, isChildInternal: boolean): void {
+  private rotateLeft(
+    child: INode<K, V>,
+    right0: INode<K, V>,
+    index: number,
+    isChildInternal: boolean
+  ): void {
     const right = right0.toOwned(this.owner);
     const newKey = right.keys.shift()!;
     const newValue = right.values.shift()!;
@@ -339,7 +381,12 @@ export class InternalNode<K, V> implements INodeBase<K, V, NodeType.Internal> {
     }
   }
 
-  private rotateRight(child: INode<K, V>, left0: INode<K, V>, index: number, isChildInternal: boolean): void {
+  private rotateRight(
+    child: INode<K, V>,
+    left0: INode<K, V>,
+    index: number,
+    isChildInternal: boolean
+  ): void {
     const left = left0.toOwned(this.owner);
     const newKey = left.keys.pop()!;
     const newValue = left.values.pop()!;
@@ -459,7 +506,9 @@ export class LeafNode<K, V> implements INodeBase<K, V, NodeType.Leaf> {
   }
 
   public toOwned(owner: Owner): LeafNode<K, V> {
-    return this.owner === owner ? this : new LeafNode<K, V>(owner, this.keys.slice(), this.values.slice());
+    return this.owner === owner
+      ? this
+      : new LeafNode<K, V>(owner, this.keys.slice(), this.values.slice());
   }
 
   public getKey(index: number): K {
@@ -557,7 +606,9 @@ export class LeafNode<K, V> implements INodeBase<K, V, NodeType.Leaf> {
       values.push(value);
       same = same && is(value0, value);
     }
-    return same ? ((this as unknown) as INode<K, T>) : new LeafNode<K, T>(owner, this.keys, values);
+    return same
+      ? (this as unknown as INode<K, T>)
+      : new LeafNode<K, T>(owner, this.keys, values);
   }
 
   public forEach(f: (value: V, key: K) => void): void {
@@ -572,11 +623,20 @@ export class LeafNode<K, V> implements INodeBase<K, V, NodeType.Leaf> {
     return this.values.find(predicate);
   }
 
-  private updateWithSplit(owner: Owner, key: K, value: V, index: number): [INode<K, V>, INode<K, V>, K, V] {
+  private updateWithSplit(
+    owner: Owner,
+    key: K,
+    value: V,
+    index: number
+  ): [INode<K, V>, INode<K, V>, K, V] {
     const next1 = this.toOwned(owner);
     next1.keys.splice(index, 0, key);
     next1.values.splice(index, 0, value);
-    const next2 = new LeafNode(owner, next1.keys.splice(16, 16), next1.values.splice(16, 16));
+    const next2 = new LeafNode(
+      owner,
+      next1.keys.splice(16, 16),
+      next1.values.splice(16, 16)
+    );
     const nextKey = next1.keys.pop()!;
     const nextValue = next1.values.pop()!;
     return [next1, next2, nextKey, nextValue];
@@ -603,7 +663,12 @@ export function emptyRoot<K, V>(owner: Owner): INode<K, V> {
  * @param key
  * @param value
  */
-export function rootInsert<K, V>(owner: Owner, root: INode<K, V>, key: K, value: V): INode<K, V> {
+export function rootInsert<K, V>(
+  owner: Owner,
+  root: INode<K, V>,
+  key: K,
+  value: V
+): INode<K, V> {
   if (root.selfSize === 0) {
     return new LeafNode(owner, [key], [value]);
   }
@@ -612,7 +677,13 @@ export function rootInsert<K, V>(owner: Owner, root: INode<K, V>, key: K, value:
     return insert[0];
   }
   const [next1, next2, newKey, newValue] = insert;
-  return new InternalNode(owner, [newKey], [newValue], [next1, next2], next1.size + next2.size + 1);
+  return new InternalNode(
+    owner,
+    [newKey],
+    [newValue],
+    [next1, next2],
+    next1.size + next2.size + 1
+  );
 }
 
 /**
@@ -620,7 +691,11 @@ export function rootInsert<K, V>(owner: Owner, root: INode<K, V>, key: K, value:
  * @param root
  * @param key
  */
-export function rootRemove<K, V>(owner: Owner, root: INode<K, V>, key: K): INode<K, V> {
+export function rootRemove<K, V>(
+  owner: Owner,
+  root: INode<K, V>,
+  key: K
+): INode<K, V> {
   const newRoot = root.remove(owner, key);
   if (newRoot.type === NodeType.Internal && newRoot.selfSize === 0) {
     return newRoot.getChild(0);

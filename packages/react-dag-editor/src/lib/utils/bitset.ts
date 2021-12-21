@@ -1,4 +1,5 @@
-export const has = (mask: number) => (state: number | undefined) => Boolean(pick(mask)(state));
+export const has = (mask: number) => (state: number | undefined) =>
+  Boolean(pick(mask)(state));
 
 export const add =
   (mask: number | number[]) =>
@@ -21,13 +22,14 @@ export const pick = (mask: number) => (state: number | undefined) => {
   return t & mask;
 };
 
-export const remove = (mask: number | number[]) => (state: number | undefined) => {
-  const t = state || 0;
-  if (Array.isArray(mask)) {
-    return mask.reduce((c, m) => c & ~m, t);
-  } else {
-    return t & ~mask;
-  }
-};
+export const remove =
+  (mask: number | number[]) => (state: number | undefined) => {
+    const t = state || 0;
+    if (Array.isArray(mask)) {
+      return mask.reduce((c, m) => c & ~m, t);
+    } else {
+      return t & ~mask;
+    }
+  };
 
 export const replace = (state: number) => () => state;

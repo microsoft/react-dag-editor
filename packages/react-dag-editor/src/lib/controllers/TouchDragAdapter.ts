@@ -5,7 +5,8 @@ import { ITouchHandler } from "./TouchController";
 export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
   implements
     IEventProvider<IGlobalMoveEventTypes<ExtraArgs>>,
-    ITouchHandler<ExtraArgs> {
+    ITouchHandler<ExtraArgs>
+{
   private readonly startListeners = new Set<
     (...args: $Cons<MouseEvent, ExtraArgs>) => void
   >();
@@ -59,7 +60,7 @@ export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
     e: PointerEvent,
     ...args: ExtraArgs
   ): void {
-    this.startListeners.forEach(cb => {
+    this.startListeners.forEach((cb) => {
       cb.call(undefined, e, ...args);
     });
   }
@@ -69,13 +70,13 @@ export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
     e: PointerEvent,
     ...args: ExtraArgs
   ): void {
-    this.moveListeners.forEach(cb => {
+    this.moveListeners.forEach((cb) => {
       cb.call(undefined, e, ...args);
     });
   }
 
   public onEnd(e: PointerEvent, ...args: ExtraArgs): void {
-    this.endListeners.forEach(cb => {
+    this.endListeners.forEach((cb) => {
       cb.call(undefined, e, ...args);
     });
   }

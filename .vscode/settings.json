@@ -27,12 +27,7 @@ Happy linting! 💖
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.ignoreWords": [
-    "editor",
-    "format",
-    "on",
-    "save"
-  ],
+  "cSpell.ignoreWords": ["editor", "format", "on", "save"],
   "cSpell.words": [
     "Algos",
     "Conda",

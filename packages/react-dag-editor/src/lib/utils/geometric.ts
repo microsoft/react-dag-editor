@@ -1,6 +1,9 @@
 import { IPoint, IRectShape } from "../models/geometry";
 
-export const checkRectIntersect = (rectA: IRectShape, rectB: IRectShape): boolean => {
+export const checkRectIntersect = (
+  rectA: IRectShape,
+  rectB: IRectShape
+): boolean => {
   const isALeftOfB = rectA.maxX < rectB.minX;
   const isARightOfB = rectA.minX > rectB.maxX;
   const isABelowB = rectA.minY > rectB.maxY;
@@ -21,12 +24,18 @@ export const distance = (x1: number, y1: number, x2: number, y2: number) => {
   return Math.sqrt(square(x2 - x1) + square(y2 - y1));
 };
 
-export const getLinearFunction = (x1: number, y1: number, x2: number, y2: number): ((x: number) => number) => {
+export const getLinearFunction = (
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number
+): ((x: number) => number) => {
   if (x1 === x2) {
     return () => Number.MAX_SAFE_INTEGER;
   }
 
-  return (x: number) => ((y2 - y1) / (x2 - x1)) * x + (y1 * x2 - y2 * x1) / (x2 - x1);
+  return (x: number) =>
+    ((y2 - y1) / (x2 - x1)) * x + (y1 * x2 - y2 * x1) / (x2 - x1);
 };
 
 /**

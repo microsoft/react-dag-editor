@@ -17,6 +17,7 @@
     "@nrwl/eslint-plugin-nx": "13.3.11",
     "@nrwl/jest": "13.3.11",
     "@nrwl/linter": "13.3.11",
+    "@nrwl/node": "^13.3.11",
     "@nrwl/react": "13.3.11",
     "@nrwl/storybook": "13.3.11",
     "@nrwl/tao": "13.3.11",
@@ -59,6 +60,8 @@
     "url-loader": "^3.0.0"
   },
   "dependencies": {
+    "@storybook/builder-webpack5": "~6.4.5",
+    "@storybook/manager-webpack5": "~6.4.5",
     "core-js": "^3.6.5",
     "eventemitter3": "^4.0.7",
     "react": "17.0.2",
@@ -67,8 +70,6 @@
     "regenerator-runtime": "0.13.7",
     "toposort": "^2.0.2",
     "tslib": "^2.0.0",
-    "uuid": "^8.3.2",
-    "@storybook/builder-webpack5": "~6.4.5",
-    "@storybook/manager-webpack5": "~6.4.5"
+    "uuid": "^8.3.2"
   }
 }

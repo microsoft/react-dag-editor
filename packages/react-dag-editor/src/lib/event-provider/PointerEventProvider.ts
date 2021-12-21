@@ -1,12 +1,19 @@
 import { EventEmitter } from "eventemitter3";
 import { IEventProvider, IGlobalMoveEventTypes } from "./types";
 
-export class PointerEventProvider implements IEventProvider<IGlobalMoveEventTypes> {
+export class PointerEventProvider
+  implements IEventProvider<IGlobalMoveEventTypes>
+{
   private readonly target: Window | HTMLElement;
   private readonly pointerId: number | null;
-  private readonly eventEmitter = new EventEmitter<Record<string, [PointerEvent]>>();
+  private readonly eventEmitter = new EventEmitter<
+    Record<string, [PointerEvent]>
+  >();
 
-  public constructor(target: Window | HTMLElement, pointerId: number | null = null) {
+  public constructor(
+    target: Window | HTMLElement,
+    pointerId: number | null = null
+  ) {
     this.target = target;
     this.pointerId = pointerId;
   }
@@ -33,10 +40,16 @@ export class PointerEventProvider implements IEventProvider<IGlobalMoveEventType
     if (!this.eventEmitter.listeners(type).length) {
       switch (type) {
         case "move":
-          this.target.addEventListener("pointermove", this.onMove as (e: Event) => void);
+          this.target.addEventListener(
+            "pointermove",
+            this.onMove as (e: Event) => void
+          );
           break;
         case "end":
-          this.target.addEventListener("pointerup", this.onUp as (e: Event) => void);
+          this.target.addEventListener(
+            "pointerup",
+            this.onUp as (e: Event) => void
+          );
           break;
         default:
       }
@@ -47,10 +60,16 @@ export class PointerEventProvider implements IEventProvider<IGlobalMoveEventType
     if (!this.eventEmitter.listeners(type).length) {
       switch (type) {
         case "move":
-          this.target.removeEventListener("pointermove", this.onMove as (e: Event) => void);
+          this.target.removeEventListener(
+            "pointermove",
+            this.onMove as (e: Event) => void
+          );
           break;
         case "end":
-          this.target.removeEventListener("pointerup", this.onUp as (e: Event) => void);
+          this.target.removeEventListener(
+            "pointerup",
+            this.onUp as (e: Event) => void
+          );
           break;
         default:
       }

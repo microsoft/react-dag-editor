@@ -33,8 +33,13 @@ function makeScheduledCallback<T, Args extends unknown[]>(
   return scheduledCallback;
 }
 
-export const animationFramed = <Args extends unknown[]>(callback: (...args: Args) => void) =>
+export const animationFramed = <Args extends unknown[]>(
+  callback: (...args: Args) => void
+) =>
   makeScheduledCallback(callback, requestAnimationFrame, cancelAnimationFrame);
 
-export const throttle = <Args extends unknown[]>(callback: (...args: Args) => void, limit: number) =>
-  makeScheduledCallback(callback, cb => setTimeout(cb, limit), clearTimeout);
+export const throttle = <Args extends unknown[]>(
+  callback: (...args: Args) => void,
+  limit: number
+) =>
+  makeScheduledCallback(callback, (cb) => setTimeout(cb, limit), clearTimeout);

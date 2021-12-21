@@ -1,17 +1,33 @@
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
 import { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
-import { GraphCanvasEvent, GraphNodeEvent, ICanvasNavigateEvent } from "../models/event";
+import {
+  GraphCanvasEvent,
+  GraphNodeEvent,
+  ICanvasNavigateEvent,
+} from "../models/event";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { GraphPortStatus, updateStatus } from "../models/status";
-import { getRelativePoint, isViewportComplete, nodeSelection, unSelectAllEntity } from "../utils";
+import {
+  getRelativePoint,
+  isViewportComplete,
+  nodeSelection,
+  unSelectAllEntity,
+} from "../utils";
 import * as Bitset from "../utils/bitset";
 import { selectNodeBySelectBox } from "../utils/updateNodeBySelectBox";
 
-function handleNavigate(state: IGraphState, action: ICanvasNavigateEvent): IGraphState {
+function handleNavigate(
+  state: IGraphState,
+  action: ICanvasNavigateEvent
+): IGraphState {
   let data = unSelectAllEntity()(state.data.present);
   if (action.node && action.port) {
-    data = data.updatePort(action.node.id, action.port.id, updateStatus(Bitset.add(GraphPortStatus.Selected)));
+    data = data.updatePort(
+      action.node.id,
+      action.port.id,
+      updateStatus(Bitset.add(GraphPortStatus.Selected))
+    );
   } else if (action.node) {
     const nodeId = action.node.id;
     data = data.selectNodes((node) => node.id === nodeId);
@@ -27,7 +43,9 @@ function handleNavigate(state: IGraphState, action: ICanvasNavigateEvent): IGrap
 
 export const selectionReducer: IGraphReactReducer = (state, action) => {
   const data = state.data.present;
-  const isLassoSelectEnable = state.settings.features.has(GraphFeatures.LassoSelect);
+  const isLassoSelectEnable = state.settings.features.has(
+    GraphFeatures.LassoSelect
+  );
 
   switch (action.type) {
     case GraphCanvasEvent.Click:

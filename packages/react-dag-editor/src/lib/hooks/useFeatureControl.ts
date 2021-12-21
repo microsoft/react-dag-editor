@@ -11,12 +11,18 @@ export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
     const isMultiSelectDisabled = !features.has(GraphFeatures.MultipleSelect);
     const isLassoSelectEnable = features.has(GraphFeatures.LassoSelect);
     const isNodeHoverViewEnabled = features.has(GraphFeatures.NodeHoverView);
-    const isClickNodeToSelectDisabled = !features.has(GraphFeatures.ClickNodeToSelect);
+    const isClickNodeToSelectDisabled = !features.has(
+      GraphFeatures.ClickNodeToSelect
+    );
     const isConnectDisabled = !features.has(GraphFeatures.AddNewEdges);
     const isPortHoverViewEnable = features.has(GraphFeatures.PortHoverView);
     const isNodeEditDisabled = !features.has(GraphFeatures.EditNode);
-    const isVerticalScrollDisabled = !features.has(GraphFeatures.CanvasVerticalScrollable);
-    const isHorizontalScrollDisabled = !features.has(GraphFeatures.CanvasHorizontalScrollable);
+    const isVerticalScrollDisabled = !features.has(
+      GraphFeatures.CanvasVerticalScrollable
+    );
+    const isHorizontalScrollDisabled = !features.has(
+      GraphFeatures.CanvasHorizontalScrollable
+    );
     const isA11yEnable = features.has(GraphFeatures.A11yFeatures);
     const isAutoAlignEnable = features.has(GraphFeatures.AutoAlign);
     const isCtrlKeyZoomEnable = features.has(GraphFeatures.CtrlKeyZoom);
@@ -24,7 +30,9 @@ export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
     const isVirtualizationEnabled = !features.has(GraphFeatures.AutoFit);
     const isEdgeEditable = features.has(GraphFeatures.EditEdge);
     const isDeleteDisabled = !features.has(GraphFeatures.Delete);
-    const isPasteDisabled = !features.has(GraphFeatures.AddNewNodes) || !features.has(GraphFeatures.AddNewEdges);
+    const isPasteDisabled =
+      !features.has(GraphFeatures.AddNewNodes) ||
+      !features.has(GraphFeatures.AddNewEdges);
     const isUndoEnabled = features.has(GraphFeatures.UndoStack);
 
     return {

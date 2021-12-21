@@ -10,7 +10,9 @@ export interface IReadonlyGraphProps {
   style?: React.CSSProperties;
 }
 
-export const StaticGraph: React.FunctionComponent<IReadonlyGraphProps> = props => {
+export const StaticGraph: React.FunctionComponent<IReadonlyGraphProps> = (
+  props
+) => {
   const { nodes } = props.data;
 
   const style: React.CSSProperties = {
@@ -19,7 +21,7 @@ export const StaticGraph: React.FunctionComponent<IReadonlyGraphProps> = props =
     left: 0,
     height: "100%",
     width: "100%",
-    ...props.style
+    ...props.style,
   };
 
   return (

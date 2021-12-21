@@ -12,5 +12,5 @@ export function mapCow<T, U>(
     same = same && is(value0, value);
     values.push(value);
   }
-  return same ? ((list as unknown) as U[]) : values;
+  return same ? (list as unknown as U[]) : values;
 }

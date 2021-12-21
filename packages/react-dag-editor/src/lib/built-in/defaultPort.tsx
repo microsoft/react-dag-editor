@@ -39,10 +39,22 @@ class DefaultPort implements IPortConfig {
   public render(args: IPortDrawArgs): React.ReactNode {
     const { model: port, data, parentNode } = args;
 
-    const connectedAsSource = data.isPortConnectedAsSource(parentNode.id, port.id);
-    const connectedAsTarget = data.isPortConnectedAsTarget(parentNode.id, port.id);
+    const connectedAsSource = data.isPortConnectedAsSource(
+      parentNode.id,
+      port.id
+    );
+    const connectedAsTarget = data.isPortConnectedAsTarget(
+      parentNode.id,
+      port.id
+    );
 
-    const style = this.getStyle(port, parentNode, data, connectedAsSource, connectedAsTarget);
+    const style = this.getStyle(
+      port,
+      parentNode,
+      data,
+      connectedAsSource,
+      connectedAsTarget
+    );
 
     const { x, y } = args;
     const polygonPoints = `${x - 5} ${y}, ${x + 7} ${y}, ${x + 1} ${y + 8}`;
@@ -52,7 +64,13 @@ class DefaultPort implements IPortConfig {
         {connectedAsTarget ? (
           <polygon points={polygonPoints} style={style} />
         ) : (
-          <circle key={`${args.parentNode.id}-${args.model.id}`} r={5} cx={x} cy={y} style={style} />
+          <circle
+            key={`${args.parentNode.id}-${args.model.id}`}
+            r={5}
+            cx={x}
+            cy={y}
+            style={style}
+          />
         )}
       </>
     );

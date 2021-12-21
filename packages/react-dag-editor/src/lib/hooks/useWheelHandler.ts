@@ -34,7 +34,7 @@ export const useWheelHandler = (args: IWheelOptions) => {
     isCtrlKeyZoomEnable,
     eventChannel,
     graphConfig,
-    dispatch
+    dispatch,
   } = args;
 
   useLayoutEffect(() => {
@@ -61,22 +61,25 @@ export const useWheelHandler = (args: IWheelOptions) => {
           type: GraphCanvasEvent.Zoom,
           rawEvent: e,
           scale,
-          anchor: getRelativePoint(rect, e)
+          anchor: getRelativePoint(rect, e),
         });
         return;
       }
 
       const dx = isHorizontalScrollDisabled
         ? 0
-        : -normalizeWheelDelta(e.deltaMode, e.shiftKey ? e.deltaY : e.deltaX) * scrollSensitivity;
+        : -normalizeWheelDelta(e.deltaMode, e.shiftKey ? e.deltaY : e.deltaX) *
+          scrollSensitivity;
       const dy =
-        isVerticalScrollDisabled || e.shiftKey ? 0 : -normalizeWheelDelta(e.deltaMode, e.deltaY) * scrollSensitivity;
+        isVerticalScrollDisabled || e.shiftKey
+          ? 0
+          : -normalizeWheelDelta(e.deltaMode, e.deltaY) * scrollSensitivity;
 
       eventChannel.trigger({
         type: GraphCanvasEvent.MouseWheelScroll,
         dx,
         dy,
-        rawEvent: e
+        rawEvent: e,
       });
     };
 
@@ -95,6 +98,6 @@ export const useWheelHandler = (args: IWheelOptions) => {
     isVerticalScrollDisabled,
     graphConfig,
     eventChannel,
-    isCtrlKeyZoomEnable
+    isCtrlKeyZoomEnable,
   ]);
 };

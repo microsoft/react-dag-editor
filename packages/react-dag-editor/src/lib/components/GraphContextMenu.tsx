@@ -14,7 +14,10 @@ interface IProps {
   onClick(evt: React.MouseEvent<HTMLDivElement>): void;
 }
 
-export const GraphContextMenu: React.FunctionComponent<IProps> = ({ state, onClick }) => {
+export const GraphContextMenu: React.FunctionComponent<IProps> = ({
+  state,
+  onClick,
+}) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [style, setStyle] = React.useState<React.CSSProperties>({
     ...defaultStyle,
@@ -73,7 +76,10 @@ export const GraphContextMenu: React.FunctionComponent<IProps> = ({ state, onCli
     // todo port menu
     if (selectedPortsCount + selectedNodesCount + selectedEdgesCount > 1) {
       menu = contextMenuConfig.getMenu(MenuType.Multi);
-    } else if (selectedPortsCount + selectedNodesCount + selectedEdgesCount === 0) {
+    } else if (
+      selectedPortsCount + selectedNodesCount + selectedEdgesCount ===
+      0
+    ) {
       menu = contextMenuConfig.getMenu(MenuType.Canvas);
     } else if (selectedNodesCount === 1) {
       menu = contextMenuConfig.getMenu(MenuType.Node);
@@ -86,15 +92,22 @@ export const GraphContextMenu: React.FunctionComponent<IProps> = ({ state, onCli
     setContent(menu);
   }, [state.data.present, contextMenuConfig]);
 
-  const handleContextMenu: React.MouseEventHandler<HTMLDivElement> = React.useCallback((evt) => {
-    evt.stopPropagation();
-    evt.preventDefault();
-  }, []);
+  const handleContextMenu: React.MouseEventHandler<HTMLDivElement> =
+    React.useCallback((evt) => {
+      evt.stopPropagation();
+      evt.preventDefault();
+    }, []);
 
   return (
     <>
       {state.contextMenuPosition && (
-        <div ref={ref} onClick={onClick} onContextMenu={handleContextMenu} role="button" style={style}>
+        <div
+          ref={ref}
+          onClick={onClick}
+          onContextMenu={handleContextMenu}
+          role="button"
+          style={style}
+        >
           {content}
         </div>
       )}

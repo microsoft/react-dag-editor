@@ -14,12 +14,20 @@ import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { useConst } from "../../hooks/useConst";
 import { useEventChannel } from "../../hooks/useEventChannel";
 import { useFeatureControl } from "../../hooks/useFeatureControl";
-import { GraphCanvasEvent, GraphContextMenuEvent, ICanvasCommonEvent, ICanvasKeyboardEvent } from "../../models/event";
+import {
+  GraphCanvasEvent,
+  GraphContextMenuEvent,
+  ICanvasCommonEvent,
+  ICanvasKeyboardEvent,
+} from "../../models/event";
 import type { IContainerRect, IViewport } from "../../models/geometry";
 import { GraphBehavior } from "../../models/state";
 import { isSelected } from "../../models/status";
 import { isSupported, isViewportComplete } from "../../utils";
-import { defaultGetNodeAriaLabel, defaultGetPortAriaLabel } from "../../utils/a11yUtils";
+import {
+  defaultGetNodeAriaLabel,
+  defaultGetPortAriaLabel,
+} from "../../utils/a11yUtils";
 import { constantEmptyArray } from "../../utils/empty";
 import { getOffsetLimit } from "../../utils/getOffsetLimit";
 import { AlignmentLines } from "../AlignmentLines";
@@ -38,10 +46,13 @@ import { getGraphStyles } from "./Graph.styles";
 import type { IGraphProps } from "./IGraphProps";
 import { SelectBox } from "./SelectBox";
 
-export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown>(
-  props: IGraphProps<NodeData, EdgeData, PortData>
-): React.ReactElement | null {
-  const [focusedWithoutMouse, setFocusedWithoutMouse] = React.useState<boolean>(false);
+export function Graph<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+>(props: IGraphProps<NodeData, EdgeData, PortData>): React.ReactElement | null {
+  const [focusedWithoutMouse, setFocusedWithoutMouse] =
+    React.useState<boolean>(false);
 
   const graphController = useGraphController();
   const { state, dispatch } = useGraphState();
@@ -65,12 +76,18 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const featureControl = useFeatureControl(state.settings.features);
 
   const [curHoverNode, setCurHoverNode] = React.useState<string>();
-  const [curHoverPort, setCurHoverPort] = React.useState<[string, string] | undefined>(undefined);
+  const [curHoverPort, setCurHoverPort] = React.useState<
+    [string, string] | undefined
+  >(undefined);
 
   const containerRef = React.useRef<HTMLDivElement>(null);
   const rectRef = React.useRef<IContainerRect | undefined>(undefined);
 
-  const updateViewport = useUpdateViewportCallback(rectRef, svgRef, eventChannel);
+  const updateViewport = useUpdateViewportCallback(
+    rectRef,
+    svgRef,
+    eventChannel
+  );
 
   useEventChannel({
     props,
@@ -109,7 +126,11 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
 
   const canvasEventHandler =
     <T extends (ICanvasCommonEvent | ICanvasKeyboardEvent)["type"]>(type: T) =>
-    (rawEvent: T extends ICanvasCommonEvent["type"] ? React.SyntheticEvent : React.KeyboardEvent) => {
+    (
+      rawEvent: T extends ICanvasCommonEvent["type"]
+        ? React.SyntheticEvent
+        : React.KeyboardEvent
+    ) => {
       rawEvent.persist();
       eventChannel.trigger({
         type,
@@ -157,13 +178,14 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     [eventChannel, svgRef]
   );
 
-  const onFocusButtonClick: React.MouseEventHandler<HTMLButtonElement> = React.useCallback(() => {
-    setFocusedWithoutMouse(true);
+  const onFocusButtonClick: React.MouseEventHandler<HTMLButtonElement> =
+    React.useCallback(() => {
+      setFocusedWithoutMouse(true);
 
-    if (svgRef.current) {
-      svgRef.current.focus({ preventScroll: true });
-    }
-  }, [svgRef]);
+      if (svgRef.current) {
+        svgRef.current.focus({ preventScroll: true });
+      }
+    }, [svgRef]);
 
   useSafariScale({
     rectRef,
@@ -175,7 +197,9 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
   const touchHandlers = useGraphTouchHandler(rectRef, eventChannel);
 
   if (!isSupported()) {
-    const { onBrowserNotSupported = () => <p>Your browser is not supported</p> } = props;
+    const {
+      onBrowserNotSupported = () => <p>Your browser is not supported</p>,
+    } = props;
     return <>{onBrowserNotSupported()}</>;
   }
 
@@ -192,7 +216,14 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
     if (!port) {
       return null;
     }
-    return <PortTooltips port={port} parentNode={node} data={data} viewport={state.viewport} />;
+    return (
+      <PortTooltips
+        port={port}
+        parentNode={node}
+        data={data}
+        viewport={state.viewport}
+      />
+    );
   };
 
   const renderNodeTooltip = () => {
@@ -202,13 +233,19 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
 
     // do not show tooltip if current node has contextmenu
     const curHoverNodeHasContextMenu =
-      state.contextMenuPosition && curHoverNode === state.data.present.nodes.find(isSelected)?.id;
+      state.contextMenuPosition &&
+      curHoverNode === state.data.present.nodes.find(isSelected)?.id;
 
     if (curHoverNodeHasContextMenu) {
       return null;
     }
 
-    return <NodeTooltips node={data.nodes.get(curHoverNode)} viewport={state.viewport} />;
+    return (
+      <NodeTooltips
+        node={data.nodes.get(curHoverNode)}
+        viewport={state.viewport}
+      />
+    );
   };
 
   return (
@@ -230,7 +267,12 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
       onKeyDown={canvasEventHandler(GraphCanvasEvent.KeyDown)}
       onKeyUp={canvasEventHandler(GraphCanvasEvent.KeyUp)}
     >
-      <button className={classes.buttonA11y} onClick={onFocusButtonClick} accessKey={accessKey} hidden={true} />
+      <button
+        className={classes.buttonA11y}
+        onClick={onFocusButtonClick}
+        accessKey={accessKey}
+        hidden={true}
+      />
       <svg
         tabIndex={0}
         // for IE and Edge
@@ -250,8 +292,16 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
               virtualizationDelay={virtualizationDelay}
               eventChannel={eventChannel}
             >
-              <GraphGroupsRenderer data={data} groups={data.groups ?? constantEmptyArray()} />
-              <EdgeTree graphId={graphId} tree={data.edges} data={data} eventChannel={eventChannel} />
+              <GraphGroupsRenderer
+                data={data}
+                groups={data.groups ?? constantEmptyArray()}
+              />
+              <EdgeTree
+                graphId={graphId}
+                tree={data.edges}
+                data={data}
+                eventChannel={eventChannel}
+              />
               <NodeTree
                 graphId={graphId}
                 isNodeResizable={isNodeResizable}
@@ -259,18 +309,28 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
                 data={data}
                 isNodeEditDisabled={isNodeEditDisabled}
                 eventChannel={eventChannel}
-                getNodeAriaLabel={props.getNodeAriaLabel ?? defaultGetNodeAriaLabel}
-                getPortAriaLabel={props.getPortAriaLabel ?? defaultGetPortAriaLabel}
+                getNodeAriaLabel={
+                  props.getNodeAriaLabel ?? defaultGetNodeAriaLabel
+                }
+                getPortAriaLabel={
+                  props.getPortAriaLabel ?? defaultGetPortAriaLabel
+                }
               />
             </VirtualizationProvider>
           )}
           {state.dummyNodes.isVisible && (
-            <AnimatingNodeGroup dummyNodes={state.dummyNodes} graphData={state.data.present} />
+            <AnimatingNodeGroup
+              dummyNodes={state.dummyNodes}
+              graphData={state.data.present}
+            />
           )}
           <AlignmentLines style={props.styles?.alignmentLine} />
         </Transform>
         {(!isMultiSelectDisabled || isLassoSelectEnable) && (
-          <SelectBox selectBoxPosition={state.selectBoxPosition} style={props.styles?.selectBox} />
+          <SelectBox
+            selectBoxPosition={state.selectBoxPosition}
+            style={props.styles?.selectBox}
+          />
         )}
         {state.connectState && (
           <Connecting
@@ -282,7 +342,9 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
           />
         )}
       </svg>
-      {(!isVerticalScrollDisabled || !isHorizontalScrollDisabled || !isPanDisabled) &&
+      {(!isVerticalScrollDisabled ||
+        !isHorizontalScrollDisabled ||
+        !isPanDisabled) &&
         isLimitBoundary &&
         isViewportComplete(state.viewport) && (
           <Scrollbar
@@ -301,7 +363,11 @@ export function Graph<NodeData = unknown, EdgeData = unknown, PortData = unknown
             eventChannel={eventChannel}
           />
         )}
-      <GraphContextMenu state={state} onClick={onContextMenuClick} data-automation-id="context-menu-container" />
+      <GraphContextMenu
+        state={state}
+        onClick={onContextMenuClick}
+        data-automation-id="context-menu-container"
+      />
       {renderNodeTooltip()}
       {renderPortTooltip()}
     </div>

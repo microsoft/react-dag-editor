@@ -39,34 +39,50 @@ function getHintPoints(
   }
   if (source.x < target.x) {
     if (source.y < target.y) {
-      return yOnRightAxis <= maxY ? { x: maxX, y: yOnRightAxis } : { x: xOnBottomAxis, y: maxY };
+      return yOnRightAxis <= maxY
+        ? { x: maxX, y: yOnRightAxis }
+        : { x: xOnBottomAxis, y: maxY };
     } else {
-      return yOnRightAxis >= minY ? { x: maxX, y: yOnRightAxis } : { x: xOnTopAxis, y: minY };
+      return yOnRightAxis >= minY
+        ? { x: maxX, y: yOnRightAxis }
+        : { x: xOnTopAxis, y: minY };
     }
   }
   if (source.y < target.y) {
-    return xOnBottomAxis > minX ? { x: xOnBottomAxis, y: maxY } : { x: minX, y: yOnLeftAxis };
+    return xOnBottomAxis > minX
+      ? { x: xOnBottomAxis, y: maxY }
+      : { x: minX, y: yOnLeftAxis };
   }
-  return yOnLeftAxis > minY ? { x: minX, y: yOnLeftAxis } : { x: xOnTopAxis, y: minY };
+  return yOnLeftAxis > minY
+    ? { x: minX, y: yOnLeftAxis }
+    : { x: xOnTopAxis, y: minY };
 }
 
 export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
   // eslint-disable-next-line complexity
   (props) => {
-    const { edge, data: graphModel, eventChannel, source, target, graphId } = props;
+    const {
+      edge,
+      data: graphModel,
+      eventChannel,
+      source,
+      target,
+      graphId,
+    } = props;
     const graphConfig = useGraphConfig();
 
     const virtualization = useVirtualization();
     const { viewport, renderedArea, visibleArea } = virtualization;
 
-    const edgeEvent = (type: IEdgeCommonEvent["type"]) => (e: React.SyntheticEvent) => {
-      e.persist();
-      eventChannel.trigger({
-        type,
-        edge,
-        rawEvent: e,
-      });
-    };
+    const edgeEvent =
+      (type: IEdgeCommonEvent["type"]) => (e: React.SyntheticEvent) => {
+        e.persist();
+        eventChannel.trigger({
+          type,
+          edge,
+          rawEvent: e,
+        });
+      };
 
     const isSourceRendered = isPointInRect(renderedArea, source);
     const isTargetRendered = isPointInRect(renderedArea, target);
@@ -92,7 +108,9 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
     }
 
     if (!edgeConfig.render) {
-      Debug.warn(`Missing "render" method in edge config ${JSON.stringify(edge)}`);
+      Debug.warn(
+        `Missing "render" method in edge config ${JSON.stringify(edge)}`
+      );
       return null;
     }
 
@@ -110,9 +128,22 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       viewport,
     });
 
-    if (Bitset.has(GraphEdgeStatus.ConnectedToSelected)(edge.status) && (!isSourceVisible || !isTargetVisible)) {
-      const linearFunction = getLinearFunction(source.x, source.y, target.x, target.y);
-      const inverseLinearFunction = getLinearFunction(source.y, source.x, target.y, target.x);
+    if (
+      Bitset.has(GraphEdgeStatus.ConnectedToSelected)(edge.status) &&
+      (!isSourceVisible || !isTargetVisible)
+    ) {
+      const linearFunction = getLinearFunction(
+        source.x,
+        source.y,
+        target.x,
+        target.y
+      );
+      const inverseLinearFunction = getLinearFunction(
+        source.y,
+        source.x,
+        target.y,
+        target.x
+      );
       const hintSource = isSourceVisible ? source : target;
       const hintTarget = isSourceVisible ? target : source;
       const yOnRightAxis = linearFunction(visibleArea.maxX);

@@ -1,5 +1,11 @@
 import * as React from "react";
-import { IDispatch, IDispatchCallback, IGraphAction, IGraphReactReducer, IGraphReducer } from "../contexts";
+import {
+  IDispatch,
+  IDispatchCallback,
+  IGraphAction,
+  IGraphReactReducer,
+  IGraphReducer,
+} from "../contexts";
 import { createGraphState } from "../createGraphState";
 import { IGraphReducerInitializerParams, IGraphState } from "../models/state";
 import { behaviorReducer } from "../reducers/behaviorReducer";
@@ -27,23 +33,59 @@ const builtinReducer = composeReducers(
     connectingReducer,
     selectionReducer,
     contextMenuReducer,
-  ].map((reducer): IGraphReducer => (next) => (state, action) => next(reducer(state, action), action))
+  ].map(
+    (reducer): IGraphReducer =>
+      (next) =>
+      (state, action) =>
+        next(reducer(state, action), action)
+  )
 );
 
-export function getGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
-  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined = undefined,
-  finalReducer: IGraphReactReducer<NodeData, EdgeData, PortData, Action> = identical
+export function getGraphReducer<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown,
+  Action = never
+>(
+  middleware:
+    | IGraphReducer<NodeData, EdgeData, PortData, Action>
+    | undefined = undefined,
+  finalReducer: IGraphReactReducer<
+    NodeData,
+    EdgeData,
+    PortData,
+    Action
+  > = identical
 ): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
-  const finalMiddleware = middleware ? composeReducers([middleware as IGraphReducer, builtinReducer]) : builtinReducer;
-  return finalMiddleware(finalReducer as IGraphReactReducer) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+  const finalMiddleware = middleware
+    ? composeReducers([middleware as IGraphReducer, builtinReducer])
+    : builtinReducer;
+  return finalMiddleware(
+    finalReducer as IGraphReactReducer
+  ) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
 }
 
-export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
+export function useGraphReducer<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown,
+  Action = never
+>(
   params: IGraphReducerInitializerParams<NodeData, EdgeData, PortData>,
   middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined
-): [IGraphState<NodeData, EdgeData, PortData>, IDispatch<NodeData, EdgeData, PortData, Action>] {
-  const reducer = React.useMemo(() => getGraphReducer(middleware), [middleware]);
-  const [state, dispatchImpl] = React.useReducer(reducer, params, createGraphState);
+): [
+  IGraphState<NodeData, EdgeData, PortData>,
+  IDispatch<NodeData, EdgeData, PortData, Action>
+] {
+  const reducer = React.useMemo(
+    () => getGraphReducer(middleware),
+    [middleware]
+  );
+  const [state, dispatchImpl] = React.useReducer(
+    reducer,
+    params,
+    createGraphState
+  );
   const sideEffects = useConst<IDispatchCallback[]>(() => []);
   const prevStateRef = React.useRef(state);
   const dispatch: IDispatch = React.useCallback(
@@ -51,7 +93,9 @@ export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData
       if (callback) {
         sideEffects.push(callback);
       }
-      dispatchImpl(action as Action | IGraphAction<NodeData, EdgeData, PortData>);
+      dispatchImpl(
+        action as Action | IGraphAction<NodeData, EdgeData, PortData>
+      );
     },
     [sideEffects]
   );

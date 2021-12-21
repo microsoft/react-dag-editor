@@ -22,7 +22,14 @@ export interface IGap {
   readonly right?: number;
 }
 
-export type ITransformMatrix = readonly [number, number, number, number, number, number];
+export type ITransformMatrix = readonly [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number
+];
 
 export type IContainerRect = ClientRect | DOMRect;
 
@@ -37,5 +44,5 @@ export enum Direction {
   /**
    * zoom to fit in the X and Y directions, maybe the scaleX and the scaleY will different
    */
-  XY
+  XY,
 }

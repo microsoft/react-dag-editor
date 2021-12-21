@@ -1,5 +1,9 @@
 import * as React from "react";
-import { INodeFrameProps, SlotsContext, INodeResizeHandlerProps } from "../../contexts/SlotsContext";
+import {
+  INodeFrameProps,
+  SlotsContext,
+  INodeResizeHandlerProps,
+} from "../../contexts/SlotsContext";
 
 const NodeFrame: React.FC<INodeFrameProps> = (props) => {
   const slotsContext = React.useContext(SlotsContext);

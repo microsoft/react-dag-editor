@@ -10,7 +10,7 @@ export enum MenuType {
   Edge = "edge",
   Port = "port",
   Canvas = "canvas",
-  Multi = "multi"
+  Multi = "multi",
 }
 
 export interface IContextMenuConfig {
@@ -38,7 +38,7 @@ export class ContextMenuConfig implements IContextMenuConfig {
         "div",
         {
           className,
-          style: styles
+          style: styles,
         },
         this.contextMenu.get(menuType)
       );

@@ -92,7 +92,12 @@ export class OrderedMap<K, V> implements IMap<K, V> {
       itemId = this.itemId + 1;
       hashRoot = this.hashRoot.insert(temp, key, itemId, hashing(key), 0);
     }
-    const sortedRoot = BTree.rootInsert<number, [K, V]>(temp, this.sortedRoot, itemId, [key, value]);
+    const sortedRoot = BTree.rootInsert<number, [K, V]>(
+      temp,
+      this.sortedRoot,
+      itemId,
+      [key, value]
+    );
     return this.withRoot(this.itemId + 1, hashRoot, sortedRoot);
   }
 
@@ -101,11 +106,15 @@ export class OrderedMap<K, V> implements IMap<K, V> {
     if (!itemId) {
       return this;
     }
-    const sortedRoot = this.sortedRoot.update(uid.peek(), itemId, (prev): [K, V] => {
-      const [prevKey, prevValue] = prev;
-      const value = updater(prevValue);
-      return is(value, prevValue) ? prev : [prevKey, value];
-    });
+    const sortedRoot = this.sortedRoot.update(
+      uid.peek(),
+      itemId,
+      (prev): [K, V] => {
+        const [prevKey, prevValue] = prev;
+        const value = updater(prevValue);
+        return is(value, prevValue) ? prev : [prevKey, value];
+      }
+    );
     return this.withRoot(this.itemId, this.hashRoot, sortedRoot);
   }
 
@@ -118,7 +127,9 @@ export class OrderedMap<K, V> implements IMap<K, V> {
   }
 
   public entries(): IterableIterator<[K, V]> {
-    return new OrderedMapIterator(new BTree.BTreeIterator<number, [K, V]>(this.sortedRoot));
+    return new OrderedMapIterator(
+      new BTree.BTreeIterator<number, [K, V]>(this.sortedRoot)
+    );
   }
 
   public values(): IterableIterator<V> {
@@ -134,7 +145,7 @@ export class OrderedMap<K, V> implements IMap<K, V> {
     const g = (prev: [K, V]): [K, T] => {
       const [key, value0] = prev;
       const value = f(value0, key);
-      return is(value0, value) ? ((prev as unknown) as [K, T]) : [key, value];
+      return is(value0, value) ? (prev as unknown as [K, T]) : [key, value];
     };
     const sortedRoot = this.sortedRoot.map(id, g);
     return new OrderedMap<K, T>(this.itemId, this.hashRoot, sortedRoot);
@@ -200,12 +211,12 @@ export class OrderedMapIterator<K, V> implements IterableIterator<[K, V]> {
     if (next.done) {
       return {
         done: true,
-        value: undefined
+        value: undefined,
       };
     }
     return {
       done: false,
-      value: next.value[1]
+      value: next.value[1],
     };
   }
 
@@ -237,7 +248,9 @@ export class OrderedMapBuilder<K, V> implements IMapBuilder<K, V> {
     return new OrderedMapBuilder<TK, TV>(0, hashRoot, sortedRoot);
   }
 
-  public static from<TK, TV>(iterable: Iterable<[TK, TV]>): OrderedMapBuilder<TK, TV> {
+  public static from<TK, TV>(
+    iterable: Iterable<[TK, TV]>
+  ): OrderedMapBuilder<TK, TV> {
     if (Array.isArray(iterable)) {
       return OrderedMapBuilder.fromArray(iterable);
     }
@@ -252,7 +265,9 @@ export class OrderedMapBuilder<K, V> implements IMapBuilder<K, V> {
     return builder;
   }
 
-  private static fromArray<TK, TV>(list: Array<[TK, TV]>): OrderedMapBuilder<TK, TV> {
+  private static fromArray<TK, TV>(
+    list: Array<[TK, TV]>
+  ): OrderedMapBuilder<TK, TV> {
     const builder = OrderedMapBuilder.empty<TK, TV>();
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < list.length; i += 1) {
@@ -293,9 +308,20 @@ export class OrderedMapBuilder<K, V> implements IMapBuilder<K, V> {
     if (itemId === undefined) {
       itemId = this.itemId + 1;
       this.itemId += 1;
-      this.hashRoot = this.hashRoot.insert(this.id, key, itemId, hashing(key), 0);
+      this.hashRoot = this.hashRoot.insert(
+        this.id,
+        key,
+        itemId,
+        hashing(key),
+        0
+      );
     }
-    this.sortedRoot = BTree.rootInsert<number, [K, V]>(this.id, this.sortedRoot, itemId, [key, value]);
+    this.sortedRoot = BTree.rootInsert<number, [K, V]>(
+      this.id,
+      this.sortedRoot,
+      itemId,
+      [key, value]
+    );
     return this;
   }
 
@@ -304,11 +330,15 @@ export class OrderedMapBuilder<K, V> implements IMapBuilder<K, V> {
     if (!itemId) {
       return this;
     }
-    this.sortedRoot = this.sortedRoot.update(this.id, itemId, (prev): [K, V] => {
-      const [prevKey, prevValue] = prev;
-      const value = updater(prevValue);
-      return is(value, prevValue) ? prev : [prevKey, value];
-    });
+    this.sortedRoot = this.sortedRoot.update(
+      this.id,
+      itemId,
+      (prev): [K, V] => {
+        const [prevKey, prevValue] = prev;
+        const value = updater(prevValue);
+        return is(value, prevValue) ? prev : [prevKey, value];
+      }
+    );
     return this;
   }
 

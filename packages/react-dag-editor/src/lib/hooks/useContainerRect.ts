@@ -1,4 +1,10 @@
-import { MutableRefObject, RefObject, useCallback, useEffect, useLayoutEffect } from "react";
+import {
+  MutableRefObject,
+  RefObject,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 import { GraphCanvasEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
 import { debounce } from "../utils";
@@ -8,14 +14,22 @@ import { noop } from "../utils/noop";
 
 const LIMIT = 20;
 
-const isRectChanged = (a: IContainerRect | undefined, b: IContainerRect | undefined): boolean => {
+const isRectChanged = (
+  a: IContainerRect | undefined,
+  b: IContainerRect | undefined
+): boolean => {
   if (!a || !b) {
     return true;
   }
   if (a === b) {
     return false;
   }
-  return a.top !== b.top || a.left !== b.left || a.width !== b.width || a.height !== b.height;
+  return (
+    a.top !== b.top ||
+    a.left !== b.left ||
+    a.width !== b.width ||
+    a.height !== b.height
+  );
 };
 
 export const useUpdateViewportCallback = (
@@ -29,7 +43,7 @@ export const useUpdateViewportCallback = (
       rectRef.current = viewportRect;
       eventChannel.trigger({
         type: GraphCanvasEvent.ViewportResize,
-        viewportRect
+        viewportRect,
       });
     }
   }, [eventChannel, rectRef, svgRef]);
@@ -87,7 +101,7 @@ export const useContainerRect = (
     }, LIMIT);
     const options: AddEventListenerOptions = {
       capture: true,
-      passive: true
+      passive: true,
     };
     document.body.addEventListener("scroll", listener, options);
     return () => {

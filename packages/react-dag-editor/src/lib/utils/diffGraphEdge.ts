@@ -23,9 +23,9 @@ export const diffGraphEdge = (
 
   const edgeIdSet = new Set();
 
-  smaller.edges.forEach(n => edgeIdSet.add(n.id));
+  smaller.edges.forEach((n) => edgeIdSet.add(n.id));
 
-  const edges = larger.edges.filter(n => !edgeIdSet.has(n.id));
+  const edges = larger.edges.filter((n) => !edgeIdSet.has(n.id));
 
   return { isAdded, edges };
 };

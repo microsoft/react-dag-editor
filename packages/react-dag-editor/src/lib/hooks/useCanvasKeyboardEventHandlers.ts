@@ -13,29 +13,41 @@ export interface IGetCanvasKeyboardEventHandlers {
   setCurHoverPort(value: [string, string] | undefined): void;
 }
 
-export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHandlers) => {
-  const { featureControl, graphConfig, setCurHoverNode, setCurHoverPort, eventChannel } = args;
+export const useCanvasKeyboardEventHandlers = (
+  args: IGetCanvasKeyboardEventHandlers
+) => {
+  const {
+    featureControl,
+    graphConfig,
+    setCurHoverNode,
+    setCurHoverPort,
+    eventChannel,
+  } = args;
 
   const { isDeleteDisabled, isPasteDisabled, isUndoEnabled } = featureControl;
 
   return React.useMemo(() => {
-    const keyDownHandlerMap = new Map<string, React.KeyboardEventHandler<SVGGElement>>();
+    const keyDownHandlerMap = new Map<
+      string,
+      React.KeyboardEventHandler<SVGGElement>
+    >();
 
-    const deleteKeyDownHandler = () => (evt: React.KeyboardEvent<SVGSVGElement>) => {
-      evt.preventDefault();
-      evt.stopPropagation();
+    const deleteKeyDownHandler =
+      () => (evt: React.KeyboardEvent<SVGSVGElement>) => {
+        evt.preventDefault();
+        evt.stopPropagation();
 
-      if (isDeleteDisabled) {
-        return;
-      }
+        if (isDeleteDisabled) {
+          return;
+        }
 
-      eventChannel.trigger({
-        type: GraphCanvasEvent.Delete
-      });
+        eventChannel.trigger({
+          type: GraphCanvasEvent.Delete,
+        });
 
-      setCurHoverNode(undefined);
-      setCurHoverPort(undefined);
-    };
+        setCurHoverNode(undefined);
+        setCurHoverPort(undefined);
+      };
 
     keyDownHandlerMap.set("delete", deleteKeyDownHandler());
     keyDownHandlerMap.set("backspace", deleteKeyDownHandler());
@@ -46,7 +58,7 @@ export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHand
         evt.stopPropagation();
 
         eventChannel.trigger({
-          type: GraphCanvasEvent.Copy
+          type: GraphCanvasEvent.Copy,
         });
       }
     };
@@ -66,7 +78,7 @@ export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHand
         if (data) {
           eventChannel.trigger({
             type: GraphCanvasEvent.Paste,
-            data
+            data,
           });
         }
       }
@@ -81,7 +93,7 @@ export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHand
 
         if (isUndoEnabled) {
           eventChannel.trigger({
-            type: GraphCanvasEvent.Undo
+            type: GraphCanvasEvent.Undo,
           });
         }
       }
@@ -96,7 +108,7 @@ export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHand
 
         if (isUndoEnabled) {
           eventChannel.trigger({
-            type: GraphCanvasEvent.Redo
+            type: GraphCanvasEvent.Redo,
           });
         }
       }
@@ -110,7 +122,7 @@ export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHand
         evt.stopPropagation();
 
         eventChannel.trigger({
-          type: GraphNodeEvent.SelectAll
+          type: GraphNodeEvent.SelectAll,
         });
       }
     };
@@ -154,5 +166,13 @@ export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHand
         handler.call(null, evt);
       }
     };
-  }, [eventChannel, graphConfig, isDeleteDisabled, isPasteDisabled, isUndoEnabled, setCurHoverNode, setCurHoverPort]);
+  }, [
+    eventChannel,
+    graphConfig,
+    isDeleteDisabled,
+    isPasteDisabled,
+    isUndoEnabled,
+    setCurHoverNode,
+    setCurHoverPort,
+  ]);
 };

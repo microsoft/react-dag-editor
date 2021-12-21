@@ -8,12 +8,14 @@ export interface IGraphGroupsRendererProps {
   groups: ICanvasGroup[];
 }
 
-export const GraphGroupsRenderer: React.FC<IGraphGroupsRendererProps> = props => {
+export const GraphGroupsRenderer: React.FC<IGraphGroupsRendererProps> = (
+  props
+) => {
   return (
     <g>
       {React.useMemo(
         () =>
-          props.groups.map(group => {
+          props.groups.map((group) => {
             return <Group key={group.id} group={group} data={props.data} />;
           }),
         [props.groups, props.data]

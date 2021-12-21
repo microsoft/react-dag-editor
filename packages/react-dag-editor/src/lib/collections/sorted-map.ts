@@ -5,7 +5,7 @@ import {
   emptyRoot,
   INode,
   rootInsert,
-  rootRemove
+  rootRemove,
 } from "./b-tree";
 import { IMap, IMapBuilder } from "./common";
 import { Uid } from "./uid";

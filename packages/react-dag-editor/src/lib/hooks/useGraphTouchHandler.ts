@@ -8,7 +8,9 @@ export const useGraphTouchHandler = (
   eventChannel: EventChannel
 ) => {
   return React.useMemo(() => {
-    const touchEvents = new TouchController(new Map().set(2, new TwoFingerHandler(rectRef, eventChannel)));
+    const touchEvents = new TouchController(
+      new Map().set(2, new TwoFingerHandler(rectRef, eventChannel))
+    );
     return touchEvents.eventHandlers;
   }, [rectRef, eventChannel]);
 };

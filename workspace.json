@@ -125,6 +125,66 @@
           }
         }
       }
+    },
+    "typescript-record-codegen": {
+      "root": "packages/typescript-record-codegen",
+      "sourceRoot": "packages/typescript-record-codegen/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/typescript-record-codegen",
+            "main": "packages/typescript-record-codegen/src/main.ts",
+            "tsConfig": "packages/typescript-record-codegen/tsconfig.app.json",
+            "assets": ["packages/typescript-record-codegen/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "packages/typescript-record-codegen/src/environments/environment.ts",
+                  "with": "packages/typescript-record-codegen/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "typescript-record-codegen:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["packages/typescript-record-codegen/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/typescript-record-codegen"],
+          "options": {
+            "jestConfig": "packages/typescript-record-codegen/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "run": {
+          "executor": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              "yarn ts-node --project packages/typescript-record-codegen/tsconfig.json packages/typescript-record-codegen/src/main.ts"
+            ]
+          }
+        }
+      },
+      "tags": []
     }
   }
 }

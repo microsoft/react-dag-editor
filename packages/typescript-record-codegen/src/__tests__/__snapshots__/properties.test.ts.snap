@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should generate properties correctly: input.record.ts 1`] = `
+"class InputRecord {
+    public readonly simple: boolean;
+    public readonly simpleOptional: undefined | symbol;
+    public readonly nullable: undefined | null | string;
+    public readonly hasUndefinedUnion: number | undefined;
+}
+"
+`;

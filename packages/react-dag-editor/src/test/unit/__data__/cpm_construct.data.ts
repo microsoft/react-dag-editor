@@ -47,11 +47,13 @@ const tasksInputTestData = constructInputData();
 export { tasksInputTestData };
 
 const constructOutputData = (): Task => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getSuccessorsSet = (task: any): Set<Task> => {
     const dependenciesSet = new Set<Task>();
     const dependencies = task.dependencies;
 
     if (dependencies.length) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       dependencies.forEach((d: any) => {
         const t = new Task(d.name, d.cost);
         t.earlyFinish = d.earlyFinish;

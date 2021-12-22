@@ -59,20 +59,16 @@ class DefaultPort implements IPortConfig {
     const { x, y } = args;
     const polygonPoints = `${x - 5} ${y}, ${x + 7} ${y}, ${x + 1} ${y + 8}`;
 
-    return (
-      <>
-        {connectedAsTarget ? (
-          <polygon points={polygonPoints} style={style} />
-        ) : (
-          <circle
-            key={`${args.parentNode.id}-${args.model.id}`}
-            r={5}
-            cx={x}
-            cy={y}
-            style={style}
-          />
-        )}
-      </>
+    return connectedAsTarget ? (
+      <polygon points={polygonPoints} style={style} />
+    ) : (
+      <circle
+        key={`${args.parentNode.id}-${args.model.id}`}
+        r={5}
+        cx={x}
+        cy={y}
+        style={style}
+      />
     );
   }
 }

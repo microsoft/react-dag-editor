@@ -25,7 +25,8 @@
             "name": "lodash",
             "message": "Use lodash-es instead"
           }
-        ]
+        ],
+        "array-callback-return": "error"
       }
     },
     {
@@ -33,13 +34,22 @@
       "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {
         "@typescript-eslint/no-empty-interface": "off",
-        "prefer-spread": "off"
+        "prefer-spread": "off",
+        "@typescript-eslint/no-non-null-assertion": "error",
+        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-unused-vars": "error"
       }
     },
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
+    },
+    {
+      "files": ["*.test.ts", "*.test.tsx"],
+      "rules": {
+        "@typescript-eslint/no-non-null-assertion": "warn"
+      }
     }
   ]
 }

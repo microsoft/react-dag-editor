@@ -86,7 +86,7 @@ export class SortedMap<K, V> implements IMap<K, V> {
     return new SortedMap<K, T>(root);
   }
 
-  public filter<T>(predicate: (value: V, key: K) => boolean): SortedMap<K, V> {
+  public filter(predicate: (value: V, key: K) => boolean): SortedMap<K, V> {
     const map = this.mutate();
     this.forEach((value, key) => {
       if (!predicate(value, key)) {

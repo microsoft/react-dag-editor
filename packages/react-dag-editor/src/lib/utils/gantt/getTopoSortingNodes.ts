@@ -19,7 +19,7 @@ export const getTopoSortingNodes = (canvasData: ICanvasData): ICanvasNode[] => {
   const orderOfNodeIds = toposort.array(nodesForTopo, edgesForTopo);
 
   const newNodes: ICanvasNode[] = [];
-  orderOfNodeIds.map((id: string) => {
+  orderOfNodeIds.forEach((id: string) => {
     const node = nodes.find((it) => it.id === id);
     if (node) {
       newNodes.push(node);

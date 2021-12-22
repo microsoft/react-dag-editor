@@ -93,7 +93,7 @@ export const getNearestConnectablePort = (
   return nearestPort;
 };
 
-export const isConnectable = <NodeData, EdgeData, PortData>(
+export const isConnectable = (
   graphConfig: IGraphConfig,
   params: IGetConnectableParams
 ) => {

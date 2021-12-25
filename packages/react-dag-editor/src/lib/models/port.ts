@@ -1,4 +1,5 @@
 import { Properties, ReadonlyProperties, WithPropertiesRecord } from "core";
+import record from "record-class/macro";
 import type { $Complete } from "../utils/complete";
 import type { $Model } from "./model";
 import type { GraphPortStatus } from "./status";
@@ -27,6 +28,7 @@ export interface ICanvasPort extends ICanvasPortInit {
 
 export interface IPortState extends $Model<ICanvasPort> {}
 
+@record
 export class PortModel
   extends WithPropertiesRecord<IPortState, PortModel>
   implements $Complete<IPortState>

@@ -1,4 +1,5 @@
 import { Properties, ReadonlyProperties, WithPropertiesRecord } from "core";
+import record from "record-class/macro";
 import type { $Complete } from "../utils/complete";
 import type { IPoint } from "./geometry";
 import type { PortModel } from "./port";
@@ -23,6 +24,7 @@ export interface INodeModel extends Omit<$Model<ICanvasNode>, "ports"> {
   readonly portPositionCache: Map<string, IPoint>;
 }
 
+@record
 export class NodeModel
   extends WithPropertiesRecord<INodeModel, NodeModel>
   implements $Complete<INodeModel>

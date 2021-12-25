@@ -53,4 +53,35 @@ export class NodeModel
   public getPort(id: string): PortModel | undefined {
     return this.ports?.find((port) => port.id === id);
   }
+
+  public hasPort(id: string): boolean {
+    return Boolean(this.ports?.find((port) => port.id === id));
+  }
+
+  public getPortPosition(portId: string): IPoint | undefined {
+    let point: IPoint | undefined = this.portPositionCache.get(portId);
+    if (!point) {
+      const port = this.getPort(portId);
+      if (!port) {
+        return undefined;
+      }
+      const { width, height } = this;
+      const xOffset = port.position ? port.position[0] * width : width * 0.5;
+      const x = this.x + xOffset;
+      const yOffset = port.position ? port.position[1] * height : height;
+      const y = this.y + yOffset;
+      point = {
+        x,
+        y,
+      };
+      this.portPositionCache.set(portId, point);
+    }
+    return point;
+  }
+
+  public invalidCache(): NodeModel {
+    return this.merge({
+      portPositionCache: new Map(),
+    });
+  }
 }

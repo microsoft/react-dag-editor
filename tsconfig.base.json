@@ -13,7 +13,7 @@
     "strict": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2019", "dom"],
     "baseUrl": ".",
     "paths": {
       "core": ["packages/core/src/index.ts"],

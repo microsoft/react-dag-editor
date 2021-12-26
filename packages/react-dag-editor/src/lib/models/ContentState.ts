@@ -1,7 +1,7 @@
 import { EdgeModel, NodeModel } from "react-dag-editor";
 import { Record } from "record-class";
 import record from "record-class/macro";
-import { HashMap, HashMapBuilder, OrderedMap } from "../collections";
+import { HashMap, OrderedMap } from "../collections";
 
 export type IContentStateUpdate = (
   content: IContentState
@@ -19,8 +19,10 @@ export interface IContentState {
   readonly edgesByTarget: EdgesByPort;
 }
 
-type EdgesByPort = HashMap<string, ReadonlyMap<string, ReadonlySet<string>>>;
-type EdgesByPortMutable = HashMapBuilder<string, Map<string, Set<string>>>;
+export type EdgesByPort = HashMap<
+  string,
+  ReadonlyMap<string, ReadonlySet<string>>
+>;
 
 @record
 export class ContentState

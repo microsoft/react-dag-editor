@@ -25,6 +25,8 @@ export interface IEdgeModel extends ICanvasEdge {
   readonly properties: ReadonlyProperties;
 }
 
+export type IEdgeUpdate = (edge: IEdgeModel) => Partial<IEdgeModel>;
+
 @record
 export class EdgeModel
   extends Record<IEdgeModel, EdgeModel>

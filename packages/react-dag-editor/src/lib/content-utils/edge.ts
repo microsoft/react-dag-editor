@@ -79,3 +79,29 @@ export const insertEdges =
       edgesByTarget: edgesByTarget.finish(),
     };
   };
+
+export const deleteEdges =
+  (edgeIds: string[]): IContentStateUpdate =>
+  (content) => {
+    const nextNodes = content.nodes.mutate();
+    const nextEdges = content.edges.mutate();
+    const edgesBySource = new EdgesMapMutator(content.edgesBySource);
+    const edgesByTarget = new EdgesMapMutator(content.edgesByTarget);
+    edgeIds.forEach((edgeId) => {
+      const edge = nextEdges.get(edgeId);
+      if (!edge) {
+        return;
+      }
+      edgesBySource.deleteEdge(edge.id, edge.source, edge.sourcePortId);
+      edgesByTarget.deleteEdge(edge.id, edge.target, edge.targetPortId);
+      nextNodes
+        .update(edge.source, (node) => node.invalidCache())
+        .update(edge.target, (node) => node.invalidCache());
+    });
+    return {
+      nodes: nextNodes.finish(),
+      edges: nextEdges.finish(),
+      edgesBySource: edgesBySource.finish(),
+      edgesByTarget: edgesByTarget.finish(),
+    };
+  };

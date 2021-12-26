@@ -20,13 +20,20 @@ export class EdgesMapMutator {
     return this;
   }
 
+  public deleteEdge(
+    edgeId: string,
+    nodeId: string,
+    portId: string
+  ): EdgesMapMutator {
+    const edges = this.getEdgesByPort(nodeId, portId);
+    edges.delete(edgeId);
+    return this;
+  }
+
   public finish(): HashMap<string, ReadonlyMap<string, ReadonlySet<string>>> {
     this.source.forEach((ports, nodeId) => {
       ports.forEach((prevEdges, portId) => {
-        const edges = this.getEdgesByPort(nodeId, portId);
-        prevEdges.forEach((edgeId) => {
-          edges.add(edgeId);
-        });
+        this.getEdgesByPort(nodeId, portId);
       });
     });
     const result = this.result.finish();
@@ -42,7 +49,7 @@ export class EdgesMapMutator {
     }
     let port = node.get(portId);
     if (!port) {
-      port = new Set();
+      port = new Set(this.source.get(nodeId)?.get(portId));
       node.set(portId, port);
     }
     return port;

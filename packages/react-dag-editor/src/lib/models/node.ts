@@ -1,4 +1,9 @@
-import { Properties, ReadonlyProperties, WithPropertiesRecord } from "core";
+import {
+  IOrderedEntity,
+  Properties,
+  ReadonlyProperties,
+  WithPropertiesRecord,
+} from "core";
 import record from "record-class/macro";
 import type { $Complete } from "../utils/complete";
 import type { IPoint } from "./geometry";
@@ -19,10 +24,15 @@ export interface ICanvasNode {
   readonly ports?: ReadonlyArray<PortModel>;
 }
 
-export interface INodeModel extends Omit<$Model<ICanvasNode>, "ports"> {
+export interface INodeModel
+  extends Omit<$Model<ICanvasNode>, "ports">,
+    IOrderedEntity {
   readonly ports?: ReadonlyArray<PortModel>;
   readonly portPositionCache: Map<string, IPoint>;
 }
+
+export type INodeUpdate = (node: INodeModel) => INodeModel;
+export type INodeComputed<T> = (node: NodeModel) => T;
 
 @record
 export class NodeModel
@@ -41,6 +51,8 @@ export class NodeModel
   public readonly ports: ReadonlyArray<PortModel> | undefined = undefined;
   public readonly properties: Properties = new Properties();
   public readonly portPositionCache = new Map<string, IPoint>();
+  public readonly prev: string | undefined = undefined;
+  public readonly next: string | undefined = undefined;
 
   public $$create(partial: Partial<INodeModel>): NodeModel {
     return new NodeModel(partial);

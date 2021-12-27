@@ -14,17 +14,19 @@
           "test",
           "e2e",
           "build-storybook"
-        ]
+        ],
+        "parallel": 1
       }
     }
   },
-  "projects": {
-    "react-dag-editor": {
-      "tags": []
-    },
-    "react-dag-editor-e2e": {
-      "tags": [],
-      "implicitDependencies": ["react-dag-editor"]
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
     }
   }
 }

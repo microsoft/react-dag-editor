@@ -19,6 +19,6 @@ export function preventSpread(obj: object): void {
         );
       }
       return undefined;
-    }
+    },
   });
 }

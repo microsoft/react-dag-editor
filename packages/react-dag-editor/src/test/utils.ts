@@ -143,7 +143,7 @@ export const mockClientRect: DOMRect = {
   right: 900,
   bottom: 700,
   left: 100,
-  toJSON(): any {
+  toJSON(): DOMRect {
     return this;
   },
 };

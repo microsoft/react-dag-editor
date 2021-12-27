@@ -15,18 +15,25 @@ interface IConnectingProps {
   movingPoint: IPoint | undefined;
 }
 
-export const Connecting = React.memo<IConnectingProps>(props => {
+export const Connecting = React.memo<IConnectingProps>((props) => {
   const { styles, graphConfig, viewport, movingPoint } = props;
-  const { sourcePort, sourceNode, targetPort, targetNode } = useConnectingState();
+  const { sourcePort, sourceNode, targetPort, targetNode } =
+    useConnectingState();
   if (!sourceNode || !sourcePort) {
     return null;
   }
-  const sourcePortPosition = sourceNode.getPortPosition(sourcePort.id, graphConfig);
+  const sourcePortPosition = sourceNode.getPortPosition(
+    sourcePort.id,
+    graphConfig
+  );
   let targetPortPosition: IPoint | undefined;
   let isAttach = false;
   if (targetNode && targetPort) {
     isAttach = true;
-    targetPortPosition = targetNode?.getPortPosition(targetPort.id, graphConfig);
+    targetPortPosition = targetNode?.getPortPosition(
+      targetPort.id,
+      graphConfig
+    );
   } else {
     targetPortPosition = sourcePortPosition;
   }
@@ -34,15 +41,23 @@ export const Connecting = React.memo<IConnectingProps>(props => {
   if (!sourcePortPosition || !targetPortPosition) {
     return null;
   }
-  const sourcePoint = transformPoint(sourcePortPosition.x, sourcePortPosition.y, viewport.transformMatrix);
-  const targetPoint = transformPoint(targetPortPosition.x, targetPortPosition.y, viewport.transformMatrix);
+  const sourcePoint = transformPoint(
+    sourcePortPosition.x,
+    sourcePortPosition.y,
+    viewport.transformMatrix
+  );
+  const targetPoint = transformPoint(
+    targetPortPosition.x,
+    targetPortPosition.y,
+    viewport.transformMatrix
+  );
   const connectingLine: ILine = movingPoint
     ? {
         x1: sourcePoint.x,
         y1: sourcePoint.y,
         x2: movingPoint.x,
         y2: movingPoint.y,
-        visible: !isAttach
+        visible: !isAttach,
       }
     : emptyLine();
   const autoAttachLine: ILine = {
@@ -50,9 +65,15 @@ export const Connecting = React.memo<IConnectingProps>(props => {
     y1: sourcePoint.y,
     x2: targetPoint.x,
     y2: targetPoint.y,
-    visible: isAttach
+    visible: isAttach,
   };
-  return <ConnectingLine connectingLine={connectingLine} autoAttachLine={autoAttachLine} styles={styles} />;
+  return (
+    <ConnectingLine
+      connectingLine={connectingLine}
+      autoAttachLine={autoAttachLine}
+      styles={styles}
+    />
+  );
 });
 
 Connecting.displayName = "Connecting";

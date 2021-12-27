@@ -1,16 +1,35 @@
-import { DefaultClipboard, defaultPort, DefaultStorage, line, rect } from "../../built-in";
+import {
+  DefaultClipboard,
+  defaultPort,
+  DefaultStorage,
+  line,
+  rect,
+} from "../../built-in";
 import { defaultGroup } from "../../built-in/defaultGroup";
 import { GraphConfig } from "./GraphConfig";
-import type { IEdgeConfig, IGraphClipboard, IGroupConfig, INodeConfig, IPortConfig } from "./types";
+import type {
+  IEdgeConfig,
+  IGraphClipboard,
+  IGroupConfig,
+  INodeConfig,
+  IPortConfig,
+} from "./types";
 
-export class GraphConfigBuilder<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+export class GraphConfigBuilder<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> {
   private defaultEdgeShape: string;
   private defaultNodeShape: string;
   private defaultPortShape: string;
   private defaultGroupShape: string;
   private readonly nodeConfigMap: Map<string, INodeConfig<NodeData, PortData>>;
   private readonly edgeConfigMap: Map<string, IEdgeConfig<EdgeData>>;
-  private readonly portConfigMap: Map<string, IPortConfig<NodeData, EdgeData, PortData>>;
+  private readonly portConfigMap: Map<
+    string,
+    IPortConfig<NodeData, EdgeData, PortData>
+  >;
   private readonly groupConfigMap: Map<string, IGroupConfig>;
   private clipboard: IGraphClipboard<NodeData, EdgeData, PortData>;
 
@@ -64,22 +83,30 @@ export class GraphConfigBuilder<NodeData = unknown, EdgeData = unknown, PortData
     );
   }
 
-  public withDefaultEdgeShape(shape: string): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultEdgeShape(
+    shape: string
+  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
     this.defaultEdgeShape = shape;
     return this;
   }
 
-  public withDefaultNodeShape(shape: string): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultNodeShape(
+    shape: string
+  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
     this.defaultNodeShape = shape;
     return this;
   }
 
-  public withDefaultPortShape(shape: string): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultPortShape(
+    shape: string
+  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
     this.defaultPortShape = shape;
     return this;
   }
 
-  public withDefaultGroupShape(shape: string): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultGroupShape(
+    shape: string
+  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
     this.defaultGroupShape = shape;
     return this;
   }
@@ -99,7 +126,10 @@ export class GraphConfigBuilder<NodeData = unknown, EdgeData = unknown, PortData
     return this;
   }
 
-  public registerEdge(name: string, config: IEdgeConfig<EdgeData>): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public registerEdge(
+    name: string,
+    config: IEdgeConfig<EdgeData>
+  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
     this.edgeConfigMap.set(name, config);
     return this;
   }
@@ -112,7 +142,10 @@ export class GraphConfigBuilder<NodeData = unknown, EdgeData = unknown, PortData
     return this;
   }
 
-  public registerGroup(name: string, config: IGroupConfig): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public registerGroup(
+    name: string,
+    config: IGroupConfig
+  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
     this.groupConfigMap.set(name, config);
     return this;
   }

@@ -15,12 +15,16 @@ interface IPortTooltipsProps {
   viewport: Required<IViewport>;
 }
 
-export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = (props) => {
+export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = (
+  props
+) => {
   const graphConfig = useGraphConfig();
 
   const { parentNode, port, viewport } = props;
 
-  const isPortTooltipsVisible = Bitset.has(GraphPortStatus.Activated)(port.status);
+  const isPortTooltipsVisible = Bitset.has(GraphPortStatus.Activated)(
+    port.status
+  );
 
   if (!isPortTooltipsVisible) {
     return null;

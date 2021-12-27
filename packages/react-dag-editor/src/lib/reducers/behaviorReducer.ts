@@ -1,11 +1,19 @@
 import { IGraphReactReducer } from "../contexts";
-import { GraphCanvasEvent, GraphEdgeEvent, GraphNodeEvent, IEvent } from "../models/event";
+import {
+  GraphCanvasEvent,
+  GraphEdgeEvent,
+  GraphNodeEvent,
+  IEvent,
+} from "../models/event";
 import { GraphBehavior } from "../models/state";
 
 /**
  * this function is used both in useEventChannel and behaviorReducer to share the same logic
  */
-export const handleBehaviorChange = (prevBehavior: GraphBehavior, event: IEvent): GraphBehavior => {
+export const handleBehaviorChange = (
+  prevBehavior: GraphBehavior,
+  event: IEvent
+): GraphBehavior => {
   switch (event.type) {
     case GraphNodeEvent.DragStart:
       return GraphBehavior.Dragging;

@@ -1,19 +1,44 @@
 import { v4 as uuid } from "uuid";
-import { EMPTY_CONNECT_STATE, IGraphReactReducer } from "../contexts/GraphStateContext";
+import {
+  EMPTY_CONNECT_STATE,
+  IGraphReactReducer,
+} from "../contexts/GraphStateContext";
 import { ICanvasEdge } from "../models/edge";
-import { GraphEdgeEvent, GraphNodeEvent, GraphPortEvent } from "../models/event";
+import {
+  GraphEdgeEvent,
+  GraphNodeEvent,
+  GraphPortEvent,
+} from "../models/event";
 import { IGraphState } from "../models/state";
-import { GraphEdgeStatus, GraphPortStatus, updateStatus } from "../models/status";
-import { getNearestConnectablePort, isConnectable, isViewportComplete, pushHistory, unSelectAllEntity } from "../utils";
+import {
+  GraphEdgeStatus,
+  GraphPortStatus,
+  updateStatus,
+} from "../models/status";
+import {
+  getNearestConnectablePort,
+  isConnectable,
+  isViewportComplete,
+  pushHistory,
+  unSelectAllEntity,
+} from "../utils";
 import * as Bitset from "../utils/bitset";
 import { nextConnectablePort } from "../utils/a11yUtils";
 
-function attachPort(state: IGraphState, nodeId: string, portId: string): IGraphState {
+function attachPort(
+  state: IGraphState,
+  nodeId: string,
+  portId: string
+): IGraphState {
   if (!state.connectState) {
     return state;
   }
   let data = state.data.present;
-  data = data.updatePort(nodeId, portId, updateStatus(Bitset.add(GraphPortStatus.ConnectingAsTarget)));
+  data = data.updatePort(
+    nodeId,
+    portId,
+    updateStatus(Bitset.add(GraphPortStatus.ConnectingAsTarget))
+  );
   if (state.connectState.targetNode && state.connectState.targetPort) {
     data = data.updatePort(
       state.connectState.targetNode,
@@ -42,7 +67,11 @@ function clearAttach(state: IGraphState): IGraphState {
   let data = state.data.present;
   const { targetPort, targetNode } = state.connectState;
   if (targetNode && targetPort) {
-    data = data.updatePort(targetNode, targetPort, updateStatus(Bitset.remove(GraphPortStatus.ConnectingAsTarget)));
+    data = data.updatePort(
+      targetNode,
+      targetPort,
+      updateStatus(Bitset.remove(GraphPortStatus.ConnectingAsTarget))
+    );
   }
   return {
     ...state,
@@ -59,7 +88,10 @@ function clearAttach(state: IGraphState): IGraphState {
 }
 
 // eslint-disable-next-line complexity
-export const connectingReducer: IGraphReactReducer = (state, action): IGraphState => {
+export const connectingReducer: IGraphReactReducer = (
+  state,
+  action
+): IGraphState => {
   if (!isViewportComplete(state.viewport)) {
     return state;
   }
@@ -105,9 +137,14 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
     case GraphEdgeEvent.ConnectEnd:
       if (state.connectState) {
         const { edgeWillAdd, isCancel } = action;
-        const { sourceNode, sourcePort, targetNode, targetPort } = state.connectState;
+        const { sourceNode, sourcePort, targetNode, targetPort } =
+          state.connectState;
         let data = state.data.present;
-        data = data.updatePort(sourceNode, sourcePort, updateStatus(Bitset.replace(GraphPortStatus.Default)));
+        data = data.updatePort(
+          sourceNode,
+          sourcePort,
+          updateStatus(Bitset.replace(GraphPortStatus.Default))
+        );
         if (!isCancel && targetNode && targetPort) {
           let edge: ICanvasEdge = {
             source: sourceNode,
@@ -123,7 +160,11 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
           }
           data = data
             .insertEdge(edge)
-            .updatePort(targetNode, targetPort, updateStatus(Bitset.replace(GraphPortStatus.Default)));
+            .updatePort(
+              targetNode,
+              targetPort,
+              updateStatus(Bitset.replace(GraphPortStatus.Default))
+            );
           return {
             ...state,
             connectState: undefined,
@@ -145,7 +186,9 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
         const data = state.data.present;
         const sourceNode = data.nodes.get(state.connectState.sourceNode);
         const sourcePort = sourceNode?.getPort(state.connectState.sourcePort);
-        const targetNode = state.connectState.targetNode ? data.nodes.get(state.connectState.targetNode) : undefined;
+        const targetNode = state.connectState.targetNode
+          ? data.nodes.get(state.connectState.targetNode)
+          : undefined;
         const targetPort = state.connectState.targetPort
           ? targetNode?.getPort(state.connectState.targetPort)
           : undefined;
@@ -156,7 +199,11 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
           anotherNode: sourceNode,
           anotherPort: sourcePort,
         })(data, targetNode || sourceNode, targetPort);
-        if (!next.node || !next.port || (next.node.id === sourceNode.id && next.port.id === sourcePort.id)) {
+        if (
+          !next.node ||
+          !next.port ||
+          (next.node.id === sourceNode.id && next.port.id === sourcePort.id)
+        ) {
           return state;
         }
         return attachPort(state, next.node.id, next.port.id);
@@ -220,7 +267,10 @@ export const connectingReducer: IGraphReactReducer = (state, action): IGraphStat
       }
       return state;
     case GraphPortEvent.PointerLeave:
-      if (state.connectState?.targetNode === action.node.id && state.connectState?.targetPort === action.port.id) {
+      if (
+        state.connectState?.targetNode === action.node.id &&
+        state.connectState?.targetPort === action.port.id
+      ) {
         return clearAttach(state);
       }
       return state;

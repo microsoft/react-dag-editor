@@ -3,7 +3,12 @@ import { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { GraphCanvasEvent } from "../models/event";
 import { GraphNodeStatus, notSelected } from "../models/status";
-import { getRealPointFromClientPoint, isViewportComplete, resetUndoStack, unSelectAllEntity } from "../utils";
+import {
+  getRealPointFromClientPoint,
+  isViewportComplete,
+  resetUndoStack,
+  unSelectAllEntity,
+} from "../utils";
 import { pushHistory, redo, undo } from "../utils/history";
 
 export const canvasReducer: IGraphReactReducer = (state, action) => {
@@ -17,7 +22,11 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
       let pasteNodes = action.data.nodes;
 
       if (position && rect) {
-        const realPoint = getRealPointFromClientPoint(position.x, position.y, state.viewport);
+        const realPoint = getRealPointFromClientPoint(
+          position.x,
+          position.y,
+          state.viewport
+        );
 
         let dx: number;
         let dy: number;

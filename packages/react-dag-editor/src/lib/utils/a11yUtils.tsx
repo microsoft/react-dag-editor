@@ -2,7 +2,10 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { VisitPortHelper } from "../components/A11yHelpers/VisitPortHelper";
 import type { GraphController } from "../controllers/GraphController";
-import type { IGetConnectableParams, IGraphConfig } from "../models/config/types";
+import type {
+  IGetConnectableParams,
+  IGraphConfig,
+} from "../models/config/types";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
 
 import type { GraphModel } from "../models/GraphModel";
@@ -17,14 +20,24 @@ export interface INextItem {
   port: ICanvasPort | undefined;
 }
 
-const item = (node: NodeModel | undefined = undefined, port: ICanvasPort | undefined = undefined): INextItem => ({
+const item = (
+  node: NodeModel | undefined = undefined,
+  port: ICanvasPort | undefined = undefined
+): INextItem => ({
   node,
-  port
+  port,
 });
 
-export type TGetNextItemHandler = (data: GraphModel, node: NodeModel, portId?: ICanvasPort) => INextItem;
+export type TGetNextItemHandler = (
+  data: GraphModel,
+  node: NodeModel,
+  portId?: ICanvasPort
+) => INextItem;
 
-export const findDOMElement = (svg: SVGSVGElement, { node, port }: INextItem): Element | null => {
+export const findDOMElement = (
+  svg: SVGSVGElement,
+  { node, port }: INextItem
+): Element | null => {
   let id: string;
   if (node && port) {
     id = getPortUid(svg.dataset.graphId ?? "", node, port);
@@ -54,21 +67,23 @@ export const focusItem = (
       type: GraphCanvasEvent.Navigate,
       node: nextItem.node,
       port: nextItem.port,
-      rawEvent: evt
+      rawEvent: evt,
     });
   } else if (!nextItem.node && !nextItem.port) {
     eventChannel.trigger({
       type: GraphCanvasEvent.Navigate,
       node: nextItem.node,
       port: nextItem.port,
-      rawEvent: evt
+      rawEvent: evt,
     });
   }
 };
 
 export const getNextItem: TGetNextItemHandler = (data, curNode, port) => {
   if (curNode.ports) {
-    const portIndex = port ? curNode.ports.findIndex(p => p.id === port.id) : -1;
+    const portIndex = port
+      ? curNode.ports.findIndex((p) => p.id === port.id)
+      : -1;
     const nextPortIndex = portIndex + 1;
     if (nextPortIndex < curNode.ports.length) {
       return item(curNode, curNode.ports[nextPortIndex]);
@@ -84,7 +99,7 @@ export const getNextItem: TGetNextItemHandler = (data, curNode, port) => {
 
 export const getPrevItem: TGetNextItemHandler = (data, curNode, port) => {
   if (port && curNode.ports) {
-    const prevPortIndex = curNode.ports.findIndex(p => p.id === port.id) - 1;
+    const prevPortIndex = curNode.ports.findIndex((p) => p.id === port.id) - 1;
     if (prevPortIndex >= 0) {
       return item(curNode, curNode.ports[prevPortIndex]);
     }
@@ -94,41 +109,47 @@ export const getPrevItem: TGetNextItemHandler = (data, curNode, port) => {
   if (prevNode) {
     return item(
       prevNode,
-      prevNode.ports && prevNode.ports.length ? prevNode.ports[prevNode.ports.length - 1] : undefined
+      prevNode.ports && prevNode.ports.length
+        ? prevNode.ports[prevNode.ports.length - 1]
+        : undefined
     );
   }
 
   return item();
 };
 
-export const nextConnectablePort = (
-  graphConfig: IGraphConfig,
-  params: Omit<IGetConnectableParams, "model" | "parentNode" | "data">
-): TGetNextItemHandler => (data, node, port?) => {
-  let next = getNextItem(data, node, port);
-  while (!(next.node?.id === node.id && next.port?.id === port?.id)) {
-    if (!next.node) {
-      next = item(data.getNavigationFirstNode());
-    } else if (next.port) {
-      const portShape = next.port.shape ? next.port.shape : graphConfig.defaultPortShape;
+export const nextConnectablePort =
+  (
+    graphConfig: IGraphConfig,
+    params: Omit<IGetConnectableParams, "model" | "parentNode" | "data">
+  ): TGetNextItemHandler =>
+  (data, node, port?) => {
+    let next = getNextItem(data, node, port);
+    while (!(next.node?.id === node.id && next.port?.id === port?.id)) {
+      if (!next.node) {
+        next = item(data.getNavigationFirstNode());
+      } else if (next.port) {
+        const portShape = next.port.shape
+          ? next.port.shape
+          : graphConfig.defaultPortShape;
 
-      if (
-        graphConfig.getPortConfigByName(portShape)?.getIsConnectable({
-          ...params,
-          data,
-          parentNode: next.node,
-          model: next.port
-        })
-      ) {
-        return next;
+        if (
+          graphConfig.getPortConfigByName(portShape)?.getIsConnectable({
+            ...params,
+            data,
+            parentNode: next.node,
+            model: next.port,
+          })
+        ) {
+          return next;
+        }
       }
-    }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    next = getNextItem(data, next.node!, next.port);
-  }
-  return item();
-};
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      next = getNextItem(data, next.node!, next.port);
+    }
+    return item();
+  };
 
 export const focusNextPort = (
   ports: readonly ICanvasPort[],
@@ -138,7 +159,7 @@ export const focusNextPort = (
   evt: React.KeyboardEvent,
   eventChannel: EventChannel
 ): void => {
-  const curPortIndex = ports.findIndex(p => p.id === curPortId);
+  const curPortIndex = ports.findIndex((p) => p.id === curPortId);
   const nextPortIndex = (curPortIndex + 1) % ports.length;
   const nextPort = ports[nextPortIndex];
 
@@ -155,7 +176,7 @@ export const focusPrevPort = (
   evt: React.KeyboardEvent,
   eventChannel: EventChannel
 ): void => {
-  const curPortIndex = ports.findIndex(p => p.id === curPortId);
+  const curPortIndex = ports.findIndex((p) => p.id === curPortId);
   const prevPortIndex = (curPortIndex - 1 + ports.length) % ports.length;
   const prevPort = ports[prevPortIndex];
 
@@ -164,39 +185,49 @@ export const focusPrevPort = (
   }
 };
 
-export const getFocusNodeHandler = (compareFn?: (a: ICanvasNode, b: ICanvasNode) => number) => (
-  data: GraphModel,
-  curNodeId: string,
-  svgRef: React.RefObject<SVGSVGElement>,
-  graphController: GraphController,
-  evt: React.KeyboardEvent,
-  eventChannel: EventChannel
-): void => {
-  const sortedNodes = Array.from(data.nodes.values()).sort(compareFn);
-  const curNodeIndex = sortedNodes.findIndex(n => n.id === curNodeId);
-  const nextNode = sortedNodes[(curNodeIndex + 1) % sortedNodes.length];
+export const getFocusNodeHandler =
+  (compareFn?: (a: ICanvasNode, b: ICanvasNode) => number) =>
+  (
+    data: GraphModel,
+    curNodeId: string,
+    svgRef: React.RefObject<SVGSVGElement>,
+    graphController: GraphController,
+    evt: React.KeyboardEvent,
+    eventChannel: EventChannel
+  ): void => {
+    const sortedNodes = Array.from(data.nodes.values()).sort(compareFn);
+    const curNodeIndex = sortedNodes.findIndex((n) => n.id === curNodeId);
+    const nextNode = sortedNodes[(curNodeIndex + 1) % sortedNodes.length];
 
-  if (nextNode && svgRef.current) {
-    graphController.dispatch({
-      type: GraphNodeEvent.Select,
-      nodes: [nextNode.id]
-    });
-    graphController.dispatch({
-      type: GraphNodeEvent.Centralize,
-      nodes: [nextNode.id]
-    });
+    if (nextNode && svgRef.current) {
+      graphController.dispatch({
+        type: GraphNodeEvent.Select,
+        nodes: [nextNode.id],
+      });
+      graphController.dispatch({
+        type: GraphNodeEvent.Centralize,
+        nodes: [nextNode.id],
+      });
 
-    focusItem(svgRef, { node: nextNode, port: undefined }, evt, eventChannel);
-  }
-};
+      focusItem(svgRef, { node: nextNode, port: undefined }, evt, eventChannel);
+    }
+  };
 
-export const focusLeftNode = getFocusNodeHandler((n1, n2) => n1.x * 10 + n1.y - n2.x * 10 - n2.y);
+export const focusLeftNode = getFocusNodeHandler(
+  (n1, n2) => n1.x * 10 + n1.y - n2.x * 10 - n2.y
+);
 
-export const focusRightNode = getFocusNodeHandler((n1, n2) => n2.x * 10 + n2.y - n1.x * 10 - n1.y);
+export const focusRightNode = getFocusNodeHandler(
+  (n1, n2) => n2.x * 10 + n2.y - n1.x * 10 - n1.y
+);
 
-export const focusDownNode = getFocusNodeHandler((n1, n2) => n1.x + n1.y * 10 - n2.x - n2.y * 10);
+export const focusDownNode = getFocusNodeHandler(
+  (n1, n2) => n1.x + n1.y * 10 - n2.x - n2.y * 10
+);
 
-export const focusUpNode = getFocusNodeHandler((n1, n2) => n2.x + n2.y * 10 - n1.x - n1.y * 10);
+export const focusUpNode = getFocusNodeHandler(
+  (n1, n2) => n2.x + n2.y * 10 - n1.x - n1.y * 10
+);
 
 export const goToConnectedPort = (
   data: GraphModel,
@@ -215,18 +246,27 @@ export const goToConnectedPort = (
       return;
     }
 
-    const targetPort = targetNode.ports?.find(p => p.id === neighborPorts[0].portId);
+    const targetPort = targetNode.ports?.find(
+      (p) => p.id === neighborPorts[0].portId
+    );
 
     if (!targetPort) {
       return;
     }
 
-    focusItem(svgRef, { node: targetNode, port: targetPort }, evt, eventChannel);
+    focusItem(
+      svgRef,
+      { node: targetNode, port: targetPort },
+      evt,
+      eventChannel
+    );
   } else if (neighborPorts.length > 1 && svgRef.current) {
     const onComplete = (nextPort: { nodeId: string; portId: string }) => {
       ReactDOM.unmountComponentAtNode(visitPortHelperContainer);
       if (svgRef.current) {
-        const curEditorContainer = svgRef.current.closest(".react-dag-editor-container");
+        const curEditorContainer = svgRef.current.closest(
+          ".react-dag-editor-container"
+        );
 
         if (curEditorContainer) {
           curEditorContainer.removeChild(visitPortHelperContainer);
@@ -239,18 +279,27 @@ export const goToConnectedPort = (
         return;
       }
 
-      const targetPort = targetNode.ports?.find(p => p.id === nextPort.portId);
+      const targetPort = targetNode.ports?.find(
+        (p) => p.id === nextPort.portId
+      );
 
       if (!targetPort) {
         return;
       }
 
-      focusItem(svgRef, { node: targetNode, port: targetPort }, evt, eventChannel);
+      focusItem(
+        svgRef,
+        { node: targetNode, port: targetPort },
+        evt,
+        eventChannel
+      );
     };
 
     const visitPortHelperContainer = document.createElement("div");
 
-    const editorContainer = svgRef.current.closest(".react-dag-editor-container");
+    const editorContainer = svgRef.current.closest(
+      ".react-dag-editor-container"
+    );
 
     if (editorContainer) {
       editorContainer.appendChild(visitPortHelperContainer);
@@ -278,7 +327,11 @@ export const goToConnectedPort = (
  *
  * @returns port arial label
  */
-export function defaultGetPortAriaLabel(data: GraphModel, node: NodeModel, port: ICanvasPort): string | undefined {
+export function defaultGetPortAriaLabel(
+  data: GraphModel,
+  node: NodeModel,
+  port: ICanvasPort
+): string | undefined {
   return port.ariaLabel;
 }
 

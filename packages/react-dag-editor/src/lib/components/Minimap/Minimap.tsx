@@ -1,12 +1,23 @@
 import * as React from "react";
 import { defaultColors } from "../../common/constants";
-import { DragController, ITouchHandler, TouchController } from "../../controllers";
+import {
+  DragController,
+  ITouchHandler,
+  TouchController,
+} from "../../controllers";
 import { TouchDragAdapter } from "../../controllers/TouchDragAdapter";
 import { EMPTY_TRANSFORM_MATRIX } from "../../createGraphState";
 import { MouseMoveEventProvider } from "../../event-provider/MouseMoveEventProvider";
-import { IEventProvider, IGlobalMoveEventTypes } from "../../event-provider/types";
+import {
+  IEventProvider,
+  IGlobalMoveEventTypes,
+} from "../../event-provider/types";
 import { useGraphData, useMinimapRect } from "../../hooks";
-import { useGraphConfig, useGraphController, useViewport } from "../../hooks/context";
+import {
+  useGraphConfig,
+  useGraphController,
+  useViewport,
+} from "../../hooks/context";
 import { useRefValue } from "../../hooks/useRefValue";
 import { GraphCanvasEvent, GraphMinimapEvent } from "../../models/event";
 import { ITransformMatrix } from "../../models/geometry";
@@ -109,9 +120,17 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
 
     const boundaryPoints = getVisibleArea(graphViewport);
 
-    const { x: startX, y: startY } = transformPoint(boundaryPoints.minX, boundaryPoints.minY, minimapTransformMatrix);
+    const { x: startX, y: startY } = transformPoint(
+      boundaryPoints.minX,
+      boundaryPoints.minY,
+      minimapTransformMatrix
+    );
 
-    const { x: endX, y: endY } = transformPoint(boundaryPoints.maxX, boundaryPoints.maxY, minimapTransformMatrix);
+    const { x: endX, y: endY } = transformPoint(
+      boundaryPoints.maxX,
+      boundaryPoints.maxY,
+      minimapTransformMatrix
+    );
 
     return {
       startX,
@@ -120,7 +139,12 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
       endY,
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rect, minimapTransformMatrix, graphViewport.rect, ...graphViewport.transformMatrix]);
+  }, [
+    rect,
+    minimapTransformMatrix,
+    graphViewport.rect,
+    ...graphViewport.transformMatrix,
+  ]);
 
   const onClick = React.useCallback(
     (evt: React.MouseEvent) => {
@@ -186,7 +210,11 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
         };
       });
       drag.onMove = ({ dx, dy, e }) => {
-        const { x, y } = getPointDeltaByClientDelta(-dx, -dy, minimapTransformMatrixRef.current);
+        const { x, y } = getPointDeltaByClientDelta(
+          -dx,
+          -dy,
+          minimapTransformMatrixRef.current
+        );
         graphController.eventChannel.trigger({
           type: GraphMinimapEvent.Pan,
           dx: x,
@@ -241,7 +269,10 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
 
   const onMouseDown: React.MouseEventHandler = React.useCallback(
     (evt) => {
-      onStartDrag(evt.nativeEvent, new MouseMoveEventProvider(graphController.getGlobalEventTarget()));
+      onStartDrag(
+        evt.nativeEvent,
+        new MouseMoveEventProvider(graphController.getGlobalEventTarget())
+      );
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [onStartDrag]
@@ -273,7 +304,10 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
   }
 
   return (
-    <div className={`minimap-container ${classes.minimap}`} style={minimapContainerStyle}>
+    <div
+      className={`minimap-container ${classes.minimap}`}
+      style={minimapContainerStyle}
+    >
       {staticGraphEl}
       <svg
         className={classes.minimapSvg}
@@ -282,7 +316,12 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
         ref={svgRef}
         data-automation-id="minimap-id"
       >
-        <MiniMapShadow containerRect={rect} viewport={viewport} shadowPadding={shadowPadding} onClick={onClick} />
+        <MiniMapShadow
+          containerRect={rect}
+          viewport={viewport}
+          shadowPadding={shadowPadding}
+          onClick={onClick}
+        />
       </svg>
       {arrowParams.showArrow && renderArrow(arrowParams.arrowDeg)}
     </div>

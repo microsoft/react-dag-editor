@@ -13,10 +13,12 @@ export const EMPTY_CONNECT_CONTEXT: IConnectingStateContext = {
   sourceNode: undefined,
   sourcePort: undefined,
   targetNode: undefined,
-  targetPort: undefined
+  targetPort: undefined,
 };
 
-const ConnectingStateContext = createContext<IConnectingStateContext>(EMPTY_CONNECT_CONTEXT);
+const ConnectingStateContext = createContext<IConnectingStateContext>(
+  EMPTY_CONNECT_CONTEXT
+);
 
 ConnectingStateContext.displayName = "ConnectingStateContext";
 

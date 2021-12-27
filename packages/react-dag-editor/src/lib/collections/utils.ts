@@ -20,7 +20,7 @@ export class MapIterator<T, U> implements IterableIterator<U> {
     }
     return {
       done: false,
-      value: this.f(next.value)
+      value: this.f(next.value),
     };
   }
 }

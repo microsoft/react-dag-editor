@@ -23,9 +23,9 @@ export const diffGraphNode = (
 
   const nodeIdSet = new Set();
 
-  smaller.nodes.forEach(n => nodeIdSet.add(n.id));
+  smaller.nodes.forEach((n) => nodeIdSet.add(n.id));
 
-  const nodes = larger.nodes.filter(n => !nodeIdSet.has(n.id));
+  const nodes = larger.nodes.filter((n) => !nodeIdSet.has(n.id));
 
   return { isAdded, nodes };
 };

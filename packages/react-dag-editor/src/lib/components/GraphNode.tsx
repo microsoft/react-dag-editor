@@ -1,7 +1,11 @@
 /* eslint-disable react/jsx-no-bind */
 import * as React from "react";
 import { useGraphConfig } from "../hooks/context";
-import { GraphNodeEvent, INodeCommonEvent, INodeContextMenuEvent } from "../models/event";
+import {
+  GraphNodeEvent,
+  INodeCommonEvent,
+  INodeContextMenuEvent,
+} from "../models/event";
 import { IViewport } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { getNodeAutomationId, getNodeConfig, getNodeUid } from "../utils";
@@ -30,7 +34,8 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = (props) => {
   const nodeConfig = getNodeConfig(node, graphConfig);
 
   const nodeEvent =
-    (type: (INodeCommonEvent | INodeContextMenuEvent)["type"]) => (evt: React.SyntheticEvent | React.MouseEvent) => {
+    (type: (INodeCommonEvent | INodeContextMenuEvent)["type"]) =>
+    (evt: React.SyntheticEvent | React.MouseEvent) => {
       evt.persist();
       const e = {
         type,

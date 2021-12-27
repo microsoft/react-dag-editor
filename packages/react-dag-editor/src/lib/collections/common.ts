@@ -21,7 +21,7 @@ export interface IMap<K, V> extends Iterable<[K, V]> {
   values(): IterableIterator<V>;
   mutate(): IMapBuilder<K, V>;
   map<T>(f: (value: V) => T): IMap<K, T>;
-  filter<T>(predicate: (value: V, key: K) => boolean): IMap<K, V>;
+  filter(predicate: (value: V, key: K) => boolean): IMap<K, V>;
   forEach(f: (value: V, key: K) => void): void;
   find(predicate: (value: V) => boolean): V | undefined;
 }

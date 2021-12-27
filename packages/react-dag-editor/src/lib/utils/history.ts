@@ -11,14 +11,18 @@ export interface IHistory<T> {
   future: IHistoryNode<T> | null;
 }
 
-export const pushHistory = <T>(history: IHistory<T>, data: T, mapPresent: (value: T) => T = identical): IHistory<T> => {
+export const pushHistory = <T>(
+  history: IHistory<T>,
+  data: T,
+  mapPresent: (value: T) => T = identical
+): IHistory<T> => {
   return {
     present: data,
     past: {
       next: history.past,
-      value: mapPresent(history.present)
+      value: mapPresent(history.present),
     },
-    future: null
+    future: null,
   };
 };
 
@@ -31,8 +35,8 @@ export const undo = <T>(history: IHistory<T>): IHistory<T> => {
     past: history.past.next,
     future: {
       next: history.future,
-      value: history.present
-    }
+      value: history.present,
+    },
   };
 };
 
@@ -44,9 +48,9 @@ export const redo = <T>(history: IHistory<T>): IHistory<T> => {
     present: history.future.value,
     past: {
       next: history.past,
-      value: history.present
+      value: history.present,
     },
-    future: history.future.next
+    future: history.future.next,
   };
 };
 
@@ -54,7 +58,7 @@ export const resetUndoStack = <T>(data: T): IHistory<T> => {
   return {
     present: data,
     future: null,
-    past: null
+    past: null,
   };
 };
 

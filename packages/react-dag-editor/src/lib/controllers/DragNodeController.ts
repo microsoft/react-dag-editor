@@ -21,7 +21,12 @@ export class DragNodeController extends DragController {
     if (!rect || !this.lastEvent) {
       return;
     }
-    if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
+    if (
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
+    ) {
       this.mouseMove(this.lastEvent);
     }
   }

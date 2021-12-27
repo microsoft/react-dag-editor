@@ -65,5 +65,5 @@ export const defaultColors = {
   dummyNodeStroke: "#015cda",
   inputFocusBorderAlt: "#0078d4",
   buttonBorder: "#797775",
-  scrollbarColor: "#c8c8c8"
+  scrollbarColor: "#c8c8c8",
 };

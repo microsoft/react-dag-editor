@@ -129,7 +129,12 @@ function zoomToFit(
   };
 }
 
-const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings: IGraphSettings): IViewport => {
+const reducer = (
+  viewport: IViewport,
+  action: IEvent,
+  data: GraphModel,
+  settings: IGraphSettings
+): IViewport => {
   const { graphConfig, canvasBoundaryPadding, features } = settings;
   const limitScale = (scale: number) => {
     return Math.max(scale, getScaleLimit(data, settings));
@@ -204,7 +209,11 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
       return zoomToFit(viewport, data, settings, action);
     case GraphCanvasEvent.ScrollIntoView:
       if (viewport.rect) {
-        const { x, y } = transformPoint(action.x, action.y, viewport.transformMatrix);
+        const { x, y } = transformPoint(
+          action.x,
+          action.y,
+          viewport.transformMatrix
+        );
         return scrollIntoView(x, y, viewport.rect, true)(viewport);
       }
       return viewport;
@@ -214,7 +223,12 @@ const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings
 };
 
 export const viewportReducer: IGraphReactReducer = (state, action) => {
-  const viewport = reducer(state.viewport, action, state.data.present, state.settings);
+  const viewport = reducer(
+    state.viewport,
+    action,
+    state.data.present,
+    state.settings
+  );
   return viewport === state.viewport
     ? state
     : {

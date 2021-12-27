@@ -55,7 +55,7 @@ function hashString(str: string): number {
  * @param n
  */
 function hashNumber(n: number): number {
-  if (n !== n || n === Infinity) {
+  if (!isFinite(n)) {
     return 0;
   }
   let hash = n | 0;

@@ -8,7 +8,11 @@ import { NodeModel } from "../../models/NodeModel";
 import { ICanvasPort } from "../../models/port";
 import { CanvasMouseMode } from "../../models/state";
 
-export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+export interface IGraphProps<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> {
   /**
    * Title of the svg
    */
@@ -85,7 +89,10 @@ export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = 
   /**
    * Triggered before add an edge
    */
-  edgeWillAdd?(edge: ICanvasEdge<EdgeData>, data: GraphModel<NodeData, EdgeData, PortData>): ICanvasEdge;
+  edgeWillAdd?(
+    edge: ICanvasEdge<EdgeData>,
+    data: GraphModel<NodeData, EdgeData, PortData>
+  ): ICanvasEdge;
 
   /**
    * Custom overrides the nodes aria-label

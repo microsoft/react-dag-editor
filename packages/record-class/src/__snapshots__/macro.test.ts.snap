@@ -2,11 +2,11 @@
 
 exports[`macro-record-class ignore fields that are not public readonly: ignore fields that are not public readonly 1`] = `
 
-import { Record } from "../lib/record";
+import { RecordBase } from "../lib/record";
 import record from "./proxy.macro";
 
 @record
-export class SomeRecord extends Record<SomeRecord, SomeRecord> {
+export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
   public field1?: string = "";
   private readonly field2 = false;
 
@@ -17,8 +17,8 @@ export class SomeRecord extends Record<SomeRecord, SomeRecord> {
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import { Record } from "../lib/record";
-export class SomeRecord extends Record {
+import { RecordBase } from "../lib/record";
+export class SomeRecord extends RecordBase {
   field1 = "";
   field2 = false;
 
@@ -45,11 +45,11 @@ export class SomeRecord extends Record {
 
 exports[`macro-record-class simple: simple 1`] = `
 
-import { Record } from "../lib/record";
+import { RecordBase } from "../lib/record";
 import record from "./proxy.macro";
 
 @record
-export class SomeRecord extends Record<SomeRecord, SomeRecord> {
+export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
   public readonly name?: string = "";
 
   constructor(partial: Partial<SomeRecord>) {
@@ -67,8 +67,8 @@ export class SomeRecord extends Record<SomeRecord, SomeRecord> {
 
       ↓ ↓ ↓ ↓ ↓ ↓
 
-import { Record } from "../lib/record";
-export class SomeRecord extends Record {
+import { RecordBase } from "../lib/record";
+export class SomeRecord extends RecordBase {
   name;
 
   constructor(partial) {

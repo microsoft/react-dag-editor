@@ -1,8 +1,8 @@
-import { Record } from "../lib/record";
+import { RecordBase } from "../lib/record";
 import record from "./proxy.macro";
 
 @record
-export class SomeRecord extends Record<SomeRecord, SomeRecord> {
+export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
   public field1?: string = "";
   private readonly field2 = false;
 

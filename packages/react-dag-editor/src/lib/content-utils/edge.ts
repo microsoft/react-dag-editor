@@ -1,15 +1,15 @@
-import {
-  IContentStateComputed,
+import type {
+  IContentStateApplicable,
   IContentStateUpdate,
 } from "../models/ContentState";
-import { EdgeModel } from "../models/edge";
+import type { EdgeModel } from "../models/edge";
 import { EdgesMapMutator } from "./edges-map-mutator";
 
 export const getEdgesBySource =
   (
     nodeId: string,
     portId: string
-  ): IContentStateComputed<ReadonlySet<string> | undefined> =>
+  ): IContentStateApplicable<ReadonlySet<string> | undefined> =>
   (content) => {
     return content.edgesBySource.get(nodeId)?.get(portId);
   };
@@ -18,7 +18,7 @@ export const getEdgesByTarget =
   (
     nodeId: string,
     portId: string
-  ): IContentStateComputed<ReadonlySet<string> | undefined> =>
+  ): IContentStateApplicable<ReadonlySet<string> | undefined> =>
   (content) => {
     return content.edgesByTarget.get(nodeId)?.get(portId);
   };
@@ -29,10 +29,10 @@ export const isEdgeExist =
     sourcePortId: string,
     target: string,
     targetPortId: string
-  ): IContentStateComputed<boolean> =>
+  ): IContentStateApplicable<boolean> =>
   (content) => {
-    const sources = content.computed(getEdgesBySource(source, sourcePortId));
-    const targets = content.computed(getEdgesByTarget(target, targetPortId));
+    const sources = content.apply(getEdgesBySource(source, sourcePortId));
+    const targets = content.apply(getEdgesByTarget(target, targetPortId));
     if (!sources || !targets) {
       return false;
     }

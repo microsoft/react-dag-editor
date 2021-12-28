@@ -1,14 +1,23 @@
 import {
-  IContentStateComputed,
+  ContentState,
+  IContentStateApplicable,
   IContentStateUpdate,
-  INodeUpdate,
-  markEdgeDirty,
-  NodeModel,
-} from "react-dag-editor";
-import { ContentState } from "../models/ContentState";
+} from "../models/ContentState";
+import { INodeUpdate, NodeModel } from "../models/node";
+import {
+  GraphEdgeStatus,
+  GraphNodeStatus,
+  GraphPortStatus,
+  isSelected,
+  resetConnectStatus,
+  updateStatus,
+} from "../models/status";
+import { updatePorts } from "../node-utils";
+import { markEdgeDirty } from "../utils";
+import * as Bitset from "../utils/bitset";
 
 export const getFirstNode =
-  (): IContentStateComputed<NodeModel | undefined> =>
+  (): IContentStateApplicable<NodeModel | undefined> =>
   (content: ContentState) => {
     if (!content.firstNode) {
       return undefined;
@@ -19,7 +28,7 @@ export const getFirstNode =
 export const updateNode =
   (id: string, f: INodeUpdate): IContentStateUpdate =>
   (content) => {
-    const nodes = content.nodes.update(id, (node) => node.pipe([f]));
+    const nodes = content.nodes.update(id, (node) => node.pipe(f));
     if (nodes === content.nodes) {
       return content;
     }
@@ -60,5 +69,81 @@ export const insertNode =
       nodes: nodes.finish(),
       head: content.nodes.size === 0 ? node.id : content.firstNode,
       tail: node.id,
+    };
+  };
+
+export const selectNodes =
+  (
+    predicate: (node: NodeModel) => boolean,
+    topNode?: string
+  ): IContentStateUpdate =>
+  (content) => {
+    const selected = new Set<string>();
+    const nodes = content.nodes
+      .map((node) => {
+        const isNodeSelected = predicate(node);
+        if (isNodeSelected) {
+          selected.add(node.id);
+        }
+        return node.pipe(
+          updatePorts(updateStatus(Bitset.replace(GraphPortStatus.Default))),
+          updateStatus(
+            resetConnectStatus(
+              isNodeSelected
+                ? GraphNodeStatus.Selected
+                : GraphNodeStatus.UnconnectedToSelected
+            )
+          )
+        );
+      })
+      .mutate();
+
+    if (selected.size === 0) {
+      content.nodes.forEach((n) =>
+        nodes.update(n.id, (it) =>
+          it.pipe(updateStatus(Bitset.replace(GraphNodeStatus.Default)))
+        )
+      );
+    } else if (topNode) {
+      const n = nodes.get(topNode);
+      if (n) {
+        nodes.delete(topNode);
+        nodes.set(n.id, n);
+      }
+    }
+
+    const setConnected = (id: string) => {
+      nodes.update(id, (node) =>
+        node.pipe(
+          updateStatus(
+            Bitset.replace(
+              isSelected(node)
+                ? GraphNodeStatus.Selected
+                : GraphNodeStatus.ConnectedToSelected
+            )
+          )
+        )
+      );
+    };
+    const edges = selected.size
+      ? content.edges.map((edge) => {
+          let state = GraphEdgeStatus.UnconnectedToSelected;
+          if (selected.has(edge.source)) {
+            setConnected(edge.target);
+            state = GraphEdgeStatus.ConnectedToSelected;
+          }
+          if (selected.has(edge.target)) {
+            setConnected(edge.source);
+            state = GraphEdgeStatus.ConnectedToSelected;
+          }
+          return edge.pipe(updateStatus(Bitset.replace(state)));
+        })
+      : content.edges.map((edge) =>
+          edge.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
+        );
+    return {
+      nodes: nodes.finish(),
+      edges,
+      selectedNodes: selected,
     };
   };

@@ -21,3 +21,4 @@ export * from "./lib/models/config/types";
 export * from "./lib/createGraphState";
 
 export * as ContentUtils from "./lib/content-utils";
+export * as NodeUtils from "./lib/node-utils";

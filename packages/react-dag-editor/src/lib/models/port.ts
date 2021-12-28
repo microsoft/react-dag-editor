@@ -1,4 +1,5 @@
 import { Properties, ReadonlyProperties, WithPropertiesRecord } from "core";
+import { IRecordApplicable } from "record-class";
 import record from "record-class/macro";
 import type { $Complete } from "../utils/complete";
 import type { $Model } from "./model";
@@ -26,12 +27,15 @@ export interface ICanvasPort extends ICanvasPortInit {
   readonly position: readonly [number, number];
 }
 
-export interface IPortState extends $Model<ICanvasPort> {}
+export interface IPortModel extends $Model<ICanvasPort> {}
+
+export type IPortUpdate = (node: IPortModel) => Partial<IPortModel>;
+export type IPortApplicable<T> = IRecordApplicable<PortModel, T>;
 
 @record
 export class PortModel
-  extends WithPropertiesRecord<IPortState, PortModel>
-  implements $Complete<IPortState>
+  extends WithPropertiesRecord<IPortModel, PortModel>
+  implements $Complete<IPortModel>
 {
   public readonly id!: string;
   public readonly name!: string;
@@ -43,7 +47,7 @@ export class PortModel
   public readonly position!: readonly [number, number];
   public readonly properties: Properties = new Properties();
 
-  public $$create(partial: Partial<IPortState>): PortModel {
+  public $$create(partial: Partial<IPortModel>): PortModel {
     return new PortModel(partial);
   }
 

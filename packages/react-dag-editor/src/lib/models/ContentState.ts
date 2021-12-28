@@ -1,13 +1,14 @@
-import { EdgeModel, NodeModel } from "react-dag-editor";
-import { Record } from "record-class";
+import { IRecordApplicable, RecordBase } from "record-class";
 import record from "record-class/macro";
 import { HashMap, OrderedMap } from "../collections";
+import { EdgeModel } from "./edge";
+import { NodeModel } from "./node";
 
 export type IContentStateUpdate = (
   content: IContentState
 ) => Partial<IContentState>;
 
-export type IContentStateComputed<T> = (content: ContentState) => T;
+export type IContentStateApplicable<T> = IRecordApplicable<ContentState, T>;
 
 export interface IContentState {
   readonly nodes: OrderedMap<string, NodeModel>;
@@ -26,7 +27,7 @@ export type EdgesByPort = HashMap<
 
 @record
 export class ContentState
-  extends Record<IContentState, ContentState>
+  extends RecordBase<IContentState, ContentState>
   implements IContentState
 {
   public readonly nodes: OrderedMap<string, NodeModel> = OrderedMap.empty();
@@ -39,9 +40,5 @@ export class ContentState
 
   protected $$create(partial: Partial<IContentState>): ContentState {
     return new ContentState(partial);
-  }
-
-  public computed<T>(f: IContentStateComputed<T>) {
-    return f(this);
   }
 }

@@ -1,4 +1,4 @@
-import { Record as RecordBase } from "record-class";
+import { RecordBase } from "record-class";
 
 export class Property<T> {
   private declare readonly __phantomData: T;

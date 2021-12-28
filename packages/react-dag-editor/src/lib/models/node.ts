@@ -4,6 +4,7 @@ import {
   ReadonlyProperties,
   WithPropertiesRecord,
 } from "core";
+import { IRecordApplicable } from "record-class";
 import record from "record-class/macro";
 import type { $Complete } from "../utils/complete";
 import type { IPoint } from "./geometry";
@@ -31,8 +32,8 @@ export interface INodeModel
   readonly portPositionCache: Map<string, IPoint>;
 }
 
-export type INodeUpdate = (node: INodeModel) => INodeModel;
-export type INodeComputed<T> = (node: NodeModel) => T;
+export type INodeUpdate = (node: INodeModel) => Partial<INodeModel>;
+export type INodeApplicable<T> = IRecordApplicable<NodeModel, T>;
 
 @record
 export class NodeModel

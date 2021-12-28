@@ -1,6 +1,6 @@
-import { Properties, ReadonlyProperties } from "core";
 import { RecordBase } from "record-class";
 import record from "record-class/macro";
+import { Properties, ReadonlyProperties } from "../property";
 import { $Complete } from "../utils/complete";
 import type { GraphEdgeStatus } from "./status";
 

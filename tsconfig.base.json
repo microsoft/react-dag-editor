@@ -16,7 +16,6 @@
     "lib": ["es2019", "dom"],
     "baseUrl": ".",
     "paths": {
-      "core": ["packages/core/src/index.ts"],
       "react-dag-editor": ["packages/react-dag-editor/src/index.ts"]
     }
   },

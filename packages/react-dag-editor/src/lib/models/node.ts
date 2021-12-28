@@ -1,11 +1,11 @@
+import { IRecordApplicable } from "record-class";
+import record from "record-class/macro";
 import {
-  IOrderedEntity,
+  IWithPropertiesRecord,
   Properties,
   ReadonlyProperties,
   WithPropertiesRecord,
-} from "core";
-import { IRecordApplicable } from "record-class";
-import record from "record-class/macro";
+} from "../property";
 import type { $Complete } from "../utils/complete";
 import type { IPoint } from "./geometry";
 import type { PortModel } from "./port";
@@ -27,9 +27,11 @@ export interface ICanvasNode {
 
 export interface INodeModel
   extends Omit<$Model<ICanvasNode>, "ports">,
-    IOrderedEntity {
+    IWithPropertiesRecord {
   readonly ports?: ReadonlyArray<PortModel>;
   readonly portPositionCache: Map<string, IPoint>;
+  readonly prev: string | undefined;
+  readonly next: string | undefined;
 }
 
 export type INodeUpdate = (node: INodeModel) => Partial<INodeModel>;

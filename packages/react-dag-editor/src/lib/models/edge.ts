@@ -1,5 +1,5 @@
 import { Properties, ReadonlyProperties } from "core";
-import { Record } from "record-class";
+import { RecordBase } from "record-class";
 import record from "record-class/macro";
 import { $Complete } from "../utils/complete";
 import type { GraphEdgeStatus } from "./status";
@@ -29,7 +29,7 @@ export type IEdgeUpdate = (edge: IEdgeModel) => Partial<IEdgeModel>;
 
 @record
 export class EdgeModel
-  extends Record<IEdgeModel, EdgeModel>
+  extends RecordBase<IEdgeModel, EdgeModel>
   implements $Complete<IEdgeModel>
 {
   public readonly id!: string;

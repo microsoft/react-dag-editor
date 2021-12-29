@@ -40,7 +40,7 @@ export class Properties extends Map<string, unknown> {
   }
 
   public toJSON(): Partial<Record<string, unknown>> {
-    return Object.fromEntries(this);
+    return Object.fromEntries(this.entries());
   }
 }
 

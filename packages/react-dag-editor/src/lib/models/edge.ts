@@ -48,10 +48,10 @@ export class EdgeModel
   public readonly automationId: string | undefined = undefined;
   public readonly properties: ReadonlyProperties = new Properties();
 
-  public static fromJSON(value: ICanvasEdge | IEdgeModel): EdgeModel {
+  public static fromJSON(source: ICanvasEdge | IEdgeModel): EdgeModel {
     return new EdgeModel({
-      ...value,
-      properties: Properties.from(value.properties),
+      ...source,
+      properties: Properties.from(source.properties),
     });
   }
 

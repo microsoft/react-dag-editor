@@ -1,6 +1,8 @@
 import { IRecordApplicable, RecordBase } from "record-class";
 import record from "record-class/macro";
 import { HashMap, OrderedMap } from "../collections";
+import { insertFragment } from "../content-utils/content";
+import { ICanvasData } from "./canvas";
 import { EdgeModel } from "./edge";
 import { NodeModel } from "./node";
 
@@ -38,7 +40,20 @@ export class ContentState
   public readonly edgesByTarget: EdgesByPort = HashMap.empty();
   public readonly selectedNodes: ReadonlySet<string> = new Set();
 
-  protected $$create(partial: Partial<IContentState>): ContentState {
+  public static empty(): ContentState {
+    return new ContentState({});
+  }
+
+  public static fromJSON(source: ICanvasData) {
+    return ContentState.empty().pipe(
+      insertFragment(source, {
+        alwaysRegenerateId: false,
+        selectInsertedNodes: false,
+      })
+    );
+  }
+
+  protected override $$create(partial: Partial<IContentState>): ContentState {
     return new ContentState(partial);
   }
 }

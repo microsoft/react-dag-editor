@@ -52,10 +52,10 @@ export class PortModel
   public readonly position!: readonly [number, number];
   public readonly properties: Properties = new Properties();
 
-  public static fromJSON(value: ICanvasPort | IPortModel): PortModel {
+  public static fromJSON(source: ICanvasPort | IPortModel): PortModel {
     return new PortModel({
-      ...value,
-      properties: Properties.from(value.properties),
+      ...source,
+      properties: Properties.from(source.properties),
     });
   }
 

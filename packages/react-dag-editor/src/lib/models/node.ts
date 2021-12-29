@@ -54,10 +54,10 @@ export class NodeModel
   public readonly prev: string | undefined = undefined;
   public readonly next: string | undefined = undefined;
 
-  public static fromJSON(value: ICanvasNode | INodeModel): NodeModel {
+  public static fromJSON(source: ICanvasNode | INodeModel): NodeModel {
     return new NodeModel({
-      ...value,
-      properties: Properties.from(value.properties),
+      ...source,
+      properties: Properties.from(source.properties),
     });
   }
 

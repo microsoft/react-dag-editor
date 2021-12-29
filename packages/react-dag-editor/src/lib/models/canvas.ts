@@ -1,6 +1,6 @@
-import { ICanvasEdge } from "./edge";
+import { ICanvasEdge, IEdgeModel } from "./edge";
 import { IGap } from "./geometry";
-import { ICanvasNode } from "./node";
+import { ICanvasNode, INodeModel } from "./node";
 
 export interface ICanvasGroup {
   id: string;
@@ -12,12 +12,8 @@ export interface ICanvasGroup {
   shape?: string;
 }
 
-export interface ICanvasData<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
-  readonly nodes: ReadonlyArray<ICanvasNode<NodeData, PortData>>;
-  readonly edges: ReadonlyArray<ICanvasEdge<EdgeData>>;
-  readonly groups?: ICanvasGroup[];
+export interface ICanvasData {
+  readonly nodes: ReadonlyArray<ICanvasNode | INodeModel>;
+  readonly edges: ReadonlyArray<ICanvasEdge | IEdgeModel>;
+  // readonly groups?: ICanvasGroup[]; // TODO
 }

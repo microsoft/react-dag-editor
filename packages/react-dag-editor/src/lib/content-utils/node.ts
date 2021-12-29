@@ -1,4 +1,4 @@
-import { lift } from "record-class";
+import { lift, liftMerge } from "record-class";
 import { IContentState, IContentStateUpdate } from "../models/ContentState";
 import { INodeUpdate, NodeModel } from "../models/node";
 import {
@@ -10,7 +10,6 @@ import {
   liftStatus,
 } from "../models/status";
 import { liftPorts } from "../node-utils";
-import { markEdgeDirty } from "../utils";
 import * as Bitset from "../utils/bitset";
 
 export const getFirstNode = (content: IContentState) => {
@@ -21,22 +20,21 @@ export const getFirstNode = (content: IContentState) => {
 };
 
 export const updateNode =
-  (id: string, f: INodeUpdate): IContentStateUpdate =>
+  (nodeId: string, f: INodeUpdate): IContentStateUpdate =>
   (content) => {
-    const nodes = content.nodes.update(id, lift(f));
+    const nodes = content.nodes.update(nodeId, lift(f));
     if (nodes === content.nodes) {
       return content;
     }
     const edges = content.edges.mutate();
-    content.edgesBySource.get(id)?.forEach((edgeIds) => {
-      edgeIds.forEach((edgeId) => {
-        markEdgeDirty(edges, edgeId);
-      });
+    const markEdgeDirty = (edgeId: string) => {
+      edges.update(edgeId, liftMerge({}));
+    };
+    content.edgesBySource.get(nodeId)?.forEach((edgeIds) => {
+      edgeIds.forEach(markEdgeDirty);
     });
-    content.edgesByTarget.get(id)?.forEach((edgeIds) => {
-      edgeIds.forEach((edgeId) => {
-        markEdgeDirty(edges, edgeId);
-      });
+    content.edgesByTarget.get(nodeId)?.forEach((edgeIds) => {
+      edgeIds.forEach(markEdgeDirty);
     });
     return {
       nodes,

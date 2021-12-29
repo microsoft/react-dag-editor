@@ -33,10 +33,14 @@ export class SomeRecord extends RecordBase {
   }
 
   pipe(list) {
-    let next = {};
+    let next = this.toJSON();
     list.forEach((f) => {
       Object.assign(next, f(next));
     });
+  }
+
+  toJSON() {
+    return {};
   }
 }
 
@@ -94,12 +98,16 @@ export class SomeRecord extends RecordBase {
   }
 
   pipe(list) {
-    let next = {
-      name: this.name,
-    };
+    let next = this.toJSON();
     list.forEach((f) => {
       Object.assign(next, f(next));
     });
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+    };
   }
 }
 

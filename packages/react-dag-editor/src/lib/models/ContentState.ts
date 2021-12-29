@@ -1,7 +1,7 @@
 import { IRecordApplicable, RecordBase } from "record-class";
 import record from "record-class/macro";
 import { HashMap, OrderedMap } from "../collections";
-import { insertFragment } from "../content-utils/content";
+import { insertFragment } from "../content-utils";
 import { ICanvasData } from "./canvas";
 import { EdgeModel } from "./edge";
 import { NodeModel } from "./node";

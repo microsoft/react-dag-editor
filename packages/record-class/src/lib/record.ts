@@ -7,6 +7,7 @@ export abstract class RecordBase<Interface, Class extends Interface> {
     ...list: ((value: Interface) => Partial<Interface>)[]
   ) => Class;
   public declare merge: (partial: Partial<Interface>) => Class;
+  public declare toJSON: () => Interface;
   private declare $$initialize: (partial: Partial<Interface>) => void;
 
   protected abstract $$create(partial: Partial<Interface>): Class;

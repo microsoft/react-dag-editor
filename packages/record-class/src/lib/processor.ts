@@ -28,10 +28,13 @@ const methodsTemplate = template(`
       return this.$$create(MERGE)
     }
     pipe(list) {
-      let next = FIELDS;
+      let next = this.toJSON();
       list.forEach(f => {
         Object.assign(next, f(next))
       })
+    }
+    toJSON() {
+      return TO_JSON;
     }
   }
 `);
@@ -108,7 +111,7 @@ export class Processor {
     const klass = methodsTemplate({
       INITIALIZE,
       MERGE: t.objectExpression(mergeProperties),
-      FIELDS: t.objectExpression(fieldsProperties),
+      TO_JSON: t.objectExpression(fieldsProperties),
     });
     if (Array.isArray(klass) || klass.type !== "ClassDeclaration") {
       throw new Error();

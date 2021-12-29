@@ -10,11 +10,7 @@ import {
   GraphPortEvent,
 } from "../models/event";
 import { IGraphState } from "../models/state";
-import {
-  GraphEdgeStatus,
-  GraphPortStatus,
-  updateStatus,
-} from "../models/status";
+import { GraphEdgeStatus, GraphPortStatus, liftStatus } from "../models/status";
 import {
   getNearestConnectablePort,
   isConnectable,
@@ -37,13 +33,13 @@ function attachPort(
   data = data.updatePort(
     nodeId,
     portId,
-    updateStatus(Bitset.add(GraphPortStatus.ConnectingAsTarget))
+    liftStatus(Bitset.add(GraphPortStatus.ConnectingAsTarget))
   );
   if (state.connectState.targetNode && state.connectState.targetPort) {
     data = data.updatePort(
       state.connectState.targetNode,
       state.connectState.targetPort,
-      updateStatus(Bitset.remove(GraphPortStatus.ConnectingAsTarget))
+      liftStatus(Bitset.remove(GraphPortStatus.ConnectingAsTarget))
     );
   }
   return {
@@ -70,7 +66,7 @@ function clearAttach(state: IGraphState): IGraphState {
     data = data.updatePort(
       targetNode,
       targetPort,
-      updateStatus(Bitset.remove(GraphPortStatus.ConnectingAsTarget))
+      liftStatus(Bitset.remove(GraphPortStatus.ConnectingAsTarget))
     );
   }
   return {
@@ -116,7 +112,7 @@ export const connectingReducer: IGraphReactReducer = (
           present: state.data.present.updatePort(
             action.nodeId,
             action.portId,
-            updateStatus(Bitset.add(GraphPortStatus.Connecting))
+            liftStatus(Bitset.add(GraphPortStatus.Connecting))
           ),
         },
       };
@@ -143,7 +139,7 @@ export const connectingReducer: IGraphReactReducer = (
         data = data.updatePort(
           sourceNode,
           sourcePort,
-          updateStatus(Bitset.replace(GraphPortStatus.Default))
+          liftStatus(Bitset.replace(GraphPortStatus.Default))
         );
         if (!isCancel && targetNode && targetPort) {
           let edge: ICanvasEdge = {
@@ -163,7 +159,7 @@ export const connectingReducer: IGraphReactReducer = (
             .updatePort(
               targetNode,
               targetPort,
-              updateStatus(Bitset.replace(GraphPortStatus.Default))
+              liftStatus(Bitset.replace(GraphPortStatus.Default))
             );
           return {
             ...state,

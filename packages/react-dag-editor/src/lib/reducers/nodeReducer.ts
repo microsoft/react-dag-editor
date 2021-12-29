@@ -15,7 +15,7 @@ import {
 import { Direction } from "../models/geometry";
 import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
-import { GraphNodeStatus, isSelected, updateStatus } from "../models/status";
+import { GraphNodeStatus, isSelected, liftStatus } from "../models/status";
 import {
   focusArea,
   getContentArea,
@@ -359,7 +359,7 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
               ...state.data,
               present: data.updateNode(
                 action.node.id,
-                updateStatus(Bitset.add(GraphNodeStatus.Activated))
+                liftStatus(Bitset.add(GraphNodeStatus.Activated))
               ),
             },
           };
@@ -376,7 +376,7 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
               ...state.data,
               present: data.updateNode(
                 action.node.id,
-                updateStatus(Bitset.remove(GraphNodeStatus.Activated))
+                liftStatus(Bitset.remove(GraphNodeStatus.Activated))
               ),
             },
           };
@@ -420,7 +420,7 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
           ...state.data,
           present: state.data.present.updateNode(
             action.node.id,
-            updateStatus(Bitset.add(GraphNodeStatus.Editing))
+            liftStatus(Bitset.add(GraphNodeStatus.Editing))
           ),
         },
       };

@@ -15,8 +15,16 @@ export interface IWithPropertiesRecord {
 
 export class Properties extends Map<string, unknown> {
   public static from(
-    source: Properties | ReadonlyMap<string, unknown> | Record<string, unknown>
+    source:
+      | Properties
+      | ReadonlyMap<string, unknown>
+      | Record<string, unknown>
+      | undefined
+      | null
   ): Properties {
+    if (!source) {
+      return new Properties();
+    }
     if (source instanceof Map) {
       return new Properties(source);
     }

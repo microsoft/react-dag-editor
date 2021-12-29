@@ -1,3 +1,4 @@
+import { lift } from "record-class";
 import {
   ContentState,
   IContentStateApplicable,
@@ -10,9 +11,9 @@ import {
   GraphPortStatus,
   isSelected,
   resetConnectStatus,
-  updateStatus,
+  liftStatus,
 } from "../models/status";
-import { updatePorts } from "../node-utils";
+import { liftPorts } from "../node-utils";
 import { markEdgeDirty } from "../utils";
 import * as Bitset from "../utils/bitset";
 
@@ -28,7 +29,7 @@ export const getFirstNode =
 export const updateNode =
   (id: string, f: INodeUpdate): IContentStateUpdate =>
   (content) => {
-    const nodes = content.nodes.update(id, (node) => node.pipe(f));
+    const nodes = content.nodes.update(id, lift(f));
     if (nodes === content.nodes) {
       return content;
     }
@@ -86,8 +87,8 @@ export const selectNodes =
           selected.add(node.id);
         }
         return node.pipe(
-          updatePorts(updateStatus(Bitset.replace(GraphPortStatus.Default))),
-          updateStatus(
+          liftPorts(liftStatus(Bitset.replace(GraphPortStatus.Default))),
+          liftStatus(
             resetConnectStatus(
               isNodeSelected
                 ? GraphNodeStatus.Selected
@@ -101,7 +102,7 @@ export const selectNodes =
     if (selected.size === 0) {
       content.nodes.forEach((n) =>
         nodes.update(n.id, (it) =>
-          it.pipe(updateStatus(Bitset.replace(GraphNodeStatus.Default)))
+          it.pipe(liftStatus(Bitset.replace(GraphNodeStatus.Default)))
         )
       );
     } else if (topNode) {
@@ -115,7 +116,7 @@ export const selectNodes =
     const setConnected = (id: string) => {
       nodes.update(id, (node) =>
         node.pipe(
-          updateStatus(
+          liftStatus(
             Bitset.replace(
               isSelected(node)
                 ? GraphNodeStatus.Selected
@@ -136,10 +137,10 @@ export const selectNodes =
             setConnected(edge.source);
             state = GraphEdgeStatus.ConnectedToSelected;
           }
-          return edge.pipe(updateStatus(Bitset.replace(state)));
+          return edge.pipe(liftStatus(Bitset.replace(state)));
         })
       : content.edges.map((edge) =>
-          edge.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
+          edge.pipe(liftStatus(Bitset.replace(GraphEdgeStatus.Default)))
         );
     return {
       nodes: nodes.finish(),

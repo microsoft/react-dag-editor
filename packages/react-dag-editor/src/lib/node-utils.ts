@@ -1,9 +1,10 @@
 import { INodeUpdate, IPortUpdate } from "react-dag-editor";
+import { lift } from "record-class";
 
-export const updatePorts =
+export const liftPorts =
   (f: IPortUpdate): INodeUpdate =>
   (node) => {
     return {
-      ports: node.ports?.map((port) => port.pipe(f)),
+      ports: node.ports?.map(lift(f)),
     };
   };

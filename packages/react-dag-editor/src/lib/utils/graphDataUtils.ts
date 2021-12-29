@@ -19,7 +19,7 @@ import {
   GraphPortStatus,
   isNodeEditing,
   isSelected,
-  updateStatus,
+  liftStatus,
 } from "../models/status";
 import { getPortPositionByPortId } from "./getPortPosition";
 import { identical } from "./identical";
@@ -107,9 +107,7 @@ export const isConnectable = (
 export function resetNodePortsState<NodeData, PortData>(
   node: NodeModel<NodeData, PortData>
 ): NodeModel<NodeData, PortData> {
-  return node.updatePorts(
-    updateStatus(Bitset.replace(GraphPortStatus.Default))
-  );
+  return node.updatePorts(liftStatus(Bitset.replace(GraphPortStatus.Default)));
 }
 
 export const filterSelectedItems = <NodeData, EdgeData, PortData>(
@@ -188,17 +186,17 @@ export const unSelectAllEntity = <NodeData, EdgeData, PortData>(): TDataPatch<
             const nextNode: ICanvasNode<NodeData, PortData> = {
               ...curNode,
               ports: curNode.ports?.map(
-                updateStatus(Bitset.replace(GraphPortStatus.Default))
+                liftStatus(Bitset.replace(GraphPortStatus.Default))
               ),
             };
-            return updateStatus(Bitset.replace(GraphNodeStatus.Default))(
+            return liftStatus(Bitset.replace(GraphNodeStatus.Default))(
               nextNode
             );
           }
         )
       )
       .mapEdges((e) =>
-        e.update(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
+        e.update(liftStatus(Bitset.replace(GraphEdgeStatus.Default)))
       );
 };
 

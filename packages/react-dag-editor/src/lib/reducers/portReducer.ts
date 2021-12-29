@@ -1,6 +1,6 @@
 import { IGraphReactReducer } from "../contexts";
 import { GraphPortEvent } from "../models/event";
-import { GraphPortStatus, updateStatus } from "../models/status";
+import { GraphPortStatus, liftStatus } from "../models/status";
 import { unSelectAllEntity } from "../utils";
 import * as Bitset from "../utils/bitset";
 
@@ -15,7 +15,7 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: state.data.present.updatePort(
             action.node.id,
             action.port.id,
-            updateStatus(Bitset.add(GraphPortStatus.Activated))
+            liftStatus(Bitset.add(GraphPortStatus.Activated))
           ),
         },
       };
@@ -28,7 +28,7 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: state.data.present.updatePort(
             action.node.id,
             action.port.id,
-            updateStatus(Bitset.remove(GraphPortStatus.Activated))
+            liftStatus(Bitset.remove(GraphPortStatus.Activated))
           ),
         },
       };
@@ -41,7 +41,7 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: unSelectAllEntity()(state.data.present).updatePort(
             action.node.id,
             action.port.id,
-            updateStatus(Bitset.add(GraphPortStatus.Selected))
+            liftStatus(Bitset.add(GraphPortStatus.Selected))
           ),
         },
       };

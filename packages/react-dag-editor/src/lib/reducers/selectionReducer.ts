@@ -7,7 +7,7 @@ import {
   ICanvasNavigateEvent,
 } from "../models/event";
 import { GraphBehavior, IGraphState } from "../models/state";
-import { GraphPortStatus, updateStatus } from "../models/status";
+import { GraphPortStatus, liftStatus } from "../models/status";
 import {
   getRelativePoint,
   isViewportComplete,
@@ -26,7 +26,7 @@ function handleNavigate(
     data = data.updatePort(
       action.node.id,
       action.port.id,
-      updateStatus(Bitset.add(GraphPortStatus.Selected))
+      liftStatus(Bitset.add(GraphPortStatus.Selected))
     );
   } else if (action.node) {
     const nodeId = action.node.id;

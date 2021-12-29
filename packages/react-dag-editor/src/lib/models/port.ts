@@ -1,7 +1,12 @@
-import { Properties, ReadonlyProperties, WithPropertiesRecord } from "core";
 import { IRecordApplicable } from "record-class";
 import record from "record-class/macro";
+import {
+  Properties,
+  ReadonlyProperties,
+  WithPropertiesRecord,
+} from "../property";
 import type { $Complete } from "../utils/complete";
+import { IEntity } from "./entity";
 import type { $Model } from "./model";
 import type { GraphPortStatus } from "./status";
 
@@ -10,7 +15,7 @@ export enum PortKind {
   Output = "output",
 }
 
-export interface ICanvasPortInit {
+export interface ICanvasPortInit extends IEntity {
   readonly id: string;
   readonly name: string;
   readonly kind: PortKind;
@@ -47,13 +52,20 @@ export class PortModel
   public readonly position!: readonly [number, number];
   public readonly properties: Properties = new Properties();
 
-  public $$create(partial: Partial<IPortModel>): PortModel {
-    return new PortModel(partial);
+  public static fromJSON(value: ICanvasPort | IPortModel): PortModel {
+    return new PortModel({
+      ...value,
+      properties: Properties.from(value.properties),
+    });
   }
 
   public setProperties(properties: ReadonlyProperties): PortModel {
     return this.merge({
       properties,
     });
+  }
+
+  protected override $$create(partial: Partial<IPortModel>): PortModel {
+    return new PortModel(partial);
   }
 }

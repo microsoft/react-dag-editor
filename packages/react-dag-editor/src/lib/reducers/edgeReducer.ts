@@ -1,7 +1,7 @@
 import { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { GraphEdgeEvent } from "../models/event";
-import { GraphEdgeStatus, updateStatus } from "../models/status";
+import { GraphEdgeStatus, liftStatus } from "../models/status";
 import { pushHistory, unSelectAllEntity } from "../utils";
 import * as Bitset from "../utils/bitset";
 
@@ -17,7 +17,7 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
           ...state.data,
           present: state.data.present.updateEdge(
             action.edge.id,
-            updateStatus(Bitset.replace(GraphEdgeStatus.Editing))
+            liftStatus(Bitset.replace(GraphEdgeStatus.Editing))
           ),
         },
       };
@@ -28,7 +28,7 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
           ...state.data,
           present: state.data.present.updateEdge(
             action.edge.id,
-            updateStatus(Bitset.add(GraphEdgeStatus.Activated))
+            liftStatus(Bitset.add(GraphEdgeStatus.Activated))
           ),
         },
       };
@@ -39,7 +39,7 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
           ...state.data,
           present: state.data.present.updateEdge(
             action.edge.id,
-            updateStatus(Bitset.remove(GraphEdgeStatus.Activated))
+            liftStatus(Bitset.remove(GraphEdgeStatus.Activated))
           ),
         },
       };
@@ -51,7 +51,7 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
           ...state.data,
           present: unSelectAllEntity()(state.data.present).updateEdge(
             action.edge.id,
-            updateStatus(Bitset.add(GraphEdgeStatus.Selected))
+            liftStatus(Bitset.add(GraphEdgeStatus.Selected))
           ),
         },
       };

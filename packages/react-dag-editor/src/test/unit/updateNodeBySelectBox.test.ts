@@ -8,7 +8,7 @@ import {
   ICanvasPort,
   IGraphConfig,
   pan,
-  updateStatus,
+  liftStatus,
 } from "../../index";
 import { ISelectBoxPosition } from "../../lib/components/Graph/SelectBox";
 import { selectNodeBySelectBox } from "../../lib/utils/updateNodeBySelectBox";
@@ -96,9 +96,9 @@ describe("test updateNodeBySelectBox", () => {
 
     const [firstNode, ...restNodes] = [...initNodes];
     const nodes = [
-      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
+      liftStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
       ...restNodes.map(
-        updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
+        liftStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
       ),
     ];
     const nextData = {
@@ -106,7 +106,7 @@ describe("test updateNodeBySelectBox", () => {
       edges: data
         .toJSON()
         .edges.map(
-          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+          liftStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
         ),
     };
 
@@ -138,9 +138,9 @@ describe("test updateNodeBySelectBox", () => {
 
     const [firstNode, ...restNodes] = [...initNodes];
     const nodes = [
-      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
+      liftStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
       ...restNodes.map(
-        updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
+        liftStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
       ),
     ];
     const nextData = {
@@ -148,7 +148,7 @@ describe("test updateNodeBySelectBox", () => {
       edges: data
         .toJSON()
         .edges.map(
-          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+          liftStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
         ),
     };
 
@@ -180,10 +180,10 @@ describe("test updateNodeBySelectBox", () => {
 
     const [firstNode, secondNode, ...restNodes] = [...initNodes];
     const nodes = [
-      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
-      updateStatus(Bitset.replace(GraphNodeStatus.Selected))(secondNode),
+      liftStatus(Bitset.replace(GraphNodeStatus.Selected))(firstNode),
+      liftStatus(Bitset.replace(GraphNodeStatus.Selected))(secondNode),
       ...restNodes.map(
-        updateStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
+        liftStatus(Bitset.replace(GraphNodeStatus.ConnectedToSelected))
       ),
     ];
     const nextData = {
@@ -191,7 +191,7 @@ describe("test updateNodeBySelectBox", () => {
       edges: data
         .toJSON()
         .edges.map(
-          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+          liftStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
         ),
     };
 
@@ -222,14 +222,14 @@ describe("test updateNodeBySelectBox", () => {
     });
 
     const nodes = initNodes.map(
-      updateStatus(Bitset.replace(GraphNodeStatus.Selected))
+      liftStatus(Bitset.replace(GraphNodeStatus.Selected))
     );
     const nextData = {
       nodes,
       edges: data
         .toJSON()
         .edges.map(
-          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
+          liftStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
         ),
     };
 

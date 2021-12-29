@@ -2,9 +2,11 @@ import { RecordBase } from "record-class";
 import record from "record-class/macro";
 import { Properties, ReadonlyProperties } from "../property";
 import { $Complete } from "../utils/complete";
+import { IEntity } from "./entity";
+import { $Model } from "./model";
 import type { GraphEdgeStatus } from "./status";
 
-export interface ICanvasEdge {
+export interface ICanvasEdge extends IEntity {
   readonly id: string;
   /**
    * source node id
@@ -21,9 +23,7 @@ export interface ICanvasEdge {
   readonly automationId?: string;
 }
 
-export interface IEdgeModel extends ICanvasEdge {
-  readonly properties: ReadonlyProperties;
-}
+export interface IEdgeModel extends $Model<ICanvasEdge> {}
 
 export type IEdgeUpdate = (edge: IEdgeModel) => Partial<IEdgeModel>;
 
@@ -48,7 +48,14 @@ export class EdgeModel
   public readonly automationId: string | undefined = undefined;
   public readonly properties: ReadonlyProperties = new Properties();
 
-  protected $$create(partial: Partial<IEdgeModel>): EdgeModel {
+  public static fromJSON(value: ICanvasEdge | IEdgeModel): EdgeModel {
+    return new EdgeModel({
+      ...value,
+      properties: Properties.from(value.properties),
+    });
+  }
+
+  protected override $$create(partial: Partial<IEdgeModel>): EdgeModel {
     return new EdgeModel(partial);
   }
 }

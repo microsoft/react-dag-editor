@@ -23,6 +23,18 @@ export const getEdgesByTarget =
     return content.edgesByTarget.get(nodeId)?.get(portId);
   };
 
+export const isPortConnectedAsSource =
+  (nodeId: string, portId: string): IContentStateApplicable<boolean> =>
+  (content) => {
+    return (content.apply(getEdgesBySource(nodeId, portId))?.size ?? 0) > 0;
+  };
+
+export const isPortConnectedAsTarget =
+  (nodeId: string, portId: string): IContentStateApplicable<boolean> =>
+  (content) => {
+    return (content.apply(getEdgesByTarget(nodeId, portId))?.size ?? 0) > 0;
+  };
+
 export const isEdgeExist =
   (
     source: string,

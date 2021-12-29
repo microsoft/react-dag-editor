@@ -30,6 +30,11 @@ export class EdgesMapMutator {
     return this;
   }
 
+  public deleteNode(nodeId: string): EdgesMapMutator {
+    this.result.delete(nodeId);
+    return this;
+  }
+
   public finish(): HashMap<string, ReadonlyMap<string, ReadonlySet<string>>> {
     this.source.forEach((ports, nodeId) => {
       ports.forEach((prevEdges, portId) => {

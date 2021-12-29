@@ -15,8 +15,8 @@ export type IContentStateApplicable<T> = IRecordApplicable<ContentState, T>;
 export interface IContentState {
   readonly nodes: OrderedMap<string, NodeModel>;
   readonly edges: HashMap<string, EdgeModel>;
-  readonly firstNode: string | undefined;
-  readonly lastNode: string | undefined;
+  readonly head: string | undefined;
+  readonly tail: string | undefined;
   readonly selectedNodes: ReadonlySet<string>;
   readonly edgesBySource: EdgesByPort;
   readonly edgesByTarget: EdgesByPort;
@@ -34,8 +34,8 @@ export class ContentState
 {
   public readonly nodes: OrderedMap<string, NodeModel> = OrderedMap.empty();
   public readonly edges: HashMap<string, EdgeModel> = HashMap.empty();
-  public readonly firstNode: string | undefined = undefined;
-  public readonly lastNode: string | undefined = undefined;
+  public readonly head: string | undefined = undefined;
+  public readonly tail: string | undefined = undefined;
   public readonly edgesBySource: EdgesByPort = HashMap.empty();
   public readonly edgesByTarget: EdgesByPort = HashMap.empty();
   public readonly selectedNodes: ReadonlySet<string> = new Set();

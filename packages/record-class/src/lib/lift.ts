@@ -7,3 +7,11 @@ export function lift<Interface, Class extends Interface>(
     return instance.pipe(f);
   };
 }
+
+export function liftMerge<Interface, Class extends Interface>(
+  partial: Partial<Interface>
+) {
+  return <T extends RecordBase<Interface, Class>>(instance: T) => {
+    return instance.merge(partial);
+  };
+}

@@ -1,9 +1,5 @@
 import { lift } from "record-class";
-import {
-  ContentState,
-  IContentStateApplicable,
-  IContentStateUpdate,
-} from "../models/ContentState";
+import { IContentState, IContentStateUpdate } from "../models/ContentState";
 import { INodeUpdate, NodeModel } from "../models/node";
 import {
   GraphEdgeStatus,
@@ -17,14 +13,12 @@ import { liftPorts } from "../node-utils";
 import { markEdgeDirty } from "../utils";
 import * as Bitset from "../utils/bitset";
 
-export const getFirstNode =
-  (): IContentStateApplicable<NodeModel | undefined> =>
-  (content: ContentState) => {
-    if (!content.firstNode) {
-      return undefined;
-    }
-    return content.nodes.get(content.firstNode);
-  };
+export const getFirstNode = (content: IContentState) => {
+  if (!content.head) {
+    return undefined;
+  }
+  return content.nodes.get(content.head);
+};
 
 export const updateNode =
   (id: string, f: INodeUpdate): IContentStateUpdate =>
@@ -56,11 +50,11 @@ export const insertNode =
     const nodes = content.nodes.mutate().set(
       node.id,
       node.merge({
-        prev: content.lastNode,
+        prev: content.tail,
       })
     );
-    if (content.lastNode && !content.nodes.has(node.id)) {
-      nodes.update(content.lastNode, (tail) =>
+    if (content.tail && !content.nodes.has(node.id)) {
+      nodes.update(content.tail, (tail) =>
         tail.merge({
           next: node.id,
         })
@@ -68,7 +62,7 @@ export const insertNode =
     }
     return {
       nodes: nodes.finish(),
-      head: content.nodes.size === 0 ? node.id : content.firstNode,
+      head: content.nodes.size === 0 ? node.id : content.head,
       tail: node.id,
     };
   };

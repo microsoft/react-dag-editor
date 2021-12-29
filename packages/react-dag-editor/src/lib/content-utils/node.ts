@@ -1,4 +1,4 @@
-import { lift, liftMerge } from "record-class";
+import { lift } from "record-class";
 import { IContentState, IContentStateUpdate } from "../models/ContentState";
 import { INodeUpdate, NodeModel } from "../models/node";
 import {
@@ -9,8 +9,13 @@ import {
   resetConnectStatus,
   liftStatus,
 } from "../models/status";
-import { liftPorts } from "../node-utils";
+import {
+  INodeGeometryChange,
+  liftPorts,
+  updateNodeGeometry,
+} from "../node-utils";
 import * as Bitset from "../utils/bitset";
+import { markEdgesDirty } from "./internal";
 
 export const getFirstNode = (content: IContentState) => {
   if (!content.head) {
@@ -26,16 +31,7 @@ export const updateNode =
     if (nodes === content.nodes) {
       return content;
     }
-    const edges = content.edges.mutate();
-    const markEdgeDirty = (edgeId: string) => {
-      edges.update(edgeId, liftMerge({}));
-    };
-    content.edgesBySource.get(nodeId)?.forEach((edgeIds) => {
-      edgeIds.forEach(markEdgeDirty);
-    });
-    content.edgesByTarget.get(nodeId)?.forEach((edgeIds) => {
-      edgeIds.forEach(markEdgeDirty);
-    });
+    const edges = markEdgesDirty([nodeId], content);
     return {
       nodes,
       edges: edges.finish(),
@@ -138,5 +134,19 @@ export const selectNodes =
       nodes: nodes.finish(),
       edges,
       selectedNodes: selected,
+    };
+  };
+
+export const updateNodesGeometry =
+  (nodeIds: string[], change: INodeGeometryChange): IContentStateUpdate =>
+  (content) => {
+    const nodes = content.nodes.mutate();
+    nodeIds.forEach((nodeId) => {
+      nodes.update(nodeId, lift(updateNodeGeometry(change)));
+    });
+    const edges = markEdgesDirty(nodeIds, content);
+    return {
+      nodes: nodes.finish(),
+      edges: edges.finish(),
     };
   };

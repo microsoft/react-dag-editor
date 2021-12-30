@@ -1,4 +1,4 @@
-import { IGraphReactReducer } from "../contexts";
+import { IGraphReducer } from "../contexts";
 import {
   GraphCanvasEvent,
   GraphEdgeEvent,
@@ -36,7 +36,7 @@ export const handleBehaviorChange = (
   }
 };
 
-export const behaviorReducer: IGraphReactReducer = (prevState, action) => {
+export const behaviorReducer: IGraphReducer = (prevState, action) => {
   const nextBehavior = handleBehaviorChange(prevState.behavior, action);
 
   if (nextBehavior === prevState.behavior) {

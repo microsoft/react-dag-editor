@@ -1,4 +1,4 @@
-import type { IGraphReactReducer } from "../contexts";
+import type { IGraphReducer } from "../contexts";
 import { EMPTY_TRANSFORM_MATRIX } from "../createGraphState";
 import { GraphFeatures } from "../Features";
 import type { IGraphConfig } from "../models/config/types";
@@ -80,8 +80,8 @@ function resetViewport(
     };
   }
 
-  const groupRects = groups.map((g) => getGroupRect(g, nodes, graphConfig));
-  const hasVisibleGroup = groupRects.find(isShapeRectInViewport);
+  const groupRects = groups?.map((g) => getGroupRect(g, nodes, graphConfig));
+  const hasVisibleGroup = groupRects?.find(isShapeRectInViewport);
   if (hasVisibleGroup) {
     return {
       ...viewport,
@@ -97,7 +97,7 @@ function resetViewport(
     }
   };
   nodeRects.forEach(findTopMostRect);
-  groupRects.forEach(findTopMostRect);
+  groupRects?.forEach(findTopMostRect);
 
   return {
     ...viewport,
@@ -222,7 +222,7 @@ const reducer = (
   }
 };
 
-export const viewportReducer: IGraphReactReducer = (state, action) => {
+export const viewportReducer: IGraphReducer = (state, action) => {
   const viewport = reducer(
     state.viewport,
     action,

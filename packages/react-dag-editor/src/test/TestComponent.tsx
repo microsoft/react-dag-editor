@@ -4,7 +4,7 @@ import {
   GraphModel,
   ICanvasData,
   IEvent,
-  IGraphReducer,
+  IGraphMiddleware,
   IGraphSettings,
 } from "../index";
 import { Graph, IGraphProps, ReactDagEditor } from "../lib/components";
@@ -24,7 +24,7 @@ const data: ICanvasData = {
 
 export interface ITestComponentProps {
   data?: GraphModel;
-  middleware?: IGraphReducer;
+  middleware?: IGraphMiddleware;
   graphProps?: Partial<IGraphProps>;
   graph?: boolean;
   settings?: Partial<IGraphSettings>;

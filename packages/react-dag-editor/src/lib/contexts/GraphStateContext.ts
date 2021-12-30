@@ -35,11 +35,7 @@ export const EMPTY_CONNECT_STATE = {
   },
 };
 
-export type IGraphAction<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> = IEvent<NodeData, EdgeData, PortData>;
+export type IGraphAction = IEvent;
 
 export type IDispatchCallback = (
   state: IGraphState,
@@ -77,14 +73,14 @@ export const GraphStateContext = React.createContext<IGraphStateContext>(
   defaultGraphStateContext
 );
 
-export type IGraphReactReducer<Action = never> = React.Reducer<
+export type IGraphReducer<Action = never> = React.Reducer<
   IGraphState,
   IEvent | Action
 >;
 
-export type IGraphReducer<Action = never> = (
-  next: IGraphReactReducer<Action>
-) => IGraphReactReducer<Action>;
+export type IGraphMiddleware<Action = never> = (
+  next: IGraphReducer<Action>
+) => IGraphReducer<Action>;
 
 export const setData = (
   state: IGraphState,

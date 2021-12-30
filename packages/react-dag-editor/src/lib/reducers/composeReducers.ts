@@ -1,12 +1,7 @@
-import { IGraphReducer } from "../contexts";
+import { IGraphMiddleware } from "../contexts";
 
-export function composeReducers<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
->(
-  reducers: ReadonlyArray<IGraphReducer<NodeData, EdgeData, PortData, Action>>
-): IGraphReducer<NodeData, EdgeData, PortData, Action> {
+export function composeReducers<Action = never>(
+  reducers: ReadonlyArray<IGraphMiddleware<Action>>
+): IGraphMiddleware<Action> {
   return (next) => reducers.reduceRight((prev, current) => current(prev), next);
 }

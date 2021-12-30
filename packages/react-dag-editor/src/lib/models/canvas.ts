@@ -15,5 +15,5 @@ export interface ICanvasGroup {
 export interface ICanvasData {
   readonly nodes: ReadonlyArray<ICanvasNode | INodeModel>;
   readonly edges: ReadonlyArray<ICanvasEdge | IEdgeModel>;
-  // readonly groups?: ICanvasGroup[]; // TODO
+  readonly groups?: ICanvasGroup[];
 }

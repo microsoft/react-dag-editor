@@ -1,5 +1,5 @@
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
-import { IGraphReactReducer } from "../contexts";
+import { IGraphReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import {
   GraphCanvasEvent,
@@ -41,7 +41,7 @@ function handleNavigate(
   };
 }
 
-export const selectionReducer: IGraphReactReducer = (state, action) => {
+export const selectionReducer: IGraphReducer = (state, action) => {
   const data = state.data.present;
   const isLassoSelectEnable = state.settings.features.has(
     GraphFeatures.LassoSelect

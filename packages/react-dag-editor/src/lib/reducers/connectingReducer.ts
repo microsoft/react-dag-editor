@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import {
   EMPTY_CONNECT_STATE,
-  IGraphReactReducer,
+  IGraphReducer,
 } from "../contexts/GraphStateContext";
 import { ICanvasEdge } from "../models/edge";
 import {
@@ -84,7 +84,7 @@ function clearAttach(state: IGraphState): IGraphState {
 }
 
 // eslint-disable-next-line complexity
-export const connectingReducer: IGraphReactReducer = (
+export const connectingReducer: IGraphReducer = (
   state,
   action
 ): IGraphState => {

@@ -1,4 +1,6 @@
-import type { IGraphReactReducer } from "../contexts";
+import { lift } from "record-class";
+import { insertNode, selectNodes, updateNodesGeometry } from "../content-utils";
+import type { IGraphReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import type { IGraphConfig } from "../models/config/types";
 import { ContentState } from "../models/ContentState";
@@ -14,6 +16,7 @@ import {
   INodeLocateEvent,
 } from "../models/event";
 import { Direction } from "../models/geometry";
+import { INodeModel, NodeModel } from "../models/node";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { GraphNodeStatus, isSelected, liftStatus } from "../models/status";
 import {
@@ -186,8 +189,8 @@ function dragStart(
   }
   let selectedNodes: IDummyNode[];
   if (action.isMultiSelect) {
-    data = data.selectNodes(
-      (node) => node.id === action.node.id || isSelected(node)
+    data = data.pipe(
+      selectNodes((node) => node.id === action.node.id || isSelected(node))
     );
     selectedNodes = getSelectedNodes(data, state.settings.graphConfig);
   } else if (!isSelected(targetNode)) {
@@ -225,15 +228,11 @@ function dragEnd(state: IGraphState, action: INodeDragEndEvent): IGraphState {
       dummyNodes: emptyDummyNodes(),
     };
   }
-  const { dx, dy } = state.dummyNodes;
-  data = data.updateNodesPositionAndSize(
-    state.dummyNodes.nodes.map((node) => ({
-      ...node,
-      x: node.x + dx,
-      y: node.y + dy,
-      width: undefined,
-      height: undefined,
-    }))
+  data = data.pipe(
+    updateNodesGeometry(
+      state.dummyNodes.nodes.map((node) => node.id),
+      state.dummyNodes
+    )
   );
   return {
     ...state,
@@ -295,7 +294,7 @@ function locateNode(
   };
 }
 
-export const nodeReducer: IGraphReactReducer = (state, action) => {
+export const nodeReducer: IGraphReducer = (state, action) => {
   const data = state.data.present;
   switch (action.type) {
     //#region resize
@@ -320,20 +319,16 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
         },
       };
     case GraphNodeEvent.ResizingEnd: {
-      const { dx, dy, dWidth, dHeight } = state.dummyNodes;
       return {
         ...state,
         dummyNodes: emptyDummyNodes(),
         data: pushHistory(
           state.data,
-          data.updateNodesPositionAndSize(
-            state.dummyNodes.nodes.map((node) => ({
-              ...node,
-              x: node.x + dx,
-              y: node.y + dy,
-              width: node.width + dWidth,
-              height: node.height + dHeight,
-            }))
+          data.pipe(
+            updateNodesGeometry(
+              state.dummyNodes.nodes.map((node) => node.id),
+              state.dummyNodes
+            )
           ),
           unSelectAllEntity()
         ),
@@ -357,10 +352,14 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(
-                action.node.id,
-                liftStatus(Bitset.add(GraphNodeStatus.Activated))
-              ),
+              present: data.merge({
+                nodes: data.nodes.update(
+                  action.node.id,
+                  lift<INodeModel, NodeModel>(
+                    liftStatus(Bitset.add(GraphNodeStatus.Activated))
+                  )
+                ),
+              }),
             },
           };
         default:
@@ -374,10 +373,14 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
             ...state,
             data: {
               ...state.data,
-              present: data.updateNode(
-                action.node.id,
-                liftStatus(Bitset.remove(GraphNodeStatus.Activated))
-              ),
+              present: data.merge({
+                nodes: data.nodes.update(
+                  action.node.id,
+                  lift<INodeModel, NodeModel>(
+                    liftStatus(Bitset.remove(GraphNodeStatus.Activated))
+                  )
+                ),
+              }),
             },
           };
         default:
@@ -392,10 +395,14 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
           alignmentLines: [],
           data: pushHistory(
             state.data,
-            state.data.present.insertNode({
-              ...action.node,
-              status: GraphNodeStatus.Selected,
-            }),
+            state.data.present.pipe(
+              insertNode(
+                NodeModel.fromJSON({
+                  ...action.node,
+                  status: GraphNodeStatus.Selected,
+                })
+              )
+            ),
             unSelectAllEntity()
           ),
         };
@@ -411,17 +418,24 @@ export const nodeReducer: IGraphReactReducer = (state, action) => {
     case GraphNodeEvent.Add:
       return {
         ...state,
-        data: pushHistory(state.data, data.insertNode(action.node)),
+        data: pushHistory(
+          state.data,
+          data.pipe(insertNode(NodeModel.fromJSON(action.node)))
+        ),
       };
     case GraphNodeEvent.DoubleClick:
       return {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateNode(
-            action.node.id,
-            liftStatus(Bitset.add(GraphNodeStatus.Editing))
-          ),
+          present: data.merge({
+            nodes: data.nodes.update(
+              action.node.id,
+              lift<INodeModel, NodeModel>(
+                liftStatus(Bitset.add(GraphNodeStatus.Editing))
+              )
+            ),
+          }),
         },
       };
     default:

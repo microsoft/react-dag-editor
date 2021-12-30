@@ -2,7 +2,7 @@ import { IRecordApplicable, RecordBase } from "record-class";
 import record from "record-class/macro";
 import { HashMap, OrderedMap } from "../collections";
 import { insertFragment } from "../content-utils";
-import { ICanvasData } from "./canvas";
+import { ICanvasData, ICanvasGroup } from "./canvas";
 import { EdgeModel } from "./edge";
 import { NodeModel } from "./node";
 
@@ -20,6 +20,7 @@ export interface IContentState {
   readonly selectedNodes: ReadonlySet<string>;
   readonly edgesBySource: EdgesByPort;
   readonly edgesByTarget: EdgesByPort;
+  readonly groups?: ICanvasGroup[];
 }
 
 export type EdgesByPort = HashMap<
@@ -39,6 +40,7 @@ export class ContentState
   public readonly edgesBySource: EdgesByPort = HashMap.empty();
   public readonly edgesByTarget: EdgesByPort = HashMap.empty();
   public readonly selectedNodes: ReadonlySet<string> = new Set();
+  public readonly groups: ICanvasGroup[] | undefined = undefined;
 
   public static empty(): ContentState {
     return new ContentState({});

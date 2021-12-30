@@ -3,8 +3,8 @@ import {
   IDispatch,
   IDispatchCallback,
   IGraphAction,
-  IGraphReactReducer,
   IGraphReducer,
+  IGraphMiddleware,
 } from "../contexts";
 import { createGraphState } from "../createGraphState";
 import { IGraphReducerInitializerParams, IGraphState } from "../models/state";
@@ -34,7 +34,7 @@ const builtinReducer = composeReducers(
     selectionReducer,
     contextMenuReducer,
   ].map(
-    (reducer): IGraphReducer =>
+    (reducer): IGraphMiddleware =>
       (next) =>
       (state, action) =>
         next(reducer(state, action), action)
@@ -48,21 +48,19 @@ export function getGraphReducer<
   Action = never
 >(
   middleware:
-    | IGraphReducer<NodeData, EdgeData, PortData, Action>
+    | IGraphMiddleware<NodeData, EdgeData, PortData, Action>
     | undefined = undefined,
-  finalReducer: IGraphReactReducer<
+  finalReducer: IGraphReducer<NodeData, EdgeData, PortData, Action> = identical
+): IGraphReducer<NodeData, EdgeData, PortData, Action> {
+  const finalMiddleware = middleware
+    ? composeReducers([middleware as IGraphMiddleware, builtinReducer])
+    : builtinReducer;
+  return finalMiddleware(finalReducer as IGraphReducer) as IGraphReducer<
     NodeData,
     EdgeData,
     PortData,
     Action
-  > = identical
-): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
-  const finalMiddleware = middleware
-    ? composeReducers([middleware as IGraphReducer, builtinReducer])
-    : builtinReducer;
-  return finalMiddleware(
-    finalReducer as IGraphReactReducer
-  ) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+  >;
 }
 
 export function useGraphReducer<
@@ -72,7 +70,7 @@ export function useGraphReducer<
   Action = never
 >(
   params: IGraphReducerInitializerParams<NodeData, EdgeData, PortData>,
-  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined
+  middleware: IGraphMiddleware<NodeData, EdgeData, PortData, Action> | undefined
 ): [
   IGraphState<NodeData, EdgeData, PortData>,
   IDispatch<NodeData, EdgeData, PortData, Action>

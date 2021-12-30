@@ -1,11 +1,11 @@
 import * as React from "react";
+import { ContentState } from "../../models/ContentState";
 import { ITransformMatrix } from "../../models/geometry";
-import { GraphModel } from "../../models/GraphModel";
 import { Transform } from "../Transform";
 import { ReadonlyNodeTree } from "../tree/ReadonlyNodeTree";
 
 export interface IReadonlyGraphProps {
-  data: GraphModel;
+  data: ContentState;
   transformMatrix: ITransformMatrix;
   style?: React.CSSProperties;
 }

@@ -1,17 +1,16 @@
 import type { OrderedMap } from "../collections";
 import type { ICanvasGroup } from "../models/canvas";
 import type { IGraphConfig, INodeConfig } from "../models/config/types";
-import type { ICanvasNode } from "../models/node";
-import type { NodeModel } from "../models/NodeModel";
+import type { ICanvasNode, INodeModel, NodeModel } from "../models/node";
 import { getNodeConfig } from "./getNodeConfig";
 
 /**
  * @param rectConfig
  * @param rect
  */
-export function getRectWidth<T>(
-  rectConfig: INodeConfig<T> | undefined,
-  rect: Partial<ICanvasNode<T>>
+export function getRectWidth(
+  rectConfig: INodeConfig | undefined,
+  rect: Partial<ICanvasNode | INodeModel>
 ): number {
   const minWidth = rectConfig?.getMinWidth(rect) ?? 0;
 
@@ -26,9 +25,9 @@ export function getRectWidth<T>(
  * @param rectConfig
  * @param rect
  */
-export function getRectHeight<T>(
-  rectConfig: INodeConfig<T> | undefined,
-  rect: Partial<ICanvasNode<T>>
+export function getRectHeight(
+  rectConfig: INodeConfig | undefined,
+  rect: Partial<ICanvasNode | INodeModel>
 ): number {
   const minHeight = rectConfig?.getMinHeight(rect) ?? 0;
 
@@ -51,7 +50,7 @@ export interface INodeRect {
  * @param graphConfig type IGraphConfig
  */
 export function getNodeSize(
-  node: ICanvasNode,
+  node: ICanvasNode | INodeModel,
   graphConfig: IGraphConfig
 ): INodeRect {
   const nodeConfig = getNodeConfig(node, graphConfig);
@@ -76,9 +75,9 @@ export interface IShapeRect extends INodeRect, IShapePosition {}
  * @param nodes
  * @param graphConfig
  */
-export function getGroupRect<NodeData, PortData>(
+export function getGroupRect(
   group: ICanvasGroup,
-  nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
+  nodes: OrderedMap<string, NodeModel>,
   graphConfig: IGraphConfig
 ): IShapeRect {
   const childrenIds = new Set(group.nodeIds);

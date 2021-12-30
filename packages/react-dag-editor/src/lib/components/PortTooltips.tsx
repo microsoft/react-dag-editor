@@ -1,17 +1,17 @@
 import * as React from "react";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
 import { useGraphConfig } from "../hooks/context";
-import { IViewport } from "../models/geometry";
-import { ICanvasPort } from "../models/port";
-import { GraphModel } from "../models/GraphModel";
-import { NodeModel } from "../models/NodeModel";
+import type { IViewport } from "../models/geometry";
+import type { PortModel } from "../models/port";
 import { GraphPortStatus } from "../models/status";
 import * as Bitset from "../utils/bitset";
+import type { ContentState } from "../models/ContentState";
+import type { NodeModel } from "../models/node";
 
 interface IPortTooltipsProps {
-  port: ICanvasPort;
+  port: PortModel;
   parentNode: NodeModel;
-  data: GraphModel;
+  data: ContentState;
   viewport: Required<IViewport>;
 }
 
@@ -36,7 +36,7 @@ export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = (
     return null;
   }
 
-  const pos = parentNode.getPortPosition(port.id, graphConfig);
+  const pos = parentNode.getPortPosition(port.id);
 
   if (!pos) {
     return null;

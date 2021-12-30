@@ -22,6 +22,7 @@ export interface ICanvasNode extends IWithStatus<GraphNodeStatus>, IEntity {
   readonly shape?: string;
   readonly automationId?: string;
   readonly ports?: ReadonlyArray<PortModel>;
+  readonly ariaLabel?: string;
 }
 
 export interface INodeModel extends $Model<Omit<ICanvasNode, "ports">> {
@@ -29,6 +30,7 @@ export interface INodeModel extends $Model<Omit<ICanvasNode, "ports">> {
   readonly portPositionCache: Map<string, IPoint>;
   readonly prev: string | undefined;
   readonly next: string | undefined;
+  readonly ariaLabel: string | undefined;
 }
 
 export type INodeUpdate = (node: INodeModel) => Partial<INodeModel>;
@@ -53,6 +55,7 @@ export class NodeModel
   public readonly portPositionCache = new Map<string, IPoint>();
   public readonly prev: string | undefined = undefined;
   public readonly next: string | undefined = undefined;
+  public readonly ariaLabel: string | undefined = undefined;
 
   public static fromJSON(source: ICanvasNode | INodeModel): NodeModel {
     return new NodeModel({

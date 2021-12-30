@@ -1,37 +1,36 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { VisitPortHelper } from "../components/A11yHelpers/VisitPortHelper";
+import { getFirstNode } from "../content-utils";
 import type { GraphController } from "../controllers/GraphController";
 import type {
   IGetConnectableParams,
   IGraphConfig,
 } from "../models/config/types";
+import { ContentState } from "../models/ContentState";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
-
-import type { GraphModel } from "../models/GraphModel";
-import type { ICanvasNode } from "../models/node";
-import type { NodeModel } from "../models/NodeModel";
-import type { ICanvasPort } from "../models/port";
+import type { ICanvasNode, NodeModel } from "../models/node";
+import type { PortModel } from "../models/port";
 import type { EventChannel } from "./eventChannel";
 import { getNeighborPorts, getNodeUid, getPortUid } from "./graphDataUtils";
 
 export interface INextItem {
   node: NodeModel | undefined;
-  port: ICanvasPort | undefined;
+  port: PortModel | undefined;
 }
 
 const item = (
   node: NodeModel | undefined = undefined,
-  port: ICanvasPort | undefined = undefined
+  port: PortModel | undefined = undefined
 ): INextItem => ({
   node,
   port,
 });
 
 export type TGetNextItemHandler = (
-  data: GraphModel,
+  data: ContentState,
   node: NodeModel,
-  portId?: ICanvasPort
+  portId?: PortModel
 ) => INextItem;
 
 export const findDOMElement = (
@@ -127,7 +126,7 @@ export const nextConnectablePort =
     let next = getNextItem(data, node, port);
     while (!(next.node?.id === node.id && next.port?.id === port?.id)) {
       if (!next.node) {
-        next = item(data.getNavigationFirstNode());
+        next = item(getFirstNode(data));
       } else if (next.port) {
         const portShape = next.port.shape
           ? next.port.shape
@@ -152,7 +151,7 @@ export const nextConnectablePort =
   };
 
 export const focusNextPort = (
-  ports: readonly ICanvasPort[],
+  ports: readonly PortModel[],
   node: NodeModel,
   curPortId: string,
   svgRef: React.RefObject<SVGSVGElement>,
@@ -169,7 +168,7 @@ export const focusNextPort = (
 };
 
 export const focusPrevPort = (
-  ports: readonly ICanvasPort[],
+  ports: readonly PortModel[],
   node: NodeModel,
   curPortId: string,
   svgRef: React.RefObject<SVGSVGElement>,
@@ -186,9 +185,9 @@ export const focusPrevPort = (
 };
 
 export const getFocusNodeHandler =
-  (compareFn?: (a: ICanvasNode, b: ICanvasNode) => number) =>
+  (compareFn?: (a: NodeModel, b: NodeModel) => number) =>
   (
-    data: GraphModel,
+    data: ContentState,
     curNodeId: string,
     svgRef: React.RefObject<SVGSVGElement>,
     graphController: GraphController,
@@ -230,9 +229,9 @@ export const focusUpNode = getFocusNodeHandler(
 );
 
 export const goToConnectedPort = (
-  data: GraphModel,
+  data: ContentState,
   node: NodeModel,
-  port: ICanvasPort,
+  port: PortModel,
   svgRef: React.RefObject<SVGSVGElement>,
   evt: React.KeyboardEvent,
   eventChannel: EventChannel
@@ -328,9 +327,9 @@ export const goToConnectedPort = (
  * @returns port arial label
  */
 export function defaultGetPortAriaLabel(
-  data: GraphModel,
+  data: ContentState,
   node: NodeModel,
-  port: ICanvasPort
+  port: PortModel
 ): string | undefined {
   return port.ariaLabel;
 }

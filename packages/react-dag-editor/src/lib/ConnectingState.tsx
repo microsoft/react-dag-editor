@@ -3,13 +3,13 @@ import {
   ConnectingStateContext,
   IConnectingStateContext,
 } from "./contexts/ConnectingStateContext";
-import { GraphModel } from "./models/GraphModel";
-import { NodeModel } from "./models/NodeModel";
-import { ICanvasPort } from "./models/port";
-import { IConnectingState } from "./models/state";
+import type { ContentState } from "./models/ContentState";
+import type { NodeModel } from "./models/node";
+import type { PortModel } from "./models/port";
+import type { IConnectingState } from "./models/state";
 
 interface IProps {
-  data: GraphModel;
+  data: ContentState;
   connectState: IConnectingState | undefined;
 }
 
@@ -19,9 +19,9 @@ export const ConnectingState: React.FunctionComponent<IProps> = ({
   connectState,
 }) => {
   let sourceNode: NodeModel | undefined;
-  let sourcePort: ICanvasPort | undefined;
+  let sourcePort: PortModel | undefined;
   let targetNode: NodeModel | undefined;
-  let targetPort: ICanvasPort | undefined;
+  let targetPort: PortModel | undefined;
   if (connectState) {
     sourceNode = data.nodes.get(connectState.sourceNode);
     sourcePort = sourceNode?.getPort(connectState.sourcePort);

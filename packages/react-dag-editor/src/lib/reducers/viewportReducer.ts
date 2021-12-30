@@ -2,6 +2,7 @@ import type { IGraphReactReducer } from "../contexts";
 import { EMPTY_TRANSFORM_MATRIX } from "../createGraphState";
 import { GraphFeatures } from "../Features";
 import type { IGraphConfig } from "../models/config/types";
+import { ContentState } from "../models/ContentState";
 import {
   GraphCanvasEvent,
   GraphMinimapEvent,
@@ -11,7 +12,6 @@ import {
   IEvent,
 } from "../models/event";
 import type { IContainerRect, IPoint, IViewport } from "../models/geometry";
-import { GraphModel } from "../models/GraphModel";
 import type { IGraphSettings } from "../models/state";
 import {
   clamp,
@@ -42,7 +42,7 @@ function getRectCenter(rect: IContainerRect): IPoint {
 
 function resetViewport(
   viewport: IViewport,
-  data: GraphModel,
+  data: ContentState,
   graphConfig: IGraphConfig,
   action: ICanvasResetViewportEvent
 ): IViewport {
@@ -107,7 +107,7 @@ function resetViewport(
 
 function zoomToFit(
   viewport: IViewport,
-  data: GraphModel,
+  data: ContentState,
   settings: IGraphSettings,
   action: ICanvasZoomToFitEvent
 ): IViewport {
@@ -132,7 +132,7 @@ function zoomToFit(
 const reducer = (
   viewport: IViewport,
   action: IEvent,
-  data: GraphModel,
+  data: ContentState,
   settings: IGraphSettings
 ): IViewport => {
   const { graphConfig, canvasBoundaryPadding, features } = settings;

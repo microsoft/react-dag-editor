@@ -5,6 +5,7 @@ import {
 import { emptySelectBoxPosition } from "./components/Graph/SelectBox";
 import { defaultFeatures } from "./Features";
 import { GraphConfigBuilder } from "./models/config/GraphConfigBuilder";
+import { ContentState } from "./models/ContentState";
 import { emptyDummyNodes } from "./models/dummy-node";
 import type {
   IGap,
@@ -12,7 +13,6 @@ import type {
   ITransformMatrix,
   IViewport,
 } from "./models/geometry";
-import { GraphModel } from "./models/GraphModel";
 import {
   GraphBehavior,
   IGraphReducerInitializerParams,
@@ -55,24 +55,16 @@ export const DEFAULT_GRAPH_SETTINGS: IGraphSettings = {
 
 export const EMPTY_GRAPH_STATE: IGraphState = createGraphState({});
 
-export function createGraphState<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
-  params: IGraphReducerInitializerParams<NodeData, EdgeData, PortData>
-): IGraphState<NodeData, EdgeData, PortData> {
+export function createGraphState(
+  params: IGraphReducerInitializerParams
+): IGraphState {
   const { data, transformMatrix, settings } = params;
   return {
     settings: {
-      ...(DEFAULT_GRAPH_SETTINGS as IGraphSettings<
-        NodeData,
-        EdgeData,
-        PortData
-      >),
+      ...DEFAULT_GRAPH_SETTINGS,
       ...settings,
     },
-    data: resetUndoStack(data ?? GraphModel.empty()),
+    data: resetUndoStack(data ?? ContentState.empty()),
     viewport: {
       rect: undefined,
       transformMatrix: transformMatrix ?? EMPTY_TRANSFORM_MATRIX,

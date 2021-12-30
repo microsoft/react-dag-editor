@@ -1,11 +1,11 @@
-import { ISelectBoxPosition } from "../components/Graph/SelectBox";
+import type { ISelectBoxPosition } from "../components/Graph/SelectBox";
 import type { ILine } from "../components/Line";
 import type { GraphFeatures } from "../Features";
 import type { IHistory, IZoomCommonParams } from "../utils";
 import type { IGraphConfig } from "./config/types";
-import { IDummyNodes } from "./dummy-node";
+import type { ContentState } from "./ContentState";
+import type { IDummyNodes } from "./dummy-node";
 import type { IGap, IPoint, ITransformMatrix, IViewport } from "./geometry";
-import { GraphModel } from "./GraphModel";
 
 export enum CanvasMouseMode {
   Pan = "Pan",
@@ -21,11 +21,7 @@ export enum GraphBehavior {
   AddingNode = "addingNode",
 }
 
-export interface IGraphDataState<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> extends IHistory<GraphModel<NodeData, EdgeData, PortData>> {}
+export interface IGraphDataState extends IHistory<ContentState> {}
 
 export interface IConnectingState {
   sourceNode: string;
@@ -35,23 +31,15 @@ export interface IConnectingState {
   movingPoint: IPoint | undefined;
 }
 
-export interface IGraphSettings<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> extends IZoomCommonParams {
+export interface IGraphSettings extends IZoomCommonParams {
   canvasBoundaryPadding: IGap;
-  graphConfig: IGraphConfig<NodeData, EdgeData, PortData>;
+  graphConfig: IGraphConfig;
   features: ReadonlySet<GraphFeatures>;
 }
 
-export interface IGraphState<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
-  settings: IGraphSettings<NodeData, EdgeData, PortData>;
-  data: IGraphDataState<NodeData, EdgeData, PortData>;
+export interface IGraphState {
+  settings: IGraphSettings;
+  data: IGraphDataState;
   viewport: IViewport;
   behavior: GraphBehavior;
   dummyNodes: IDummyNodes;
@@ -62,12 +50,8 @@ export interface IGraphState<
   connectState: IConnectingState | undefined;
 }
 
-export interface IGraphReducerInitializerParams<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
-  data?: GraphModel<NodeData, EdgeData, PortData>;
+export interface IGraphReducerInitializerParams {
+  data?: ContentState;
   transformMatrix?: ITransformMatrix;
-  settings?: Partial<IGraphSettings<NodeData, EdgeData, PortData>>;
+  settings?: Partial<IGraphSettings>;
 }

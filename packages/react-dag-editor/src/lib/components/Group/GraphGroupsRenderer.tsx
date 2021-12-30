@@ -1,10 +1,10 @@
 import * as React from "react";
-import { ICanvasGroup } from "../../models/canvas";
-import { GraphModel } from "../../models/GraphModel";
+import type { ICanvasGroup } from "../../models/canvas";
+import type { ContentState } from "../../models/ContentState";
 import { Group } from "./Group";
 
 export interface IGraphGroupsRendererProps {
-  data: GraphModel;
+  data: ContentState;
   groups: ICanvasGroup[];
 }
 

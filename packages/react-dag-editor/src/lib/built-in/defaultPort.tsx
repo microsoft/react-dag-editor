@@ -1,7 +1,11 @@
 import * as React from "react";
-import type { ICanvasNode } from "../models/node";
-import type { ICanvasPort } from "../models/port";
-import { GraphModel } from "../models/GraphModel";
+import {
+  isPortConnectedAsSource,
+  isPortConnectedAsTarget,
+} from "../content-utils";
+import { ContentState } from "../models/ContentState";
+import { NodeModel } from "../models/node";
+import { PortModel } from "../models/port";
 import { GraphPortStatus } from "../models/status";
 import * as Bitset from "../utils/bitset";
 import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
@@ -9,9 +13,9 @@ import { defaultColors } from "../common/constants";
 
 class DefaultPort implements IPortConfig {
   public getStyle(
-    port: ICanvasPort,
-    parentNode: ICanvasNode,
-    data: GraphModel,
+    port: PortModel,
+    parentNode: NodeModel,
+    data: ContentState,
     connectedAsSource: boolean,
     connectedAsTarget: boolean
   ): Partial<React.CSSProperties> {
@@ -39,13 +43,11 @@ class DefaultPort implements IPortConfig {
   public render(args: IPortDrawArgs): React.ReactNode {
     const { model: port, data, parentNode } = args;
 
-    const connectedAsSource = data.isPortConnectedAsSource(
-      parentNode.id,
-      port.id
+    const connectedAsSource = data.apply(
+      isPortConnectedAsSource(parentNode.id, port.id)
     );
-    const connectedAsTarget = data.isPortConnectedAsTarget(
-      parentNode.id,
-      port.id
+    const connectedAsTarget = data.apply(
+      isPortConnectedAsTarget(parentNode.id, port.id)
     );
 
     const style = this.getStyle(

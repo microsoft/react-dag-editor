@@ -1,21 +1,18 @@
 import type { ISelectBoxPosition } from "../components/Graph/SelectBox";
+import { selectNodes } from "../content-utils";
 import type { IGraphConfig } from "../models/config/types";
+import type { ContentState } from "../models/ContentState";
 import type { IRectShape, ITransformMatrix } from "../models/geometry";
-import type { GraphModel } from "../models/GraphModel";
 import { checkRectIntersect } from "./geometric";
 import { getNodeSize } from "./layout";
 import { reverseTransformPoint } from "./transformMatrix";
 
-export const selectNodeBySelectBox = <
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
+export const selectNodeBySelectBox = (
   graphConfig: IGraphConfig,
   transformMatrix: ITransformMatrix,
   selectBox: ISelectBoxPosition,
-  data: GraphModel<NodeData, EdgeData, PortData>
-): GraphModel<NodeData, EdgeData, PortData> => {
+  data: ContentState
+): ContentState => {
   if (!selectBox.width || !selectBox.height) {
     return data;
   }
@@ -56,14 +53,16 @@ export const selectNodeBySelectBox = <
     maxY: primeSelectionMax.y,
   };
 
-  return data.selectNodes((n) => {
-    const { width, height } = getNodeSize(n, graphConfig);
-    const rectNode: IRectShape = {
-      minX: n.x,
-      minY: n.y,
-      maxX: n.x + width,
-      maxY: n.y + height,
-    };
-    return checkRectIntersect(primeRectSelectionBox, rectNode);
-  });
+  return data.pipe(
+    selectNodes((n) => {
+      const { width, height } = getNodeSize(n, graphConfig);
+      const rectNode: IRectShape = {
+        minX: n.x,
+        minY: n.y,
+        maxX: n.x + width,
+        maxY: n.y + height,
+      };
+      return checkRectIntersect(primeRectSelectionBox, rectNode);
+    })
+  );
 };

@@ -1,12 +1,12 @@
 import * as React from "react";
 import { defaultGroup } from "../../built-in/defaultGroup";
 import { useGraphConfig } from "../../hooks/context";
-import { ICanvasGroup } from "../../models/canvas";
-import { GraphModel } from "../../models/GraphModel";
+import type { ICanvasGroup } from "../../models/canvas";
+import type { ContentState } from "../../models/ContentState";
 import { getGroupRect } from "../../utils/layout";
 
 export interface IGroupProps {
-  data: GraphModel;
+  data: ContentState;
   group: ICanvasGroup;
 }
 

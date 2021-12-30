@@ -1,6 +1,7 @@
 import type { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import type { IGraphConfig } from "../models/config/types";
+import { ContentState } from "../models/ContentState";
 import { emptyDummyNodes, IDummyNode, IDummyNodes } from "../models/dummy-node";
 import {
   GraphCanvasEvent,
@@ -13,7 +14,6 @@ import {
   INodeLocateEvent,
 } from "../models/event";
 import { Direction } from "../models/geometry";
-import { GraphModel } from "../models/GraphModel";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { GraphNodeStatus, isSelected, liftStatus } from "../models/status";
 import {
@@ -50,7 +50,7 @@ const getDelta = (start: number, end: number, value: number): number => {
 };
 
 function getSelectedNodes(
-  data: GraphModel,
+  data: ContentState,
   graphConfig: IGraphConfig
 ): IDummyNode[] {
   const nodes: IDummyNode[] = [];

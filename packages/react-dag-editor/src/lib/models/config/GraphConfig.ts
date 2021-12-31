@@ -7,41 +7,27 @@ import type {
   IPortConfig,
 } from "./types";
 
-export class GraphConfig<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> implements IGraphConfig<NodeData, EdgeData, PortData>
-{
+export class GraphConfig implements IGraphConfig {
   public readonly defaultEdgeShape;
   public readonly defaultNodeShape;
   public readonly defaultPortShape;
   public readonly defaultGroupShape;
-  public readonly nodeConfigMap: ReadonlyMap<
-    string,
-    INodeConfig<NodeData, PortData>
-  >;
-  public readonly edgeConfigMap: ReadonlyMap<string, IEdgeConfig<EdgeData>>;
-  public readonly portConfigMap: ReadonlyMap<
-    string,
-    IPortConfig<NodeData, EdgeData, PortData>
-  >;
+  public readonly nodeConfigMap: ReadonlyMap<string, INodeConfig>;
+  public readonly edgeConfigMap: ReadonlyMap<string, IEdgeConfig>;
+  public readonly portConfigMap: ReadonlyMap<string, IPortConfig>;
   public readonly groupConfigMap: ReadonlyMap<string, IGroupConfig>;
-  public readonly clipboard: IGraphClipboard<NodeData, EdgeData, PortData>;
+  public readonly clipboard: IGraphClipboard;
 
   public constructor(
     defaultEdgeShape: string,
     defaultNodeShape: string,
     defaultPortShape: string,
     defaultGroupShape: string,
-    nodeConfigMap: ReadonlyMap<string, INodeConfig<NodeData, PortData>>,
-    edgeConfigMap: ReadonlyMap<string, IEdgeConfig<EdgeData>>,
-    portConfigMap: ReadonlyMap<
-      string,
-      IPortConfig<NodeData, EdgeData, PortData>
-    >,
+    nodeConfigMap: ReadonlyMap<string, INodeConfig>,
+    edgeConfigMap: ReadonlyMap<string, IEdgeConfig>,
+    portConfigMap: ReadonlyMap<string, IPortConfig>,
     groupConfigMap: ReadonlyMap<string, IGroupConfig>,
-    clipboard: IGraphClipboard<NodeData, EdgeData, PortData>
+    clipboard: IGraphClipboard
   ) {
     this.defaultEdgeShape = defaultEdgeShape;
     this.defaultNodeShape = defaultNodeShape;
@@ -54,11 +40,11 @@ export class GraphConfig<
     this.clipboard = clipboard;
   }
 
-  public getClipboard(): IGraphClipboard<NodeData, EdgeData, PortData> {
+  public getClipboard(): IGraphClipboard {
     return this.clipboard;
   }
 
-  public getEdgeConfigByName(name?: string): IEdgeConfig<EdgeData> | undefined {
+  public getEdgeConfigByName(name?: string): IEdgeConfig | undefined {
     return this.edgeConfigMap.get(name || this.defaultEdgeShape);
   }
 
@@ -66,15 +52,11 @@ export class GraphConfig<
     return this.groupConfigMap.get(name || this.defaultGroupShape);
   }
 
-  public getNodeConfigByName(
-    name?: string
-  ): INodeConfig<NodeData, PortData> | undefined {
+  public getNodeConfigByName(name?: string): INodeConfig | undefined {
     return this.nodeConfigMap.get(name || this.defaultNodeShape);
   }
 
-  public getPortConfigByName(
-    name?: string
-  ): IPortConfig<NodeData, EdgeData, PortData> | undefined {
+  public getPortConfigByName(name?: string): IPortConfig | undefined {
     return this.portConfigMap.get(name || this.defaultPortShape);
   }
 }

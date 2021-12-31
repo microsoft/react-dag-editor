@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Graph, GraphModel, ReactDagEditor, useGraphReducer } from "../..";
+import { Graph, ContentState, ReactDagEditor, useGraphReducer } from "../..";
 import { sampleGraphData } from "../data/sample-graph-1";
 import { graphConfig } from "./FeaturesDemo";
 
@@ -9,7 +9,7 @@ export const NodeFrameCustomization: React.FC = () => {
       settings: {
         graphConfig,
       },
-      data: GraphModel.fromJSON(sampleGraphData),
+      data: ContentState.fromJSON(sampleGraphData),
     },
     undefined
   );
@@ -45,7 +45,7 @@ export const NodeResizeHandlerCustomization: React.FC = () => {
       settings: {
         graphConfig,
       },
-      data: GraphModel.fromJSON(sampleGraphData),
+      data: ContentState.fromJSON(sampleGraphData),
     },
     undefined
   );

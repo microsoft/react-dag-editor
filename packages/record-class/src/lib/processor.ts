@@ -25,7 +25,7 @@ const methodsTemplate = template(`
       INITIALIZE
     }
     merge(partial) {
-      return this.$$create(MERGE)
+      return this.$$create(Object.assign(this.toJSON(), partial))
     }
     pipe(list) {
       let next = this.toJSON();
@@ -60,17 +60,14 @@ export class Processor {
         if (!isRecordProperty(property.node)) {
           return;
         }
-        if (!property.node.optional && !property.node.value) {
-          throw new Error();
+        if (!property.node.value) {
+          return;
         }
         const key = property.node.key;
         if (key.type !== "Identifier") {
           return;
         }
         const value = property.node.value;
-        if (!value && !property.node.optional) {
-          throw new Error();
-        }
         this.properties.set(key.name, value);
         property.node.value = null;
       },
@@ -79,7 +76,6 @@ export class Processor {
 
   private insertMethods(): void {
     const INITIALIZE: t.Statement[] = [];
-    const mergeProperties: t.ObjectProperty[] = [];
     const fieldsProperties: t.ObjectProperty[] = [];
     this.properties.forEach((value, name) => {
       const init = value
@@ -95,13 +91,6 @@ export class Processor {
             NAME: t.identifier(name),
           });
       INITIALIZE.push(init);
-      const mergeProperty = t.objectProperty(
-        t.identifier(name),
-        mergePropertyValue({
-          NAME: t.identifier(name),
-        })
-      );
-      mergeProperties.push(mergeProperty);
       const fieldsProperty = t.objectProperty(
         t.identifier(name),
         t.memberExpression(t.thisExpression(), t.identifier(name))
@@ -110,7 +99,6 @@ export class Processor {
     });
     const klass = methodsTemplate({
       INITIALIZE,
-      MERGE: t.objectExpression(mergeProperties),
       TO_JSON: t.objectExpression(fieldsProperties),
     });
     if (Array.isArray(klass) || klass.type !== "ClassDeclaration") {

@@ -16,7 +16,7 @@ import {
   INodeLocateEvent,
 } from "../models/event";
 import { Direction } from "../models/geometry";
-import { INodeModel, NodeModel } from "../models/node";
+import { NodeModel } from "../models/node";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { GraphNodeStatus, isSelected, liftStatus } from "../models/status";
 import {
@@ -238,7 +238,7 @@ function dragEnd(state: IGraphState, action: INodeDragEndEvent): IGraphState {
     ...state,
     alignmentLines: [],
     dummyNodes: emptyDummyNodes(),
-    data: pushHistory(state.data, data, unSelectAllEntity()),
+    data: pushHistory(state.data, data.pipe(unSelectAllEntity())),
   };
 }
 
@@ -325,12 +325,12 @@ export const nodeReducer: IGraphReducer = (state, action) => {
         data: pushHistory(
           state.data,
           data.pipe(
+            unSelectAllEntity(),
             updateNodesGeometry(
               state.dummyNodes.nodes.map((node) => node.id),
               state.dummyNodes
             )
-          ),
-          unSelectAllEntity()
+          )
         ),
       };
     }
@@ -355,9 +355,7 @@ export const nodeReducer: IGraphReducer = (state, action) => {
               present: data.merge({
                 nodes: data.nodes.update(
                   action.node.id,
-                  lift<INodeModel, NodeModel>(
-                    liftStatus(Bitset.add(GraphNodeStatus.Activated))
-                  )
+                  lift(liftStatus(Bitset.add(GraphNodeStatus.Activated)))
                 ),
               }),
             },
@@ -376,9 +374,7 @@ export const nodeReducer: IGraphReducer = (state, action) => {
               present: data.merge({
                 nodes: data.nodes.update(
                   action.node.id,
-                  lift<INodeModel, NodeModel>(
-                    liftStatus(Bitset.remove(GraphNodeStatus.Activated))
-                  )
+                  lift(liftStatus(Bitset.remove(GraphNodeStatus.Activated)))
                 ),
               }),
             },
@@ -396,14 +392,14 @@ export const nodeReducer: IGraphReducer = (state, action) => {
           data: pushHistory(
             state.data,
             state.data.present.pipe(
+              unSelectAllEntity(),
               insertNode(
                 NodeModel.fromJSON({
                   ...action.node,
                   status: GraphNodeStatus.Selected,
                 })
               )
-            ),
-            unSelectAllEntity()
+            )
           ),
         };
       }
@@ -431,9 +427,7 @@ export const nodeReducer: IGraphReducer = (state, action) => {
           present: data.merge({
             nodes: data.nodes.update(
               action.node.id,
-              lift<INodeModel, NodeModel>(
-                liftStatus(Bitset.add(GraphNodeStatus.Editing))
-              )
+              lift(liftStatus(Bitset.add(GraphNodeStatus.Editing)))
             ),
           }),
         },

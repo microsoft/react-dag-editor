@@ -26,7 +26,7 @@ import { noop } from "../../utils/noop";
 import classes from "../Graph.styles.module.scss";
 import { AddingNodeSvg } from "./AddingNodeSvg";
 
-export interface IItemProps<N = unknown, P = unknown> {
+export interface IItemProps {
   /**
    * Custom styling for the Item
    */
@@ -39,7 +39,7 @@ export interface IItemProps<N = unknown, P = unknown> {
    * Triggered just before drag the model node from the item panel
    */
   dragWillStart?(node: ICanvasNode): void;
-  getNode(): Partial<ICanvasNode<N, P>>;
+  getNode(): Omit<ICanvasNode, "x" | "y">;
 }
 
 const el = document.createElement("div");

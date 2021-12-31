@@ -1,6 +1,10 @@
 import { lift } from "record-class";
-import { IContentState, IContentStateUpdate } from "../models/ContentState";
-import { INodeUpdate, NodeModel } from "../models/node";
+import type {
+  IContentState,
+  IContentStateUpdate,
+} from "../models/ContentState";
+import type { INodeUpdate, NodeModel } from "../models/node";
+import type { IPortUpdate } from "../models/port";
 import {
   GraphEdgeStatus,
   GraphNodeStatus,
@@ -9,11 +13,7 @@ import {
   resetConnectStatus,
   liftStatus,
 } from "../models/status";
-import {
-  INodeGeometryChange,
-  liftPorts,
-  updateNodeGeometry,
-} from "../node-utils";
+import * as NodeUtils from "../node-utils";
 import * as Bitset from "../utils/bitset";
 import { markEdgesDirty } from "./internal";
 
@@ -75,7 +75,9 @@ export const selectNodes =
           selected.add(node.id);
         }
         return node.pipe(
-          liftPorts(liftStatus(Bitset.replace(GraphPortStatus.Default))),
+          NodeUtils.liftPorts(
+            liftStatus(Bitset.replace(GraphPortStatus.Default))
+          ),
           liftStatus(
             resetConnectStatus(
               isNodeSelected
@@ -138,15 +140,29 @@ export const selectNodes =
   };
 
 export const updateNodesGeometry =
-  (nodeIds: string[], change: INodeGeometryChange): IContentStateUpdate =>
+  (
+    nodeIds: string[],
+    change: NodeUtils.INodeGeometryChange
+  ): IContentStateUpdate =>
   (content) => {
     const nodes = content.nodes.mutate();
     nodeIds.forEach((nodeId) => {
-      nodes.update(nodeId, lift(updateNodeGeometry(change)));
+      nodes.update(nodeId, lift(NodeUtils.updateNodeGeometry(change)));
     });
     const edges = markEdgesDirty(nodeIds, content);
     return {
       nodes: nodes.finish(),
       edges: edges.finish(),
+    };
+  };
+
+export const updatePort =
+  (nodeId: string, portId: string, f: IPortUpdate): IContentStateUpdate =>
+  (content) => {
+    return {
+      nodes: content.nodes.update(
+        nodeId,
+        lift(NodeUtils.updatePort(portId, f))
+      ),
     };
   };

@@ -6,7 +6,6 @@ import type {
   IGetConnectableParams,
   IGraphConfig,
 } from "../models/config/types";
-import type { EdgeModel } from "../models/edge";
 import type { ICanvasEdge, IEdgeModel } from "../models/edge";
 import type { IViewport } from "../models/geometry";
 import type { ICanvasNode, INodeModel, NodeModel } from "../models/node";
@@ -25,7 +24,7 @@ import { identical } from "./identical";
 import { checkIsMultiSelect } from "./keyboard";
 import * as Bitset from "./bitset";
 import { getRealPointFromClientPoint } from "./transformMatrix";
-import type { ContentState } from "../models/ContentState";
+import type { ContentState, IContentStateUpdate } from "../models/ContentState";
 import {
   getEdgesBySource,
   getEdgesByTarget,
@@ -90,9 +89,7 @@ export const isConnectable = (
 export function resetNodePortsState(node: NodeModel): NodeModel {
   return node.merge({
     ports: node.ports?.map(
-      lift<IPortModel, PortModel>(
-        liftStatus(Bitset.replace(GraphPortStatus.Default))
-      )
+      lift(liftStatus(Bitset.replace(GraphPortStatus.Default)))
     ),
   });
 }
@@ -156,25 +153,20 @@ export const getNeighborPorts = (
   return neighbors;
 };
 
-export const unSelectAllEntity = () => {
-  return (data: ContentState) =>
-    data.pipe((content) => ({
-      nodes: content.nodes.map(
-        lift<INodeModel, NodeModel>((node) => ({
-          ports: node.ports?.map(
-            lift<IPortModel, PortModel>(
-              liftStatus(Bitset.replace(GraphPortStatus.Default))
-            )
-          ),
-          status: GraphNodeStatus.Default,
-        }))
-      ),
-      edges: content.edges.map(
-        lift<IEdgeModel, EdgeModel>(
-          liftStatus(Bitset.replace(GraphEdgeStatus.Default))
-        )
-      ),
-    }));
+export const unSelectAllEntity = (): IContentStateUpdate => {
+  return (content) => ({
+    nodes: content.nodes.map(
+      lift<INodeModel, NodeModel, NodeModel>((node) => ({
+        ports: node.ports?.map(
+          lift(liftStatus(Bitset.replace(GraphPortStatus.Default)))
+        ),
+        status: GraphNodeStatus.Default,
+      }))
+    ),
+    edges: content.edges.map(
+      lift(liftStatus(Bitset.replace(GraphEdgeStatus.Default)))
+    ),
+  });
 };
 
 export const nodeSelection = (

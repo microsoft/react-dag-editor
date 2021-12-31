@@ -8,7 +8,7 @@ import {
 import type { $Complete } from "../utils/complete";
 import { IEntity } from "./entity";
 import type { IPoint } from "./geometry";
-import type { PortModel } from "./port";
+import type { ICanvasPortInit, IPortModel, PortModel } from "./port";
 import type { GraphNodeStatus, IWithStatus } from "./status";
 import type { $Model } from "./model";
 
@@ -21,16 +21,16 @@ export interface ICanvasNode extends IWithStatus<GraphNodeStatus>, IEntity {
   readonly width: number;
   readonly shape?: string;
   readonly automationId?: string;
-  readonly ports?: ReadonlyArray<PortModel>;
+  readonly ports?: ReadonlyArray<IPortModel | ICanvasPortInit>;
   readonly ariaLabel?: string;
 }
 
 export interface INodeModel extends $Model<Omit<ICanvasNode, "ports">> {
   readonly ports?: ReadonlyArray<PortModel>;
-  readonly portPositionCache: Map<string, IPoint>;
-  readonly prev: string | undefined;
-  readonly next: string | undefined;
-  readonly ariaLabel: string | undefined;
+  readonly portPositionCache?: Map<string, IPoint>;
+  readonly prev?: string;
+  readonly next?: string;
+  readonly ariaLabel?: string;
 }
 
 export type INodeUpdate = (node: INodeModel) => Partial<INodeModel>;

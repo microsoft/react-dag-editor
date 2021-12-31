@@ -9,7 +9,7 @@ import type {
 } from "../models/config/types";
 import { ContentState } from "../models/ContentState";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
-import type { ICanvasNode, NodeModel } from "../models/node";
+import type { NodeModel } from "../models/node";
 import type { PortModel } from "../models/port";
 import type { EventChannel } from "./eventChannel";
 import { getNeighborPorts, getNodeUid, getPortUid } from "./graphDataUtils";
@@ -340,6 +340,6 @@ export function defaultGetPortAriaLabel(
  *
  * @returns the string value for the aria label
  */
-export function defaultGetNodeAriaLabel(node: ICanvasNode): string | undefined {
+export function defaultGetNodeAriaLabel(node: NodeModel): string | undefined {
   return node.ariaLabel;
 }

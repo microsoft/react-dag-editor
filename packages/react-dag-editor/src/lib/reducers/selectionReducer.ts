@@ -1,6 +1,8 @@
 import { emptySelectBoxPosition } from "../components/Graph/SelectBox";
+import { selectNodes, updatePort } from "../content-utils";
 import { IGraphReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
+import { IContentStateUpdate } from "../models/ContentState";
 import {
   GraphCanvasEvent,
   GraphNodeEvent,
@@ -21,22 +23,24 @@ function handleNavigate(
   state: IGraphState,
   action: ICanvasNavigateEvent
 ): IGraphState {
-  let data = unSelectAllEntity()(state.data.present);
+  const updates: IContentStateUpdate[] = [unSelectAllEntity()];
   if (action.node && action.port) {
-    data = data.updatePort(
-      action.node.id,
-      action.port.id,
-      liftStatus(Bitset.add(GraphPortStatus.Selected))
+    updates.push(
+      updatePort(
+        action.node.id,
+        action.port.id,
+        liftStatus(Bitset.add(GraphPortStatus.Selected))
+      )
     );
   } else if (action.node) {
     const nodeId = action.node.id;
-    data = data.selectNodes((node) => node.id === nodeId);
+    updates.push(selectNodes((node) => node.id === nodeId));
   }
   return {
     ...state,
     data: {
       ...state.data,
-      present: data,
+      present: state.data.present.pipe(...updates),
     },
   };
 }
@@ -55,7 +59,7 @@ export const selectionReducer: IGraphReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: unSelectAllEntity()(data),
+          present: data.pipe(unSelectAllEntity()),
         },
       };
     case GraphNodeEvent.Click:
@@ -76,7 +80,7 @@ export const selectionReducer: IGraphReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: unSelectAllEntity()(data),
+          present: data.pipe(unSelectAllEntity()),
         },
         selectBoxPosition: {
           startX: point.x,
@@ -138,7 +142,7 @@ export const selectionReducer: IGraphReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: data.selectNodes(() => true),
+          present: data.pipe(selectNodes(() => true)),
         },
       };
     case GraphNodeEvent.Select: {
@@ -147,7 +151,7 @@ export const selectionReducer: IGraphReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: data.selectNodes((node) => nodes.has(node.id)),
+          present: data.pipe(selectNodes((node) => nodes.has(node.id))),
         },
       };
     }

@@ -118,9 +118,10 @@ export const filterSelectedItems = <NodeData, EdgeData, PortData>(
   const nodes = new Map<string, ICanvasNode<NodeData, PortData>>();
   const edges: Array<ICanvasEdge<EdgeData>> = [];
 
-  data.nodes.forEach(({ inner }) => {
-    if (isSelected(inner)) {
-      nodes.set(inner.id, inner);
+  data.nodes.forEach((node) => {
+    const json = node.toJSON();
+    if (isSelected(json)) {
+      nodes.set(json.id, json);
     }
   });
 

@@ -28,8 +28,4 @@ export class EdgeModel<T = unknown>
   public static fromJSON<T = unknown>(source: ICanvasEdge<T>): EdgeModel<T> {
     return new EdgeModel(source);
   }
-
-  protected $$create(partial: ICanvasEdge<T>): EdgeModel<T> {
-    return new EdgeModel(partial);
-  }
 }

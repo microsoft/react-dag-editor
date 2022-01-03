@@ -555,7 +555,7 @@ export class GraphModel<
       nodes.push(current.toJSON());
       current = current.next && this.nodes.get(current.next);
     }
-    const edges = Array.from(this.edges.values()).map((it) => it.inner);
+    const edges = Array.from(this.edges.values()).map((it) => it.toJSON());
     return {
       nodes,
       edges,

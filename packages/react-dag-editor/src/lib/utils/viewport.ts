@@ -146,7 +146,7 @@ export const getRenderedEdges = (
         renderedArea
       )
     ) {
-      result.push(e.inner);
+      result.push(e.toJSON());
     }
   });
 

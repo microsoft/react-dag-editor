@@ -1,4 +1,5 @@
 import { RecordBase } from "record-class";
+import record from "record-class/macro";
 import { mapCow } from "../utils/array";
 import type { $Complete } from "../utils/complete";
 import { getPortPositionByPortId } from "../utils/getPortPosition";
@@ -15,6 +16,7 @@ export interface INodeModel<NodeData = unknown, PortData = unknown>
   readonly next?: string;
 }
 
+@record
 export class NodeModel<NodeData = unknown, PortData = unknown>
   extends RecordBase<
     INodeModel<NodeData, PortData>,

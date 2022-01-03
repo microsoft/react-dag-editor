@@ -9,10 +9,6 @@ import record from "./proxy.macro";
 export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
   public field1?: string = "";
   private readonly field2 = false;
-
-  public override $$create(partial: Partial<SomeRecord>): SomeRecord {
-    return new SomeRecord(partial);
-  }
 }
 
       ↓ ↓ ↓ ↓ ↓ ↓
@@ -22,14 +18,12 @@ export class SomeRecord extends RecordBase {
   field1 = "";
   field2 = false;
 
-  $$create(partial) {
-    return new SomeRecord(partial);
+  constructor(partial) {
+    super();
   }
 
-  $$initialize(partial) {}
-
   merge(partial) {
-    return this.$$create({});
+    return new SomeRecord({});
   }
 
   pipe(...list) {
@@ -54,18 +48,11 @@ import record from "./proxy.macro";
 
 @record
 export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
+  public readonly id!: string;
   public readonly name?: string = "";
-
-  constructor(partial: Partial<SomeRecord>) {
-    super(partial);
-  }
 
   public someMethod(): void {
     //
-  }
-
-  public override $$create(partial: Partial<SomeRecord>): SomeRecord {
-    return new SomeRecord(partial);
   }
 }
 
@@ -73,26 +60,19 @@ export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
 
 import { RecordBase } from "../lib/record";
 export class SomeRecord extends RecordBase {
-  name;
-
-  constructor(partial) {
-    super(partial);
-  }
-
   someMethod() {
     //
   }
 
-  $$create(partial) {
-    return new SomeRecord(partial);
-  }
-
-  $$initialize(partial) {
+  constructor(partial) {
+    super();
+    this.id = partial.id;
     this.name = partial.name ?? "";
   }
 
   merge(partial) {
-    return this.$$create({
+    return new SomeRecord({
+      id: partial.id ?? this.id,
       name: partial.name ?? this.name,
     });
   }
@@ -106,6 +86,7 @@ export class SomeRecord extends RecordBase {
 
   toJSON() {
     return {
+      id: this.id,
       name: this.name,
     };
   }

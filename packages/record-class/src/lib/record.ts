@@ -8,13 +8,8 @@ export abstract class RecordBase<Interface, Class extends Interface> {
   ) => Class;
   public declare merge: (partial: Partial<Interface>) => Class;
   public declare toJSON: () => Interface;
-  private declare $$initialize: (partial: Partial<Interface>) => void;
 
-  protected abstract $$create(partial: Partial<Interface>): Class;
-
-  protected constructor(partial: Interface) {
-    this.$$initialize(partial);
-  }
+  constructor(partial: Interface) {}
 
   public clone(): Class {
     return this.merge({});

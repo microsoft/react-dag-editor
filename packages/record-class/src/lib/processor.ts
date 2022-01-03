@@ -21,11 +21,12 @@ const assign = template.statement("TARGET.NAME = SOURCE.NAME;");
 
 const methodsTemplate = template(`
   class Template {
-    $$initialize(partial) {
+    constructor(partial) {
+      super(partial)
       INITIALIZE
     }
     merge(partial) {
-      return this.$$create(MERGE)
+      return new CLASS(MERGE)
     }
     pipe(...list) {
       let next = this.clone();
@@ -55,6 +56,7 @@ export class Processor {
   }
 
   private processProperties() {
+    const properties = new Set<t.ClassProperty>();
     this.classDeclaration.traverse({
       ClassProperty: (property) => {
         if (!isRecordProperty(property.node)) {
@@ -65,13 +67,14 @@ export class Processor {
           return;
         }
         const value = property.node.value;
-        if (!value) {
-          return;
-        }
         this.properties.set(key.name, value);
-        property.node.value = null;
+        properties.add(property.node);
       },
     });
+    this.classDeclaration.node.body.body =
+      this.classDeclaration.node.body.body.filter((item) => {
+        return item.type !== "ClassProperty" || !properties.has(item);
+      });
   }
 
   private insertMethods(): void {
@@ -107,6 +110,7 @@ export class Processor {
     });
     const klass = methodsTemplate({
       INITIALIZE,
+      CLASS: this.classDeclaration.node.id,
       MERGE: t.objectExpression(mergeProperties),
       TO_JSON: t.objectExpression(fieldsProperties),
     });

@@ -150,7 +150,7 @@ export class GraphConfigBuilder<
     return this;
   }
 
-  public build(): GraphConfig {
+  public build(): GraphConfig<NodeData, EdgeData, PortData> {
     return new GraphConfig(
       this.defaultEdgeShape,
       this.defaultNodeShape,

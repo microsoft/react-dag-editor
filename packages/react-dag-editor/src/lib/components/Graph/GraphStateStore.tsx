@@ -9,6 +9,8 @@ import {
   IGraphStateContext,
 } from "../../contexts/GraphStateContext";
 import type { GraphController } from "../../controllers/GraphController";
+import type { GraphConfig } from "../../models/config/GraphConfig";
+import type { GraphModel } from "../../models/GraphModel";
 import type { IGraphState } from "../../models/state";
 
 export interface IGraphStateStoreProps<
@@ -43,18 +45,19 @@ export function GraphStateStore<
     [state, dispatch]
   );
 
+  const data = state.data.present as GraphModel;
+
   return (
-    <GraphConfigContext.Provider value={state.settings.graphConfig}>
+    <GraphConfigContext.Provider
+      value={state.settings.graphConfig as GraphConfig}
+    >
       <GraphControllerContext.Provider value={graphController}>
-        <ConnectingState
-          data={state.data.present}
-          connectState={state.connectState}
-        >
+        <ConnectingState data={data} connectState={state.connectState}>
           <GraphStateContext.Provider
             value={contextValue as IGraphStateContext}
           >
             <ViewportContext.Provider value={state.viewport}>
-              <GraphValueContext.Provider value={state.data.present}>
+              <GraphValueContext.Provider value={data}>
                 <AlignmentLinesContext.Provider value={state.alignmentLines}>
                   {children}
                 </AlignmentLinesContext.Provider>

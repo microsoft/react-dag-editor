@@ -108,7 +108,7 @@ export function useGraphReducer<
     batchedUpdates(() => {
       sideEffects.forEach((callback) => {
         try {
-          callback(state, prevState);
+          callback(state as IGraphState, prevState as IGraphState);
         } catch (e) {
           // eslint-disable-next-line no-console
           console.error(e);

@@ -1,8 +1,10 @@
 import { RecordBase } from "record-class";
+import record from "record-class/macro";
 import { $Complete } from "../utils/complete";
 import { ICanvasEdge } from "./edge";
 import { GraphEdgeStatus } from "./status";
 
+@record
 export class EdgeModel<T = unknown>
   extends RecordBase<ICanvasEdge<T>, EdgeModel<T>>
   implements $Complete<ICanvasEdge<T>>

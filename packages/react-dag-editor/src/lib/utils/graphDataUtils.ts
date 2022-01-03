@@ -125,12 +125,12 @@ export const filterSelectedItems = <NodeData, EdgeData, PortData>(
     }
   });
 
-  data.edges.forEach(({ inner }) => {
+  data.edges.forEach((node) => {
     if (
-      isSelected(inner) ||
-      (nodes.has(inner.source) && nodes.has(inner.target))
+      isSelected(node) ||
+      (nodes.has(node.source) && nodes.has(node.target))
     ) {
-      edges.push(inner);
+      edges.push(node.toJSON());
     }
   });
 

@@ -185,7 +185,7 @@ export class GraphModel<
       node: ICanvasNode<NodeData, PortData>
     ) => ICanvasNode<NodeData, PortData>
   ): GraphModel<NodeData, EdgeData, PortData> {
-    const nodes = this.nodes.update(id, (node) => node.update(f));
+    const nodes = this.nodes.update(id, (node) => node.pipe(f));
     if (nodes === this.nodes) {
       return this;
     }
@@ -237,7 +237,7 @@ export class GraphModel<
       .set(node.id, NodeModel.fromJSON(node, this.tail, undefined));
     if (this.tail && !this.nodes.has(node.id)) {
       nodes.update(this.tail, (tail) =>
-        tail.link({
+        tail.merge({
           next: node.id,
         })
       );
@@ -268,12 +268,12 @@ export class GraphModel<
         deleted.add(node.id);
         if (prev) {
           nodes.update(prev.id, (prevNode) =>
-            prevNode.link({ next: node?.next })
+            prevNode.merge({ next: node?.next })
           );
         }
         if (next) {
           nodes.update(next.id, (nextNode) =>
-            nextNode.link({ prev: prev?.id })
+            nextNode.merge({ prev: prev?.id })
           );
         }
         if (node === first) {
@@ -281,7 +281,7 @@ export class GraphModel<
         }
       } else {
         nodes.update(node.id, (current) =>
-          current.link({ prev: prev?.id }).update((n) => {
+          current.merge({ prev: prev?.id }).pipe((n) => {
             if (Bitset.has(GraphNodeStatus.Editing)(n.status)) {
               return n;
             }
@@ -303,7 +303,7 @@ export class GraphModel<
         (predicate.edge?.(edge) ?? true)
       ) {
         edges.update(edge.id, (e) =>
-          e.update(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
+          e.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
         );
       } else {
         edges.delete(edge.id);
@@ -365,7 +365,9 @@ export class GraphModel<
         .update(edge.target, (node) => node.invalidCache()),
       edges: this.edges
         .set(edge.id, EdgeModel.fromJSON(edge))
-        .map((e) => e.updateStatus(Bitset.replace(GraphEdgeStatus.Default))),
+        .map((e) =>
+          e.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
+        ),
       edgesBySource,
       edgesByTarget,
     });
@@ -376,7 +378,7 @@ export class GraphModel<
     f: (edge: ICanvasEdge<EdgeData>) => ICanvasEdge<EdgeData>
   ): GraphModel<NodeData, EdgeData, PortData> {
     return this.merge({
-      edges: this.edges.update(id, (e) => e.update(f)),
+      edges: this.edges.update(id, (e) => e.pipe(f)),
     });
   }
 
@@ -460,11 +462,13 @@ export class GraphModel<
         }
         return node
           .updatePorts(updateStatus(Bitset.replace(GraphPortStatus.Default)))
-          .updateStatus(
-            resetConnectStatus(
-              isNodeSelected
-                ? GraphNodeStatus.Selected
-                : GraphNodeStatus.UnconnectedToSelected
+          .pipe(
+            updateStatus(
+              resetConnectStatus(
+                isNodeSelected
+                  ? GraphNodeStatus.Selected
+                  : GraphNodeStatus.UnconnectedToSelected
+              )
             )
           );
       })
@@ -472,7 +476,7 @@ export class GraphModel<
     if (selected.size === 0) {
       this.nodes.forEach((n) =>
         nodes.update(n.id, (it) =>
-          it.updateStatus(Bitset.replace(GraphNodeStatus.Default))
+          it.pipe(updateStatus(Bitset.replace(GraphNodeStatus.Default)))
         )
       );
     } else if (topNode) {
@@ -484,11 +488,13 @@ export class GraphModel<
     }
     const setConnected = (id: string) => {
       nodes.update(id, (node) =>
-        node.updateStatus(
-          Bitset.replace(
-            isSelected(node)
-              ? GraphNodeStatus.Selected
-              : GraphNodeStatus.ConnectedToSelected
+        node.pipe(
+          updateStatus(
+            Bitset.replace(
+              isSelected(node)
+                ? GraphNodeStatus.Selected
+                : GraphNodeStatus.ConnectedToSelected
+            )
           )
         )
       );
@@ -504,10 +510,10 @@ export class GraphModel<
             setConnected(edge.source);
             state = GraphEdgeStatus.ConnectedToSelected;
           }
-          return edge.updateStatus(Bitset.replace(state));
+          return edge.pipe(updateStatus(Bitset.replace(state)));
         })
       : this.edges.map((edge) =>
-          edge.updateStatus(Bitset.replace(GraphEdgeStatus.Default))
+          edge.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
         );
     return this.merge({
       nodes: nodes.finish(),

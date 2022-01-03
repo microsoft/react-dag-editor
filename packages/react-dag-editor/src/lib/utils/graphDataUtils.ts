@@ -43,14 +43,14 @@ export function markEdgeDirty<T>(
   edges: HashMapBuilder<string, EdgeModel<T>>,
   id: string
 ): void {
-  edges.update(id, (edge) => edge.shallow());
+  edges.update(id, (edge) => edge.clone());
 }
 
 export interface IGetNearestConnectablePortParams<
   NodeData = unknown,
   EdgeData = unknown,
   PortData = unknown
-> extends Omit<IGetConnectableParams, "model"> {
+> extends Omit<IGetConnectableParams<NodeData, EdgeData, PortData>, "model"> {
   clientX: number;
   clientY: number;
   graphConfig: IGraphConfig;
@@ -182,7 +182,7 @@ export const unSelectAllEntity = <NodeData, EdgeData, PortData>(): TDataPatch<
   return (data) =>
     data
       .mapNodes((n) =>
-        n.update(
+        n.pipe(
           (
             curNode: ICanvasNode<NodeData, PortData>
           ): ICanvasNode<NodeData, PortData> => {
@@ -199,7 +199,7 @@ export const unSelectAllEntity = <NodeData, EdgeData, PortData>(): TDataPatch<
         )
       )
       .mapEdges((e) =>
-        e.update(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
+        e.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
       );
 };
 

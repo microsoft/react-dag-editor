@@ -6,7 +6,7 @@
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": false,
-    "experimentalDecorators": false,
+    "experimentalDecorators": true,
     "downlevelIteration": false,
     "importHelpers": true,
     "resolveJsonModule": true,

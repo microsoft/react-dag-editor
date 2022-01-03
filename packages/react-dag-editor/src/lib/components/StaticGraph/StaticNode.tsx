@@ -39,9 +39,7 @@ const StaticNodeWithMemo = React.memo(StaticNode, (prevProps, nextProps) => {
     prevNode.x === nextNode.x &&
     prevNode.y === nextNode.y &&
     prevNode.height === nextNode.height &&
-    prevNode.width === nextNode.width &&
-    prevNode.isInSearchResults === nextNode.isInSearchResults &&
-    prevNode.isCurrentSearchResult === nextNode.isCurrentSearchResult
+    prevNode.width === nextNode.width
   );
 });
 

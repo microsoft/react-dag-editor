@@ -60,16 +60,13 @@ export class Processor {
         if (!isRecordProperty(property.node)) {
           return;
         }
-        if (!property.node.optional && !property.node.value) {
-          throw new Error();
-        }
         const key = property.node.key;
         if (key.type !== "Identifier") {
           return;
         }
         const value = property.node.value;
-        if (!value && !property.node.optional) {
-          throw new Error();
+        if (!value) {
+          return;
         }
         this.properties.set(key.name, value);
         property.node.value = null;

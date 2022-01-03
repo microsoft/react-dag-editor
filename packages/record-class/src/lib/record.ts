@@ -4,7 +4,7 @@ export interface IRecordApplicable<T, R> {
 
 export abstract class RecordBase<Interface, Class extends Interface> {
   public declare pipe: (
-    list: ((value: Interface) => Partial<Interface>)[]
+    ...list: ((value: Class) => Partial<Interface>)[]
   ) => Class;
   public declare merge: (partial: Partial<Interface>) => Class;
   public declare toJSON: () => Interface;
@@ -12,7 +12,7 @@ export abstract class RecordBase<Interface, Class extends Interface> {
 
   protected abstract $$create(partial: Partial<Interface>): Class;
 
-  protected constructor(partial: Partial<Interface>) {
+  protected constructor(partial: Interface) {
     this.$$initialize(partial);
   }
 

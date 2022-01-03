@@ -27,8 +27,8 @@ const methodsTemplate = template(`
     merge(partial) {
       return this.$$create(MERGE)
     }
-    pipe(list) {
-      let next = this.toJSON();
+    pipe(...list) {
+      let next = this.clone();
       list.forEach(f => {
         Object.assign(next, f(next))
       })

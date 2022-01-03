@@ -32,8 +32,8 @@ export class SomeRecord extends RecordBase {
     return this.$$create({});
   }
 
-  pipe(list) {
-    let next = this.toJSON();
+  pipe(...list) {
+    let next = this.clone();
     list.forEach((f) => {
       Object.assign(next, f(next));
     });
@@ -97,8 +97,8 @@ export class SomeRecord extends RecordBase {
     });
   }
 
-  pipe(list) {
-    let next = this.toJSON();
+  pipe(...list) {
+    let next = this.clone();
     list.forEach((f) => {
       Object.assign(next, f(next));
     });

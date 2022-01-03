@@ -125,10 +125,4 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
       portPositionCache: new Map(),
     });
   }
-
-  protected override $$create(
-    partial: INodeModel<NodeData, PortData>
-  ): NodeModel<NodeData, PortData> {
-    return new NodeModel(partial);
-  }
 }

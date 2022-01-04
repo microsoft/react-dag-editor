@@ -33,9 +33,7 @@ const methodsTemplate = template(`
       list.forEach(f => {
         Object.assign(next, f(next))
       })
-    }
-    toJSON() {
-      return TO_JSON;
+      return next
     }
   }
 `);
@@ -80,7 +78,6 @@ export class Processor {
   private insertMethods(): void {
     const INITIALIZE: t.Statement[] = [];
     const mergeProperties: t.ObjectProperty[] = [];
-    const fieldsProperties: t.ObjectProperty[] = [];
     this.properties.forEach((value, name) => {
       const init = value
         ? assignWithDefault({
@@ -102,17 +99,11 @@ export class Processor {
         })
       );
       mergeProperties.push(mergeProperty);
-      const fieldsProperty = t.objectProperty(
-        t.identifier(name),
-        t.memberExpression(t.thisExpression(), t.identifier(name))
-      );
-      fieldsProperties.push(fieldsProperty);
     });
     const klass = methodsTemplate({
       INITIALIZE,
       CLASS: this.classDeclaration.node.id,
       MERGE: t.objectExpression(mergeProperties),
-      TO_JSON: t.objectExpression(fieldsProperties),
     });
     if (Array.isArray(klass) || klass.type !== "ClassDeclaration") {
       throw new Error();

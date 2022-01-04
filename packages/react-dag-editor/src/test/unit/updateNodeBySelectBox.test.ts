@@ -221,18 +221,6 @@ describe("test updateNodeBySelectBox", () => {
       ]),
     });
 
-    const nodes = initNodes.map(
-      updateStatus(Bitset.replace(GraphNodeStatus.Selected))
-    );
-    const nextData = {
-      nodes,
-      edges: data
-        .toJSON()
-        .edges.map(
-          updateStatus(Bitset.replace(GraphEdgeStatus.ConnectedToSelected))
-        ),
-    };
-
     expect(
       selectNodeBySelectBox(
         graphConfig,
@@ -240,6 +228,6 @@ describe("test updateNodeBySelectBox", () => {
         selectBoxPosition,
         data
       ).toJSON()
-    ).toEqual(nextData);
+    ).toMatchSnapshot();
   });
 });

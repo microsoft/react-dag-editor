@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test updateNodeBySelectBox should select covered nodes 1`] = `
+Object {
+  "edges": Array [],
+  "nodes": Array [
+    Object {
+      "height": 50,
+      "id": "0",
+      "status": 16,
+      "width": 50,
+      "x": 50,
+      "y": 50,
+    },
+    Object {
+      "height": 100,
+      "id": "1",
+      "status": 1,
+      "width": 100,
+      "x": 150,
+      "y": 150,
+    },
+    Object {
+      "height": 150,
+      "id": "2",
+      "status": 16,
+      "width": 150,
+      "x": 350,
+      "y": 350,
+    },
+  ],
+}
+`;
+
+exports[`test updateNodeBySelectBox should select covered nodes 2`] = `
+Object {
+  "edges": Array [],
+  "nodes": Array [
+    Object {
+      "height": 50,
+      "id": "0",
+      "status": 16,
+      "width": 50,
+      "x": 50,
+      "y": 50,
+    },
+    Object {
+      "height": 100,
+      "id": "1",
+      "status": 1,
+      "width": 100,
+      "x": 150,
+      "y": 150,
+    },
+    Object {
+      "height": 150,
+      "id": "2",
+      "status": 16,
+      "width": 150,
+      "x": 350,
+      "y": 350,
+    },
+  ],
+}
+`;
+
+exports[`test updateNodeBySelectBox should select covered nodes 3`] = `
+Object {
+  "edges": Array [],
+  "nodes": Array [
+    Object {
+      "height": 50,
+      "id": "0",
+      "status": 16,
+      "width": 50,
+      "x": 50,
+      "y": 50,
+    },
+    Object {
+      "height": 100,
+      "id": "1",
+      "status": 1,
+      "width": 100,
+      "x": 150,
+      "y": 150,
+    },
+    Object {
+      "height": 150,
+      "id": "2",
+      "status": 16,
+      "width": 150,
+      "x": 350,
+      "y": 350,
+    },
+  ],
+}
+`;
+
+exports[`test updateNodeBySelectBox should select covered nodes 4`] = `
+Object {
+  "edges": Array [],
+  "nodes": Array [
+    Object {
+      "height": 50,
+      "id": "0",
+      "status": 16,
+      "width": 50,
+      "x": 50,
+      "y": 50,
+    },
+    Object {
+      "height": 100,
+      "id": "1",
+      "status": 1,
+      "width": 100,
+      "x": 150,
+      "y": 150,
+    },
+    Object {
+      "height": 150,
+      "id": "2",
+      "status": 16,
+      "width": 150,
+      "x": 350,
+      "y": 350,
+    },
+  ],
+}
+`;
+
+exports[`test updateNodeBySelectBox should select covered nodes 5`] = `
+Object {
+  "edges": Array [],
+  "nodes": Array [
+    Object {
+      "height": 50,
+      "id": "0",
+      "status": 16,
+      "width": 50,
+      "x": 50,
+      "y": 50,
+    },
+    Object {
+      "height": 100,
+      "id": "1",
+      "status": 1,
+      "width": 100,
+      "x": 150,
+      "y": 150,
+    },
+    Object {
+      "height": 150,
+      "id": "2",
+      "status": 16,
+      "width": 150,
+      "x": 350,
+      "y": 350,
+    },
+  ],
+}
+`;

@@ -1,6 +1,223 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should delete related edges 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "1",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 0,
+      "target": "2",
+      "targetPortId": "0",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+  ],
+}
+`;
+
 exports[`should delete related edges: events 1`] = `Array []`;
+
+exports[`should do nothing if delete disabled 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "0",
+      "source": "0",
+      "sourcePortId": "0",
+      "status": 4,
+      "target": "1",
+      "targetPortId": "1",
+    },
+    Object {
+      "id": "1",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 8,
+      "target": "2",
+      "targetPortId": "0",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 8,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "1",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 1,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 16,
+      "x": 0,
+      "y": 0,
+    },
+  ],
+}
+`;
 
 exports[`should do nothing if delete disabled: events 1`] = `
 Array [
@@ -9,8 +226,338 @@ Array [
 ]
 `;
 
+exports[`should do nothing if nothing selected 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "0",
+      "source": "0",
+      "sourcePortId": "0",
+      "status": 0,
+      "target": "1",
+      "targetPortId": "1",
+    },
+    Object {
+      "id": "1",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 0,
+      "target": "2",
+      "targetPortId": "0",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "1",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 4,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+  ],
+}
+`;
+
 exports[`should do nothing if nothing selected: events 1`] = `Array []`;
 
+exports[`should only delete edge 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "1",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 0,
+      "target": "2",
+      "targetPortId": "0",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "1",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+  ],
+}
+`;
+
 exports[`should only delete edge: events 1`] = `Array []`;
+
+exports[`should only delete node 1`] = `
+Object {
+  "edges": Array [],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 0,
+      "x": 0,
+      "y": 0,
+    },
+  ],
+}
+`;
 
 exports[`should only delete node: events 1`] = `Array []`;

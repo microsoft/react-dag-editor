@@ -38,6 +38,18 @@ export enum GraphPortStatus {
   ConnectingAsTarget = 0b1000,
 }
 
+export const liftStatus =
+  <S extends number, Interface extends IWithStatus<S>>(
+    updater: (state: number | undefined) => number
+  ) =>
+  (value: Interface): Partial<Interface> => {
+    const next = updater(value.status as number | 0);
+
+    return {
+      status: next as S,
+    } as Partial<Interface>;
+  };
+
 export const updateStatus =
   (updater: (state: number | undefined) => number) =>
   <S extends number, T extends IWithStatus<S>>(value: T): T => {

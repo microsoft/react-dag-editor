@@ -5,7 +5,7 @@ export function lift<
   Class extends Interface,
   T extends RecordBase<Interface, Class>
 >(f: (value: Class) => Partial<Interface>) {
-  return (instance: T) => {
-    return instance.pipe(f);
+  return (instance: T): T => {
+    return instance.pipe(f) as unknown as T;
   };
 }

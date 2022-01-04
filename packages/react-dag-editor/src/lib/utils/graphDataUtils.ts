@@ -1,4 +1,5 @@
 import type * as React from "react";
+import { lift } from "record-class";
 import type { HashMapBuilder } from "../collections";
 import { MouseEventButton } from "../common/constants";
 import type { ICanvasData } from "../models/canvas";
@@ -20,6 +21,7 @@ import {
   GraphPortStatus,
   isNodeEditing,
   isSelected,
+  liftStatus,
   updateStatus,
 } from "../models/status";
 import { getPortPositionByPortId } from "./getPortPosition";
@@ -174,7 +176,7 @@ export const unSelectAllEntity = (): TDataPatch => {
           const nextNode = {
             ...curNode,
             ports: curNode.ports?.map(
-              updateStatus(Bitset.replace(GraphPortStatus.Default))
+              lift(liftStatus(Bitset.replace(GraphPortStatus.Default)))
             ),
           };
           return updateStatus(Bitset.replace(GraphNodeStatus.Default))(

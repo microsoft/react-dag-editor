@@ -1,9 +1,10 @@
 import type { IGraphConfig, INodeConfig } from "../models/config/types";
 import type { ICanvasNode } from "../models/node";
+import { INodeModel } from "../models/NodeModel";
 import { Debug } from "./debug";
 
 export const getNodeConfig = (
-  node: ICanvasNode,
+  node: ICanvasNode | INodeModel,
   graphConfig: IGraphConfig
 ): INodeConfig | undefined => {
   const nodeConfig = graphConfig.getNodeConfigByName(node.shape);

@@ -1,5 +1,6 @@
 import * as Bitset from "../utils/bitset";
 import { ICanvasNode } from "./node";
+import { INodeModel } from "./NodeModel";
 
 export interface IWithStatus<S extends number> {
   status?: S;
@@ -56,7 +57,7 @@ export function isActivated<S extends number, T extends IWithStatus<S>>(
   return Bitset.has(ACTIVATED_STATUS)(value.status);
 }
 
-export function isNodeEditing(node: ICanvasNode): boolean {
+export function isNodeEditing(node: ICanvasNode | INodeModel): boolean {
   return Bitset.has(GraphNodeStatus.Editing)(node.status);
 }
 

@@ -55,21 +55,13 @@ export const DEFAULT_GRAPH_SETTINGS: IGraphSettings = {
 
 export const EMPTY_GRAPH_STATE: IGraphState = createGraphState({});
 
-export function createGraphState<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
-  params: IGraphReducerInitializerParams<NodeData, EdgeData, PortData>
-): IGraphState<NodeData, EdgeData, PortData> {
+export function createGraphState(
+  params: IGraphReducerInitializerParams
+): IGraphState {
   const { data, transformMatrix, settings } = params;
   return {
     settings: {
-      ...(DEFAULT_GRAPH_SETTINGS as IGraphSettings<
-        NodeData,
-        EdgeData,
-        PortData
-      >),
+      ...DEFAULT_GRAPH_SETTINGS,
       ...settings,
     },
     data: resetUndoStack(data ?? GraphModel.empty()),

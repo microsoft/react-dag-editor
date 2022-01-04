@@ -6,40 +6,18 @@ import {
   IPortEvent,
 } from "../models/event";
 
-export function isEdgeEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(event: IEvent<NodeData, EdgeData, PortData>): event is IEdgeEvent<EdgeData> {
-  return event.type.startsWith("onEdge");
+export function isEdgeEvent(event: IEvent): event is IEdgeEvent {
+  return event.type.startsWith("[Edge]");
 }
 
-export function isNodeEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
-  event: IEvent<NodeData, EdgeData, PortData>
-): event is INodeEvent<NodeData, PortData> {
-  return event.type.startsWith("onNode");
+export function isNodeEvent(event: IEvent): event is INodeEvent {
+  return event.type.startsWith("[Node]");
 }
 
-export function isPortEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
-  event: IEvent<NodeData, EdgeData, PortData>
-): event is IPortEvent<NodeData, PortData> {
-  return event.type.startsWith("onPort");
+export function isPortEvent(event: IEvent): event is IPortEvent {
+  return event.type.startsWith("[Port]");
 }
 
-export function isCanvasEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
-  event: IEvent<NodeData, EdgeData, PortData>
-): event is ICanvasEvent<NodeData, EdgeData, PortData> {
-  return event.type.startsWith("onCanvas");
+export function isCanvasEvent(event: IEvent): event is ICanvasEvent {
+  return event.type.startsWith("[Canvas]");
 }

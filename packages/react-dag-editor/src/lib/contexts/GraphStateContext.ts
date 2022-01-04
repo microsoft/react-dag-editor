@@ -35,39 +35,21 @@ export const EMPTY_CONNECT_STATE = {
   },
 };
 
-export type IGraphAction<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> = IEvent<NodeData, EdgeData, PortData>;
+export type IGraphAction = IEvent;
 
-export type IDispatchCallback<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> = (
-  state: IGraphState<NodeData, EdgeData, PortData>,
-  prevState: IGraphState<NodeData, EdgeData, PortData>
+export type IDispatchCallback = (
+  state: IGraphState,
+  prevState: IGraphState
 ) => void;
 
-export type IDispatch<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
-> = (
-  action: IEvent<NodeData, EdgeData, PortData> | Action,
-  callback?: IDispatchCallback<NodeData, EdgeData, PortData>
+export type IDispatch<Action = never> = (
+  action: IEvent | Action,
+  callback?: IDispatchCallback
 ) => void;
 
-export interface IGraphStateContext<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
-> {
-  state: IGraphState<NodeData, EdgeData, PortData>;
-  dispatch: IDispatch<NodeData, EdgeData, PortData, Action>;
+export interface IGraphStateContext<Action = never> {
+  state: IGraphState;
+  dispatch: IDispatch<Action>;
 }
 
 /**
@@ -91,33 +73,16 @@ export const GraphStateContext = React.createContext<IGraphStateContext>(
   defaultGraphStateContext
 );
 
-export type IGraphReactReducer<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
-> = React.Reducer<
-  IGraphState<NodeData, EdgeData, PortData>,
-  IEvent<NodeData, EdgeData, PortData> | Action
+export type IGraphReactReducer<Action = never> = React.Reducer<
+  IGraphState,
+  IEvent | Action
 >;
 
-export type IGraphReducer<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
-> = (
-  next: IGraphReactReducer<NodeData, EdgeData, PortData, Action>
-) => IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+export type IGraphReducer<Action = never> = (
+  next: IGraphReactReducer<Action>
+) => IGraphReactReducer<Action>;
 
-export const setData = <
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
-  state: IGraphState<NodeData, EdgeData, PortData>,
-  data: GraphModel<NodeData, EdgeData, PortData>
-): IGraphState<NodeData, EdgeData, PortData> => ({
+export const setData = (state: IGraphState, data: GraphModel): IGraphState => ({
   ...state,
   data: {
     ...state.data,
@@ -125,16 +90,10 @@ export const setData = <
   },
 });
 
-export const updateData = <
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
-  state: IGraphState<NodeData, EdgeData, PortData>,
-  f: (
-    data: GraphModel<NodeData, EdgeData, PortData>
-  ) => GraphModel<NodeData, EdgeData, PortData>
-): IGraphState<NodeData, EdgeData, PortData> => ({
+export const updateData = (
+  state: IGraphState,
+  f: (data: GraphModel) => GraphModel
+): IGraphState => ({
   ...state,
   data: {
     ...state.data,

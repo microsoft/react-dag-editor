@@ -1,15 +1,15 @@
 import * as React from "react";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
 import { useGraphConfig } from "../hooks/context";
-import { IViewport } from "../models/geometry";
-import { ICanvasPort } from "../models/port";
-import { GraphModel } from "../models/GraphModel";
-import { NodeModel } from "../models/NodeModel";
+import type { IViewport } from "../models/geometry";
+import type { GraphModel } from "../models/GraphModel";
+import type { NodeModel } from "../models/NodeModel";
+import type { PortModel } from "../models/PortModel";
 import { GraphPortStatus } from "../models/status";
 import * as Bitset from "../utils/bitset";
 
 interface IPortTooltipsProps {
-  port: ICanvasPort;
+  port: PortModel;
   parentNode: NodeModel;
   data: GraphModel;
   viewport: Required<IViewport>;

@@ -13,31 +13,17 @@ import type { GraphConfig } from "../../models/config/GraphConfig";
 import type { GraphModel } from "../../models/GraphModel";
 import type { IGraphState } from "../../models/state";
 
-export interface IGraphStateStoreProps<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
-> {
-  state: IGraphState<NodeData, EdgeData, PortData>;
-  dispatch: IDispatch<NodeData, EdgeData, PortData, Action>;
+export interface IGraphStateStoreProps<Action = never> {
+  state: IGraphState;
+  dispatch: IDispatch<Action>;
   graphController: GraphController;
 }
 
-export function GraphStateStore<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
->(
-  props: React.PropsWithChildren<
-    IGraphStateStoreProps<NodeData, EdgeData, PortData, Action>
-  >
+export function GraphStateStore<Action = never>(
+  props: React.PropsWithChildren<IGraphStateStoreProps<Action>>
 ): React.ReactElement {
   const { graphController, state, dispatch, children } = props;
-  const contextValue = React.useMemo<
-    IGraphStateContext<NodeData, EdgeData, PortData, Action>
-  >(
+  const contextValue = React.useMemo<IGraphStateContext<Action>>(
     () => ({
       state: state,
       dispatch,

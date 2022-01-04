@@ -7,12 +7,13 @@ import type {
   IGraphConfig,
 } from "../models/config/types";
 import type { ICanvasEdge } from "../models/edge";
-import type { EdgeModel } from "../models/EdgeModel";
+import type { EdgeModel, IEdgeModel } from "../models/EdgeModel";
 import type { IViewport } from "../models/geometry";
 import type { GraphModel } from "../models/GraphModel";
 import type { ICanvasNode } from "../models/node";
-import type { NodeModel } from "../models/NodeModel";
+import type { INodeModel, NodeModel } from "../models/NodeModel";
 import type { ICanvasPort } from "../models/port";
+import type { IPortModel, PortModel } from "../models/PortModel";
 import {
   GraphEdgeStatus,
   GraphNodeStatus,
@@ -27,9 +28,7 @@ import { checkIsMultiSelect } from "./keyboard";
 import * as Bitset from "./bitset";
 import { getRealPointFromClientPoint } from "./transformMatrix";
 
-export type TDataPatch<NodeData, EdgeData, PortData> = (
-  data: GraphModel<NodeData, EdgeData, PortData>
-) => GraphModel<NodeData, EdgeData, PortData>;
+export type TDataPatch = (data: GraphModel) => GraphModel;
 
 /**
  * shallow copy to mark edge dirty, in order to trigger a re-render
@@ -39,31 +38,28 @@ export type TDataPatch<NodeData, EdgeData, PortData> = (
  * @param edges
  * @param id
  */
-export function markEdgeDirty<T>(
-  edges: HashMapBuilder<string, EdgeModel<T>>,
+export function markEdgeDirty(
+  edges: HashMapBuilder<string, EdgeModel>,
   id: string
 ): void {
   edges.update(id, (edge) => edge.clone());
 }
 
-export interface IGetNearestConnectablePortParams<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> extends Omit<IGetConnectableParams<NodeData, EdgeData, PortData>, "model"> {
+export interface IGetNearestConnectablePortParams
+  extends Omit<IGetConnectableParams, "model"> {
   clientX: number;
   clientY: number;
   graphConfig: IGraphConfig;
-  data: GraphModel<NodeData, EdgeData, PortData>;
+  data: GraphModel;
   viewport: Required<IViewport>;
 }
 
 export const getNearestConnectablePort = (
   params: IGetNearestConnectablePortParams
-): ICanvasPort | undefined => {
+): PortModel | undefined => {
   const { parentNode: node, clientX, clientY, graphConfig, viewport } = params;
   let minDistance = Infinity;
-  let nearestPort: ICanvasPort | undefined;
+  let nearestPort: PortModel | undefined;
 
   if (!node.ports) {
     return undefined;
@@ -104,19 +100,15 @@ export const isConnectable = (
 /**
  * @param node
  */
-export function resetNodePortsState<NodeData, PortData>(
-  node: NodeModel<NodeData, PortData>
-): NodeModel<NodeData, PortData> {
+export function resetNodePortsState(node: NodeModel): NodeModel {
   return node.updatePorts(
     updateStatus(Bitset.replace(GraphPortStatus.Default))
   );
 }
 
-export const filterSelectedItems = <NodeData, EdgeData, PortData>(
-  data: GraphModel<NodeData, EdgeData, PortData>
-): ICanvasData<NodeData, EdgeData, PortData> => {
-  const nodes = new Map<string, ICanvasNode<NodeData, PortData>>();
-  const edges: Array<ICanvasEdge<EdgeData>> = [];
+export const filterSelectedItems = (data: GraphModel): ICanvasData => {
+  const nodes = new Map<string, ICanvasNode>();
+  const edges: Array<ICanvasEdge> = [];
 
   data.nodes.forEach((node) => {
     const json = node.toJSON();
@@ -145,8 +137,8 @@ interface IPortNeighbor {
   portId: string;
 }
 
-export const getNeighborPorts = <NodeData, EdgeData, PortData>(
-  data: GraphModel<NodeData, EdgeData, PortData>,
+export const getNeighborPorts = (
+  data: GraphModel,
   nodeId: string,
   portId: string
 ): IPortNeighbor[] => {
@@ -174,41 +166,31 @@ export const getNeighborPorts = <NodeData, EdgeData, PortData>(
   return neighbors;
 };
 
-export const unSelectAllEntity = <NodeData, EdgeData, PortData>(): TDataPatch<
-  NodeData,
-  EdgeData,
-  PortData
-> => {
+export const unSelectAllEntity = (): TDataPatch => {
   return (data) =>
     data
       .mapNodes((n) =>
-        n.pipe(
-          (
-            curNode: ICanvasNode<NodeData, PortData>
-          ): ICanvasNode<NodeData, PortData> => {
-            const nextNode: ICanvasNode<NodeData, PortData> = {
-              ...curNode,
-              ports: curNode.ports?.map(
-                updateStatus(Bitset.replace(GraphPortStatus.Default))
-              ),
-            };
-            return updateStatus(Bitset.replace(GraphNodeStatus.Default))(
-              nextNode
-            );
-          }
-        )
+        n.pipe((curNode) => {
+          const nextNode = {
+            ...curNode,
+            ports: curNode.ports?.map(
+              updateStatus(Bitset.replace(GraphPortStatus.Default))
+            ),
+          };
+          return updateStatus(Bitset.replace(GraphNodeStatus.Default))(
+            nextNode
+          );
+        })
       )
       .mapEdges((e) =>
         e.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
       );
 };
 
-export const nodeSelection = <NodeData, EdgeData, PortData>(
+export const nodeSelection = (
   e: MouseEvent | React.MouseEvent,
-  target: ICanvasNode<NodeData, PortData>
-): ((
-  data: GraphModel<NodeData, EdgeData, PortData>
-) => GraphModel<NodeData, EdgeData, PortData>) => {
+  target: NodeModel
+): ((data: GraphModel) => GraphModel) => {
   if (isNodeEditing(target)) {
     return identical;
   }
@@ -220,46 +202,51 @@ export const nodeSelection = <NodeData, EdgeData, PortData>(
   }
 
   return (data) => {
-    const predicate: (node: ICanvasNode<NodeData, PortData>) => boolean =
-      isMultiSelect
-        ? (node) => {
-            if (node.id !== target.id) {
-              return isSelected(node);
-            } else if (e.button === MouseEventButton.Secondary) {
-              return true;
-            } else {
-              // use target.state here which is node's original state before onNodeMouseDown
-              return !isSelected(target);
-            }
+    const predicate: (node: NodeModel) => boolean = isMultiSelect
+      ? (node) => {
+          if (node.id !== target.id) {
+            return isSelected(node);
+          } else if (e.button === MouseEventButton.Secondary) {
+            return true;
+          } else {
+            // use target.state here which is node's original state before onNodeMouseDown
+            return !isSelected(target);
           }
-        : (node) => node.id === target.id;
+        }
+      : (node) => node.id === target.id;
     return data.selectNodes(predicate, target.id);
   };
 };
 
-export const getNodeAutomationId = (node: ICanvasNode): string => {
+export const getNodeAutomationId = (node: ICanvasNode | INodeModel): string => {
   return `node-container-${node.name ?? "unnamed"}-${node.id}`;
 };
 
 export const getPortAutomationId = (
-  port: ICanvasPort,
-  parentNode: ICanvasNode
+  port: ICanvasPort | IPortModel,
+  parentNode: ICanvasNode | INodeModel
 ): string => {
   return `port-${parentNode.name}-${parentNode.id}-${port.name}-${port.id}`;
 };
 
-export const getNodeUid = (graphId: string, node: ICanvasNode): string => {
+export const getNodeUid = (
+  graphId: string,
+  node: ICanvasNode | INodeModel
+): string => {
   return `node:${graphId}:${node.id}`;
 };
 
 export const getPortUid = (
   graphId: string,
-  node: ICanvasNode,
-  port: ICanvasPort
+  node: ICanvasNode | INodeModel,
+  port: ICanvasPort | IPortModel
 ): string => {
   return `port:${graphId}:${node.id}:${port.id}`;
 };
 
-export const getEdgeUid = (graphId: string, edge: ICanvasEdge): string => {
+export const getEdgeUid = (
+  graphId: string,
+  edge: ICanvasEdge | IEdgeModel
+): string => {
   return `edge:${graphId}:${edge.id}`;
 };

@@ -2,7 +2,7 @@ import type * as React from "react";
 import type { HashMap, OrderedMap } from "../collections";
 import type { IGraphConfig } from "../models/config/types";
 import type { ICanvasEdge } from "../models/edge";
-import type { EdgeModel } from "../models/EdgeModel";
+import type { EdgeModel, IEdgeModel } from "../models/EdgeModel";
 import {
   Direction,
   IContainerRect,
@@ -15,7 +15,7 @@ import {
 } from "../models/geometry";
 import type { GraphModel } from "../models/GraphModel";
 import type { ICanvasNode } from "../models/node";
-import type { NodeModel } from "../models/NodeModel";
+import type { INodeModel, NodeModel } from "../models/NodeModel";
 import type { IGraphSettings } from "../models/state";
 import { isPointInRect } from "./geometric";
 import { identical } from "./identical";
@@ -39,7 +39,7 @@ export const isViewportEmpty = (viewport: IViewport): boolean => {
 };
 
 export const getNodeRect = (
-  node: ICanvasNode,
+  node: NodeModel,
   graphConfig: IGraphConfig
 ): IShapeRect => {
   const { x, y } = node;
@@ -53,7 +53,7 @@ export const getNodeRect = (
 };
 
 export const isNodeVisible = (
-  node: ICanvasNode,
+  node: NodeModel,
   viewport: Required<IViewport>,
   graphConfig: IGraphConfig
 ): boolean => {
@@ -84,8 +84,8 @@ export const isPointVisible = (
   return x > 0 && x < width && y > 0 && y < height;
 };
 
-export const getVisibleNodes = <NodeData, PortData>(
-  nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
+export const getVisibleNodes = (
+  nodes: OrderedMap<string, NodeModel>,
   viewport: Required<IViewport>,
   graphConfig: IGraphConfig
 ): ICanvasNode[] => {
@@ -101,8 +101,8 @@ export const getVisibleNodes = <NodeData, PortData>(
 };
 
 // Get rendered nodes count
-export const getRenderedNodes = <NodeData, PortData>(
-  nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
+export const getRenderedNodes = (
+  nodes: OrderedMap<string, NodeModel>,
   viewport: IViewport
 ): ICanvasNode[] => {
   const result: ICanvasNode[] = [];
@@ -119,7 +119,7 @@ export const getRenderedNodes = <NodeData, PortData>(
 };
 
 const isNodeInRenderedArea = (
-  node: ICanvasNode,
+  node: ICanvasNode | INodeModel,
   renderedArea: IRectShape
 ): boolean => {
   return isPointInRect(renderedArea, node);
@@ -225,7 +225,7 @@ export const getRenderedArea = (viewport: IViewport): IRectShape => {
 };
 
 export const getEdgeSourceTargetCoordinate = (
-  edge: ICanvasEdge,
+  edge: ICanvasEdge | IEdgeModel,
   nodes: OrderedMap<string, NodeModel>,
   graphConfig: IGraphConfig
 ): { source?: IPoint; target?: IPoint } => {

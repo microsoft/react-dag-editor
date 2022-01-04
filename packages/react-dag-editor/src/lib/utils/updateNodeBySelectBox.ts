@@ -6,16 +6,12 @@ import { checkRectIntersect } from "./geometric";
 import { getNodeSize } from "./layout";
 import { reverseTransformPoint } from "./transformMatrix";
 
-export const selectNodeBySelectBox = <
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(
+export const selectNodeBySelectBox = (
   graphConfig: IGraphConfig,
   transformMatrix: ITransformMatrix,
   selectBox: ISelectBoxPosition,
-  data: GraphModel<NodeData, EdgeData, PortData>
-): GraphModel<NodeData, EdgeData, PortData> => {
+  data: GraphModel
+): GraphModel => {
   if (!selectBox.width || !selectBox.height) {
     return data;
   }

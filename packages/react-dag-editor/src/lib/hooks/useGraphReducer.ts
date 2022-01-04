@@ -41,42 +41,22 @@ const builtinReducer = composeReducers(
   )
 );
 
-export function getGraphReducer<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
->(
-  middleware:
-    | IGraphReducer<NodeData, EdgeData, PortData, Action>
-    | undefined = undefined,
-  finalReducer: IGraphReactReducer<
-    NodeData,
-    EdgeData,
-    PortData,
-    Action
-  > = identical
-): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
+export function getGraphReducer<Action = never>(
+  middleware: IGraphReducer<Action> | undefined = undefined,
+  finalReducer: IGraphReactReducer<Action> = identical
+): IGraphReactReducer<Action> {
   const finalMiddleware = middleware
-    ? composeReducers([middleware as IGraphReducer, builtinReducer])
+    ? composeReducers([middleware as unknown as IGraphReducer, builtinReducer])
     : builtinReducer;
   return finalMiddleware(
     finalReducer as IGraphReactReducer
-  ) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+  ) as IGraphReactReducer<Action>;
 }
 
-export function useGraphReducer<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
->(
-  params: IGraphReducerInitializerParams<NodeData, EdgeData, PortData>,
-  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined
-): [
-  IGraphState<NodeData, EdgeData, PortData>,
-  IDispatch<NodeData, EdgeData, PortData, Action>
-] {
+export function useGraphReducer<Action = never>(
+  params: IGraphReducerInitializerParams,
+  middleware: IGraphReducer<Action> | undefined
+): [IGraphState, IDispatch<Action>] {
   const reducer = React.useMemo(
     () => getGraphReducer(middleware),
     [middleware]
@@ -93,9 +73,7 @@ export function useGraphReducer<
       if (callback) {
         sideEffects.push(callback);
       }
-      dispatchImpl(
-        action as Action | IGraphAction<NodeData, EdgeData, PortData>
-      );
+      dispatchImpl(action as Action | IGraphAction);
     },
     [sideEffects]
   );
@@ -118,8 +96,5 @@ export function useGraphReducer<
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
-  return [state, dispatch] as [
-    IGraphState<NodeData, EdgeData, PortData>,
-    IDispatch<NodeData, EdgeData, PortData, Action>
-  ];
+  return [state, dispatch] as [IGraphState, IDispatch<Action>];
 }

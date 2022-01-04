@@ -1,7 +1,7 @@
 import type { ICanvasPort } from "./port";
 import type { GraphNodeStatus } from "./status";
 
-export interface ICanvasNode<T = unknown, P = unknown> {
+export interface ICanvasNode {
   readonly shape?: string;
   readonly x: number;
   readonly y: number;
@@ -11,7 +11,7 @@ export interface ICanvasNode<T = unknown, P = unknown> {
   readonly height?: number;
   readonly width?: number;
   readonly automationId?: string;
-  readonly ports?: ReadonlyArray<ICanvasPort<P>>;
+  readonly ports?: ReadonlyArray<ICanvasPort>;
   readonly ariaLabel?: string;
-  readonly data?: Readonly<T>;
+  readonly properties?: Record<string, unknown>;
 }

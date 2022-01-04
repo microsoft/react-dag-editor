@@ -21,9 +21,6 @@ import {
   ICanvasKeyboardEvent,
 } from "../../models/event";
 import type { IContainerRect, IViewport } from "../../models/geometry";
-import { GraphModel } from "../../models/GraphModel";
-import { NodeModel } from "../../models/NodeModel";
-import { ICanvasPort } from "../../models/port";
 import { GraphBehavior } from "../../models/state";
 import { isSelected } from "../../models/status";
 import { isSupported, isViewportComplete } from "../../utils";
@@ -49,11 +46,7 @@ import { getGraphStyles } from "./Graph.styles";
 import type { IGraphProps } from "./IGraphProps";
 import { SelectBox } from "./SelectBox";
 
-export function Graph<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(props: IGraphProps<NodeData, EdgeData, PortData>): React.ReactElement | null {
+export function Graph(props: IGraphProps): React.ReactElement | null {
   const [focusedWithoutMouse, setFocusedWithoutMouse] =
     React.useState<boolean>(false);
 
@@ -316,11 +309,7 @@ export function Graph<
                   props.getNodeAriaLabel ?? defaultGetNodeAriaLabel
                 }
                 getPortAriaLabel={
-                  (props.getPortAriaLabel as (
-                    data: GraphModel,
-                    node: NodeModel,
-                    port: ICanvasPort
-                  ) => string | undefined) ?? defaultGetPortAriaLabel
+                  props.getPortAriaLabel ?? defaultGetPortAriaLabel
                 }
               />
             </VirtualizationProvider>

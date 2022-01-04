@@ -1,13 +1,22 @@
-import { RecordBase } from "record-class";
 import record from "record-class/macro";
+import {
+  IWithPropertiesRecord,
+  Properties,
+  ReadonlyProperties,
+  WithPropertiesRecord,
+} from "../properties";
 import { $Complete } from "../utils/complete";
 import { ICanvasEdge } from "./edge";
 import { GraphEdgeStatus } from "./status";
 
+export interface IEdgeModel
+  extends Omit<ICanvasEdge, "properties">,
+    IWithPropertiesRecord {}
+
 @record
-export class EdgeModel<T = unknown>
-  extends RecordBase<ICanvasEdge<T>, EdgeModel<T>>
-  implements $Complete<ICanvasEdge<T>>
+export class EdgeModel
+  extends WithPropertiesRecord<IEdgeModel, EdgeModel>
+  implements $Complete<IEdgeModel>
 {
   public readonly id!: string;
   /**
@@ -23,13 +32,16 @@ export class EdgeModel<T = unknown>
   public readonly shape: string | undefined = undefined;
   public readonly status: GraphEdgeStatus | undefined = undefined;
   public readonly automationId: string | undefined = undefined;
-  public readonly data: Readonly<T> | undefined = undefined;
+  public readonly properties: ReadonlyProperties = new Properties();
 
-  public static fromJSON<T = unknown>(source: ICanvasEdge<T>): EdgeModel<T> {
-    return new EdgeModel(source);
+  public static fromJSON(source: ICanvasEdge): EdgeModel {
+    return new EdgeModel({
+      ...source,
+      properties: Properties.from(source.properties),
+    });
   }
 
-  public toJSON(): ICanvasEdge<T> {
+  public toJSON(): ICanvasEdge {
     return {
       id: this.id,
       source: this.source,
@@ -39,7 +51,13 @@ export class EdgeModel<T = unknown>
       shape: this.shape,
       status: this.status,
       automationId: this.automationId,
-      data: this.data,
+      properties: this.properties.toJSON(),
     };
+  }
+
+  public setProperties(properties: ReadonlyProperties): EdgeModel {
+    return this.merge({
+      properties,
+    });
   }
 }

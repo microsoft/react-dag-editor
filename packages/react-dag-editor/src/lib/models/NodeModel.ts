@@ -1,30 +1,32 @@
-import { RecordBase } from "record-class";
 import record from "record-class/macro";
+import {
+  IWithPropertiesRecord,
+  Properties,
+  ReadonlyProperties,
+  WithPropertiesRecord,
+} from "../properties";
 import { mapCow } from "../utils/array";
 import type { $Complete } from "../utils/complete";
 import { getPortPositionByPortId } from "../utils/getPortPosition";
 import type { IGraphConfig } from "./config/types";
 import type { IPoint } from "./geometry";
 import type { ICanvasNode } from "./node";
-import type { ICanvasPort } from "./port";
-import { PortModel } from "./PortModel";
+import { IPortModel, PortModel } from "./PortModel";
 import { GraphNodeStatus } from "./status";
 
-export interface INodeModel<NodeData = unknown, PortData = unknown>
-  extends Omit<ICanvasNode<NodeData, PortData>, "ports"> {
+export interface INodeModel
+  extends Omit<ICanvasNode, "ports" | "properties">,
+    IWithPropertiesRecord {
   readonly portPositionCache?: Map<string, IPoint>;
   readonly prev?: string;
   readonly next?: string;
-  readonly ports?: ReadonlyArray<PortModel<PortData>>;
+  readonly ports?: ReadonlyArray<PortModel>;
 }
 
 @record
-export class NodeModel<NodeData = unknown, PortData = unknown>
-  extends RecordBase<
-    INodeModel<NodeData, PortData>,
-    NodeModel<NodeData, PortData>
-  >
-  implements $Complete<INodeModel<NodeData, PortData>>
+export class NodeModel
+  extends WithPropertiesRecord<INodeModel, NodeModel>
+  implements $Complete<INodeModel>
 {
   public readonly id!: string;
   public readonly x!: number;
@@ -35,44 +37,30 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   public readonly shape: string | undefined = undefined;
   public readonly status: GraphNodeStatus | undefined = undefined;
   public readonly automationId: string | undefined = undefined;
-  public readonly ports: ReadonlyArray<PortModel<PortData>> | undefined =
-    undefined;
+  public readonly ports: ReadonlyArray<PortModel> | undefined = undefined;
   public readonly portPositionCache = new Map<string, IPoint>();
-  public readonly data: Readonly<NodeData> | undefined = undefined;
   public readonly ariaLabel: string | undefined = undefined;
   public readonly prev: string | undefined = undefined;
   public readonly next: string | undefined = undefined;
+  public readonly properties: ReadonlyProperties = new Properties();
 
-  public static fromJSON<NodeData = unknown, PortData = unknown>(
-    source: ICanvasNode<NodeData, PortData>,
+  public static fromJSON(
+    source: ICanvasNode,
     prev: string | undefined = undefined,
     next: string | undefined = undefined
-  ): NodeModel<NodeData, PortData> {
+  ): NodeModel {
     return new NodeModel({
       ...source,
       ports: source.ports?.map(PortModel.fromJSON),
       prev,
       next,
       portPositionCache: new Map(),
+      properties: Properties.from(source.properties),
     });
   }
 
-  public getPort(id: string): ICanvasPort<PortData> | undefined {
+  public getPort(id: string): PortModel | undefined {
     return this.ports?.find((port) => port.id === id);
-  }
-
-  public updateData(
-    f: (data: Readonly<NodeData>) => Readonly<NodeData>
-  ): NodeModel<NodeData, PortData> {
-    if (!this.data) {
-      return this;
-    }
-    const data = f(this.data);
-    return this.data === data
-      ? this
-      : this.merge({
-          data,
-        });
   }
 
   public getPortPosition(
@@ -96,9 +84,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   /**
    * @internal
    */
-  public updatePositionAndSize(
-    dummy: ICanvasNode
-  ): NodeModel<NodeData, PortData> {
+  public updatePositionAndSize(dummy: ICanvasNode): NodeModel {
     const { x, y, width, height } = dummy;
     return this.merge({
       x,
@@ -110,13 +96,17 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   }
 
   public updatePorts(
-    f: (port: ICanvasPort<PortData>, index: number) => ICanvasPort<PortData>
-  ): NodeModel<NodeData, PortData> {
+    f: (
+      port: PortModel,
+      index: number,
+      array: readonly PortModel[]
+    ) => Partial<IPortModel>
+  ): NodeModel {
     if (!this.ports) {
       return this;
     }
-    const ports = mapCow(this.ports, (port, index) =>
-      port.pipe((port) => f(port, index))
+    const ports = mapCow(this.ports, (port, index, array) =>
+      port.pipe((port) => f(port, index, array))
     );
 
     return this.ports === ports
@@ -126,13 +116,13 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
         });
   }
 
-  public invalidCache(): NodeModel<NodeData, PortData> {
+  public invalidCache(): NodeModel {
     return this.merge({
       portPositionCache: new Map(),
     });
   }
 
-  public toJSON(): ICanvasNode<NodeData, PortData> {
+  public toJSON(): ICanvasNode {
     return {
       shape: this.shape,
       x: this.x,
@@ -143,9 +133,15 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
       height: this.height,
       width: this.width,
       automationId: this.automationId,
-      ports: this.ports,
+      ports: this.ports?.map((port) => port.toJSON()),
       ariaLabel: this.ariaLabel,
-      data: this.data,
+      properties: this.properties.toJSON(),
     };
+  }
+
+  public setProperties(properties: ReadonlyProperties): NodeModel {
+    return this.merge({
+      properties,
+    });
   }
 }

@@ -102,6 +102,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
       y,
       width: width ?? this.width,
       height: height ?? this.height,
+      portPositionCache: new Map(),
     });
   }
 
@@ -124,5 +125,22 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     return this.merge({
       portPositionCache: new Map(),
     });
+  }
+
+  public toJSON(): ICanvasNode<NodeData, PortData> {
+    return {
+      shape: this.shape,
+      x: this.x,
+      y: this.y,
+      name: this.name,
+      id: this.id,
+      status: this.status,
+      height: this.height,
+      width: this.width,
+      automationId: this.automationId,
+      ports: this.ports,
+      ariaLabel: this.ariaLabel,
+      data: this.data,
+    };
   }
 }

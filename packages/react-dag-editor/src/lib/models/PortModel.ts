@@ -1,15 +1,22 @@
-import { RecordBase } from "record-class";
 import record from "record-class/macro";
+import {
+  IWithPropertiesRecord,
+  Properties,
+  ReadonlyProperties,
+  WithPropertiesRecord,
+} from "../properties";
 import { $Complete } from "../utils/complete";
 import { ICanvasPort } from "./port";
 import { GraphPortStatus } from "./status";
 
-export interface IPortModel<T = unknown> extends ICanvasPort<T> {}
+export interface IPortModel
+  extends Omit<ICanvasPort, "properties">,
+    IWithPropertiesRecord {}
 
 @record
-export class PortModel<T = unknown>
-  extends RecordBase<IPortModel<T>, PortModel<T>>
-  implements $Complete<IPortModel<T>>
+export class PortModel
+  extends WithPropertiesRecord<IPortModel, PortModel>
+  implements $Complete<IPortModel>
 {
   public readonly id!: string;
   public readonly name!: string;
@@ -19,14 +26,23 @@ export class PortModel<T = unknown>
   public readonly isInputDisabled: boolean | undefined = undefined;
   public readonly isOutputDisabled: boolean | undefined = undefined;
   public readonly ariaLabel: string | undefined = undefined;
-  public readonly data: Readonly<T> | undefined = undefined;
   public readonly automationId: string | undefined = undefined;
+  public readonly properties: ReadonlyProperties = new Properties();
 
-  public static fromJSON<T>(source: ICanvasPort<T>) {
-    return new PortModel(source);
+  public static fromJSON(source: ICanvasPort) {
+    return new PortModel({
+      ...source,
+      properties: Properties.from(source.properties),
+    });
   }
 
-  public toJSON(): ICanvasPort<T> {
+  public setProperties(properties: ReadonlyProperties): PortModel {
+    return this.merge({
+      properties,
+    });
+  }
+
+  public toJSON(): ICanvasPort {
     return {
       id: this.id,
       name: this.name,
@@ -36,8 +52,8 @@ export class PortModel<T = unknown>
       isInputDisabled: this.isInputDisabled,
       isOutputDisabled: this.isOutputDisabled,
       ariaLabel: this.ariaLabel,
-      data: this.data,
       automationId: this.automationId,
+      properties: this.properties.toJSON(),
     };
   }
 }

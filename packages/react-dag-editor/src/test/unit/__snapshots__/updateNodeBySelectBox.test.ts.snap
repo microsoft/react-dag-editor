@@ -1,5 +1,395 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`test updateNodeBySelectBox test select position (100,100) and (160, 160) nodes 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "0",
+      "source": "0",
+      "sourcePortId": "0",
+      "status": 4,
+      "target": "1",
+      "targetPortId": "1",
+    },
+    Object {
+      "id": "1",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 4,
+      "target": "2",
+      "targetPortId": "0",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 1,
+      "x": 100,
+      "y": 100,
+    },
+    Object {
+      "id": "1",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 1,
+      "x": 160,
+      "y": 160,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 8,
+      "x": 300,
+      "y": 300,
+    },
+  ],
+}
+`;
+
+exports[`test updateNodeBySelectBox test select position (100,100) node 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "0",
+      "source": "0",
+      "sourcePortId": "0",
+      "status": 4,
+      "target": "1",
+      "targetPortId": "1",
+    },
+    Object {
+      "id": "1",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 4,
+      "target": "2",
+      "targetPortId": "0",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 1,
+      "x": 100,
+      "y": 100,
+    },
+    Object {
+      "id": "1",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 8,
+      "x": 160,
+      "y": 160,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 8,
+      "x": 300,
+      "y": 300,
+    },
+  ],
+}
+`;
+
+exports[`test updateNodeBySelectBox test select position (100,100) node with pan 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "id": "0",
+      "source": "0",
+      "sourcePortId": "0",
+      "status": 4,
+      "target": "1",
+      "targetPortId": "1",
+    },
+    Object {
+      "id": "1",
+      "source": "0",
+      "sourcePortId": "1",
+      "status": 4,
+      "target": "2",
+      "targetPortId": "0",
+    },
+  ],
+  "nodes": Array [
+    Object {
+      "id": "0",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 1,
+      "x": 100,
+      "y": 100,
+    },
+    Object {
+      "id": "1",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 8,
+      "x": 160,
+      "y": 160,
+    },
+    Object {
+      "id": "2",
+      "ports": Array [
+        Object {
+          "id": "0",
+          "name": "0",
+          "position": Array [
+            0.25,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "1",
+          "name": "1",
+          "position": Array [
+            0.5,
+            0,
+          ],
+          "status": 0,
+        },
+        Object {
+          "id": "2",
+          "name": "2",
+          "position": Array [
+            0.75,
+            0,
+          ],
+          "status": 0,
+        },
+      ],
+      "status": 8,
+      "x": 300,
+      "y": 300,
+    },
+  ],
+}
+`;
+
 exports[`test updateNodeBySelectBox test select position all nodes 1`] = `
 Object {
   "edges": Array [

@@ -33,7 +33,7 @@ export abstract class RecordBase<Interface, Class extends Interface> {
     return this.merge({});
   }
 
-  public apply<T>(this: Class, f: IRecordApplicable<Class, T>): T {
+  public applied<T>(this: Class, f: IRecordApplicable<Class, T>): T {
     return f(this);
   }
 }

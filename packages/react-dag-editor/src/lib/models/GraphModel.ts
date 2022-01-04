@@ -1,6 +1,8 @@
+import { RecordBase } from "record-class";
+import record from "record-class/macro";
 import { HashMap, HashMapBuilder, OrderedMap } from "../collections";
+import { $Complete } from "../utils/complete";
 import { markEdgeDirty } from "../utils/graphDataUtils";
-import { preventSpread } from "../utils/preventSpread";
 import * as Bitset from "../utils/bitset";
 import { ICanvasData, ICanvasGroup } from "./canvas";
 import { ICanvasEdge } from "./edge";
@@ -44,14 +46,14 @@ interface IGraphModel<
   EdgeData = unknown,
   PortData = unknown
 > {
-  readonly nodes: OrderedMap<string, NodeModel<NodeData, PortData>>;
-  readonly edges: HashMap<string, EdgeModel<EdgeData>>;
-  readonly groups: ICanvasGroup[];
-  readonly head: string | undefined;
-  readonly tail: string | undefined;
-  readonly edgesBySource: EdgesByPort;
-  readonly edgesByTarget: EdgesByPort;
-  readonly selectedNodes: ReadonlySet<string>;
+  readonly nodes?: OrderedMap<string, NodeModel<NodeData, PortData>>;
+  readonly edges?: HashMap<string, EdgeModel<EdgeData>>;
+  readonly groups?: ICanvasGroup[];
+  readonly head?: string;
+  readonly tail?: string;
+  readonly edgesBySource?: EdgesByPort;
+  readonly edgesByTarget?: EdgesByPort;
+  readonly selectedNodes?: ReadonlySet<string>;
 }
 
 /**
@@ -60,32 +62,27 @@ interface IGraphModel<
  * * including multiple operations that must happen atomically
  * * improve performance by internal mutability
  */
+@record
 export class GraphModel<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> implements IGraphModel<NodeData, EdgeData, PortData>
+    NodeData = unknown,
+    EdgeData = unknown,
+    PortData = unknown
+  >
+  extends RecordBase<
+    IGraphModel<NodeData, EdgeData, PortData>,
+    GraphModel<NodeData, EdgeData, PortData>
+  >
+  implements $Complete<IGraphModel<NodeData, EdgeData, PortData>>
 {
-  public readonly nodes: OrderedMap<string, NodeModel<NodeData, PortData>>;
-  public readonly edges: HashMap<string, EdgeModel<EdgeData>>;
-  public readonly groups: ICanvasGroup[];
-  public readonly head: string | undefined;
-  public readonly tail: string | undefined;
-  public readonly edgesBySource: EdgesByPort;
-  public readonly edgesByTarget: EdgesByPort;
-  public readonly selectedNodes: ReadonlySet<string>;
-
-  private constructor(init: IGraphModel<NodeData, EdgeData, PortData>) {
-    this.nodes = init.nodes;
-    this.edges = init.edges;
-    this.groups = init.groups;
-    this.head = init.head;
-    this.tail = init.tail;
-    this.edgesBySource = init.edgesBySource;
-    this.edgesByTarget = init.edgesByTarget;
-    this.selectedNodes = init.selectedNodes;
-    preventSpread(this);
-  }
+  public readonly nodes: OrderedMap<string, NodeModel<NodeData, PortData>> =
+    OrderedMap.empty();
+  public readonly edges: HashMap<string, EdgeModel<EdgeData>> = HashMap.empty();
+  public readonly groups: ICanvasGroup[] = [];
+  public readonly head: string | undefined = undefined;
+  public readonly tail: string | undefined = undefined;
+  public readonly edgesBySource: EdgesByPort = HashMap.empty();
+  public readonly edgesByTarget: EdgesByPort = HashMap.empty();
+  public readonly selectedNodes: ReadonlySet<string> = new Set();
 
   public static empty<N, E, P>(): GraphModel<N, E, P> {
     return new GraphModel({
@@ -544,10 +541,6 @@ export class GraphModel<
     return (this.getEdgesByTarget(nodeId, portId)?.size ?? 0) > 0;
   }
 
-  public shallow(): GraphModel<NodeData, EdgeData, PortData> {
-    return this.merge({});
-  }
-
   public toJSON(): ICanvasData<NodeData, EdgeData, PortData> {
     const nodes: Array<ICanvasNode<NodeData, PortData>> = [];
     let current = this.head && this.nodes.get(this.head);
@@ -580,21 +573,6 @@ export class GraphModel<
       }
     });
     return exist;
-  }
-
-  private merge(
-    partial: Partial<IGraphModel<NodeData, EdgeData, PortData>>
-  ): GraphModel<NodeData, EdgeData, PortData> {
-    return new GraphModel({
-      nodes: partial.nodes ?? this.nodes,
-      edges: partial.edges ?? this.edges,
-      groups: partial.groups ?? this.groups,
-      head: partial.head ?? this.head,
-      tail: partial.tail ?? this.tail,
-      edgesBySource: partial.edgesBySource ?? this.edgesBySource,
-      edgesByTarget: partial.edgesByTarget ?? this.edgesByTarget,
-      selectedNodes: partial.selectedNodes ?? this.selectedNodes,
-    });
   }
 }
 

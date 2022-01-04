@@ -28,4 +28,18 @@ export class EdgeModel<T = unknown>
   public static fromJSON<T = unknown>(source: ICanvasEdge<T>): EdgeModel<T> {
     return new EdgeModel(source);
   }
+
+  public toJSON(): ICanvasEdge<T> {
+    return {
+      id: this.id,
+      source: this.source,
+      target: this.target,
+      sourcePortId: this.sourcePortId,
+      targetPortId: this.targetPortId,
+      shape: this.shape,
+      status: this.status,
+      automationId: this.automationId,
+      data: this.data,
+    };
+  }
 }

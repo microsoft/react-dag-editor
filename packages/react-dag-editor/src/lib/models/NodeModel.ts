@@ -7,13 +7,15 @@ import type { IGraphConfig } from "./config/types";
 import type { IPoint } from "./geometry";
 import type { ICanvasNode } from "./node";
 import type { ICanvasPort } from "./port";
+import { PortModel } from "./PortModel";
 import { GraphNodeStatus } from "./status";
 
 export interface INodeModel<NodeData = unknown, PortData = unknown>
-  extends ICanvasNode<NodeData, PortData> {
+  extends Omit<ICanvasNode<NodeData, PortData>, "ports"> {
   readonly portPositionCache?: Map<string, IPoint>;
   readonly prev?: string;
   readonly next?: string;
+  readonly ports?: ReadonlyArray<PortModel<PortData>>;
 }
 
 @record
@@ -33,7 +35,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   public readonly shape: string | undefined = undefined;
   public readonly status: GraphNodeStatus | undefined = undefined;
   public readonly automationId: string | undefined = undefined;
-  public readonly ports: ReadonlyArray<ICanvasPort<PortData>> | undefined =
+  public readonly ports: ReadonlyArray<PortModel<PortData>> | undefined =
     undefined;
   public readonly portPositionCache = new Map<string, IPoint>();
   public readonly data: Readonly<NodeData> | undefined = undefined;
@@ -48,6 +50,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   ): NodeModel<NodeData, PortData> {
     return new NodeModel({
       ...source,
+      ports: source.ports?.map(PortModel.fromJSON),
       prev,
       next,
       portPositionCache: new Map(),
@@ -112,7 +115,9 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     if (!this.ports) {
       return this;
     }
-    const ports = mapCow(this.ports, f);
+    const ports = mapCow(this.ports, (port, index) =>
+      port.pipe((port) => f(port, index))
+    );
 
     return this.ports === ports
       ? this

@@ -191,7 +191,7 @@ export const unSelectAllEntity = (): TDataPatch => {
 
 export const nodeSelection = (
   e: MouseEvent | React.MouseEvent,
-  target: NodeModel
+  target: ICanvasNode | INodeModel
 ): ((data: GraphModel) => GraphModel) => {
   if (isNodeEditing(target)) {
     return identical;

@@ -22,7 +22,7 @@ function proceed(
   let data = init;
   steps.forEach((step) => {
     data = step[0](data);
-    expect(data.toJSON()).toEqual(step[1]);
+    expect(data.toJSON()).toEqual(GraphModel.fromJSON(step[1]).toJSON());
   });
 }
 

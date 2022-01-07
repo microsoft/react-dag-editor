@@ -5,8 +5,8 @@ Object {
   "edges": Array [
     Object {
       "automationId": undefined,
-      "data": undefined,
       "id": "mock-uuid",
+      "properties": Object {},
       "shape": "default",
       "source": "0",
       "sourcePortId": "1",
@@ -19,15 +19,13 @@ Object {
     Object {
       "ariaLabel": undefined,
       "automationId": undefined,
-      "data": undefined,
       "height": 100,
       "id": "0",
       "name": undefined,
       "ports": Array [
         Object {
-          "data": Object {
-            "isConnectable": false,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "0",
           "isInputDisabled": false,
           "isOutputDisabled": true,
@@ -36,12 +34,15 @@ Object {
             0.5,
             0,
           ],
+          "properties": Object {
+            "isConnectable": false,
+          },
+          "shape": undefined,
           "status": 0,
         },
         Object {
-          "data": Object {
-            "isConnectable": true,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "1",
           "isInputDisabled": true,
           "isOutputDisabled": false,
@@ -50,9 +51,14 @@ Object {
             0.5,
             1,
           ],
+          "properties": Object {
+            "isConnectable": true,
+          },
+          "shape": undefined,
           "status": 0,
         },
       ],
+      "properties": Object {},
       "shape": undefined,
       "status": undefined,
       "width": 100,
@@ -62,15 +68,13 @@ Object {
     Object {
       "ariaLabel": undefined,
       "automationId": undefined,
-      "data": undefined,
       "height": 100,
       "id": "1",
       "name": undefined,
       "ports": Array [
         Object {
-          "data": Object {
-            "isConnectable": false,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "0",
           "isInputDisabled": false,
           "isOutputDisabled": true,
@@ -79,12 +83,15 @@ Object {
             0.5,
             0,
           ],
+          "properties": Object {
+            "isConnectable": false,
+          },
+          "shape": undefined,
           "status": 0,
         },
         Object {
-          "data": Object {
-            "isConnectable": true,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "1",
           "isInputDisabled": true,
           "isOutputDisabled": false,
@@ -93,9 +100,14 @@ Object {
             0.5,
             1,
           ],
+          "properties": Object {
+            "isConnectable": true,
+          },
+          "shape": undefined,
           "status": 0,
         },
       ],
+      "properties": Object {},
       "shape": undefined,
       "status": undefined,
       "width": 100,
@@ -105,15 +117,13 @@ Object {
     Object {
       "ariaLabel": undefined,
       "automationId": undefined,
-      "data": undefined,
       "height": 150,
       "id": "2",
       "name": undefined,
       "ports": Array [
         Object {
-          "data": Object {
-            "isConnectable": false,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "0",
           "isInputDisabled": false,
           "isOutputDisabled": true,
@@ -122,12 +132,15 @@ Object {
             0.5,
             0,
           ],
+          "properties": Object {
+            "isConnectable": false,
+          },
+          "shape": undefined,
           "status": 0,
         },
         Object {
-          "data": Object {
-            "isConnectable": true,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "1",
           "isInputDisabled": true,
           "isOutputDisabled": false,
@@ -136,9 +149,14 @@ Object {
             0.5,
             1,
           ],
+          "properties": Object {
+            "isConnectable": true,
+          },
+          "shape": undefined,
           "status": 0,
         },
       ],
+      "properties": Object {},
       "shape": undefined,
       "status": undefined,
       "width": 150,
@@ -247,15 +265,13 @@ Object {
     Object {
       "ariaLabel": undefined,
       "automationId": undefined,
-      "data": undefined,
       "height": 100,
       "id": "0",
       "name": undefined,
       "ports": Array [
         Object {
-          "data": Object {
-            "isConnectable": false,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "0",
           "isInputDisabled": false,
           "isOutputDisabled": true,
@@ -264,12 +280,15 @@ Object {
             0.5,
             0,
           ],
-          "status": 0,
+          "properties": Object {
+            "isConnectable": false,
+          },
+          "shape": undefined,
+          "status": 4,
         },
         Object {
-          "data": Object {
-            "isConnectable": true,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "1",
           "isInputDisabled": true,
           "isOutputDisabled": false,
@@ -278,9 +297,14 @@ Object {
             0.5,
             1,
           ],
+          "properties": Object {
+            "isConnectable": true,
+          },
+          "shape": undefined,
           "status": 4,
         },
       ],
+      "properties": Object {},
       "shape": undefined,
       "status": undefined,
       "width": 100,
@@ -290,15 +314,13 @@ Object {
     Object {
       "ariaLabel": undefined,
       "automationId": undefined,
-      "data": undefined,
       "height": 100,
       "id": "1",
       "name": undefined,
       "ports": Array [
         Object {
-          "data": Object {
-            "isConnectable": false,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "0",
           "isInputDisabled": false,
           "isOutputDisabled": true,
@@ -307,12 +329,15 @@ Object {
             0.5,
             0,
           ],
+          "properties": Object {
+            "isConnectable": false,
+          },
+          "shape": undefined,
           "status": 0,
         },
         Object {
-          "data": Object {
-            "isConnectable": true,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "1",
           "isInputDisabled": true,
           "isOutputDisabled": false,
@@ -321,9 +346,14 @@ Object {
             0.5,
             1,
           ],
+          "properties": Object {
+            "isConnectable": true,
+          },
+          "shape": undefined,
           "status": 0,
         },
       ],
+      "properties": Object {},
       "shape": undefined,
       "status": undefined,
       "width": 100,
@@ -333,15 +363,13 @@ Object {
     Object {
       "ariaLabel": undefined,
       "automationId": undefined,
-      "data": undefined,
       "height": 150,
       "id": "2",
       "name": undefined,
       "ports": Array [
         Object {
-          "data": Object {
-            "isConnectable": false,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "0",
           "isInputDisabled": false,
           "isOutputDisabled": true,
@@ -350,12 +378,15 @@ Object {
             0.5,
             0,
           ],
+          "properties": Object {
+            "isConnectable": false,
+          },
+          "shape": undefined,
           "status": 0,
         },
         Object {
-          "data": Object {
-            "isConnectable": true,
-          },
+          "ariaLabel": undefined,
+          "automationId": undefined,
           "id": "1",
           "isInputDisabled": true,
           "isOutputDisabled": false,
@@ -364,9 +395,14 @@ Object {
             0.5,
             1,
           ],
+          "properties": Object {
+            "isConnectable": true,
+          },
+          "shape": undefined,
           "status": 0,
         },
       ],
+      "properties": Object {},
       "shape": undefined,
       "status": undefined,
       "width": 150,

@@ -37,11 +37,11 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
         Object {
           "ariaLabel": undefined,
           "automationId": undefined,
-          "data": undefined,
           "height": undefined,
           "id": "mock-id",
           "name": "node1",
           "ports": undefined,
+          "properties": Object {},
           "shape": "nodeShape",
           "status": undefined,
           "width": undefined,

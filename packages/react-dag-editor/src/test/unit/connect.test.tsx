@@ -511,7 +511,9 @@ describe("test Connecting", () => {
     act(() => {
       connecting.finish();
     });
-    expect(connecting.data?.toJSON()).toEqual(data);
+    expect(connecting.data?.toJSON()).toEqual(
+      GraphModel.fromJSON(data).toJSON()
+    );
   });
 
   it("should attach to port when mouse enter a connectable port, should not add edge after mouse leave", () => {

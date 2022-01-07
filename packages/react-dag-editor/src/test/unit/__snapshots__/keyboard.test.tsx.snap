@@ -163,7 +163,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Select Columns in Dataset
                 </text>
-                
+                <text
+                  class="comment-47566002"
+                  font-size="12"
+                  x="548"
+                  y="232"
+                />
               </g>
             </g>
           </g>
@@ -228,7 +233,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Clean Missing Data
                 </text>
-                
+                <text
+                  class="comment-f6dc0eb1"
+                  font-size="12"
+                  x="548"
+                  y="350"
+                />
               </g>
             </g>
           </g>
@@ -309,7 +319,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Split Data
                 </text>
-                
+                <text
+                  class="comment-d1647408"
+                  font-size="12"
+                  x="542"
+                  y="456"
+                />
               </g>
             </g>
           </g>
@@ -390,7 +405,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Linear Regression
                 </text>
-                
+                <text
+                  class="comment-4b199015"
+                  font-size="12"
+                  x="173"
+                  y="463.5"
+                />
               </g>
             </g>
           </g>
@@ -441,7 +461,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Train Model
                 </text>
-                
+                <text
+                  class="comment-fb404f70"
+                  font-size="12"
+                  x="387"
+                  y="587"
+                />
               </g>
             </g>
           </g>
@@ -520,7 +545,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Score Model
                 </text>
-                
+                <text
+                  class="comment-c4ee5025"
+                  font-size="12"
+                  x="491"
+                  y="700"
+                />
               </g>
             </g>
           </g>
@@ -599,7 +629,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Evaluate Model
                 </text>
-                
+                <text
+                  class="comment-81777c66"
+                  font-size="12"
+                  x="493"
+                  y="808"
+                />
               </g>
             </g>
           </g>
@@ -680,7 +715,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Automobile price data (Raw)
                 </text>
-                
+                <text
+                  class="comment-1fd27f80"
+                  font-size="12"
+                  x="544"
+                  y="119"
+                />
               </g>
             </g>
           </g>
@@ -730,6 +770,12 @@ exports[`should copy and paste with edge 1`] = `
                 >
                   Train Model
                 </text>
+                <text
+                  class="comment-mock-uuid"
+                  font-size="12"
+                  x="437"
+                  y="637"
+                />
               </g>
             </g>
           </g>

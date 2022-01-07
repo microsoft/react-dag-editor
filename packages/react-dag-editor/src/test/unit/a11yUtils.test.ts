@@ -17,7 +17,7 @@ function ports(list: boolean[]): ICanvasPort[] {
     list.map((isConnectable, index) => ({
       id: String(index),
       name: String(index),
-      data: {
+      properties: {
         isConnectable,
       },
     }))

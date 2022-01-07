@@ -8,7 +8,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 628.5,
         y: 101,
         name: "Edit Metadata",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "completed",
@@ -36,7 +36,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 630.5,
         y: 229.5,
         name: "Split Data",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "completed",
@@ -71,7 +71,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 293,
         y: 723.25,
         name: "Train Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "ModelingView",
           status: "completed",
@@ -106,7 +106,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 377,
         y: 822.25,
         name: "Score Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "completed",
@@ -141,7 +141,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 463,
         y: 913.25,
         name: "Evaluate Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "running",
@@ -176,7 +176,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 708,
         y: 816.25,
         name: "Score Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "running",
@@ -211,7 +211,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 643.5,
         y: 723.75,
         name: "Train Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "ModelingView",
           status: "running",
@@ -246,7 +246,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 1212,
         y: 550.25,
         name: "Normalize Data",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "running",
@@ -281,7 +281,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 899,
         y: 549.75,
         name: "Normalize Data",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "running",
@@ -316,7 +316,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 1085,
         y: 636.75,
         name: "Two-Class Boosted Decision Tree",
-        data: {
+        properties: {
           comment: "",
           iconName: "MachineLearning",
           status: "running",
@@ -337,7 +337,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 1426,
         y: 751.75,
         name: "Train Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "ModelingView",
           status: "running",
@@ -372,7 +372,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 1039.5,
         y: 751.25,
         name: "Train Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "ModelingView",
           status: "running",
@@ -407,7 +407,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 136,
         y: 560.75,
         name: "Normalize Data",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "running",
@@ -442,7 +442,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 975,
         y: 858.75,
         name: "Score Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "running",
@@ -477,7 +477,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 1378,
         y: 859.25,
         name: "Score Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "running",
@@ -512,7 +512,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 1150,
         y: 956.25,
         name: "Evaluate Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "running",
@@ -547,7 +547,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 632,
         y: 1041.25,
         name: "Add Rows",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "running",
@@ -582,7 +582,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 636,
         y: 1148.25,
         name: "Execute Python Script",
-        data: {
+        properties: {
           comment: "",
           iconName: "PythonLanguage",
           status: "running",
@@ -631,7 +631,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 632,
         y: 1265.25,
         name: "Select Columns in Dataset",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "running",
@@ -659,7 +659,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 489.5,
         y: 407.5,
         name: "Normalize Data",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "running",
@@ -694,7 +694,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 1039,
         y: 399.5,
         name: "Execute Python Script",
-        data: {
+        properties: {
           comment: "",
           iconName: "PythonLanguage",
           status: "running",
@@ -743,7 +743,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 73,
         y: 408,
         name: "Execute Python Script",
-        data: {
+        properties: {
           comment: "",
           iconName: "PythonLanguage",
           status: "running",
@@ -792,7 +792,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 488,
         y: 549.75,
         name: "Two-Class Support Vector Machine",
-        data: {
+        properties: {
           comment: "",
           iconName: "MachineLearning",
           status: "running",
@@ -813,7 +813,7 @@ export const getSample4Data = (): ICanvasData => {
         x: 615,
         y: -26,
         name: "German Credit Card UCI dataset",
-        data: {
+        properties: {
           comment: "",
           iconName: "Database",
           status: "running",

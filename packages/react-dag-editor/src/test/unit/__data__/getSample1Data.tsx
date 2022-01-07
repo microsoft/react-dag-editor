@@ -9,7 +9,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 162,
         name: "Select Columns in Dataset",
         ariaLabel: "test aria label for node Select Columns in Dataset",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "completed",
@@ -45,7 +45,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 280,
         name: "Clean Missing Data",
         ariaLabel: "test aria label for node Clean Missing Data",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "completed",
@@ -91,7 +91,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 386,
         name: "Split Data",
         ariaLabel: "test aria label for node Split Data",
-        data: {
+        properties: {
           comment: "",
           iconName: "TestUserSolid",
           status: "completed",
@@ -137,7 +137,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 393.5,
         name: "Linear Regression",
         ariaLabel: "test aria label for node Linear Regression",
-        data: {
+        properties: {
           comment: "",
           iconName: "MachineLearning",
           status: "completed",
@@ -163,7 +163,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 517,
         name: "Train Model",
         ariaLabel: "test aria label for node Train Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "ModelingView",
           status: "running",
@@ -209,7 +209,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 630,
         name: "Score Model",
         ariaLabel: "test aria label for node Score Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "running",
@@ -255,7 +255,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 738,
         name: "Evaluate Model",
         ariaLabel: "test aria label for node Evaluate Model",
-        data: {
+        properties: {
           comment: "",
           iconName: "WebAppBuilderModule",
           status: "running",
@@ -301,7 +301,7 @@ export const getSample1Data = (): ICanvasData => {
         y: 49,
         name: "Automobile price data (Raw)",
         ariaLabel: "test aria label for node Automobile price data (Raw)",
-        data: {
+        properties: {
           comment: "",
           iconName: "Database",
           status: "running",

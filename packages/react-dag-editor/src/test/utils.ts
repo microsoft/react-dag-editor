@@ -10,6 +10,7 @@ import {
   INodeDrawArgs,
   IPortDrawArgs,
 } from "../index";
+import { Property } from "../lib/properties";
 
 function makePort(id: string, state: number): ICanvasPort {
   return {
@@ -84,6 +85,8 @@ export function makeNodesWithPosition(
   );
 }
 
+export const ConnectableProperty = new Property<boolean>("isConnectable");
+
 export function getGraphConfig(): IGraphConfig {
   return GraphConfigBuilder.default()
     .registerNode("default", {
@@ -105,8 +108,7 @@ export function getGraphConfig(): IGraphConfig {
         return null;
       },
       getIsConnectable({ model }: IGetConnectableParams): boolean | undefined {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (model.data as any)?.isConnectable;
+        return model.getProperty(ConnectableProperty);
       },
     })
     .build();

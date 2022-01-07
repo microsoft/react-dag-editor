@@ -21,6 +21,7 @@ import {
   NodeModel,
 } from "../../index";
 import { GraphController } from "../../lib/controllers/GraphController";
+import { PortModel } from "../../lib/models/PortModel";
 import { getNearestConnectablePort } from "../../lib/utils";
 import { EventChannel } from "../../lib/utils/eventChannel";
 import { identical } from "../../lib/utils/identical";
@@ -52,15 +53,15 @@ describe("test getNearestConnectablePort", () => {
         transformMatrix: [1, 0, 0, 1, 0, 0],
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
-      anotherPort: {
+      anotherPort: PortModel.fromJSON({
         id: "0",
         name: "",
         position: [0, 0],
         isInputDisabled: false,
-        data: {
+        properties: {
           isConnectable: false,
         },
-      },
+      }),
     });
     expect(port).toBeUndefined();
   });
@@ -72,7 +73,7 @@ describe("test getNearestConnectablePort", () => {
         id: "0",
         name: "",
         isInputDisabled: false,
-        data: {
+        properties: {
           isConnectable: false,
         },
       },
@@ -80,7 +81,7 @@ describe("test getNearestConnectablePort", () => {
         id: "1",
         name: "",
         isInputDisabled: false,
-        data: {
+        properties: {
           isConnectable: true,
         },
       },
@@ -88,7 +89,7 @@ describe("test getNearestConnectablePort", () => {
         id: "2",
         name: "",
         isInputDisabled: false,
-        data: {
+        properties: {
           isConnectable: true,
         },
       },
@@ -116,15 +117,15 @@ describe("test getNearestConnectablePort", () => {
         transformMatrix: [1, 0, 0, 1, 0, 0],
       },
       anotherNode: NodeModel.fromJSON(node, undefined, undefined),
-      anotherPort: {
+      anotherPort: PortModel.fromJSON({
         id: "0",
         name: "",
         position: [0, 0],
         isInputDisabled: false,
-        data: {
+        properties: {
           isConnectable: true,
         },
-      },
+      }),
     });
     expect(port?.id).toBe("1");
   });
@@ -148,7 +149,7 @@ describe("test Connecting", () => {
   };
 
   class Connecting {
-    public start(node: NodeModel, port: ICanvasPort): void {
+    public start(node: NodeModel, port: PortModel): void {
       act(() => {
         eventChannel.trigger({
           type: GraphEdgeEvent.ConnectStart,
@@ -163,7 +164,7 @@ describe("test Connecting", () => {
       });
     }
 
-    public attach(node: NodeModel, port: ICanvasPort): void {
+    public attach(node: NodeModel, port: PortModel): void {
       graphController.pointerId = 0;
       act(() => {
         eventChannel.trigger({
@@ -175,7 +176,7 @@ describe("test Connecting", () => {
       });
     }
 
-    public clearAttach(node: NodeModel, port: ICanvasPort): void {
+    public clearAttach(node: NodeModel, port: PortModel): void {
       graphController.pointerId = 0;
       act(() => {
         eventChannel.trigger({
@@ -235,7 +236,7 @@ describe("test Connecting", () => {
         status: GraphPortStatus.Default,
         isInputDisabled: false,
         isOutputDisabled: true,
-        data: {
+        properties: {
           isConnectable: false,
         },
       },
@@ -245,7 +246,7 @@ describe("test Connecting", () => {
         status: GraphPortStatus.Default,
         isInputDisabled: true,
         isOutputDisabled: false,
-        data: {
+        properties: {
           isConnectable: true,
         },
       },
@@ -317,7 +318,10 @@ describe("test Connecting", () => {
 
   it("should not connect", () => {
     act(() => {
-      connecting.start(mockData.nodes.get(mockData.head!)!, ports[0]);
+      connecting.start(
+        mockData.nodes.get(mockData.head!)!,
+        PortModel.fromJSON(ports[0])
+      );
     });
     const port = getData().nodes.get(mockData.head!)?.ports?.[0];
     expect(Bitset.has(GraphPortStatus.Connecting)(port?.status)).toBe(true);
@@ -423,7 +427,7 @@ describe("test Connecting", () => {
               status: GraphPortStatus.Default,
               isInputDisabled: false,
               isOutputDisabled: true,
-              data: {
+              properties: {
                 isConnectable: true,
               },
             },
@@ -433,7 +437,7 @@ describe("test Connecting", () => {
               status: GraphPortStatus.Default,
               isInputDisabled: false,
               isOutputDisabled: true,
-              data: {
+              properties: {
                 isConnectable: true,
               },
             },
@@ -443,7 +447,7 @@ describe("test Connecting", () => {
               status: GraphPortStatus.Default,
               isInputDisabled: false,
               isOutputDisabled: true,
-              data: {
+              properties: {
                 isConnectable: true,
               },
             },
@@ -453,7 +457,7 @@ describe("test Connecting", () => {
               status: GraphPortStatus.Default,
               isInputDisabled: true,
               isOutputDisabled: false,
-              data: {
+              properties: {
                 isConnectable: true,
               },
             },
@@ -470,7 +474,7 @@ describe("test Connecting", () => {
     act(() => {
       connecting.start(
         NodeModel.fromJSON(data.nodes[0], undefined, "1"),
-        data.nodes[0].ports![1]
+        PortModel.fromJSON(data.nodes[0].ports![1])
       );
     });
     expect(connecting.targetNode).toBeUndefined();

@@ -125,6 +125,39 @@
           }
         }
       }
+    },
+    "records": {
+      "root": "packages/records",
+      "sourceRoot": "packages/records/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/js:tsc",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/records",
+            "main": "packages/records/src/index.ts",
+            "tsConfig": "packages/records/tsconfig.lib.json",
+            "assets": ["packages/records/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["packages/records/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/records"],
+          "options": {
+            "jestConfig": "packages/records/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
     }
   }
 }

@@ -1,9 +1,9 @@
-import { RecordBase } from "record-class";
 import record from "record-class/macro";
+import { RecordBase } from "records";
 import { HashMap, HashMapBuilder, OrderedMap } from "../collections";
+import * as Bitset from "../utils/bitset";
 import { $Complete } from "../utils/complete";
 import { markEdgeDirty } from "../utils/graphDataUtils";
-import * as Bitset from "../utils/bitset";
 import { ICanvasData, ICanvasGroup } from "./canvas";
 import { ICanvasEdge } from "./edge";
 import { EdgeModel } from "./EdgeModel";

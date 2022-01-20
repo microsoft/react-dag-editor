@@ -13,6 +13,7 @@
   "bundledDependencies": [
     "@fluentui/merge-styles",
     "eventemitter3",
-    "lodash-es"
+    "lodash-es",
+    "records"
   ]
 }

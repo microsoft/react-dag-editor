@@ -1,5 +1,5 @@
-import { RecordBase } from "record-class";
 import record from "record-class/macro";
+import { RecordBase } from "records";
 import { $Complete } from "../utils/complete";
 import { ICanvasEdge } from "./edge";
 import { GraphEdgeStatus } from "./status";

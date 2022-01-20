@@ -1,5 +1,5 @@
-import { RecordBase } from "record-class";
 import record from "record-class/macro";
+import { RecordBase } from "records";
 import { mapCow } from "../utils/array";
 import type { $Complete } from "../utils/complete";
 import { getPortPositionByPortId } from "../utils/getPortPosition";

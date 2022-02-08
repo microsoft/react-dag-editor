@@ -82,6 +82,10 @@ export interface IGraphProps<
    */
   virtualizationDelay?: number;
   /**
+   * Custom element for canvas background
+   */
+  background?: JSX.Element;
+  /**
    * Render function when browser not supported.
    */
   onBrowserNotSupported?(): React.ReactChild;

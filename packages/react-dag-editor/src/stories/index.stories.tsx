@@ -1,5 +1,6 @@
 /* eslint-disable import/no-default-export */
 import * as React from "react";
+import { BackgroundCustomization } from "./components/BackgroundCustomization";
 import { FeaturesDemo } from "./components/FeaturesDemo";
 import {
   NodeFrameCustomization,
@@ -23,4 +24,8 @@ export const NodeResizeHandlerCustomizationDemo = () => (
 );
 
 NodeResizeHandlerCustomizationDemo.storyName =
-  "Custom Widgets/Node reize handler on double-clicking on node";
+  "Custom Widgets/Node resize handler on double-clicking on node";
+
+export const BackgroundCustomizationDemo = () => <BackgroundCustomization />;
+
+BackgroundCustomizationDemo.storyName = "Custom background";

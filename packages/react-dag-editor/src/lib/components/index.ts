@@ -6,3 +6,4 @@ export * from "./StaticGraph/StaticGraph";
 export * from "./Graph/IGraphProps";
 export * from "./RegisterComponent";
 export { defaultGetPositionFromEvent } from "../controllers";
+export * from "./GridBackground";

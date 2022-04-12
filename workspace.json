@@ -8,13 +8,17 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:rollup",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/react-dag-editor",
             "tsConfig": "packages/react-dag-editor/tsconfig.lib.json",
             "project": "packages/react-dag-editor/package.json",
             "entryFile": "packages/react-dag-editor/src/index.ts",
-            "external": ["react/jsx-runtime"],
+            "external": [
+              "react/jsx-runtime"
+            ],
             "rollupConfig": "packages/react-dag-editor/rollup.config.js",
             "extractCss": false,
             "assets": [
@@ -33,7 +37,9 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
             "lintFilePatterns": [
               "packages/react-dag-editor/**/*.{ts,tsx,js,jsx}"
@@ -42,7 +48,9 @@
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/packages/react-dag-editor"],
+          "outputs": [
+            "coverage/packages/react-dag-editor"
+          ],
           "options": {
             "jestConfig": "packages/react-dag-editor/jest.config.js",
             "passWithNoTests": true
@@ -65,7 +73,9 @@
         },
         "build-storybook": {
           "executor": "@nrwl/storybook:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "uiFramework": "@storybook/react",
             "outputPath": "dist/storybook/react-dag-editor",
@@ -119,9 +129,13 @@
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["packages/react-dag-editor-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "packages/react-dag-editor-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }

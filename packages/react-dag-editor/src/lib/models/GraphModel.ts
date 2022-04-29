@@ -261,7 +261,7 @@ export class GraphModel<
     const edgesByTarget = this.edgesByTarget.mutate();
     while (node !== undefined) {
       const next = node.next ? this.nodes.get(node.next) : undefined;
-      if (!predicate.node?.(node.inner)) {
+      if (!predicate.node?.(node.toJSON())) {
         nodes.delete(node.id);
         edgesBySource.delete(node.id);
         edgesByTarget.delete(node.id);
@@ -454,7 +454,7 @@ export class GraphModel<
     const selected = new Set<string>();
     const nodes = this.nodes
       .map((node) => {
-        const isNodeSelected = predicate(node.inner);
+        const isNodeSelected = predicate(node.toJSON());
         if (isNodeSelected) {
           selected.add(node.id);
         }
@@ -546,7 +546,7 @@ export class GraphModel<
     const nodes: Array<ICanvasNode<NodeData, PortData>> = [];
     let current = this.head && this.nodes.get(this.head);
     while (current) {
-      nodes.push(current.inner);
+      nodes.push(current.toJSON());
       current = current.next && this.nodes.get(current.next);
     }
     const edges = Array.from(this.edges.values()).map((it) => it.inner);

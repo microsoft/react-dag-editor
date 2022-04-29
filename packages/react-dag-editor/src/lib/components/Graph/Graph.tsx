@@ -46,11 +46,7 @@ import { getGraphStyles } from "./Graph.styles";
 import type { IGraphProps } from "./IGraphProps";
 import { SelectBox } from "./SelectBox";
 
-export function Graph<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
->(props: IGraphProps<NodeData, EdgeData, PortData>): React.ReactElement | null {
+export function Graph(props: IGraphProps): React.ReactElement | null {
   const [focusedWithoutMouse, setFocusedWithoutMouse] =
     React.useState<boolean>(false);
 
@@ -90,7 +86,7 @@ export function Graph<
   );
 
   useEventChannel({
-    props,
+    props: props as IGraphProps,
     dispatch,
     rectRef,
     svgRef,
@@ -139,7 +135,7 @@ export function Graph<
     };
 
   const classes = getGraphStyles(
-    props,
+    props as IGraphProps,
     state,
     isPanDisabled,
     isNodesDraggable,

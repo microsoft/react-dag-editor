@@ -1,7 +1,7 @@
 import * as React from "react";
-import type { ICanvasNode } from "../models/node";
-import type { ICanvasPort } from "../models/port";
-import { GraphModel } from "../models/GraphModel";
+import type { GraphModel } from "../models/GraphModel";
+import type { NodeModel } from "../models/NodeModel";
+import type { PortModel } from "../models/PortModel";
 import { GraphPortStatus } from "../models/status";
 import * as Bitset from "../utils/bitset";
 import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
@@ -9,8 +9,8 @@ import { defaultColors } from "../common/constants";
 
 class DefaultPort implements IPortConfig {
   public getStyle(
-    port: ICanvasPort,
-    parentNode: ICanvasNode,
+    port: PortModel,
+    parentNode: NodeModel,
     data: GraphModel,
     connectedAsSource: boolean,
     connectedAsTarget: boolean

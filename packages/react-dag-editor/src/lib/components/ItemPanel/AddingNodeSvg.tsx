@@ -19,15 +19,17 @@ import classes from "../Graph.styles.module.scss";
 import { Transform } from "../Transform";
 import { useSvgRect } from "./useSvgRect";
 
-interface IAddingNodeSvgProps<NodeData, PortData> {
-  model: ICanvasNode<NodeData, PortData>;
-  nextNodeRef: React.MutableRefObject<ICanvasNode<NodeData, PortData> | null>;
+interface IAddingNodeSvgProps {
+  model: ICanvasNode;
+  nextNodeRef: React.MutableRefObject<ICanvasNode | null>;
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const AddingNodeSvg: React.FunctionComponent<
-  IAddingNodeSvgProps<unknown, unknown>
-> = ({ model, svgRef, nextNodeRef }) => {
+export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps> = ({
+  model,
+  svgRef,
+  nextNodeRef,
+}) => {
   const rect = useSvgRect(svgRef);
   const graphConfig = useGraphConfig();
   const graphController = useGraphController();

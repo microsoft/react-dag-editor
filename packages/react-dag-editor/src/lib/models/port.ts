@@ -1,6 +1,6 @@
 import type { GraphPortStatus } from "./status";
 
-export interface ICanvasPortInit<T = unknown> {
+export interface ICanvasPortInit {
   readonly id: string;
   readonly name: string;
   readonly shape?: string;
@@ -8,11 +8,11 @@ export interface ICanvasPortInit<T = unknown> {
   readonly isInputDisabled?: boolean;
   readonly isOutputDisabled?: boolean;
   readonly ariaLabel?: string;
-  readonly data?: Readonly<T>;
   readonly automationId?: string;
+  readonly properties?: Record<string, unknown>;
 }
 
-export interface ICanvasPort<T = unknown> extends ICanvasPortInit<T> {
+export interface ICanvasPort extends ICanvasPortInit {
   /**
    * relative position to node
    */

@@ -2,21 +2,12 @@ import * as uuid from "uuid";
 import { COPIED_NODE_SPACING } from "../common/constants";
 import type { ICanvasData } from "../models/canvas";
 
-export interface IGraphClipBoard<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
-  write(data: ICanvasData<NodeData, EdgeData, PortData>): void;
-  read(): ICanvasData<NodeData, EdgeData, PortData> | null;
+export interface IGraphClipBoard {
+  write(data: ICanvasData): void;
+  read(): ICanvasData | null;
 }
 
-export class DefaultClipboard<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> implements IGraphClipBoard<NodeData, EdgeData, PortData>
-{
+export class DefaultClipboard implements IGraphClipBoard {
   private readonly storage: Storage;
 
   public constructor(storage: Storage) {
@@ -33,7 +24,7 @@ export class DefaultClipboard<
     );
   }
 
-  public read(): ICanvasData<NodeData, EdgeData, PortData> | null {
+  public read(): ICanvasData | null {
     const str = this.storage.getItem("graph-clipboard");
 
     if (!str) {
@@ -41,7 +32,7 @@ export class DefaultClipboard<
     }
 
     try {
-      const data = JSON.parse(str) as ICanvasData<NodeData, EdgeData, PortData>;
+      const data = JSON.parse(str) as ICanvasData;
       const nodeIdHash = new Map<string, string>();
 
       return {

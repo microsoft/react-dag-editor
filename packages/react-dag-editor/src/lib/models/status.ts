@@ -1,5 +1,6 @@
 import * as Bitset from "../utils/bitset";
 import { ICanvasNode } from "./node";
+import { INodeModel } from "./NodeModel";
 
 export interface IWithStatus<S extends number> {
   status?: S;
@@ -37,6 +38,18 @@ export enum GraphPortStatus {
   ConnectingAsTarget = 0b1000,
 }
 
+export const liftStatus =
+  <S extends number, Interface extends IWithStatus<S>>(
+    updater: (state: number | undefined) => number
+  ) =>
+  (value: Interface): Partial<Interface> => {
+    const next = updater(value.status as number | 0);
+
+    return {
+      status: next as S,
+    } as Partial<Interface>;
+  };
+
 export const updateStatus =
   (updater: (state: number | undefined) => number) =>
   <S extends number, T extends IWithStatus<S>>(value: T): T => {
@@ -56,7 +69,7 @@ export function isActivated<S extends number, T extends IWithStatus<S>>(
   return Bitset.has(ACTIVATED_STATUS)(value.status);
 }
 
-export function isNodeEditing(node: ICanvasNode): boolean {
+export function isNodeEditing(node: ICanvasNode | INodeModel): boolean {
   return Bitset.has(GraphNodeStatus.Editing)(node.status);
 }
 

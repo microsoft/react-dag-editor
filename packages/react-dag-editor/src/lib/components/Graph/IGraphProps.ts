@@ -1,18 +1,13 @@
 import * as React from "react";
-import { TGetPositionFromEvent } from "../../controllers";
-import { IEvent } from "../../models/event";
-import { ICanvasEdge } from "../../models/edge";
-import { GraphModel } from "../../models/GraphModel";
-import { ICanvasNode } from "../../models/node";
-import { NodeModel } from "../../models/NodeModel";
-import { ICanvasPort } from "../../models/port";
+import type { TGetPositionFromEvent } from "../../controllers";
+import type { IEvent } from "../../models/event";
+import type { ICanvasEdge } from "../../models/edge";
+import type { GraphModel } from "../../models/GraphModel";
+import type { NodeModel } from "../../models/NodeModel";
+import type { PortModel } from "../../models/PortModel";
 import { CanvasMouseMode } from "../../models/state";
 
-export interface IGraphProps<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export interface IGraphProps {
   /**
    * Title of the svg
    */
@@ -89,30 +84,27 @@ export interface IGraphProps<
   /**
    * Triggered before add an edge
    */
-  edgeWillAdd?(
-    edge: ICanvasEdge<EdgeData>,
-    data: GraphModel<NodeData, EdgeData, PortData>
-  ): ICanvasEdge;
+  edgeWillAdd?(edge: ICanvasEdge, data: GraphModel): ICanvasEdge;
 
   /**
    * Custom overrides the nodes aria-label
    */
-  getNodeAriaLabel?(node: ICanvasNode<NodeData, PortData>): string | undefined;
+  getNodeAriaLabel?(node: NodeModel): string | undefined;
 
   /**
    * Custom overrides the ports aria-label
    */
   getPortAriaLabel?(
-    data: GraphModel<NodeData, EdgeData, PortData>,
-    node: NodeModel<NodeData, PortData>,
-    port: ICanvasPort<PortData>
+    data: GraphModel,
+    node: NodeModel,
+    port: PortModel
   ): string | undefined;
   /**
    * The events handler function
    *
    * @param event
    */
-  onEvent?(event: IEvent<NodeData, EdgeData, PortData>): void;
+  onEvent?(event: IEvent): void;
 }
 
 export interface IGraphClasses {

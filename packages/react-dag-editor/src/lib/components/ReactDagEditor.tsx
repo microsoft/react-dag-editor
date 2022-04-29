@@ -16,12 +16,7 @@ import { GraphStateStore } from "./Graph/GraphStateStore";
 /**
  * ReactDagEditor props
  */
-export interface IReactDagEditorProps<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
-> extends ISlotsContext {
+export interface IReactDagEditorProps<Action = never> extends ISlotsContext {
   /**
    * Additional css styles to apply to the container element.
    */
@@ -30,8 +25,8 @@ export interface IReactDagEditorProps<
    * Additional css class to apply to the container element.
    */
   className?: string;
-  state: IGraphState<NodeData, EdgeData, PortData>;
-  dispatch: IDispatch<NodeData, EdgeData, PortData, Action>;
+  state: IGraphState;
+  dispatch: IDispatch<Action>;
   /**
    * Fired when there is invalid data or config. The invalid data or config will be ignored to avoid crashing your app.
    */

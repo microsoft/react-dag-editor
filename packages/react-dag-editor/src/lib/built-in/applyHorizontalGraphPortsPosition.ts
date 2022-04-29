@@ -1,15 +1,15 @@
 import { ICanvasPort, ICanvasPortInit } from "../models/port";
 
-export function applyHorizontalGraphPortsPosition<T>(
-  list: ReadonlyArray<ICanvasPortInit<T>>
-): Array<ICanvasPort<T>> {
+export function applyHorizontalGraphPortsPosition(
+  list: ReadonlyArray<ICanvasPortInit>
+): Array<ICanvasPort> {
   const inputPorts = list.filter((p) => !p.isInputDisabled);
   const outputPorts = list.filter((p) => !p.isOutputDisabled);
   const inputPortsCount = inputPorts.length;
   const outputPortsCount = outputPorts.length;
   const inputPortsInterval = 1 / (inputPortsCount + 1);
   const outputPortsInterval = 1 / (outputPortsCount + 1);
-  const res: Array<ICanvasPort<T>> = [];
+  const res: Array<ICanvasPort> = [];
 
   for (let i = 0; i < inputPortsCount; i += 1) {
     res.push({

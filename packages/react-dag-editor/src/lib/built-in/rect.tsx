@@ -1,6 +1,5 @@
 import * as React from "react";
 import type { INodeConfig, INodeDrawArgs } from "../models/config/types";
-import type { ICanvasNode } from "../models/node";
 import { GraphNodeStatus } from "../models/status";
 import { has } from "../utils/bitset";
 import { getRectHeight, getRectWidth } from "../utils/layout";
@@ -16,7 +15,7 @@ export const rect: INodeConfig = {
   },
   render(args: INodeDrawArgs): React.ReactNode {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const node = args.model as ICanvasNode<any, any>;
+    const node = args.model;
     const width = getRectWidth(rect, node);
     const height = getRectHeight(rect, node);
     const style = has(GraphNodeStatus.Selected | GraphNodeStatus.Activated)(

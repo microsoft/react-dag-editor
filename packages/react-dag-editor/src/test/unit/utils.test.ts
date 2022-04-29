@@ -218,35 +218,6 @@ describe("test updateNodeBySelectBox", () => {
   });
 
   it("should select covered nodes", () => {
-    const expected = {
-      edges: [],
-      nodes: [
-        {
-          id: "0",
-          x: 50,
-          y: 50,
-          width: 50,
-          height: 50,
-          status: GraphNodeStatus.UnconnectedToSelected,
-        },
-        {
-          id: "1",
-          x: 150,
-          y: 150,
-          width: 100,
-          height: 100,
-          status: GraphNodeStatus.Selected,
-        },
-        {
-          id: "2",
-          x: 350,
-          y: 350,
-          width: 150,
-          height: 150,
-          status: GraphNodeStatus.UnconnectedToSelected,
-        },
-      ],
-    };
     expect(
       select({
         startX: 140,
@@ -254,7 +225,7 @@ describe("test updateNodeBySelectBox", () => {
         width: 20,
         height: 20,
       })
-    ).toEqual(expected);
+    ).toMatchSnapshot();
     expect(
       select({
         startX: 140,
@@ -262,7 +233,7 @@ describe("test updateNodeBySelectBox", () => {
         width: 20,
         height: 20,
       })
-    ).toEqual(expected);
+    ).toMatchSnapshot();
     expect(
       select({
         startX: 160,
@@ -270,7 +241,7 @@ describe("test updateNodeBySelectBox", () => {
         width: 20,
         height: 20,
       })
-    ).toEqual(expected);
+    ).toMatchSnapshot();
     expect(
       select({
         startX: 160,
@@ -278,7 +249,7 @@ describe("test updateNodeBySelectBox", () => {
         width: 20,
         height: 20,
       })
-    ).toEqual(expected);
+    ).toMatchSnapshot();
     expect(
       select({
         startX: 240,
@@ -286,7 +257,7 @@ describe("test updateNodeBySelectBox", () => {
         width: 20,
         height: 20,
       })
-    ).toEqual(expected);
+    ).toMatchSnapshot();
   });
 });
 

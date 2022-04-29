@@ -1,20 +1,24 @@
 import * as React from "react";
-import { ICanvasNode } from "../models/node";
+import { NodeModel } from "../models/NodeModel";
+
 import { isNodeEditing } from "../models/status";
+import { Property } from "../properties";
 
 export interface IRectComponentProps {
   style: React.CSSProperties;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  node: ICanvasNode<any>;
+  node: NodeModel;
   width: number;
   height: number;
   textY: number;
 }
 
+export const CommentProperty = new Property<string>("comment");
+
 export const RectComponent: React.FC<IRectComponentProps> = (props) => {
   const { style, node, width, height, textY } = props;
 
-  const comment = node.data && node.data.comment ? node.data.comment : "";
+  const comment = node.getProperty(CommentProperty) ?? "";
   const isEditing = isNodeEditing(node);
   return (
     <g key={node.id}>
@@ -29,14 +33,14 @@ export const RectComponent: React.FC<IRectComponentProps> = (props) => {
       <text x={node.x} y={textY} fontSize={12}>
         {node.name}
       </text>
-      {node.data && node.data.comment && !isEditing && (
+      {!isEditing && (
         <text
           x={node.x}
           y={textY + 20}
           fontSize={12}
           className={`comment-${node.id}`}
         >
-          {node.data.comment}
+          {comment}
         </text>
       )}
       {isEditing && (

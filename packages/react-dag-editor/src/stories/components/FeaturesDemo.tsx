@@ -11,15 +11,15 @@ import {
   GraphNodeStatus,
   GraphPortStatus,
   Bitset,
-  ICanvasNode,
-  ICanvasPort,
   IGetConnectableParams,
   INodeConfig,
   IPortConfig,
   IPortDrawArgs,
   ReactDagEditor,
   useGraphReducer,
+  NodeModel,
 } from "../..";
+import { PortModel } from "../../lib/models/PortModel";
 import { sampleGraphData } from "../data/sample-graph-1";
 
 /** How to customize a node by "shape" by data.nodes[].shape */
@@ -105,8 +105,8 @@ const stepNodeConfig: INodeConfig = {
 
 interface IPortProps {
   data: GraphModel;
-  port: ICanvasPort;
-  parentNode: ICanvasNode;
+  port: PortModel;
+  parentNode: NodeModel;
   x: number;
   y: number;
   style: React.CSSProperties;
@@ -161,8 +161,8 @@ export const Port: React.FunctionComponent<IPortProps> = (props) => {
 
 class MyPortConfig implements IPortConfig {
   public getStyle(
-    port: ICanvasPort,
-    parentNode: ICanvasNode,
+    port: PortModel,
+    parentNode: NodeModel,
     data: GraphModel,
     isConnectable: boolean | undefined,
     connectedAsSource: boolean,

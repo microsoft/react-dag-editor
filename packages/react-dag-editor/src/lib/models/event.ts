@@ -1,15 +1,15 @@
 import * as React from "react";
-import { IZoomFixPublicParams } from "../utils";
-import { ICanvasData } from "./canvas";
-import { IDummyNode } from "./dummy-node";
-import { ICanvasEdge } from "./edge";
-import { EdgeModel } from "./EdgeModel";
-import { IContainerRect, IPoint, Direction } from "./geometry";
-import { GraphModel } from "./GraphModel";
-import { ICanvasNode } from "./node";
-import { NodeModel } from "./NodeModel";
-import { ICanvasPort } from "./port";
-import { IGraphSettings } from "./state";
+import type { IZoomFixPublicParams } from "../utils";
+import type { ICanvasData } from "./canvas";
+import type { IDummyNode } from "./dummy-node";
+import type { ICanvasEdge } from "./edge";
+import type { EdgeModel } from "./EdgeModel";
+import type { IContainerRect, IPoint, Direction } from "./geometry";
+import type { GraphModel } from "./GraphModel";
+import type { ICanvasNode } from "./node";
+import type { NodeModel } from "./NodeModel";
+import type { PortModel } from "./PortModel";
+import type { IGraphSettings } from "./state";
 
 interface IEventBase<E = Event | React.SyntheticEvent> {
   rawEvent: E;
@@ -198,11 +198,10 @@ export interface ICanvasVirtualizationEvent {
   previousRenderedEdges: ReadonlySet<string>;
 }
 
-export interface ICanvasNavigateEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase<React.KeyboardEvent> {
+export interface ICanvasNavigateEvent extends IEventBase<React.KeyboardEvent> {
   type: GraphCanvasEvent.Navigate;
-  node?: NodeModel<NodeData, PortData>;
-  port?: ICanvasPort<PortData>;
+  node?: NodeModel;
+  port?: PortModel;
 }
 
 export interface ICanvasZoomEvent extends Partial<IEventBase> {
@@ -257,13 +256,9 @@ export interface ICanvasSimpleEvent {
     | GraphCanvasEvent.ResetUndoStack;
 }
 
-export interface ICanvasPasteEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export interface ICanvasPasteEvent {
   type: GraphCanvasEvent.Paste;
-  data: ICanvasData<NodeData, EdgeData, PortData>;
+  data: ICanvasData;
   position?: IPoint;
 }
 
@@ -302,40 +297,26 @@ export interface ICanvasZoomToFitEvent
   type: GraphCanvasEvent.ZoomToFit;
 }
 
-export interface ICanvasSetDataEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export interface ICanvasSetDataEvent {
   type: GraphCanvasEvent.SetData;
-  data: GraphModel<NodeData, EdgeData, PortData>;
+  data: GraphModel;
 }
 
-export interface ICanvasUpdateDataEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export interface ICanvasUpdateDataEvent {
   type: GraphCanvasEvent.UpdateData;
   shouldRecord: boolean;
 
-  updater(
-    prevData: GraphModel<NodeData, EdgeData, PortData>
-  ): GraphModel<NodeData, EdgeData, PortData>;
+  updater(prevData: GraphModel): GraphModel;
 }
 
 export interface ICanvasScrollToEvent extends IPoint {
   type: GraphCanvasEvent.ScrollTo;
 }
 
-export type ICanvasEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> =
+export type ICanvasEvent =
   | ICanvasCommonEvent
   | ICanvasViewportResizeEvent
-  | ICanvasNavigateEvent<NodeData, PortData>
+  | ICanvasNavigateEvent
   | ICanvasVirtualizationEvent
   | ICanvasZoomEvent
   | ICanvasPanEvent
@@ -344,7 +325,7 @@ export type ICanvasEvent<
   | ICanvasSelectMoveEvent
   | ICanvasUpdateNodeSelectionBySelectBoxEvent
   | ICanvasSimpleEvent
-  | ICanvasPasteEvent<NodeData, EdgeData, PortData>
+  | ICanvasPasteEvent
   | ICanvasKeyboardEvent
   | ICanvasAddNodeEvent
   | ICanvasAddEndNodeEvent
@@ -356,8 +337,7 @@ export type ICanvasEvent<
   | ICanvasUpdateDataEvent
   | ICanvasScrollToEvent;
 
-export interface INodeCommonEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase {
+export interface INodeCommonEvent extends IEventBase {
   type: Exclude<
     GraphNodeEvent,
     | GraphNodeEvent.Resizing
@@ -372,43 +352,39 @@ export interface INodeCommonEvent<NodeData = unknown, PortData = unknown>
     | GraphNodeEvent.ContextMenu
     | GraphNodeEvent.Select
   >;
-  node: NodeModel<NodeData, PortData>;
+  node: NodeModel;
 }
 
-export interface INodeResizeEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase {
+export interface INodeResizeEvent extends IEventBase {
   type: GraphNodeEvent.Resizing;
-  node: NodeModel<NodeData, PortData>;
+  node: NodeModel;
   dx: number;
   dy: number;
   dWidth: number;
   dHeight: number;
 }
 
-export interface INodeContextMenuEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase<React.MouseEvent> {
+export interface INodeContextMenuEvent extends IEventBase<React.MouseEvent> {
   type: GraphNodeEvent.ContextMenu;
-  node: NodeModel<NodeData, PortData>;
+  node: NodeModel;
 }
 
-export interface INodeClickEvent<NodeData = unknown, PortData = unknown>
+export interface INodeClickEvent
   extends IEventBase<MouseEvent | React.MouseEvent> {
   type: GraphNodeEvent.Click;
-  node: NodeModel<NodeData, PortData>;
+  node: NodeModel;
   isMultiSelect: boolean;
 }
 
-export interface INodeDragStartEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase {
+export interface INodeDragStartEvent extends IEventBase {
   type: GraphNodeEvent.DragStart;
-  node: NodeModel<NodeData, PortData>;
+  node: NodeModel;
   isMultiSelect: boolean;
 }
 
-export interface INodeDragEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase {
+export interface INodeDragEvent extends IEventBase {
   type: GraphNodeEvent.Drag;
-  node: NodeModel<NodeData, PortData>;
+  node: NodeModel;
   dx: number;
   dy: number;
   isVisible: boolean;
@@ -416,10 +392,9 @@ export interface INodeDragEvent<NodeData = unknown, PortData = unknown>
   autoAlignThreshold: number;
 }
 
-export interface INodeDragEndEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase {
+export interface INodeDragEndEvent extends IEventBase {
   type: GraphNodeEvent.DragEnd;
-  node: NodeModel<NodeData, PortData>;
+  node: NodeModel;
   isDragCanceled: boolean;
 }
 
@@ -438,9 +413,9 @@ export interface INodeLocateEvent {
   position: IPoint;
 }
 
-export interface INodeAddEvent<NodeData = unknown, PortData = unknown> {
+export interface INodeAddEvent {
   type: GraphNodeEvent.Add;
-  node: ICanvasNode<NodeData, PortData>;
+  node: ICanvasNode;
 }
 
 export interface INodeSelectEvent {
@@ -448,21 +423,21 @@ export interface INodeSelectEvent {
   nodes: string[];
 }
 
-export type INodeEvent<NodeData = unknown, PortData = unknown> =
-  | INodeCommonEvent<NodeData, PortData>
-  | INodeResizeEvent<NodeData, PortData>
-  | INodeDragStartEvent<NodeData, PortData>
-  | INodeDragEvent<NodeData, PortData>
-  | INodeDragEndEvent<NodeData, PortData>
+export type INodeEvent =
+  | INodeCommonEvent
+  | INodeResizeEvent
+  | INodeDragStartEvent
+  | INodeDragEvent
+  | INodeDragEndEvent
   | INodeSimpleEvent
   | INodeCentralizeEvent
   | INodeLocateEvent
-  | INodeContextMenuEvent<NodeData, PortData>
-  | INodeClickEvent<NodeData, PortData>
-  | INodeAddEvent<NodeData, PortData>
+  | INodeContextMenuEvent
+  | INodeClickEvent
+  | INodeAddEvent
   | INodeSelectEvent;
 
-export interface IEdgeCommonEvent<T = unknown> extends IEventBase {
+export interface IEdgeCommonEvent extends IEventBase {
   type: Exclude<
     GraphEdgeEvent,
     | GraphEdgeEvent.ConnectStart
@@ -471,7 +446,7 @@ export interface IEdgeCommonEvent<T = unknown> extends IEventBase {
     | GraphEdgeEvent.ConnectNavigate
     | GraphEdgeEvent.Add
   >;
-  edge: EdgeModel<T>;
+  edge: EdgeModel;
 }
 
 export interface IEdgeConnectStartEvent
@@ -504,24 +479,23 @@ export interface IEdgeConnectNavigateEvent extends IEventBase {
   type: GraphEdgeEvent.ConnectNavigate;
 }
 
-export interface IEdgeAddEvent<T = unknown> {
+export interface IEdgeAddEvent {
   type: GraphEdgeEvent.Add;
-  edge: ICanvasEdge<T>;
+  edge: ICanvasEdge;
 }
 
-export type IEdgeEvent<T> =
-  | IEdgeCommonEvent<T>
+export type IEdgeEvent =
+  | IEdgeCommonEvent
   | IEdgeConnectStartEvent
   | IEdgeConnectMoveEvent
   | IEdgeConnectEndEvent
   | IEdgeConnectNavigateEvent
-  | IEdgeAddEvent<T>;
+  | IEdgeAddEvent;
 
-export interface IPortEvent<NodeData = unknown, PortData = unknown>
-  extends IEventBase {
+export interface IPortEvent extends IEventBase {
   type: GraphPortEvent;
-  node: NodeModel<NodeData, PortData>;
-  port: ICanvasPort<PortData>;
+  node: NodeModel;
+  port: PortModel;
 }
 
 export interface IScrollBarCommonEvent {
@@ -562,26 +536,18 @@ export interface IContextMenuCloseEvent {
   type: GraphContextMenuEvent.Close;
 }
 
-export interface ICanvasUpdateSettingsEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> extends Partial<IGraphSettings<NodeData, EdgeData, PortData>> {
+export interface ICanvasUpdateSettingsEvent extends Partial<IGraphSettings> {
   type: GraphCanvasEvent.UpdateSettings;
 }
 
 export type IContextMenuEvent = IContextMenuOpenEvent | IContextMenuCloseEvent;
-export type IEvent<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> = (
-  | ICanvasEvent<NodeData, EdgeData, PortData>
-  | INodeEvent<NodeData, PortData>
-  | IEdgeEvent<EdgeData>
-  | IPortEvent<NodeData, PortData>
+export type IEvent = (
+  | ICanvasEvent
+  | INodeEvent
+  | IEdgeEvent
+  | IPortEvent
   | IScrollBarEvent
   | IMinimapEvent
   | IContextMenuEvent
-  | ICanvasUpdateSettingsEvent<NodeData, EdgeData, PortData>
+  | ICanvasUpdateSettingsEvent
 ) & { intercepted?: boolean };

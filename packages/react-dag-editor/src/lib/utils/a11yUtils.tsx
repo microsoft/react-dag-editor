@@ -9,20 +9,19 @@ import type {
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
 
 import type { GraphModel } from "../models/GraphModel";
-import type { ICanvasNode } from "../models/node";
 import type { NodeModel } from "../models/NodeModel";
-import type { ICanvasPort } from "../models/port";
+import type { PortModel } from "../models/PortModel";
 import type { EventChannel } from "./eventChannel";
 import { getNeighborPorts, getNodeUid, getPortUid } from "./graphDataUtils";
 
 export interface INextItem {
   node: NodeModel | undefined;
-  port: ICanvasPort | undefined;
+  port: PortModel | undefined;
 }
 
 const item = (
   node: NodeModel | undefined = undefined,
-  port: ICanvasPort | undefined = undefined
+  port: PortModel | undefined = undefined
 ): INextItem => ({
   node,
   port,
@@ -31,7 +30,7 @@ const item = (
 export type TGetNextItemHandler = (
   data: GraphModel,
   node: NodeModel,
-  portId?: ICanvasPort
+  portId?: PortModel
 ) => INextItem;
 
 export const findDOMElement = (
@@ -152,7 +151,7 @@ export const nextConnectablePort =
   };
 
 export const focusNextPort = (
-  ports: readonly ICanvasPort[],
+  ports: readonly PortModel[],
   node: NodeModel,
   curPortId: string,
   svgRef: React.RefObject<SVGSVGElement>,
@@ -169,7 +168,7 @@ export const focusNextPort = (
 };
 
 export const focusPrevPort = (
-  ports: readonly ICanvasPort[],
+  ports: readonly PortModel[],
   node: NodeModel,
   curPortId: string,
   svgRef: React.RefObject<SVGSVGElement>,
@@ -186,7 +185,7 @@ export const focusPrevPort = (
 };
 
 export const getFocusNodeHandler =
-  (compareFn?: (a: ICanvasNode, b: ICanvasNode) => number) =>
+  (compareFn?: (a: NodeModel, b: NodeModel) => number) =>
   (
     data: GraphModel,
     curNodeId: string,
@@ -232,7 +231,7 @@ export const focusUpNode = getFocusNodeHandler(
 export const goToConnectedPort = (
   data: GraphModel,
   node: NodeModel,
-  port: ICanvasPort,
+  port: PortModel,
   svgRef: React.RefObject<SVGSVGElement>,
   evt: React.KeyboardEvent,
   eventChannel: EventChannel
@@ -330,7 +329,7 @@ export const goToConnectedPort = (
 export function defaultGetPortAriaLabel(
   data: GraphModel,
   node: NodeModel,
-  port: ICanvasPort
+  port: PortModel
 ): string | undefined {
   return port.ariaLabel;
 }
@@ -341,6 +340,6 @@ export function defaultGetPortAriaLabel(
  *
  * @returns the string value for the aria label
  */
-export function defaultGetNodeAriaLabel(node: ICanvasNode): string | undefined {
+export function defaultGetNodeAriaLabel(node: NodeModel): string | undefined {
   return node.ariaLabel;
 }

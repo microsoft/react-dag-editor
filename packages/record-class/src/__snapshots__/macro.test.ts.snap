@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`macro-record-class ignore fields that are not public readonly: ignore fields that are not public readonly 1`] = `
+
+import { RecordBase } from "../lib/record";
+import record from "./proxy.macro";
+
+@record
+export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
+  public field1?: string = "";
+  private readonly field2 = false;
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { RecordBase } from "../lib/record";
+export class SomeRecord extends RecordBase {
+  field1 = "";
+  field2 = false;
+
+  constructor(partial) {
+    super();
+  }
+
+  merge(partial) {
+    return new SomeRecord({});
+  }
+
+  pipe(...list) {
+    let next = this.clone();
+    list.forEach((f) => {
+      Object.assign(next, f(next));
+    });
+  }
+
+  toJSON() {
+    return {};
+  }
+}
+
+
+`;
+
+exports[`macro-record-class simple: simple 1`] = `
+
+import { RecordBase } from "../lib/record";
+import record from "./proxy.macro";
+
+@record
+export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
+  public readonly id!: string;
+  public readonly name?: string = "";
+
+  public someMethod(): void {
+    //
+  }
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { RecordBase } from "../lib/record";
+export class SomeRecord extends RecordBase {
+  someMethod() {
+    //
+  }
+
+  constructor(partial) {
+    super();
+    this.id = partial.id;
+    this.name = partial.name ?? "";
+  }
+
+  merge(partial) {
+    return new SomeRecord({
+      id: partial.id ?? this.id,
+      name: partial.name ?? this.name,
+    });
+  }
+
+  pipe(...list) {
+    let next = this.clone();
+    list.forEach((f) => {
+      Object.assign(next, f(next));
+    });
+  }
+
+  toJSON() {
+    return {
+      id: this.id,
+      name: this.name,
+    };
+  }
+}
+
+
+`;

@@ -6,14 +6,14 @@
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": false,
-    "experimentalDecorators": false,
+    "experimentalDecorators": true,
     "downlevelIteration": false,
     "importHelpers": true,
     "resolveJsonModule": true,
     "strict": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2019", "dom"],
     "baseUrl": ".",
     "paths": {
       "react-dag-editor": ["packages/react-dag-editor/src/index.ts"]

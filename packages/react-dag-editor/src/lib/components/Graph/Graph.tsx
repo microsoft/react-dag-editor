@@ -21,6 +21,9 @@ import {
   ICanvasKeyboardEvent,
 } from "../../models/event";
 import type { IContainerRect, IViewport } from "../../models/geometry";
+import { GraphModel } from "../../models/GraphModel";
+import { NodeModel } from "../../models/NodeModel";
+import { ICanvasPort } from "../../models/port";
 import { GraphBehavior } from "../../models/state";
 import { isSelected } from "../../models/status";
 import { isSupported, isViewportComplete } from "../../utils";
@@ -90,7 +93,7 @@ export function Graph<
   );
 
   useEventChannel({
-    props,
+    props: props as IGraphProps,
     dispatch,
     rectRef,
     svgRef,
@@ -139,7 +142,7 @@ export function Graph<
     };
 
   const classes = getGraphStyles(
-    props,
+    props as IGraphProps,
     state,
     isPanDisabled,
     isNodesDraggable,
@@ -313,7 +316,11 @@ export function Graph<
                   props.getNodeAriaLabel ?? defaultGetNodeAriaLabel
                 }
                 getPortAriaLabel={
-                  props.getPortAriaLabel ?? defaultGetPortAriaLabel
+                  (props.getPortAriaLabel as (
+                    data: GraphModel,
+                    node: NodeModel,
+                    port: ICanvasPort
+                  ) => string | undefined) ?? defaultGetPortAriaLabel
                 }
               />
             </VirtualizationProvider>

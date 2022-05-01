@@ -1,0 +1,13 @@
+{
+  "extends": "../../tools/tsconfig.tools.json",
+  "compilerOptions": {
+    "outDir": "./",
+    "sourceRoot": "./src",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "declaration": true,
+    "importHelpers": true,
+    "lib": ["es2019"]
+  },
+  "include": ["./src/**/*.ts"]
+}

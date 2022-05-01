@@ -35,9 +35,16 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
       graphId="mock-uuid"
       node={
         Object {
+          "ariaLabel": undefined,
+          "automationId": undefined,
+          "data": undefined,
+          "height": undefined,
           "id": "mock-id",
           "name": "node1",
+          "ports": undefined,
           "shape": "nodeShape",
+          "status": undefined,
+          "width": undefined,
           "x": 0,
           "y": 0,
         }

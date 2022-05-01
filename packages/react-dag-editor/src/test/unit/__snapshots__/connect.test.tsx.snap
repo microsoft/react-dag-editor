@@ -4,6 +4,8 @@ exports[`test Connecting should add edge 1`] = `
 Object {
   "edges": Array [
     Object {
+      "automationId": undefined,
+      "data": undefined,
       "id": "mock-uuid",
       "shape": "default",
       "source": "0",
@@ -15,8 +17,12 @@ Object {
   ],
   "nodes": Array [
     Object {
+      "ariaLabel": undefined,
+      "automationId": undefined,
+      "data": undefined,
       "height": 100,
       "id": "0",
+      "name": undefined,
       "ports": Array [
         Object {
           "data": Object {
@@ -47,13 +53,19 @@ Object {
           "status": 0,
         },
       ],
+      "shape": undefined,
+      "status": undefined,
       "width": 100,
       "x": 50,
       "y": 50,
     },
     Object {
+      "ariaLabel": undefined,
+      "automationId": undefined,
+      "data": undefined,
       "height": 100,
       "id": "1",
+      "name": undefined,
       "ports": Array [
         Object {
           "data": Object {
@@ -84,13 +96,19 @@ Object {
           "status": 0,
         },
       ],
+      "shape": undefined,
+      "status": undefined,
       "width": 100,
       "x": 150,
       "y": 150,
     },
     Object {
+      "ariaLabel": undefined,
+      "automationId": undefined,
+      "data": undefined,
       "height": 150,
       "id": "2",
+      "name": undefined,
       "ports": Array [
         Object {
           "data": Object {
@@ -121,6 +139,8 @@ Object {
           "status": 0,
         },
       ],
+      "shape": undefined,
+      "status": undefined,
       "width": 150,
       "x": 250,
       "y": 250,
@@ -225,8 +245,12 @@ Object {
   "edges": Array [],
   "nodes": Array [
     Object {
+      "ariaLabel": undefined,
+      "automationId": undefined,
+      "data": undefined,
       "height": 100,
       "id": "0",
+      "name": undefined,
       "ports": Array [
         Object {
           "data": Object {
@@ -257,13 +281,19 @@ Object {
           "status": 4,
         },
       ],
+      "shape": undefined,
+      "status": undefined,
       "width": 100,
       "x": 50,
       "y": 50,
     },
     Object {
+      "ariaLabel": undefined,
+      "automationId": undefined,
+      "data": undefined,
       "height": 100,
       "id": "1",
+      "name": undefined,
       "ports": Array [
         Object {
           "data": Object {
@@ -294,13 +324,19 @@ Object {
           "status": 0,
         },
       ],
+      "shape": undefined,
+      "status": undefined,
       "width": 100,
       "x": 150,
       "y": 150,
     },
     Object {
+      "ariaLabel": undefined,
+      "automationId": undefined,
+      "data": undefined,
       "height": 150,
       "id": "2",
+      "name": undefined,
       "ports": Array [
         Object {
           "data": Object {
@@ -331,6 +367,8 @@ Object {
           "status": 0,
         },
       ],
+      "shape": undefined,
+      "status": undefined,
       "width": 150,
       "x": 250,
       "y": 250,

@@ -43,14 +43,14 @@ export function markEdgeDirty<T>(
   edges: HashMapBuilder<string, EdgeModel<T>>,
   id: string
 ): void {
-  edges.update(id, (edge) => edge.shallow());
+  edges.update(id, (edge) => edge.clone());
 }
 
 export interface IGetNearestConnectablePortParams<
   NodeData = unknown,
   EdgeData = unknown,
   PortData = unknown
-> extends Omit<IGetConnectableParams, "model"> {
+> extends Omit<IGetConnectableParams<NodeData, EdgeData, PortData>, "model"> {
   clientX: number;
   clientY: number;
   graphConfig: IGraphConfig;
@@ -118,18 +118,19 @@ export const filterSelectedItems = <NodeData, EdgeData, PortData>(
   const nodes = new Map<string, ICanvasNode<NodeData, PortData>>();
   const edges: Array<ICanvasEdge<EdgeData>> = [];
 
-  data.nodes.forEach(({ inner }) => {
-    if (isSelected(inner)) {
-      nodes.set(inner.id, inner);
+  data.nodes.forEach((node) => {
+    const json = node.toJSON();
+    if (isSelected(json)) {
+      nodes.set(json.id, json);
     }
   });
 
-  data.edges.forEach(({ inner }) => {
+  data.edges.forEach((node) => {
     if (
-      isSelected(inner) ||
-      (nodes.has(inner.source) && nodes.has(inner.target))
+      isSelected(node) ||
+      (nodes.has(node.source) && nodes.has(node.target))
     ) {
-      edges.push(inner);
+      edges.push(node.toJSON());
     }
   });
 
@@ -181,7 +182,7 @@ export const unSelectAllEntity = <NodeData, EdgeData, PortData>(): TDataPatch<
   return (data) =>
     data
       .mapNodes((n) =>
-        n.update(
+        n.pipe(
           (
             curNode: ICanvasNode<NodeData, PortData>
           ): ICanvasNode<NodeData, PortData> => {
@@ -198,7 +199,7 @@ export const unSelectAllEntity = <NodeData, EdgeData, PortData>(): TDataPatch<
         )
       )
       .mapEdges((e) =>
-        e.update(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
+        e.pipe(updateStatus(Bitset.replace(GraphEdgeStatus.Default)))
       );
 };
 

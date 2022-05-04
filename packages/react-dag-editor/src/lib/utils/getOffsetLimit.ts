@@ -1,10 +1,10 @@
 import type { IGraphConfig } from "../models/config/types";
+import type { ContentState } from "../models/ContentState";
 import type {
   IContainerRect,
   IGap,
   ITransformMatrix,
 } from "../models/geometry";
-import type { GraphModel } from "../models/GraphModel";
 import { memoize } from "../utils/memoize";
 import { getClientDeltaByPointDelta } from "../utils/transformMatrix";
 import { getContentArea as getContentAreaRaw } from "./viewport";
@@ -19,7 +19,7 @@ export interface IOffsetLimit {
 const getContentArea = memoize(getContentAreaRaw);
 
 export interface IOffsetLimitParams {
-  data: GraphModel;
+  data: ContentState;
   graphConfig: IGraphConfig;
   rect: IContainerRect;
   transformMatrix: ITransformMatrix;

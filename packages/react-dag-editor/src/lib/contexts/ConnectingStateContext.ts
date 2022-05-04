@@ -1,12 +1,12 @@
 import { createContext } from "react";
-import { NodeModel } from "../models/NodeModel";
-import { ICanvasPort } from "../models/port";
+import { NodeModel } from "../models/node";
+import { PortModel } from "../models/port";
 
 export interface IConnectingStateContext {
   sourceNode: NodeModel | undefined;
-  sourcePort: ICanvasPort | undefined;
+  sourcePort: PortModel | undefined;
   targetNode: NodeModel | undefined;
-  targetPort: ICanvasPort | undefined;
+  targetPort: PortModel | undefined;
 }
 
 export const EMPTY_CONNECT_CONTEXT: IConnectingStateContext = {

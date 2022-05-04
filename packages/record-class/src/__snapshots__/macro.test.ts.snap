@@ -1,0 +1,115 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`macro-record-class ignore fields that are not public readonly: ignore fields that are not public readonly 1`] = `
+
+import { RecordBase } from "../lib/record";
+import record from "./proxy.macro";
+
+@record
+export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
+  public field1?: string = "";
+  private readonly field2 = false;
+
+  public override $$create(partial: Partial<SomeRecord>): SomeRecord {
+    return new SomeRecord(partial);
+  }
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { RecordBase } from "../lib/record";
+export class SomeRecord extends RecordBase {
+  field1 = "";
+  field2 = false;
+
+  $$create(partial) {
+    return new SomeRecord(partial);
+  }
+
+  $$initialize(partial) {}
+
+  merge(partial) {
+    return this.$$create({});
+  }
+
+  pipe(list) {
+    let next = this.toJSON();
+    list.forEach((f) => {
+      Object.assign(next, f(next));
+    });
+  }
+
+  toJSON() {
+    return {};
+  }
+}
+
+
+`;
+
+exports[`macro-record-class simple: simple 1`] = `
+
+import { RecordBase } from "../lib/record";
+import record from "./proxy.macro";
+
+@record
+export class SomeRecord extends RecordBase<SomeRecord, SomeRecord> {
+  public readonly name?: string = "";
+
+  constructor(partial: Partial<SomeRecord>) {
+    super(partial);
+  }
+
+  public someMethod(): void {
+    //
+  }
+
+  public override $$create(partial: Partial<SomeRecord>): SomeRecord {
+    return new SomeRecord(partial);
+  }
+}
+
+      ↓ ↓ ↓ ↓ ↓ ↓
+
+import { RecordBase } from "../lib/record";
+export class SomeRecord extends RecordBase {
+  name;
+
+  constructor(partial) {
+    super(partial);
+  }
+
+  someMethod() {
+    //
+  }
+
+  $$create(partial) {
+    return new SomeRecord(partial);
+  }
+
+  $$initialize(partial) {
+    this.name = partial.name ?? "";
+  }
+
+  merge(partial) {
+    return this.$$create({
+      name: partial.name ?? this.name,
+    });
+  }
+
+  pipe(list) {
+    let next = this.toJSON();
+    list.forEach((f) => {
+      Object.assign(next, f(next));
+    });
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+    };
+  }
+}
+
+
+`;

@@ -1,5 +1,5 @@
 import { COPIED_NODE_SPACING } from "../common/constants";
-import { IGraphReactReducer } from "../contexts";
+import { IGraphReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { GraphCanvasEvent } from "../models/event";
 import { GraphNodeStatus, notSelected } from "../models/status";
@@ -11,7 +11,7 @@ import {
 } from "../utils";
 import { pushHistory, redo, undo } from "../utils/history";
 
-export const canvasReducer: IGraphReactReducer = (state, action) => {
+export const canvasReducer: IGraphReducer = (state, action) => {
   switch (action.type) {
     case GraphCanvasEvent.Paste: {
       const { position } = action;

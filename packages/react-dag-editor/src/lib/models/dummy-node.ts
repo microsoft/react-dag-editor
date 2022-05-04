@@ -1,4 +1,4 @@
-import type { INodeGeometryDelta } from "./GraphModel";
+import { INodeGeometryChange } from "../node-utils";
 
 /**
  * @internal
@@ -11,7 +11,7 @@ export interface IDummyNode {
   readonly height: number;
 }
 
-export interface IDummyNodes extends INodeGeometryDelta {
+export interface IDummyNodes extends INodeGeometryChange {
   nodes: IDummyNode[];
   isVisible: boolean;
   alignedDX: number | undefined;

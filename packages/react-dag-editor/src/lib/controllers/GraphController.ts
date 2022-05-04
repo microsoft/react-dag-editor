@@ -1,8 +1,8 @@
 import { IDispatch } from "../contexts";
 import { GraphFeatures } from "../Features";
+import { ContentState } from "../models/ContentState";
 import { IPoint } from "../models/geometry";
-import { GraphModel } from "../models/GraphModel";
-import { NodeModel } from "../models/NodeModel";
+import { NodeModel } from "../models/node";
 import { GraphBehavior, IGraphState } from "../models/state";
 import { EventChannel } from "../utils/eventChannel";
 
@@ -69,7 +69,7 @@ export class GraphController {
     this.behavior = value;
   }
 
-  public getData(): GraphModel {
+  public getData(): ContentState {
     return this.state.data.present;
   }
 

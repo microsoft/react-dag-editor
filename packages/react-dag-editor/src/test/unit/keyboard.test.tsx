@@ -9,7 +9,7 @@ import {
   GraphFeatures,
   GraphModel,
   GraphNodeStatus,
-  updateStatus,
+  liftStatus,
 } from "../../index";
 import { GraphController } from "../../lib/controllers/GraphController";
 import { findDOMElement } from "../../lib/utils/a11yUtils";
@@ -79,7 +79,7 @@ it("should focus first node", () => {
 it("should delete selected edge", () => {
   const id = "0";
   updateData((data) =>
-    data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected)))
+    data.updateEdge(id, liftStatus(Bitset.add(GraphEdgeStatus.Selected)))
   );
   act(() => {
     fireEvent.keyDown(element, {
@@ -94,7 +94,7 @@ it("should delete selected edge", () => {
 it("should undo, redo", () => {
   const id = "0";
   updateData((data) =>
-    data.updateEdge(id, updateStatus(Bitset.add(GraphEdgeStatus.Selected)))
+    data.updateEdge(id, liftStatus(Bitset.add(GraphEdgeStatus.Selected)))
   );
   act(() => {
     fireEvent.keyDown(element, {

@@ -4,30 +4,12 @@ import {
   GraphValueContext,
   IGraphStateContext,
 } from "../contexts/GraphStateContext";
-import { GraphModel } from "../models/GraphModel";
+import { ContentState } from "../models/ContentState";
 
-export const useGraphState = <
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
->(): IGraphStateContext<NodeData, EdgeData, PortData, Action> => {
-  return useContext(GraphStateContext) as IGraphStateContext<
-    NodeData,
-    EdgeData,
-    PortData,
-    Action
-  >;
+export const useGraphState = <Action = never>(): IGraphStateContext => {
+  return useContext(GraphStateContext) as IGraphStateContext<Action>;
 };
 
-export const useGraphData = <NodeData, EdgeData, PortData>(): GraphModel<
-  NodeData,
-  EdgeData,
-  PortData
-> => {
-  return useContext(GraphValueContext) as GraphModel<
-    NodeData,
-    EdgeData,
-    PortData
-  >;
+export const useGraphData = (): ContentState => {
+  return useContext(GraphValueContext);
 };

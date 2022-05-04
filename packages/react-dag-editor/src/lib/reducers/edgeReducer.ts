@@ -1,11 +1,13 @@
-import { IGraphReactReducer } from "../contexts";
+import { lift } from "record-class";
+import type { IGraphReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
+import { EdgeModel } from "../models/edge";
 import { GraphEdgeEvent } from "../models/event";
-import { GraphEdgeStatus, updateStatus } from "../models/status";
+import { GraphEdgeStatus, liftStatus } from "../models/status";
 import { pushHistory, unSelectAllEntity } from "../utils";
 import * as Bitset from "../utils/bitset";
 
-export const edgeReducer: IGraphReactReducer = (state, action) => {
+export const edgeReducer: IGraphReducer = (state, action) => {
   switch (action.type) {
     case GraphEdgeEvent.DoubleClick:
       if (!state.settings.features.has(GraphFeatures.EditEdge)) {
@@ -15,10 +17,12 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateEdge(
-            action.edge.id,
-            updateStatus(Bitset.replace(GraphEdgeStatus.Editing))
-          ),
+          present: state.data.present.merge({
+            edges: state.data.present.edges.update(
+              action.edge.id,
+              lift(liftStatus(Bitset.replace(GraphEdgeStatus.Editing)))
+            ),
+          }),
         },
       };
     case GraphEdgeEvent.MouseEnter:
@@ -26,10 +30,12 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateEdge(
-            action.edge.id,
-            updateStatus(Bitset.add(GraphEdgeStatus.Activated))
-          ),
+          present: state.data.present.merge({
+            edges: state.data.present.edges.update(
+              action.edge.id,
+              lift(liftStatus(Bitset.add(GraphEdgeStatus.Activated)))
+            ),
+          }),
         },
       };
     case GraphEdgeEvent.MouseLeave:
@@ -37,10 +43,12 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateEdge(
-            action.edge.id,
-            updateStatus(Bitset.remove(GraphEdgeStatus.Activated))
-          ),
+          present: state.data.present.merge({
+            edges: state.data.present.edges.update(
+              action.edge.id,
+              lift(liftStatus(Bitset.remove(GraphEdgeStatus.Activated)))
+            ),
+          }),
         },
       };
     case GraphEdgeEvent.Click:
@@ -49,10 +57,12 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: unSelectAllEntity()(state.data.present).updateEdge(
-            action.edge.id,
-            updateStatus(Bitset.add(GraphEdgeStatus.Selected))
-          ),
+          present: state.data.present.pipe(unSelectAllEntity()).merge({
+            edges: state.data.present.edges.update(
+              action.edge.id,
+              lift(liftStatus(Bitset.add(GraphEdgeStatus.Selected)))
+            ),
+          }),
         },
       };
     case GraphEdgeEvent.Add:
@@ -60,7 +70,12 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: pushHistory(
           state.data,
-          state.data.present.insertEdge(action.edge)
+          state.data.present.merge({
+            edges: state.data.present.edges.set(
+              action.edge.id,
+              EdgeModel.fromJSON(action.edge)
+            ),
+          })
         ),
       };
     default:

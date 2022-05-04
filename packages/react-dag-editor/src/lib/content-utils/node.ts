@@ -1,0 +1,168 @@
+import { lift } from "record-class";
+import type {
+  IContentState,
+  IContentStateUpdate,
+} from "../models/ContentState";
+import type { INodeUpdate, NodeModel } from "../models/node";
+import type { IPortUpdate } from "../models/port";
+import {
+  GraphEdgeStatus,
+  GraphNodeStatus,
+  GraphPortStatus,
+  isSelected,
+  resetConnectStatus,
+  liftStatus,
+} from "../models/status";
+import * as NodeUtils from "../node-utils";
+import * as Bitset from "../utils/bitset";
+import { markEdgesDirty } from "./internal";
+
+export const getFirstNode = (content: IContentState) => {
+  if (!content.head) {
+    return undefined;
+  }
+  return content.nodes.get(content.head);
+};
+
+export const updateNode =
+  (nodeId: string, f: INodeUpdate): IContentStateUpdate =>
+  (content) => {
+    const nodes = content.nodes.update(nodeId, lift(f));
+    if (nodes === content.nodes) {
+      return content;
+    }
+    const edges = markEdgesDirty([nodeId], content);
+    return {
+      nodes,
+      edges: edges.finish(),
+    };
+  };
+
+export const insertNode =
+  (node: NodeModel): IContentStateUpdate =>
+  (content) => {
+    const nodes = content.nodes.mutate().set(
+      node.id,
+      node.merge({
+        prev: content.tail,
+      })
+    );
+    if (content.tail && !content.nodes.has(node.id)) {
+      nodes.update(content.tail, (tail) =>
+        tail.merge({
+          next: node.id,
+        })
+      );
+    }
+    return {
+      nodes: nodes.finish(),
+      head: content.nodes.size === 0 ? node.id : content.head,
+      tail: node.id,
+    };
+  };
+
+export const selectNodes =
+  (
+    predicate: (node: NodeModel) => boolean,
+    topNode?: string
+  ): IContentStateUpdate =>
+  (content) => {
+    const selected = new Set<string>();
+    const nodes = content.nodes
+      .map((node) => {
+        const isNodeSelected = predicate(node);
+        if (isNodeSelected) {
+          selected.add(node.id);
+        }
+        return node.pipe(
+          NodeUtils.liftPorts(
+            liftStatus(Bitset.replace(GraphPortStatus.Default))
+          ),
+          liftStatus(
+            resetConnectStatus(
+              isNodeSelected
+                ? GraphNodeStatus.Selected
+                : GraphNodeStatus.UnconnectedToSelected
+            )
+          )
+        );
+      })
+      .mutate();
+
+    if (selected.size === 0) {
+      content.nodes.forEach((n) =>
+        nodes.update(n.id, (it) =>
+          it.pipe(liftStatus(Bitset.replace(GraphNodeStatus.Default)))
+        )
+      );
+    } else if (topNode) {
+      const n = nodes.get(topNode);
+      if (n) {
+        nodes.delete(topNode);
+        nodes.set(n.id, n);
+      }
+    }
+
+    const setConnected = (id: string) => {
+      nodes.update(id, (node) =>
+        node.pipe(
+          liftStatus(
+            Bitset.replace(
+              isSelected(node)
+                ? GraphNodeStatus.Selected
+                : GraphNodeStatus.ConnectedToSelected
+            )
+          )
+        )
+      );
+    };
+    const edges = selected.size
+      ? content.edges.map((edge) => {
+          let state = GraphEdgeStatus.UnconnectedToSelected;
+          if (selected.has(edge.source)) {
+            setConnected(edge.target);
+            state = GraphEdgeStatus.ConnectedToSelected;
+          }
+          if (selected.has(edge.target)) {
+            setConnected(edge.source);
+            state = GraphEdgeStatus.ConnectedToSelected;
+          }
+          return edge.pipe(liftStatus(Bitset.replace(state)));
+        })
+      : content.edges.map((edge) =>
+          edge.pipe(liftStatus(Bitset.replace(GraphEdgeStatus.Default)))
+        );
+    return {
+      nodes: nodes.finish(),
+      edges,
+      selectedNodes: selected,
+    };
+  };
+
+export const updateNodesGeometry =
+  (
+    nodeIds: string[],
+    change: NodeUtils.INodeGeometryChange
+  ): IContentStateUpdate =>
+  (content) => {
+    const nodes = content.nodes.mutate();
+    nodeIds.forEach((nodeId) => {
+      nodes.update(nodeId, lift(NodeUtils.updateNodeGeometry(change)));
+    });
+    const edges = markEdgesDirty(nodeIds, content);
+    return {
+      nodes: nodes.finish(),
+      edges: edges.finish(),
+    };
+  };
+
+export const updatePort =
+  (nodeId: string, portId: string, f: IPortUpdate): IContentStateUpdate =>
+  (content) => {
+    return {
+      nodes: content.nodes.update(
+        nodeId,
+        lift(NodeUtils.updatePort(portId, f))
+      ),
+    };
+  };

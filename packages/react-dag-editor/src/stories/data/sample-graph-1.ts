@@ -1,4 +1,4 @@
-import { ICanvasData } from "../..";
+import { ICanvasData, PortKind } from "../..";
 
 export const sampleGraphData: ICanvasData = {
   nodes: [
@@ -10,11 +10,9 @@ export const sampleGraphData: ICanvasData = {
           id: "source-port",
           position: [0.5, 1],
           name: "source port",
-          isInputDisabled: true,
-          isOutputDisabled: false,
+          kind: PortKind.Output,
         },
       ],
-      data: {},
       x: 100,
       y: 100,
       shape: "source",

@@ -1,8 +1,8 @@
 import type * as React from "react";
 import type { HashMap, OrderedMap } from "../collections";
 import type { IGraphConfig } from "../models/config/types";
-import type { ICanvasEdge } from "../models/edge";
-import type { EdgeModel } from "../models/EdgeModel";
+import type { ContentState } from "../models/ContentState";
+import type { EdgeModel } from "../models/edge";
 import {
   Direction,
   IContainerRect,
@@ -13,9 +13,7 @@ import {
   ITransformMatrix,
   IViewport,
 } from "../models/geometry";
-import type { GraphModel } from "../models/GraphModel";
-import type { ICanvasNode } from "../models/node";
-import type { NodeModel } from "../models/NodeModel";
+import type { ICanvasNode, INodeModel, NodeModel } from "../models/node";
 import type { IGraphSettings } from "../models/state";
 import { isPointInRect } from "./geometric";
 import { identical } from "./identical";
@@ -39,7 +37,7 @@ export const isViewportEmpty = (viewport: IViewport): boolean => {
 };
 
 export const getNodeRect = (
-  node: ICanvasNode,
+  node: ICanvasNode | INodeModel,
   graphConfig: IGraphConfig
 ): IShapeRect => {
   const { x, y } = node;
@@ -53,7 +51,7 @@ export const getNodeRect = (
 };
 
 export const isNodeVisible = (
-  node: ICanvasNode,
+  node: ICanvasNode | INodeModel,
   viewport: Required<IViewport>,
   graphConfig: IGraphConfig
 ): boolean => {
@@ -84,16 +82,16 @@ export const isPointVisible = (
   return x > 0 && x < width && y > 0 && y < height;
 };
 
-export const getVisibleNodes = <NodeData, PortData>(
-  nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
+export const getVisibleNodes = (
+  nodes: OrderedMap<string, NodeModel>,
   viewport: Required<IViewport>,
   graphConfig: IGraphConfig
-): ICanvasNode[] => {
-  const result: ICanvasNode[] = [];
+): NodeModel[] => {
+  const result: NodeModel[] = [];
 
   nodes.forEach((n) => {
     if (isNodeVisible(n, viewport, graphConfig)) {
-      result.push(n.inner);
+      result.push(n);
     }
   });
 
@@ -101,17 +99,17 @@ export const getVisibleNodes = <NodeData, PortData>(
 };
 
 // Get rendered nodes count
-export const getRenderedNodes = <NodeData, PortData>(
-  nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
+export const getRenderedNodes = (
+  nodes: OrderedMap<string, NodeModel>,
   viewport: IViewport
-): ICanvasNode[] => {
-  const result: ICanvasNode[] = [];
+): INodeModel[] => {
+  const result: INodeModel[] = [];
 
   const renderedArea = getRenderedArea(viewport);
 
   nodes.forEach((n) => {
     if (isNodeInRenderedArea(n, renderedArea)) {
-      result.push(n.inner);
+      result.push(n);
     }
   });
 
@@ -119,7 +117,7 @@ export const getRenderedNodes = <NodeData, PortData>(
 };
 
 const isNodeInRenderedArea = (
-  node: ICanvasNode,
+  node: ICanvasNode | INodeModel,
   renderedArea: IRectShape
 ): boolean => {
   return isPointInRect(renderedArea, node);
@@ -129,14 +127,13 @@ const isNodeInRenderedArea = (
 export const getRenderedEdges = (
   edges: HashMap<string, EdgeModel>,
   nodes: OrderedMap<string, NodeModel>,
-  graphConfig: IGraphConfig,
   viewport: IViewport
 ) => {
-  const result: ICanvasEdge[] = [];
+  const result: EdgeModel[] = [];
   const renderedArea = getRenderedArea(viewport);
 
   edges.forEach((e) => {
-    const edgeCoordinate = getEdgeSourceTargetCoordinate(e, nodes, graphConfig);
+    const edgeCoordinate = getEdgeSourceTargetCoordinate(e, nodes);
     if (
       edgeCoordinate.source &&
       edgeCoordinate.target &&
@@ -146,7 +143,7 @@ export const getRenderedEdges = (
         renderedArea
       )
     ) {
-      result.push(e.inner);
+      result.push(e);
     }
   });
 
@@ -225,17 +222,12 @@ export const getRenderedArea = (viewport: IViewport): IRectShape => {
 };
 
 export const getEdgeSourceTargetCoordinate = (
-  edge: ICanvasEdge,
-  nodes: OrderedMap<string, NodeModel>,
-  graphConfig: IGraphConfig
+  edge: EdgeModel,
+  nodes: OrderedMap<string, NodeModel>
 ): { source?: IPoint; target?: IPoint } => {
   return {
-    source: nodes
-      .get(edge.source)
-      ?.getPortPosition(edge.sourcePortId, graphConfig),
-    target: nodes
-      .get(edge.target)
-      ?.getPortPosition(edge.targetPortId, graphConfig),
+    source: nodes.get(edge.source)?.getPortPosition(edge.sourcePortId),
+    target: nodes.get(edge.target)?.getPortPosition(edge.targetPortId),
   };
 };
 
@@ -287,7 +279,7 @@ const normalizeSpacing = (
 export interface IZoomFitParams
   extends IZoomFixPublicParams,
     IZoomCommonParams {
-  data: GraphModel;
+  data: ContentState;
   graphConfig: IGraphConfig;
   rect: IContainerRect;
 }
@@ -454,7 +446,7 @@ export const minimapPan = (dx: number, dy: number): Action => {
 };
 
 export const getContentArea = (
-  data: GraphModel,
+  data: ContentState,
   graphConfig: IGraphConfig,
   nodeIds?: Set<string>
 ) => {
@@ -751,7 +743,7 @@ export const scrollIntoView = (
   };
 };
 
-export const getScaleLimit = (data: GraphModel, settings: IGraphSettings) => {
+export const getScaleLimit = (data: ContentState, settings: IGraphSettings) => {
   const { minNodeWidth, minNodeHeight } = getContentArea(
     data,
     settings.graphConfig

@@ -13,7 +13,7 @@ import {
   GraphModel,
   GraphNodeEvent,
   IEvent,
-  IGraphReducer,
+  IGraphMiddleware,
   previewMode,
 } from "../../index";
 import { GraphController } from "../../lib/controllers/GraphController";
@@ -87,7 +87,7 @@ function simulateNodeMove(
 }
 
 let recorder: (action: IEvent) => void;
-let middleware: IGraphReducer;
+let middleware: IGraphMiddleware;
 
 beforeEach(() => {
   recorder = jest.fn();

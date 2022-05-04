@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import type { ILine } from "../components/Line";
 import type { IGraphConfig } from "../models/config/types";
 import type { IDummyNode } from "../models/dummy-node";
-import type { ICanvasNode } from "../models/node";
+import type { INodeModel } from "../models/node";
 import { getNodeSize } from "./layout";
 
 interface IClosestNodes {
@@ -13,7 +13,7 @@ interface IClosestNodes {
   /**
    * the nodes closest to the dragging node
    */
-  closestNodes?: ICanvasNode[];
+  closestNodes?: INodeModel[];
 }
 
 /**
@@ -25,7 +25,7 @@ interface IClosestNodes {
  */
 export const getAlignmentLines = (
   draggingNodes: IDummyNode[],
-  nodes: readonly ICanvasNode[],
+  nodes: readonly INodeModel[],
   graphConfig: IGraphConfig,
   threshold = 2
 ): ILine[] => {
@@ -100,7 +100,7 @@ export const getAutoAlignDisplacement = (
  * @param field "x"|"y"
  */
 const getMinCoordinate = (
-  nodes: ICanvasNode[],
+  nodes: IDummyNode[],
   field: "x" | "y"
 ): number | undefined => {
   if (!nodes.length) {
@@ -115,7 +115,7 @@ const getMinCoordinate = (
  * @param field "x"|"y"
  */
 const getMaxCoordinate = (
-  nodes: ICanvasNode[],
+  nodes: IDummyNode[],
   field: "x" | "y"
 ): number | undefined => {
   if (!nodes.length) {
@@ -134,9 +134,9 @@ const getMaxCoordinate = (
  * @param graphConfig graphConfig of type IGraphConfig
  */
 const setSizeForNode = (
-  node: ICanvasNode,
+  node: INodeModel,
   graphConfig: IGraphConfig
-): ICanvasNode => {
+): INodeModel => {
   return {
     ...node,
     ...getNodeSize(node, graphConfig),
@@ -215,7 +215,7 @@ const getDummyDraggingNode = (draggingNodes: readonly IDummyNode[]) => {
 const getClosestNodes = (
   dummyDraggingNode: IDummyNode,
   draggingNodes: IDummyNode[],
-  nodes: readonly ICanvasNode[],
+  nodes: readonly INodeModel[],
   graphConfig: IGraphConfig,
   threshold = 2
 ): {
@@ -304,7 +304,7 @@ const getClosestNodes = (
  * @param closestNodes all closest nodes within the threshold
  */
 const getLines = (
-  draggingNode: ICanvasNode,
+  draggingNode: IDummyNode,
   closestNodes: {
     closestX: IClosestNodes[];
     closestY: IClosestNodes[];
@@ -326,7 +326,7 @@ const getLines = (
       return;
     }
 
-    const sameXNodes: ICanvasNode[] = [];
+    const sameXNodes: IDummyNode[] = [];
     const x = item.alignCoordinateValue;
     item.closestNodes?.forEach((node) => {
       if (
@@ -353,7 +353,7 @@ const getLines = (
     ) {
       return;
     }
-    const sameYNodes: ICanvasNode[] = [];
+    const sameYNodes: INodeModel[] = [];
     const y = item.alignCoordinateValue;
 
     item.closestNodes?.forEach((node) => {

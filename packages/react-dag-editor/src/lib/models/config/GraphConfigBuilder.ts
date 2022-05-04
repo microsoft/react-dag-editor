@@ -15,34 +15,27 @@ import type {
   IPortConfig,
 } from "./types";
 
-export class GraphConfigBuilder<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export class GraphConfigBuilder {
   private defaultEdgeShape: string;
   private defaultNodeShape: string;
   private defaultPortShape: string;
   private defaultGroupShape: string;
-  private readonly nodeConfigMap: Map<string, INodeConfig<NodeData, PortData>>;
-  private readonly edgeConfigMap: Map<string, IEdgeConfig<EdgeData>>;
-  private readonly portConfigMap: Map<
-    string,
-    IPortConfig<NodeData, EdgeData, PortData>
-  >;
+  private readonly nodeConfigMap: Map<string, INodeConfig>;
+  private readonly edgeConfigMap: Map<string, IEdgeConfig>;
+  private readonly portConfigMap: Map<string, IPortConfig>;
   private readonly groupConfigMap: Map<string, IGroupConfig>;
-  private clipboard: IGraphClipboard<NodeData, EdgeData, PortData>;
+  private clipboard: IGraphClipboard;
 
   private constructor(
     defaultEdgeShape: string,
     defaultNodeShape: string,
     defaultPortShape: string,
     defaultGroupShape: string,
-    nodeConfigMap: Map<string, INodeConfig<NodeData, PortData>>,
-    edgeConfigMap: Map<string, IEdgeConfig<EdgeData>>,
-    portConfigMap: Map<string, IPortConfig<NodeData, EdgeData, PortData>>,
+    nodeConfigMap: Map<string, INodeConfig>,
+    edgeConfigMap: Map<string, IEdgeConfig>,
+    portConfigMap: Map<string, IPortConfig>,
     groupConfigMap: Map<string, IGroupConfig>,
-    clipboard: IGraphClipboard<NodeData, EdgeData, PortData>
+    clipboard: IGraphClipboard
   ) {
     this.defaultEdgeShape = defaultEdgeShape;
     this.defaultNodeShape = defaultNodeShape;
@@ -83,69 +76,47 @@ export class GraphConfigBuilder<
     );
   }
 
-  public withDefaultEdgeShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultEdgeShape(shape: string): GraphConfigBuilder {
     this.defaultEdgeShape = shape;
     return this;
   }
 
-  public withDefaultNodeShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultNodeShape(shape: string): GraphConfigBuilder {
     this.defaultNodeShape = shape;
     return this;
   }
 
-  public withDefaultPortShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultPortShape(shape: string): GraphConfigBuilder {
     this.defaultPortShape = shape;
     return this;
   }
 
-  public withDefaultGroupShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withDefaultGroupShape(shape: string): GraphConfigBuilder {
     this.defaultGroupShape = shape;
     return this;
   }
 
-  public withClipboard(
-    clipboard: IGraphClipboard<NodeData, EdgeData, PortData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public withClipboard(clipboard: IGraphClipboard): GraphConfigBuilder {
     this.clipboard = clipboard;
     return this;
   }
 
-  public registerNode(
-    name: string,
-    config: INodeConfig<NodeData, PortData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public registerNode(name: string, config: INodeConfig): GraphConfigBuilder {
     this.nodeConfigMap.set(name, config);
     return this;
   }
 
-  public registerEdge(
-    name: string,
-    config: IEdgeConfig<EdgeData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public registerEdge(name: string, config: IEdgeConfig): GraphConfigBuilder {
     this.edgeConfigMap.set(name, config);
     return this;
   }
 
-  public registerPort(
-    name: string,
-    config: IPortConfig<NodeData, EdgeData, PortData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public registerPort(name: string, config: IPortConfig): GraphConfigBuilder {
     this.portConfigMap.set(name, config);
     return this;
   }
 
-  public registerGroup(
-    name: string,
-    config: IGroupConfig
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
+  public registerGroup(name: string, config: IGroupConfig): GraphConfigBuilder {
     this.groupConfigMap.set(name, config);
     return this;
   }

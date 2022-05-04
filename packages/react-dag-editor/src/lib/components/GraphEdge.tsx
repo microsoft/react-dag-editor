@@ -1,17 +1,17 @@
 import * as React from "react";
 import { useGraphConfig, useVirtualization } from "../hooks/context";
+import { ContentState } from "../models/ContentState";
+import { EdgeModel } from "../models/edge";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
-import { EdgeModel } from "../models/EdgeModel";
-import { GraphModel } from "../models/GraphModel";
 import { GraphEdgeStatus } from "../models/status";
 import { getEdgeUid, getLinearFunction, isPointInRect } from "../utils";
+import * as Bitset from "../utils/bitset";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
-import * as Bitset from "../utils/bitset";
 
 export interface IGraphEdgeCommonProps {
-  data: GraphModel;
+  data: ContentState;
   eventChannel: EventChannel;
   graphId: string;
 }
@@ -63,7 +63,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
   (props) => {
     const {
       edge,
-      data: graphModel,
+      data: content,
       eventChannel,
       source,
       target,
@@ -120,7 +120,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
 
     let edgeNode: React.ReactNode = edgeConfig.render({
       model: edge,
-      data: graphModel,
+      data: content,
       x1: source.x,
       y1: source.y,
       x2: target.x,
@@ -162,7 +162,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       if (isSourceVisible && edgeConfig.renderWithTargetHint) {
         edgeNode = edgeConfig.renderWithTargetHint({
           model: edge,
-          data: graphModel,
+          data: content,
           x1: source.x,
           y1: source.y,
           x2: hintPoint.x,
@@ -172,7 +172,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       } else if (isTargetVisible && edgeConfig.renderWithSourceHint) {
         edgeNode = edgeConfig.renderWithSourceHint({
           model: edge,
-          data: graphModel,
+          data: content,
           x1: hintPoint.x,
           y1: hintPoint.y,
           x2: target.x,

@@ -6,7 +6,8 @@
     "lint": "nx run-many --all --target=lint",
     "test": "nx run-many --all --target=test",
     "build": "nx run-many --all --target=build",
-    "build:site": "nx run react-dag-editor:site"
+    "build:site": "nx run react-dag-editor:site",
+    "storybook": "nx run react-dag-editor:storybook"
   },
   "private": true,
   "devDependencies": {

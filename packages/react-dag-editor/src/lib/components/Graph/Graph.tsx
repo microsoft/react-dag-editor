@@ -70,6 +70,7 @@ export function Graph<
     scrollSensitivity = 0.5,
     svgRef = defaultSVGRef,
     virtualizationDelay = 500,
+    background = null,
   } = props;
 
   const graphConfig = useGraphConfig();
@@ -292,6 +293,7 @@ export function Graph<
               virtualizationDelay={virtualizationDelay}
               eventChannel={eventChannel}
             >
+              {background}
               <GraphGroupsRenderer
                 data={data}
                 groups={data.groups ?? constantEmptyArray()}

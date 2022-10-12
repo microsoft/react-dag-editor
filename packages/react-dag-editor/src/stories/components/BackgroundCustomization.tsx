@@ -21,7 +21,7 @@ export const BackgroundCustomization: React.FC = () => {
     undefined
   );
 
-  const { rect } = useBackgroundRect();
+  const { rect } = useBackgroundRect(state);
 
   return (
     <ReactDagEditor

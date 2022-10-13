@@ -6,13 +6,3 @@ Array [
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
-
-exports[`Wheel should work with wheel event after focus graph: events 1`] = `
-Array [
-  "[Canvas]ViewportResize",
-  "[Canvas]VirtualizationRecalculated",
-  "[Canvas]Focus",
-  "[Canvas]MouseWheelScroll",
-  "[Canvas]VirtualizationRecalculated",
-]
-`;

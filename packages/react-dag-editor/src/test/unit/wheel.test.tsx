@@ -19,28 +19,6 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe("Wheel", () => {
-  it("should work with wheel event after focus graph", () => {
-    const onEvent = jest.fn();
-    const { container } = render(<TestComponent graphProps={{ onEvent }} />);
-    const svg = container.querySelector("svg")!;
-    expect(svg).toBeTruthy();
-
-    svg.focus();
-
-    act(() => {
-      fireEvent.wheel(svg, {
-        deltaY: 200,
-      });
-      jest.runAllTimers();
-    });
-
-    expect(onEvent).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: GraphCanvasEvent.MouseWheelScroll,
-      })
-    );
-  });
-
   it("should not work with wheel event without focus", () => {
     const onEvent = jest.fn();
     const { container } = render(<TestComponent graphProps={{ onEvent }} />);

@@ -55,8 +55,6 @@ export const useWheelHandler = (args: IWheelOptions) => {
         return;
       }
 
-      console.log(shouldRespondWheel);
-
       if (!shouldRespondWheel) {
         return;
       }

@@ -1,5 +1,5 @@
 import { RefObject, useLayoutEffect } from "react";
-import type { IDispatch } from "../contexts";
+import { IDispatch } from "../contexts";
 import type { IGraphConfig } from "../models/config/types";
 import { GraphCanvasEvent } from "../models/event";
 import type { IContainerRect } from "../models/geometry";
@@ -7,6 +7,7 @@ import { getRelativePoint } from "../utils";
 import type { EventChannel } from "../utils/eventChannel";
 import { noop } from "../utils/noop";
 import { normalizeWheelDelta } from "../utils/wheel-delta";
+import { useGraphController } from "./context";
 
 export interface IWheelOptions {
   containerRef: RefObject<HTMLDivElement | undefined>;
@@ -21,6 +22,8 @@ export interface IWheelOptions {
   graphConfig: IGraphConfig;
   dispatch: IDispatch;
 }
+
+let shouldRespondWheel = false;
 
 export const useWheelHandler = (args: IWheelOptions) => {
   const {
@@ -37,6 +40,9 @@ export const useWheelHandler = (args: IWheelOptions) => {
     dispatch,
   } = args;
 
+  const graphController = useGraphController();
+  const globalEventTarget = graphController.getGlobalEventTarget();
+
   useLayoutEffect(() => {
     const svg = svgRef.current;
     const container = containerRef.current;
@@ -48,7 +54,8 @@ export const useWheelHandler = (args: IWheelOptions) => {
       if (!rect) {
         return;
       }
-      if (!svg.contains(document.activeElement)) {
+
+      if (!shouldRespondWheel) {
         return;
       }
 
@@ -83,9 +90,25 @@ export const useWheelHandler = (args: IWheelOptions) => {
       });
     };
 
-    container.addEventListener("wheel", onWheel);
+    const mouseEnterHandler = () => {
+      shouldRespondWheel = true;
+    };
+
+    container.addEventListener("mouseenter", mouseEnterHandler);
+
+    const mouseLeaveHandler = () => {
+      shouldRespondWheel = false;
+    };
+
+    container.addEventListener("mouseleave", mouseLeaveHandler);
+
+    globalEventTarget.addEventListener("wheel", onWheel as EventListener, {
+      passive: false,
+    });
     return () => {
-      container.removeEventListener("wheel", onWheel);
+      globalEventTarget.removeEventListener("wheel", onWheel as EventListener);
+      container.removeEventListener("mouseenter", mouseEnterHandler);
+      container.removeEventListener("mouseleave", mouseLeaveHandler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [

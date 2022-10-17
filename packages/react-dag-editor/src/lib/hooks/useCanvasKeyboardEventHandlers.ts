@@ -87,34 +87,41 @@ export const useCanvasKeyboardEventHandlers = (
     keyDownHandlerMap.set("v", vKeyDownHandler);
 
     const zKeyDownHandler = (evt: React.KeyboardEvent<SVGSVGElement>) => {
+      if (!isUndoEnabled) {
+        return;
+      }
+
       if (metaControl(evt)) {
         evt.preventDefault();
         evt.stopPropagation();
-
-        if (isUndoEnabled) {
-          eventChannel.trigger({
-            type: GraphCanvasEvent.Undo,
-          });
-        }
+        eventChannel.trigger({
+          type: GraphCanvasEvent.Undo,
+        });
       }
     };
 
-    keyDownHandlerMap.set("z", zKeyDownHandler);
+    if (isUndoEnabled) {
+      keyDownHandlerMap.set("z", zKeyDownHandler);
+    }
 
     const yKeyDownHandler = (evt: React.KeyboardEvent<SVGSVGElement>) => {
+      if (!isUndoEnabled) {
+        return;
+      }
+
       if (metaControl(evt)) {
         evt.preventDefault();
         evt.stopPropagation();
 
-        if (isUndoEnabled) {
-          eventChannel.trigger({
-            type: GraphCanvasEvent.Redo,
-          });
-        }
+        eventChannel.trigger({
+          type: GraphCanvasEvent.Redo,
+        });
       }
     };
 
-    keyDownHandlerMap.set("y", yKeyDownHandler);
+    if (isUndoEnabled) {
+      keyDownHandlerMap.set("y", yKeyDownHandler);
+    }
 
     const aKeyDownHandler = (evt: React.KeyboardEvent<SVGSVGElement>) => {
       if (metaControl(evt)) {

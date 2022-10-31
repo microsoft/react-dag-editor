@@ -27,8 +27,6 @@ Array [
   "[Node]Drag",
   "[Node]DragEnd",
   "[Node]Click",
-  "[Canvas]Blur",
-  "[Canvas]Focus",
 ]
 `;
 
@@ -108,7 +106,5 @@ Array [
   "[Node]Drag",
   "[Node]DragEnd",
   "[Node]Click",
-  "[Canvas]Blur",
-  "[Canvas]Focus",
 ]
 `;

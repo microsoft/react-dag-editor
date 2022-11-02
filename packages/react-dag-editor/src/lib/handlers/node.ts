@@ -87,12 +87,20 @@ export const onNodePointerDown = (
     graphController.pointerId = null;
     const events: IEvent[] = [];
     const isDragCanceled = isWithinThreshold(totalDX, totalDY, dragThreshold);
-    events.push({
-      type: GraphNodeEvent.DragEnd,
-      node: target,
-      rawEvent: e,
-      isDragCanceled,
-    });
+    events.push(
+      {
+        type: GraphNodeEvent.DragEnd,
+        node: target,
+        rawEvent: e,
+        isDragCanceled,
+      },
+      {
+        type: GraphNodeEvent.Click,
+        rawEvent: e,
+        isMultiSelect,
+        node: target,
+      }
+    );
     if (isDragCanceled || !isNodesDraggable) {
       graphController.nodeClickOnce = target;
     }

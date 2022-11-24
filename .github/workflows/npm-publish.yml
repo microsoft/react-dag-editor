@@ -9,7 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node_version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node_version }}
+    - name: yarn install
+      run: yarn --frozen-lockfile
+    - name: lint
+      run: yarn lint
+    - name: build
+      run: yarn build
+    - name: test
+      run: yarn test
     - name: Publish if version has been updated
       uses: pascalgn/npm-publish-action@1.3.9
       with:

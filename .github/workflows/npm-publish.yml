@@ -2,36 +2,42 @@ name: npm-publish
 on:
   push:
     branches:
-      - main 
+      - main
+  workflow_dispatch:
+
 jobs:
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version:
+          - 16.x
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node_version }}
-    - name: yarn install
-      run: yarn --frozen-lockfile
-    - name: lint
-      run: yarn lint
-    - name: build
-      run: yarn build
-    - name: test
-      run: yarn test
-    - name: Publish if version has been updated
-      uses: pascalgn/npm-publish-action@1.3.9
-      with:
-        tag_name: "v%s"
-        tag_message: "v%s"
-        create_tag: "true"
-        commit_pattern: "^Release (\\S+)"
-        workspace: "./dist/packages/react-dag-editor"
-        publish_command: "yarn"
-        publish_args: "--non-interactive"
-      env: 
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} 
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: yarn install
+        run: yarn --frozen-lockfile
+      - name: lint
+        run: yarn lint
+      - name: build
+        run: yarn build
+      - name: test
+        run: yarn test
+      - name: Publish if version has been updated
+        uses: pascalgn/npm-publish-action@1.3.9
+        with:
+          tag_name: "v%s"
+          tag_message: "v%s"
+          create_tag: "true"
+          commit_pattern: "^Release (\\S+)"
+          workspace: "./dist/packages/react-dag-editor"
+          publish_command: "yarn"
+          publish_args: "--non-interactive"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

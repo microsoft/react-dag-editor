@@ -2,6 +2,10 @@
 
 # react-dag-editor
 
+[![License](https://img.shields.io/github/license/microsoft/react-dag-editor)](https://github.com/microsoft/react-dag-editor/blob/main/LICENSE)
+[![npm version](https://badge.fury.io/js/react-dag-editor.svg)](https://www.npmjs.com/package/react-dag-editor)
+[![Downloads](https://img.shields.io/npm/dm/react-dag-editor.svg)](https://www.npmjs.com/package/react-dag-editor)
+
 [Try it out!](https://microsoft.github.io/react-dag-editor/)
 
 ## Overview

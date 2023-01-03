@@ -9,11 +9,15 @@ jobs:
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version:
+          - 16.x
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
       - name: yarn install

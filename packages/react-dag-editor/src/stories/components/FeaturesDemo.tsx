@@ -82,7 +82,7 @@ const sourceNodeConfig: INodeConfig = {
 
 const stepNodeConfig: INodeConfig = {
   getMinHeight: () => 64,
-  getMinWidth: (model) => 120 + (model.name?.length ?? 0) * 12,
+  getMinWidth: (model) => model.width ?? 120 + (model.name?.length ?? 0) * 12,
   render: (args) => {
     const height = getRectHeight(stepNodeConfig, args.model);
     const width = getRectWidth(stepNodeConfig, args.model);

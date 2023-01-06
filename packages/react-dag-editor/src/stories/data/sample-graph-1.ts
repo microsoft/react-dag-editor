@@ -3,7 +3,7 @@ import { ICanvasData } from "../..";
 export const sampleGraphData: ICanvasData = {
   nodes: [
     {
-      id: "source",
+      id: "source-1",
       name: "source",
       ports: [
         {
@@ -94,6 +94,24 @@ export const sampleGraphData: ICanvasData = {
       x: 600,
       y: 400,
       shape: "step",
+    },
+    {
+      id: "step-3",
+      name: "Step at upper layer will cover others",
+      x: 300,
+      y: 200,
+      width: 450,
+      layer: 10,
+      shape: "step",
+    },
+    {
+      id: "source-2",
+      name: "source 2",
+      ports: [],
+      data: {},
+      x: 620,
+      y: 180,
+      shape: "source",
     },
   ],
   edges: [],

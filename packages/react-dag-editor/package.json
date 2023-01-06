@@ -4,7 +4,7 @@
   "repository": {
     "url": "https://github.com/microsoft/react-dag-editor.git"
   },
-  "version": "0.2.5",
+  "version": "0.2.6",
   "dependencies": {
     "react-jss": "~10.2.0",
     "toposort": "^1.0.7",

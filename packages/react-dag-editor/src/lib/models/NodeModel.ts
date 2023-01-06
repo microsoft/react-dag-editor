@@ -72,6 +72,10 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     return this.inner.width;
   }
 
+  public get layer(): number {
+    return this.inner.layer ?? 0;
+  }
+
   private constructor(
     node: ICanvasNode<NodeData, PortData>,
     portPositionCache: Map<string, IPoint | undefined>,

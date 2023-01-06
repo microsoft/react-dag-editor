@@ -41,6 +41,9 @@ import { Scrollbar } from "../Scrollbar";
 import { Transform } from "../Transform";
 import { EdgeTree } from "../tree/EdgeTree";
 import { NodeTree } from "../tree/NodeTree";
+import { NodeLayers } from "../NodeLayers";
+import { OrderedMap } from "../../collections";
+import { NodeModel } from "../../models/NodeModel";
 import { VirtualizationProvider } from "../VirtualizationProvider";
 import { getGraphStyles } from "./Graph.styles";
 import type { IGraphProps } from "./IGraphProps";
@@ -197,6 +200,30 @@ export function Graph<
   const accessKey = isA11yEnable ? focusCanvasAccessKey : undefined;
   const touchHandlers = useGraphTouchHandler(rectRef, eventChannel);
 
+  const renderNodeTree = React.useCallback(
+    (tree: OrderedMap<string, NodeModel>) => (
+      <NodeTree
+        graphId={graphId}
+        isNodeResizable={isNodeResizable}
+        tree={tree}
+        data={data}
+        isNodeEditDisabled={isNodeEditDisabled}
+        eventChannel={eventChannel}
+        getNodeAriaLabel={props.getNodeAriaLabel ?? defaultGetNodeAriaLabel}
+        getPortAriaLabel={props.getPortAriaLabel ?? defaultGetPortAriaLabel}
+      />
+    ),
+    [
+      data,
+      eventChannel,
+      graphId,
+      isNodeEditDisabled,
+      isNodeResizable,
+      props.getNodeAriaLabel,
+      props.getPortAriaLabel,
+    ]
+  );
+
   if (!isSupported()) {
     const {
       onBrowserNotSupported = () => <p>Your browser is not supported</p>,
@@ -304,20 +331,7 @@ export function Graph<
                 data={data}
                 eventChannel={eventChannel}
               />
-              <NodeTree
-                graphId={graphId}
-                isNodeResizable={isNodeResizable}
-                tree={data.nodes}
-                data={data}
-                isNodeEditDisabled={isNodeEditDisabled}
-                eventChannel={eventChannel}
-                getNodeAriaLabel={
-                  props.getNodeAriaLabel ?? defaultGetNodeAriaLabel
-                }
-                getPortAriaLabel={
-                  props.getPortAriaLabel ?? defaultGetPortAriaLabel
-                }
-              />
+              <NodeLayers data={data} renderTree={renderNodeTree} />
             </VirtualizationProvider>
           )}
           {state.dummyNodes.isVisible && (

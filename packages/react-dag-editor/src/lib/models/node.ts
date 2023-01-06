@@ -16,4 +16,5 @@ export interface ICanvasNode<T = unknown, P = unknown> {
   readonly ports?: ReadonlyArray<ICanvasPort<P>>;
   readonly ariaLabel?: string;
   readonly data?: Readonly<T>;
+  readonly layer?: number;
 }

@@ -11,7 +11,7 @@ import { getNodeConfig, getRectHeight, getRectWidth } from "../utils";
 const DEFAULT_Min_SIZE = 0;
 const DEFAULT_MAX_SIZE = 300;
 
-export const GraphNodeAnchors: React.FunctionComponent<
+export const SquareNodeAnchors: React.FunctionComponent<
   IGraphNodeAnchorsProps
 > = (props) => {
   const { node, eventChannel } = props;

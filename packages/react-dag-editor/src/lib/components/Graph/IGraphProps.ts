@@ -1,4 +1,5 @@
 import * as React from "react";
+import { RenderNodeAnchors } from "../NodeAnchors";
 import { TGetPositionFromEvent } from "../../controllers";
 import { IEvent } from "../../models/event";
 import { ICanvasEdge } from "../../models/edge";
@@ -111,12 +112,18 @@ export interface IGraphProps<
     node: NodeModel<NodeData, PortData>,
     port: ICanvasPort<PortData>
   ): string | undefined;
+
   /**
    * The events handler function
    *
    * @param event
    */
   onEvent?(event: IEvent<NodeData, EdgeData, PortData>): void;
+
+  /**
+   * Custom render function for node anchors which can resize node
+   */
+  renderNodeAnchors?: RenderNodeAnchors;
 }
 
 export interface IGraphClasses {

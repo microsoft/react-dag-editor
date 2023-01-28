@@ -1,10 +1,11 @@
 import * as React from "react";
 import { useVirtualization } from "../hooks/context";
+import { useGetMouseDownOnAnchor } from "../hooks/useGetMouseDownOnAnchor";
 import { NodeModel } from "../models/NodeModel";
 import { isNodeEditing } from "../models/status";
 import { isPointInRect } from "../utils";
 import { GraphNode, IGraphNodeCommonProps } from "./GraphNode";
-import { GraphNodeControlPoints } from "./GraphNodeControlPoints";
+import { GraphNodeAnchors, RenderNodeAnchors } from "./NodeAnchors";
 import {
   GraphOneNodePorts,
   IGraphOneNodePortsProps,
@@ -15,16 +16,18 @@ export interface IGraphNodePartsProps
     Omit<IGraphOneNodePortsProps, "viewport"> {
   node: NodeModel;
   isNodeResizable: boolean;
+  renderNodeAnchors?: RenderNodeAnchors;
 }
 
 const GraphNodeParts = ({
   node,
   isNodeResizable,
+  renderNodeAnchors,
   ...commonProps
 }: IGraphNodePartsProps) => {
   const virtualization = useVirtualization();
   const { renderedArea, viewport } = virtualization;
-
+  const getMouseDown = useGetMouseDownOnAnchor(node, commonProps.eventChannel);
   const isVisible = isPointInRect(renderedArea, node);
 
   React.useLayoutEffect(() => {
@@ -38,16 +41,21 @@ const GraphNodeParts = ({
     return null;
   }
 
+  let nodeAnchors;
+  if (isNodeResizable && isNodeEditing(node)) {
+    const defaultAnchors = (
+      <GraphNodeAnchors node={node} eventChannel={commonProps.eventChannel} />
+    );
+    nodeAnchors = renderNodeAnchors
+      ? renderNodeAnchors(node, getMouseDown, defaultAnchors)
+      : defaultAnchors;
+  }
+
   return (
     <>
       <GraphNode {...commonProps} node={node} viewport={viewport} />
       <GraphOneNodePorts {...commonProps} node={node} viewport={viewport} />
-      {isNodeResizable && isNodeEditing(node) && (
-        <GraphNodeControlPoints
-          node={node}
-          eventChannel={commonProps.eventChannel}
-        />
-      )}
+      {nodeAnchors}
     </>
   );
 };

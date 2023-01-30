@@ -5,4 +5,3 @@ export * from "./defaultClipboard";
 export * from "./defaultStorage";
 export * from "./applyDefaultPortsPosition";
 export * from "./applyHorizontalGraphPortsPosition";
-export * from "./SquareNodeAnchors";

@@ -1,20 +1,23 @@
 import * as React from "react";
 import {
-  IGraphNodeAnchorsProps,
+  GetMouseDown,
   NodeAnchor,
   RESIZE_POINT_WIDTH,
   RESIZE_POINT_HEIGHT,
-} from "../components/NodeAnchors";
-import { useGraphConfig, useGetMouseDownOnAnchor } from "../hooks";
-import { getNodeConfig, getRectHeight, getRectWidth } from "../utils";
+} from "../../lib/components/NodeAnchors";
+import { useGraphConfig } from "../../lib/hooks";
+import { ICanvasNode } from "../../lib/models/node";
+import { getNodeConfig, getRectHeight, getRectWidth } from "../../lib/utils";
 
 const DEFAULT_Min_SIZE = 0;
 const DEFAULT_MAX_SIZE = 300;
 
-export const SquareNodeAnchors: React.FunctionComponent<
-  IGraphNodeAnchorsProps
-> = (props) => {
-  const { node, eventChannel } = props;
+interface IProps {
+  node: ICanvasNode;
+  getMouseDown: GetMouseDown;
+}
+export const SquareNodeAnchors: React.FunctionComponent<IProps> = (props) => {
+  const { node, getMouseDown } = props;
 
   const graphConfig = useGraphConfig();
   const nodeConfig = getNodeConfig(node, graphConfig);
@@ -30,8 +33,6 @@ export const SquareNodeAnchors: React.FunctionComponent<
 
   const height = getRectHeight(nodeConfig, node);
   const width = getRectWidth(nodeConfig, node);
-
-  const getMouseDown = useGetMouseDownOnAnchor(node, eventChannel);
 
   const nw = getMouseDown((dx, dy) => {
     const finalDx =

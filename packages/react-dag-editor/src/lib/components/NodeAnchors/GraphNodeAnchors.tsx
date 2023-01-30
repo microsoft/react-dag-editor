@@ -1,12 +1,12 @@
 import * as React from "react";
-import { useGraphConfig, useGetMouseDownOnAnchor } from "../../hooks";
-import { getNodeConfig, getRectHeight, getRectWidth } from "../../utils";
-import { IGraphNodeAnchorsProps } from "./INodeAnchors";
 import {
+  IGraphNodeAnchorsProps,
   NodeAnchor,
   RESIZE_POINT_WIDTH,
   RESIZE_POINT_HEIGHT,
-} from "./NodeAnchor";
+} from ".";
+import { useGraphConfig, useGetMouseDownOnAnchor } from "../../hooks";
+import { getNodeConfig, getRectHeight, getRectWidth } from "../../utils";
 
 const BBOX_PADDING = 15;
 

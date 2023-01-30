@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/display-name */
 import * as React from "react";
+import { SquareNodeAnchors } from "./SquareNodeAnchors";
 import {
   getRectHeight,
   getRectWidth,
@@ -96,6 +97,29 @@ const stepNodeConfig: INodeConfig = {
         style={{ display: "flex" }}
       >
         <StepNode name={args.model.name ?? ""} />
+      </foreignObject>
+    );
+  },
+};
+
+/** Another node config to demo custom anchors of node, render function is in the FeaturesDemo component below. */
+
+const noteNodeConfig: INodeConfig = {
+  getMinHeight: () => 100,
+  getMinWidth: () => 100,
+  render: (args) => {
+    const height = getRectHeight(noteNodeConfig, args.model);
+    const width = getRectWidth(noteNodeConfig, args.model);
+
+    // Here we are using HTML wrapped by foreignObject.
+    return (
+      <foreignObject
+        transform={`translate(${args.model.x}, ${args.model.y})`}
+        height={height}
+        width={width}
+        style={{ display: "flex" }}
+      >
+        <div style={stepNodeContainerStyles}>{args.model.name ?? ""}</div>
       </foreignObject>
     );
   },
@@ -284,6 +308,7 @@ class MyPortConfig implements IPortConfig {
 export const graphConfig = GraphConfigBuilder.default()
   .registerNode("source", sourceNodeConfig)
   .registerNode("step", stepNodeConfig)
+  .registerNode("note", noteNodeConfig)
   .registerPort("myPort", new MyPortConfig())
   .build();
 
@@ -298,13 +323,25 @@ export const FeaturesDemo: React.FC = () => {
     undefined
   );
 
+  /** Render your custom anchors of node by shape */
+  const renderNodeAnchors = React.useCallback(
+    (node, getMouseDown, defaultAnchors) => {
+      return node.shape === "note" ? (
+        <SquareNodeAnchors node={node} getMouseDown={getMouseDown} />
+      ) : (
+        defaultAnchors
+      );
+    },
+    []
+  );
+
   return (
     <ReactDagEditor
       style={{ width: "900px", height: "600px" }}
       state={state}
       dispatch={dispatch}
     >
-      <Graph />
+      <Graph renderNodeAnchors={renderNodeAnchors} />
     </ReactDagEditor>
   );
 };

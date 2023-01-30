@@ -201,8 +201,9 @@ export function Graph<
   const touchHandlers = useGraphTouchHandler(rectRef, eventChannel);
 
   const renderNodeTree = React.useCallback(
-    (tree: OrderedMap<string, NodeModel>) => (
+    (tree: OrderedMap<string, NodeModel>, layer: number) => (
       <NodeTree
+        key={layer}
         graphId={graphId}
         isNodeResizable={isNodeResizable}
         tree={tree}

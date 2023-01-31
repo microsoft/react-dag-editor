@@ -113,6 +113,14 @@ export const sampleGraphData: ICanvasData = {
       y: 180,
       shape: "source",
     },
+    {
+      id: "note-1",
+      name: "Double click to see custom anchors",
+      x: 100,
+      y: 200,
+      layer: 11,
+      shape: "note",
+    },
   ],
   edges: [],
 };

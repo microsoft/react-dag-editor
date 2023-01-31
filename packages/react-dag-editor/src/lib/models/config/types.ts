@@ -24,6 +24,8 @@ export interface INodeConfig<NodeData = unknown, PortData = unknown> {
   getStyle?(rect: ICanvasNode<NodeData, PortData>): React.CSSProperties;
   getMinWidth(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
   getMinHeight(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
+  getMaxWidth?(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
+  getMaxHeight?(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
   renderTooltips?(args: INodeDrawArgs<NodeData, PortData>): React.ReactNode;
 }
 

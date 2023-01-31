@@ -212,6 +212,7 @@ export function Graph<
         eventChannel={eventChannel}
         getNodeAriaLabel={props.getNodeAriaLabel ?? defaultGetNodeAriaLabel}
         getPortAriaLabel={props.getPortAriaLabel ?? defaultGetPortAriaLabel}
+        renderNodeAnchors={props.renderNodeAnchors}
       />
     ),
     [
@@ -222,6 +223,7 @@ export function Graph<
       isNodeResizable,
       props.getNodeAriaLabel,
       props.getPortAriaLabel,
+      props.renderNodeAnchors,
     ]
   );
 

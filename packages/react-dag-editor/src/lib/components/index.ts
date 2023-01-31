@@ -7,3 +7,4 @@ export * from "./Graph/IGraphProps";
 export * from "./RegisterComponent";
 export { defaultGetPositionFromEvent } from "../controllers";
 export * from "./GridBackground";
+export * from "./NodeAnchors";

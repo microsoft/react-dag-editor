@@ -5,7 +5,7 @@ import {
   RESIZE_POINT_WIDTH,
   RESIZE_POINT_HEIGHT,
 } from ".";
-import { useGraphConfig, useGetMouseDownOnAnchor } from "../../hooks";
+import { useGraphConfig } from "../../hooks";
 import { getNodeConfig, getRectHeight, getRectWidth } from "../../utils";
 
 const BBOX_PADDING = 15;
@@ -13,7 +13,7 @@ const BBOX_PADDING = 15;
 export const GraphNodeAnchors: React.FunctionComponent<
   IGraphNodeAnchorsProps
 > = (props) => {
-  const { node, eventChannel } = props;
+  const { node, getMouseDown } = props;
 
   const graphConfig = useGraphConfig();
   const nodeConfig = getNodeConfig(node, graphConfig);
@@ -23,8 +23,6 @@ export const GraphNodeAnchors: React.FunctionComponent<
 
   const height = getRectHeight(nodeConfig, node);
   const width = getRectWidth(nodeConfig, node);
-
-  const getMouseDown = useGetMouseDownOnAnchor(node, eventChannel);
 
   const nw = getMouseDown((dx, dy) => {
     const finalDx = Math.min(dx, width - minWidth);

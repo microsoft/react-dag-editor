@@ -44,7 +44,7 @@ const GraphNodeParts = ({
   let nodeAnchors;
   if (isNodeResizable && isNodeEditing(node)) {
     const defaultAnchors = (
-      <GraphNodeAnchors node={node} eventChannel={commonProps.eventChannel} />
+      <GraphNodeAnchors node={node} getMouseDown={getMouseDown} />
     );
     nodeAnchors = renderNodeAnchors
       ? renderNodeAnchors(node, getMouseDown, defaultAnchors)

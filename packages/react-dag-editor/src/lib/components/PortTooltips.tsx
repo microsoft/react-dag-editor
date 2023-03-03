@@ -30,8 +30,7 @@ export const PortTooltips: React.FunctionComponent<IPortTooltipsProps> = (
     return null;
   }
 
-  const portShape = port.shape ? port.shape : graphConfig.defaultPortShape;
-  const portConfig = graphConfig.getPortConfigByName(portShape);
+  const portConfig = graphConfig.getPortConfig(port);
   if (!portConfig || !portConfig.renderTooltips) {
     return null;
   }

@@ -99,11 +99,9 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       return null;
     }
 
-    const shape = edge.shape ? edge.shape : graphConfig.defaultEdgeShape;
-    const edgeConfig = graphConfig.getEdgeConfigByName(shape);
-
+    const edgeConfig = graphConfig.getEdgeConfig(edge);
     if (!edgeConfig) {
-      Debug.warn(`invalid shape in edge ${JSON.stringify(edge)}`);
+      Debug.warn(`invalid edge ${JSON.stringify(edge)}`);
       return null;
     }
 

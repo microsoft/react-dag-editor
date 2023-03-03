@@ -9,7 +9,6 @@ export interface ICanvasGroup {
   padding?: IGap;
   fill?: string;
   stroke?: string;
-  shape?: string;
 }
 
 export interface ICanvasData<

@@ -7,7 +7,9 @@ import {
   ICanvasPort,
   IGetConnectableParams,
   IGraphConfig,
+  INodeConfig,
   INodeDrawArgs,
+  IPortConfig,
   IPortDrawArgs,
 } from "../index";
 
@@ -85,30 +87,34 @@ export function makeNodesWithPosition(
 }
 
 export function getGraphConfig(): IGraphConfig {
+  const defaultNodeConfig: INodeConfig = {
+    render(args: INodeDrawArgs): React.ReactNode {
+      return null;
+    },
+    getMinWidth(rect: ICanvasNode): number {
+      return 280;
+    },
+    getMinHeight(rect: ICanvasNode): number {
+      return 50;
+    },
+  };
+
+  const defaultPortConfig: IPortConfig = {
+    render(args: IPortDrawArgs): React.ReactNode {
+      return null;
+    },
+    renderTooltips(args: Omit<IPortDrawArgs, "setData">): React.ReactNode {
+      return null;
+    },
+    getIsConnectable({ model }: IGetConnectableParams): boolean | undefined {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (model.data as any)?.isConnectable;
+    },
+  };
+
   return GraphConfigBuilder.default()
-    .registerNode("default", {
-      render(args: INodeDrawArgs): React.ReactNode {
-        return null;
-      },
-      getMinWidth(rect: ICanvasNode): number {
-        return 280;
-      },
-      getMinHeight(rect: ICanvasNode): number {
-        return 50;
-      },
-    })
-    .registerPort("default", {
-      render(args: IPortDrawArgs): React.ReactNode {
-        return null;
-      },
-      renderTooltips(args: Omit<IPortDrawArgs, "setData">): React.ReactNode {
-        return null;
-      },
-      getIsConnectable({ model }: IGetConnectableParams): boolean | undefined {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return (model.data as any)?.isConnectable;
-      },
-    })
+    .registerNode((_node) => defaultNodeConfig)
+    .registerPort((_port) => defaultPortConfig)
     .build();
 }
 

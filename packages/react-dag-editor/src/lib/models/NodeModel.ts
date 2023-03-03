@@ -24,10 +24,6 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     return this.inner.status;
   }
 
-  public get shape(): string | undefined {
-    return this.inner.shape;
-  }
-
   public get ports(): ReadonlyArray<ICanvasPort<PortData>> | undefined {
     return this.inner.ports;
   }

@@ -152,7 +152,6 @@ export const connectingReducer: IGraphReactReducer = (
             target: targetNode,
             targetPortId: targetPort,
             id: uuid(),
-            shape: state.settings.graphConfig.defaultEdgeShape,
             status: GraphEdgeStatus.Default,
           };
           if (edgeWillAdd) {

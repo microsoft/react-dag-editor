@@ -2,6 +2,7 @@ import { mergeStyles } from "@fluentui/merge-styles";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { v4 as uuid } from "uuid";
+import { emptyNodeConfig } from "../../built-in/emptyNodeConfig";
 import { defaultGetPositionFromEvent, DragController } from "../../controllers";
 import { PointerEventProvider } from "../../event-provider/PointerEventProvider";
 import { GraphFeatures } from "../../Features";
@@ -134,7 +135,8 @@ export const Item: React.FunctionComponent<IItemProps> = (props) => {
         return;
       }
       const partial = getNode();
-      const nodeConfig = graphConfig.getNodeConfigByName(partial.shape);
+      const nodeConfig =
+        graphConfig.getNodeConfig(partial as ICanvasNode) ?? emptyNodeConfig;
       const position = adjustPosition(
         evt.clientX,
         evt.clientY,

@@ -43,13 +43,24 @@ describe("ItemPanel - Item", () => {
   beforeEach(() => {
     dragWillStart = jest.fn();
     const graphConfig = GraphConfigBuilder.default()
-      .registerNode("nodeShape", rect)
+      .registerNode((node) => {
+        const nodeType =
+          (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
+        switch (nodeType) {
+          case "nodeShape":
+            return rect;
+          default:
+            return undefined;
+        }
+      })
       .build();
     const graphControllerRef = React.createRef<GraphController>();
     const getNode = () => {
       return {
         name: "node1",
-        shape: "nodeShape",
+        data: {
+          nodeType: "nodeShape",
+        },
       };
     };
     renderedWrapper = render(

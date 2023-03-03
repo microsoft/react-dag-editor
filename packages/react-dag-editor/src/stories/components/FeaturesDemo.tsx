@@ -23,7 +23,7 @@ import {
 } from "../..";
 import { sampleGraphData } from "../data/sample-graph-1";
 
-/** How to customize a node by "shape" by data.nodes[].shape */
+/** How to customize a node by graphConfig.getNodeConfig */
 
 const stepNodeContainerStyles: React.CSSProperties = {
   flexGrow: 1,
@@ -306,10 +306,30 @@ class MyPortConfig implements IPortConfig {
 }
 
 export const graphConfig = GraphConfigBuilder.default()
-  .registerNode("source", sourceNodeConfig)
-  .registerNode("step", stepNodeConfig)
-  .registerNode("note", noteNodeConfig)
-  .registerPort("myPort", new MyPortConfig())
+  .registerNode((node) => {
+    const nodeType =
+      (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
+    switch (nodeType) {
+      case "source":
+        return sourceNodeConfig;
+      case "step":
+        return stepNodeConfig;
+      case "note":
+        return noteNodeConfig;
+      default:
+        return undefined;
+    }
+  })
+  .registerPort((port) => {
+    const nodeType =
+      (port.data as { nodeType: string } | undefined)?.nodeType ?? "";
+    switch (nodeType) {
+      case "myPort":
+        return new MyPortConfig();
+      default:
+        return undefined;
+    }
+  })
   .build();
 
 export const FeaturesDemo: React.FC = () => {

@@ -129,12 +129,8 @@ export const nextConnectablePort =
       if (!next.node) {
         next = item(data.getNavigationFirstNode());
       } else if (next.port) {
-        const portShape = next.port.shape
-          ? next.port.shape
-          : graphConfig.defaultPortShape;
-
         if (
-          graphConfig.getPortConfigByName(portShape)?.getIsConnectable({
+          graphConfig.getPortConfig(next.port)?.getIsConnectable({
             ...params,
             data,
             parentNode: next.node,

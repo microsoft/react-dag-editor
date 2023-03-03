@@ -14,10 +14,11 @@ export const sampleGraphData: ICanvasData = {
           isOutputDisabled: false,
         },
       ],
-      data: {},
+      data: {
+        nodeType: "source",
+      },
       x: 100,
       y: 100,
-      shape: "source",
     },
     {
       id: "step-1",
@@ -28,34 +29,43 @@ export const sampleGraphData: ICanvasData = {
           position: [0.5, 0],
           name: "input top",
           isOutputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
         {
           id: "input-left",
           position: [0, 0.5],
           name: "input left",
           isOutputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
         {
           id: "output-bottom",
           position: [0.5, 1],
           name: "output bottom",
           isInputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
         {
           id: "output-right",
           position: [1, 0.5],
           name: "output right",
           isInputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
       ],
-      data: {},
+      data: {
+        nodeType: "step",
+      },
       x: 100,
       y: 400,
-      shape: "step",
     },
     {
       id: "step-2",
@@ -66,34 +76,43 @@ export const sampleGraphData: ICanvasData = {
           position: [0.5, 0],
           name: "input top",
           isOutputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
         {
           id: "input-left",
           position: [0, 0.5],
           name: "input left",
           isOutputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
         {
           id: "output-bottom",
           position: [0.5, 1],
           name: "output bottom",
           isInputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
         {
           id: "output-right",
           position: [1, 0.5],
           name: "output right",
           isInputDisabled: true,
-          shape: "myPort",
+          data: {
+            nodeType: "myPort",
+          },
         },
       ],
-      data: {},
+      data: {
+        nodeType: "step",
+      },
       x: 600,
       y: 400,
-      shape: "step",
     },
     {
       id: "step-3",
@@ -102,16 +121,19 @@ export const sampleGraphData: ICanvasData = {
       y: 200,
       width: 450,
       layer: 10,
-      shape: "step",
+      data: {
+        nodeType: "step",
+      },
     },
     {
       id: "source-2",
       name: "source 2",
       ports: [],
-      data: {},
+      data: {
+        nodeType: "source",
+      },
       x: 620,
       y: 180,
-      shape: "source",
     },
     {
       id: "note-1",
@@ -119,7 +141,9 @@ export const sampleGraphData: ICanvasData = {
       x: 100,
       y: 200,
       layer: 11,
-      shape: "note",
+      data: {
+        nodeType: "note",
+      },
     },
   ],
   edges: [],

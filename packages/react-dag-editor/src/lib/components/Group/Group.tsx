@@ -18,8 +18,7 @@ export const Group: React.FC<IGroupProps> = (props) => {
     [group, data.nodes, graphConfig]
   );
 
-  const groupConfig =
-    graphConfig.getGroupConfigByName(group.shape) ?? defaultGroup;
+  const groupConfig = graphConfig.getGroupConfig(group) ?? defaultGroup;
 
   const automationId = `group-container-${group.id}`;
   return (

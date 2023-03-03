@@ -2,7 +2,6 @@ import type { ICanvasPort } from "./port";
 import type { GraphNodeStatus } from "./status";
 
 export interface ICanvasNode<T = unknown, P = unknown> {
-  readonly shape?: string;
   readonly x: number;
   readonly y: number;
   readonly name?: string;

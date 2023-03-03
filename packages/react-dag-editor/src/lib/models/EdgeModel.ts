@@ -10,10 +10,6 @@ export class EdgeModel<T = unknown> implements $Complete<ICanvasEdge> {
     return this.inner.id;
   }
 
-  public get shape(): string | undefined {
-    return this.inner.shape;
-  }
-
   public get automationId(): string | undefined {
     return this.inner.automationId;
   }

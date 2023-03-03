@@ -29,7 +29,6 @@ export interface IGraphNodeProps extends IGraphNodeCommonProps {
 const GraphNode: React.FunctionComponent<IGraphNodeProps> = (props) => {
   const { node, eventChannel, getNodeAriaLabel, viewport, graphId } = props;
   const graphConfig = useGraphConfig();
-  const shape = node.shape ? node.shape : graphConfig.defaultNodeShape;
   const nodeConfig = getNodeConfig(node, graphConfig);
 
   const nodeEvent =
@@ -49,7 +48,7 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = (props) => {
   const automationId = node.automationId ?? getNodeAutomationId(node);
 
   if (!nodeConfig?.render) {
-    Debug.warn(`Missing "render" method in node config ${shape}`);
+    Debug.warn(`Missing "render" method in node config`);
 
     return null;
   }

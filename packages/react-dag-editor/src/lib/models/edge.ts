@@ -1,7 +1,6 @@
 import type { GraphEdgeStatus } from "./status";
 
 export interface ICanvasEdge<T = unknown> {
-  readonly shape?: string;
   /**
    * source node id
    */

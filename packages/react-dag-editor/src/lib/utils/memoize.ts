@@ -17,16 +17,22 @@ const shallowEqual = <T extends unknown[]>(a: T | undefined, b: T): boolean => {
   return true;
 };
 
-export function memoize<T extends unknown[], R>(
-  f: (...args: T) => R
+export function memoize<T extends unknown[], R, D>(
+  f: (...args: T) => R,
+  selector?: ((...args: T) => D[]) | D[]
 ): (...args: T) => R {
-  let prev: T | undefined;
+  let prev: T | D[] | undefined;
   let value: R | undefined;
   return (...args: T): R => {
-    if (shallowEqual(prev, args)) {
+    const selectedArgs = selector
+      ? Array.isArray(selector)
+        ? selector
+        : selector.apply(undefined, args)
+      : args;
+    if (shallowEqual(prev, selectedArgs)) {
       return value!;
     }
-    prev = args;
+    prev = selectedArgs;
     value = f.apply(undefined, args);
     return value!;
   };

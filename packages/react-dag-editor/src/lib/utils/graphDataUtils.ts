@@ -97,7 +97,7 @@ export const isConnectable = (
   graphConfig: IGraphConfig,
   params: IGetConnectableParams
 ) => {
-  const portConfig = graphConfig.getPortConfigByName(params.model.shape);
+  const portConfig = graphConfig.getPortConfig(params.model);
   return portConfig ? portConfig.getIsConnectable(params) : false;
 };
 

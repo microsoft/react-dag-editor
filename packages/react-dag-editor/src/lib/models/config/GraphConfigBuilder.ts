@@ -5,11 +5,14 @@ import {
   line,
   rect,
 } from "../../built-in";
-import { defaultGroup } from "../../built-in/defaultGroup";
-import { GraphConfig } from "./GraphConfig";
+import { ICanvasGroup } from "../canvas";
+import { ICanvasEdge } from "../edge";
+import { ICanvasNode } from "../node";
+import { ICanvasPort } from "../port";
 import type {
   IEdgeConfig,
   IGraphClipboard,
+  IGraphConfig,
   IGroupConfig,
   INodeConfig,
   IPortConfig,
@@ -20,147 +23,77 @@ export class GraphConfigBuilder<
   EdgeData = unknown,
   PortData = unknown
 > {
-  private defaultEdgeShape: string;
-  private defaultNodeShape: string;
-  private defaultPortShape: string;
-  private defaultGroupShape: string;
-  private readonly nodeConfigMap: Map<string, INodeConfig<NodeData, PortData>>;
-  private readonly edgeConfigMap: Map<string, IEdgeConfig<EdgeData>>;
-  private readonly portConfigMap: Map<
-    string,
-    IPortConfig<NodeData, EdgeData, PortData>
-  >;
-  private readonly groupConfigMap: Map<string, IGroupConfig>;
-  private clipboard: IGraphClipboard<NodeData, EdgeData, PortData>;
+  private readonly draft: IGraphConfig<NodeData, EdgeData, PortData>;
 
-  private constructor(
-    defaultEdgeShape: string,
-    defaultNodeShape: string,
-    defaultPortShape: string,
-    defaultGroupShape: string,
-    nodeConfigMap: Map<string, INodeConfig<NodeData, PortData>>,
-    edgeConfigMap: Map<string, IEdgeConfig<EdgeData>>,
-    portConfigMap: Map<string, IPortConfig<NodeData, EdgeData, PortData>>,
-    groupConfigMap: Map<string, IGroupConfig>,
-    clipboard: IGraphClipboard<NodeData, EdgeData, PortData>
-  ) {
-    this.defaultEdgeShape = defaultEdgeShape;
-    this.defaultNodeShape = defaultNodeShape;
-    this.defaultPortShape = defaultPortShape;
-    this.defaultGroupShape = defaultGroupShape;
-    this.nodeConfigMap = nodeConfigMap;
-    this.edgeConfigMap = edgeConfigMap;
-    this.portConfigMap = portConfigMap;
-    this.groupConfigMap = groupConfigMap;
-    this.clipboard = clipboard;
+  private constructor() {
+    const storage = new DefaultStorage();
+    const defaultClipboard = new DefaultClipboard<NodeData, EdgeData, PortData>(
+      storage
+    );
+    this.draft = {
+      getNodeConfig: () => rect,
+      getEdgeConfig: () => line,
+      getPortConfig: () => defaultPort,
+      getGroupConfig: () => undefined,
+      getClipboard: () => defaultClipboard,
+    };
   }
 
   public static default(): GraphConfigBuilder {
-    return new GraphConfigBuilder(
-      "default",
-      "default",
-      "default",
-      "default",
-      new Map().set("default", rect),
-      new Map().set("default", line),
-      new Map().set("default", defaultPort),
-      new Map().set("default", defaultGroup),
-      new DefaultClipboard(new DefaultStorage())
-    );
+    return new GraphConfigBuilder();
   }
 
-  public static from(graphConfig: GraphConfig): GraphConfigBuilder {
-    return new GraphConfigBuilder(
-      graphConfig.defaultEdgeShape,
-      graphConfig.defaultNodeShape,
-      graphConfig.defaultPortShape,
-      graphConfig.defaultGroupShape,
-      new Map(graphConfig.nodeConfigMap),
-      new Map(graphConfig.edgeConfigMap),
-      new Map(graphConfig.portConfigMap),
-      new Map(graphConfig.groupConfigMap),
-      graphConfig.clipboard
-    );
-  }
-
-  public withDefaultEdgeShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.defaultEdgeShape = shape;
-    return this;
-  }
-
-  public withDefaultNodeShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.defaultNodeShape = shape;
-    return this;
-  }
-
-  public withDefaultPortShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.defaultPortShape = shape;
-    return this;
-  }
-
-  public withDefaultGroupShape(
-    shape: string
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.defaultGroupShape = shape;
-    return this;
-  }
-
-  public withClipboard(
-    clipboard: IGraphClipboard<NodeData, EdgeData, PortData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.clipboard = clipboard;
-    return this;
+  public static from(graphConfig: IGraphConfig): GraphConfigBuilder {
+    return new GraphConfigBuilder()
+      .registerNode(graphConfig.getNodeConfig.bind(graphConfig))
+      .registerEdge(graphConfig.getEdgeConfig.bind(graphConfig))
+      .registerPort(graphConfig.getPortConfig.bind(graphConfig))
+      .registerGroup(graphConfig.getGroupConfig.bind(graphConfig))
+      .registerClipboard(graphConfig.getClipboard.bind(graphConfig));
   }
 
   public registerNode(
-    name: string,
-    config: INodeConfig<NodeData, PortData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.nodeConfigMap.set(name, config);
+    getConfig: (
+      node: ICanvasNode<NodeData, PortData>
+    ) => INodeConfig<ICanvasNode<NodeData, PortData>> | undefined
+  ): this {
+    this.draft.getNodeConfig = getConfig;
     return this;
   }
 
   public registerEdge(
-    name: string,
-    config: IEdgeConfig<EdgeData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.edgeConfigMap.set(name, config);
+    getConfig: (
+      edge: ICanvasEdge<EdgeData>
+    ) => IEdgeConfig<EdgeData> | undefined
+  ): this {
+    this.draft.getEdgeConfig = getConfig;
     return this;
   }
 
   public registerPort(
-    name: string,
-    config: IPortConfig<NodeData, EdgeData, PortData>
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.portConfigMap.set(name, config);
+    getConfig: (
+      port: ICanvasPort<PortData>
+    ) => IPortConfig<NodeData, EdgeData, PortData> | undefined
+  ): this {
+    this.draft.getPortConfig = getConfig;
     return this;
   }
 
   public registerGroup(
-    name: string,
-    config: IGroupConfig
-  ): GraphConfigBuilder<NodeData, EdgeData, PortData> {
-    this.groupConfigMap.set(name, config);
+    getConfig: (group: ICanvasGroup) => IGroupConfig | undefined
+  ): this {
+    this.draft.getGroupConfig = getConfig;
     return this;
   }
 
-  public build(): GraphConfig {
-    return new GraphConfig(
-      this.defaultEdgeShape,
-      this.defaultNodeShape,
-      this.defaultPortShape,
-      this.defaultGroupShape,
-      new Map(this.nodeConfigMap),
-      new Map(this.edgeConfigMap),
-      new Map(this.portConfigMap),
-      new Map(this.groupConfigMap),
-      this.clipboard
-    );
+  public registerClipboard(
+    getClipboard: () => IGraphClipboard<NodeData, EdgeData, PortData>
+  ): this {
+    this.draft.getClipboard = getClipboard;
+    return this;
+  }
+
+  public build(): IGraphConfig {
+    return this.draft;
   }
 }

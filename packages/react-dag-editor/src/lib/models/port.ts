@@ -3,7 +3,6 @@ import type { GraphPortStatus } from "./status";
 export interface ICanvasPortInit<T = unknown> {
   readonly id: string;
   readonly name: string;
-  readonly shape?: string;
   readonly status?: GraphPortStatus;
   readonly isInputDisabled?: boolean;
   readonly isOutputDisabled?: boolean;

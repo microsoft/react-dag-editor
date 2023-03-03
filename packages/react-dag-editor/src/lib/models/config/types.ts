@@ -1,5 +1,6 @@
 import type * as React from "react";
 import type { ICanvasData, ICanvasGroup } from "../canvas";
+import { ICanvasEdge } from "../edge";
 import type { EdgeModel } from "../EdgeModel";
 import type { IViewport } from "../geometry";
 import type { GraphModel } from "../GraphModel";
@@ -104,17 +105,13 @@ export interface IGraphConfig<
   EdgeData = unknown,
   PortData = unknown
 > {
-  readonly defaultNodeShape: string;
-  readonly defaultEdgeShape: string;
-  readonly defaultPortShape: string;
-  readonly defaultGroupShape: string;
-  getNodeConfigByName(
-    name?: string
-  ): INodeConfig<NodeData, PortData> | undefined;
-  getEdgeConfigByName(name?: string): IEdgeConfig<EdgeData> | undefined;
-  getPortConfigByName(
-    name?: string
+  getNodeConfig(
+    node: ICanvasNode<NodeData, PortData>
+  ): INodeConfig<ICanvasNode<NodeData, PortData>> | undefined;
+  getEdgeConfig(edge: ICanvasEdge<EdgeData>): IEdgeConfig<EdgeData> | undefined;
+  getPortConfig(
+    port: ICanvasPort<PortData>
   ): IPortConfig<NodeData, EdgeData, PortData> | undefined;
+  getGroupConfig(group: ICanvasGroup): IGroupConfig | undefined;
   getClipboard(): IGraphClipboard<NodeData, EdgeData, PortData>;
-  getGroupConfigByName(name?: string): IGroupConfig | undefined;
 }

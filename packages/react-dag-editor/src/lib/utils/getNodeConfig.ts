@@ -6,10 +6,10 @@ export const getNodeConfig = (
   node: ICanvasNode,
   graphConfig: IGraphConfig
 ): INodeConfig | undefined => {
-  const nodeConfig = graphConfig.getNodeConfigByName(node.shape);
+  const nodeConfig = graphConfig.getNodeConfig(node);
 
   if (!nodeConfig) {
-    Debug.warn(`invalid shape in node ${JSON.stringify(node)}`);
+    Debug.warn(`invalid node ${JSON.stringify(node)}`);
 
     return undefined;
   }

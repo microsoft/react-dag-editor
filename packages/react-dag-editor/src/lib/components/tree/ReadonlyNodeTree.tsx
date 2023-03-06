@@ -36,7 +36,8 @@ const ReadonlyNodeTreeNode = React.memo<IReadonlyNodeTreeNodeProps>(
 
 ReadonlyNodeTreeNode.displayName = "ReadonlyNodeTreeNode";
 
-export const ReadonlyNodeTree: React.FunctionComponent<IReadonlyNodeTreeProps> =
-  ({ tree }) => {
-    return <ReadonlyNodeTreeNode node={tree.sortedRoot} />;
-  };
+export const ReadonlyNodeTree: React.FunctionComponent<
+  IReadonlyNodeTreeProps
+> = ({ tree }) => {
+  return <ReadonlyNodeTreeNode node={tree.sortedRoot} />;
+};

@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "nx run-many --all --target=lint",
+    "lint": "nx run-many --all --target=lint && yarn format:prettier",
     "test": "nx run-many --all --target=test",
     "build": "nx run-many --all --target=build",
     "build:site": "nx run react-dag-editor:site",
+    "format:prettier": "prettier . --write",
     "storybook": "nx run react-dag-editor:storybook"
   },
   "private": true,
@@ -71,5 +72,14 @@
     "uuid": "^8.3.2",
     "@storybook/builder-webpack5": "~6.4.5",
     "@storybook/manager-webpack5": "~6.4.5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,eslintrc}": [
+      "prettier --write"
+    ]
   }
 }

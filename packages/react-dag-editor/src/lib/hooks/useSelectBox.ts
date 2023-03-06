@@ -10,7 +10,9 @@ export const useSelectBox = (
 ) => {
   const selectBoxPosition = useDeferredValue<ISelectBoxPosition>(
     selectBoxPositionState,
-    { timeout: 100 }
+    {
+      timeout: 100,
+    }
   );
 
   React.useEffect(() => {

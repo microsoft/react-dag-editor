@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "lint": "nx run-many --all --target=lint",
+    "lint": "nx run-many --all --target=lint && yarn format:prettier",
     "test": "nx run-many --all --target=test",
     "build": "nx run-many --all --target=build",
     "build:site": "nx run react-dag-editor:site",
-    "storybook": "nx run react-dag-editor:storybook"
+    "format:prettier": "prettier . --write",
+    "storybook": "nx run react-dag-editor:storybook",
+    "postinstall": "is-ci || husky install"
   },
   "private": true,
   "devDependencies": {
@@ -48,7 +50,10 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "husky": "8.0.3",
+    "is-ci": "3.0.1",
     "jest": "27.2.3",
+    "lint-staged": "13.1.2",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "prettier": "^2.3.1",
@@ -71,5 +76,14 @@
     "uuid": "^8.3.2",
     "@storybook/builder-webpack5": "~6.4.5",
     "@storybook/manager-webpack5": "~6.4.5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,eslintrc}": [
+      "prettier --write"
+    ]
   }
 }

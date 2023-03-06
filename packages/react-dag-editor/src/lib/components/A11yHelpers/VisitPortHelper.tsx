@@ -12,95 +12,93 @@ interface IConnectionHelperProps {
   onComplete(item: INeighborItem): void;
 }
 
-export const VisitPortHelper: React.FunctionComponent<IConnectionHelperProps> =
-  (props) => {
-    const { neighborPorts, data } = props;
-    const selectRef = React.useRef<HTMLSelectElement>(null);
+export const VisitPortHelper: React.FunctionComponent<
+  IConnectionHelperProps
+> = (props) => {
+  const { neighborPorts, data } = props;
+  const selectRef = React.useRef<HTMLSelectElement>(null);
 
-    const [selectedItem, setSelectedItem] = React.useState<INeighborItem>();
+  const [selectedItem, setSelectedItem] = React.useState<INeighborItem>();
 
-    const onContainerKeyDown: React.KeyboardEventHandler = React.useCallback(
+  const onContainerKeyDown: React.KeyboardEventHandler = React.useCallback(
+    (evt) => {
+      if (evt.key === "Escape") {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        if (selectedItem) {
+          props.onComplete(selectedItem);
+        }
+      }
+    },
+    [selectedItem, props]
+  );
+
+  const onContainerBlur: React.FocusEventHandler = React.useCallback((evt) => {
+    //
+  }, []);
+
+  const onContainerChange: React.ChangeEventHandler<HTMLSelectElement> =
+    React.useCallback(
       (evt) => {
-        if (evt.key === "Escape") {
-          evt.stopPropagation();
-          evt.preventDefault();
+        const value = JSON.parse(evt.target.value);
 
-          if (selectedItem) {
-            props.onComplete(selectedItem);
-          }
+        if (value.nodeId && value.portId) {
+          setSelectedItem({ nodeId: value.nodeId, portId: value.portId });
         }
       },
-      [selectedItem, props]
+      [setSelectedItem]
     );
 
-    const onContainerBlur: React.FocusEventHandler = React.useCallback(
-      (evt) => {
-        //
-      },
-      []
-    );
+  React.useEffect(() => {
+    if (selectRef.current) {
+      selectRef.current.focus({ preventScroll: true });
+    }
+  }, []);
 
-    const onContainerChange: React.ChangeEventHandler<HTMLSelectElement> =
-      React.useCallback(
-        (evt) => {
-          const value = JSON.parse(evt.target.value);
+  return (
+    <select
+      onKeyDown={onContainerKeyDown}
+      onBlur={onContainerBlur}
+      ref={selectRef}
+      onChange={onContainerChange}
+    >
+      {neighborPorts.map((s) => {
+        const isSelected =
+          selectedItem &&
+          selectedItem.portId === s.portId &&
+          selectedItem.nodeId === s.nodeId;
 
-          if (value.nodeId && value.portId) {
-            setSelectedItem({ nodeId: value.nodeId, portId: value.portId });
-          }
-        },
-        [setSelectedItem]
-      );
+        const value = JSON.stringify(s);
+        const node = data.nodes.get(s.nodeId);
 
-    React.useEffect(() => {
-      if (selectRef.current) {
-        selectRef.current.focus({ preventScroll: true });
-      }
-    }, []);
+        if (!node) {
+          return null;
+        }
 
-    return (
-      <select
-        onKeyDown={onContainerKeyDown}
-        onBlur={onContainerBlur}
-        ref={selectRef}
-        onChange={onContainerChange}
-      >
-        {neighborPorts.map((s) => {
-          const isSelected =
-            selectedItem &&
-            selectedItem.portId === s.portId &&
-            selectedItem.nodeId === s.nodeId;
+        const port = node.ports
+          ? node.ports.filter((p) => p.id === s.portId)[0]
+          : null;
 
-          const value = JSON.stringify(s);
-          const node = data.nodes.get(s.nodeId);
+        if (!port) {
+          return null;
+        }
 
-          if (!node) {
-            return null;
-          }
+        const label = `${node.ariaLabel || node.name || node.id}: ${
+          port.ariaLabel || port.name || port.id
+        }`;
 
-          const port = node.ports
-            ? node.ports.filter((p) => p.id === s.portId)[0]
-            : null;
-
-          if (!port) {
-            return null;
-          }
-
-          const label = `${node.ariaLabel || node.name || node.id}: ${
-            port.ariaLabel || port.name || port.id
-          }`;
-
-          return (
-            <option
-              key={`${s.nodeId}-${s.portId}`}
-              value={value}
-              aria-selected={isSelected}
-              aria-label={label}
-            >
-              {label}
-            </option>
-          );
-        })}
-      </select>
-    );
-  };
+        return (
+          <option
+            key={`${s.nodeId}-${s.portId}`}
+            value={value}
+            aria-selected={isSelected}
+            aria-label={label}
+          >
+            {label}
+          </option>
+        );
+      })}
+    </select>
+  );
+};

@@ -1,4 +1,3 @@
-import { range } from "lodash-es";
 import {
   binaryFind,
   INode,
@@ -12,6 +11,16 @@ function leaf(values: number[], owner = 0): LeafNode<number, number> {
     values,
     values.map((it) => it * 10)
   );
+}
+
+function range(start: number, end: number, step?: number): number[] {
+  step = step === undefined ? (start < end ? 1 : -1) : step;
+  const size = Math.max(Math.ceil((end - start) / (step || 1)), 0);
+  const result = [];
+  for (let i = 0, x = start; i < size; ++i, x += step) {
+    result.push(x);
+  }
+  return result;
 }
 
 function internal(

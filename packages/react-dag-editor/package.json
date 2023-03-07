@@ -4,7 +4,7 @@
   "repository": {
     "url": "https://github.com/microsoft/react-dag-editor.git"
   },
-  "version": "0.3.3",
+  "version": "0.3.4",
   "dependencies": {
     "@fluentui/merge-styles": "^8.2.0",
     "eventemitter3": "^4.0.7",

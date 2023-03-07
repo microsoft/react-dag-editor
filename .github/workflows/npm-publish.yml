@@ -34,7 +34,7 @@ jobs:
           tag_name: "v%s"
           tag_message: "v%s"
           create_tag: "true"
-          commit_pattern: "^[Rr]elease[:]? (\\S+)"
+          commit_pattern: "\\b[Rr]elease[:]? (\\S+)"
           workspace: "./dist/packages/react-dag-editor"
           publish_command: "yarn"
           publish_args: "--non-interactive"

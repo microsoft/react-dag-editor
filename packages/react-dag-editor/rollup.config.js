@@ -1,5 +1,5 @@
 const getNxReactConfig = require("@nrwl/react/plugins/bundle-rollup");
-const { bundledDependencies } = require("./package.json");
+const { bundledDependencies = [] } = require("./package.json");
 
 function getRollupConfig(original) {
   const config = getNxReactConfig(original);

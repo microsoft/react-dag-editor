@@ -6,12 +6,10 @@
   },
   "version": "0.3.3",
   "dependencies": {
+    "@fluentui/merge-styles": "^8.2.0",
+    "eventemitter3": "^4.0.7",
     "react-jss": "~10.2.0",
     "toposort": "^1.0.7",
     "uuid": "^7.0.3"
-  },
-  "bundledDependencies": [
-    "@fluentui/merge-styles",
-    "eventemitter3"
-  ]
+  }
 }

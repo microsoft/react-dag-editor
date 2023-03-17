@@ -8,7 +8,7 @@ import {
   Item,
   ReactDagEditor,
   useGraphReducer,
-} from "react-dag-editor";
+} from "../..";
 import * as React from "react";
 import { mergeStyles } from "@fluentui/merge-styles";
 

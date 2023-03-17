@@ -1,1 +1,2 @@
-export * from "./bipartite-graph";
+export * from "./diff";
+export * from "./graph";

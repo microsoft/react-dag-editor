@@ -1,8 +1,8 @@
 import { createMcmf } from "@algorithm.ts/mcmf";
-import { IBipartiteGraphNode, IMapping } from "./types";
+import { IGraphNode, IMapping } from "../types";
 
 const mcmf = createMcmf();
-export const findMapping = <Node extends IBipartiteGraphNode>(
+export const findMapping = <Node extends IGraphNode>(
   candidates: IMapping<Node>[]
 ): IMapping<Node>[] => {
   const sourceId = 0;

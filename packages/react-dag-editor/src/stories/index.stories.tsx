@@ -2,6 +2,7 @@
 import * as React from "react";
 import { BackgroundCustomization } from "./components/BackgroundCustomization";
 import { FeaturesDemo } from "./components/FeaturesDemo";
+import { OutlineDragAndDrop } from "./components/OutlineDragAndDrop";
 import {
   NodeFrameCustomization,
   NodeResizeHandlerCustomization,
@@ -29,3 +30,7 @@ NodeResizeHandlerCustomizationDemo.storyName =
 export const BackgroundCustomizationDemo = () => <BackgroundCustomization />;
 
 BackgroundCustomizationDemo.storyName = "Custom background";
+
+export const OutlineDragAndDropDemo = () => <OutlineDragAndDrop />;
+
+OutlineDragAndDropDemo.storyName = "Outline drag and drop";

@@ -64,13 +64,6 @@ export const OutlineDragAndDrop: React.FC = () => {
     undefined
   );
 
-  console.log("BOOM_STATE", Array.from(state.data.present.nodes));
-
-  const dispatchDelegate: typeof dispatch = (...args) => {
-    console.log("BOOM", args);
-    return dispatch(...args);
-  };
-
   const nodes = React.useMemo(() => {
     return [
       { id: "0", title: "Node - 0" },
@@ -98,7 +91,7 @@ export const OutlineDragAndDrop: React.FC = () => {
     <ReactDagEditor
       style={{ display: "flex", width: "900px", height: "600px" }}
       state={state}
-      dispatch={dispatchDelegate}
+      dispatch={dispatch}
     >
       <ul
         style={{ width: "200px", flexShrink: 0, listStyle: "none", padding: 0 }}

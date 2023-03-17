@@ -1,4 +1,6 @@
 import {
+  GraphSource,
+  IGraph,
   IGraphEdge,
   IGraphNode,
   IGraphNodeDiffCost,
@@ -24,6 +26,8 @@ export interface IGraphNodeDiffResult {
 }
 
 export interface IGraphDIffEnums {
+  ABOnlyCostThreshold: number;
+  PropertyDiffCostRate: number;
   StructureDiffCostRate: number;
 }
 
@@ -31,18 +35,25 @@ export interface IGraphDiffMethods<
   Node extends IGraphNode,
   Edge extends IGraphEdge
 > {
-  areSameNodes(
-    lNode: Node,
-    rNode: Node,
-    lNodesMap: Map<string, IGraphNodeWithStructure<Node, Edge>>,
-    rNodesMap: Map<string, IGraphNodeWithStructure<Node, Edge>>
-  ): IGraphNodeDiffResult;
+  areSameNodes(lNode: Node, rNode: Node): IGraphNodeDiffResult;
+
+  buildCandidateMapping(
+    lGraph: IGraph<Node, Edge>,
+    rGraph: IGraph<Node, Edge>
+  ): IMapping<Node>[];
+
+  calcStructureDiffCost(lNode: Node, rNode: Node): number;
+
+  calcPropertyDiffCost(lNode: Node, rNode: Node): number;
+
+  getGraphNodeWithStructure(
+    nodeId: string,
+    fromGraph: GraphSource
+  ): IGraphNodeWithStructure<Node, Edge> | undefined;
 }
 
 export interface IGraphDiffContext<
   Node extends IGraphNode,
   Edge extends IGraphEdge
-> {
-  enums: IGraphDIffEnums;
-  methods: IGraphDiffMethods<Node, Edge>;
-}
+> extends IGraphDIffEnums,
+    IGraphDiffMethods<Node, Edge> {}

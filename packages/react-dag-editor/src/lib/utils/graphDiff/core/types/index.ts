@@ -1,2 +1,2 @@
-export * from "./diff";
+export * from "./context";
 export * from "./graph";

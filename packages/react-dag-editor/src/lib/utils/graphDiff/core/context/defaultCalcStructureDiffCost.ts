@@ -1,27 +1,38 @@
 import {
+  GraphSource,
   IGraphDiffContext,
   IGraphEdge,
   IGraphNode,
   IGraphNodeOutgoingEdge,
-  IGraphNodeWithStructure,
 } from "../types";
 
-export const calculateStructureDiffCost = <
+export const defaultCalcStructureDiffCost = <
   Node extends IGraphNode,
   Edge extends IGraphEdge
 >(
-  lNode: IGraphNodeWithStructure<Node, Edge>,
-  rNode: IGraphNodeWithStructure<Node, Edge>,
-  lNodesMap: Map<string, IGraphNodeWithStructure<Node, Edge>>,
-  rNodesMap: Map<string, IGraphNodeWithStructure<Node, Edge>>,
+  lNode: Node,
+  rNode: Node,
   context: IGraphDiffContext<Node, Edge>
 ): number => {
-  const { enums, methods } = context;
+  const { StructureDiffCostRate, areSameNodes, getGraphNodeWithStructure } =
+    context;
+  const lNodeWithStructure = getGraphNodeWithStructure(lNode.id, GraphSource.A);
+  const rNodeWithStructure = getGraphNodeWithStructure(rNode.id, GraphSource.B);
 
-  const structureDiffCost = (
+  const ancestralDiffCost: number = structureDiffCost(
+    lNodeWithStructure?.inEdges ?? [],
+    rNodeWithStructure?.inEdges ?? []
+  );
+  const descendantDiffCost: number = structureDiffCost(
+    lNodeWithStructure?.outEdges ?? [],
+    rNodeWithStructure?.outEdges ?? []
+  );
+  return ancestralDiffCost + descendantDiffCost;
+
+  function structureDiffCost(
     lOutgoingEdges: IGraphNodeOutgoingEdge<Node, Edge>[],
     rOutgoingEdges: IGraphNodeOutgoingEdge<Node, Edge>[]
-  ): number => {
+  ): number {
     const totalOutgoingEdges: number =
       lOutgoingEdges.length + rOutgoingEdges.length;
     if (totalOutgoingEdges === 0) {
@@ -57,12 +68,7 @@ export const calculateStructureDiffCost = <
         const j: number = rOutgoingEdges.findIndex(
           (roe, idx) =>
             !rPairedSet.has(idx) &&
-            methods.areSameNodes(
-              loe.targetNode,
-              roe.targetNode,
-              lNodesMap,
-              rNodesMap
-            ).same
+            areSameNodes(loe.targetNode, roe.targetNode).same
         );
         if (j > -1) {
           lPairedSet.add(i);
@@ -79,12 +85,7 @@ export const calculateStructureDiffCost = <
         const j: number = rOutgoingEdges.findIndex(
           (roe, idx) =>
             !rPairedSet.has(idx) &&
-            methods.areSameNodes(
-              loe.targetNode,
-              roe.targetNode,
-              lNodesMap,
-              rNodesMap
-            ).same
+            areSameNodes(loe.targetNode, roe.targetNode).same
         );
         if (j > -1) {
           lPairedSet.add(i);
@@ -95,20 +96,10 @@ export const calculateStructureDiffCost = <
     const countOfWeakSimilar: number =
       lPairedSet.size - countOfExactSame - countOfStrongSimilar;
 
-    const countOfNotSimilar: number = totalOutgoingEdges - lPairedSet.size;
+    const countOfNotSimilar: number = totalOutgoingEdges - lPairedSet.size * 2;
     const totalDiff: number =
       countOfNotSimilar * 5 + countOfWeakSimilar * 2 + countOfStrongSimilar;
-    const cost: number = totalDiff * enums.StructureDiffCostRate;
+    const cost: number = totalDiff * StructureDiffCostRate;
     return cost;
-  };
-
-  const ancestralDiffCost: number = structureDiffCost(
-    lNode.inEdges,
-    rNode.inEdges
-  );
-  const descendantDiffCost: number = structureDiffCost(
-    lNode.outEdges,
-    rNode.outEdges
-  );
-  return ancestralDiffCost + descendantDiffCost;
+  }
 };

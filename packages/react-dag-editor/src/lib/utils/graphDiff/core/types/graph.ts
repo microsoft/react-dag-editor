@@ -10,6 +10,11 @@ export interface IGraphNode {
 
 export interface IGraphEdge {}
 
+export interface IGraph<Node extends IGraphNode, Edge extends IGraphEdge> {
+  nodes: Node[];
+  edges: Edge[];
+}
+
 export interface IGraphNodeOutgoingEdge<
   Node extends IGraphNode,
   Edge extends IGraphEdge

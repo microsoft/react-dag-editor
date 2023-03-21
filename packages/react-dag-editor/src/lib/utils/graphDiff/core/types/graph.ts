@@ -5,10 +5,16 @@ export enum GraphSource {
 
 export interface IGraphNode {
   id: string;
+  ports: string[];
   hash: string | undefined; // For quickly comparing.
 }
 
-export interface IGraphEdge {}
+export interface IGraphEdge {
+  source: string;
+  sourcePort: string;
+  target: string;
+  targetPort: string;
+}
 
 export interface IGraph<Node extends IGraphNode, Edge extends IGraphEdge> {
   nodes: Node[];
@@ -51,4 +57,10 @@ export interface IGraphNodeDiffCost {
    * Diff cost of the structure between the two nodes linked by the edge.
    */
   structure: number;
+}
+
+export interface IABOnlyNode<Node extends IGraphNode> {
+  fromGraph: GraphSource;
+  node: Node;
+  active: boolean;
 }

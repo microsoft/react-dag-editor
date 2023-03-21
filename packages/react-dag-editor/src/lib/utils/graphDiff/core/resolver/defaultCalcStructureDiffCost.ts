@@ -1,6 +1,6 @@
 import {
-  GraphSource,
   IGraphDiffContext,
+  IGraphDiffResolver,
   IGraphEdge,
   IGraphNode,
   IGraphNodeOutgoingEdge,
@@ -12,12 +12,11 @@ export const defaultCalcStructureDiffCost = <
 >(
   lNode: Node,
   rNode: Node,
-  context: IGraphDiffContext<Node, Edge>
+  context: IGraphDiffContext<Node, Edge>,
+  resolver: IGraphDiffResolver<Node, Edge>
 ): number => {
-  const { StructureDiffCostRate, areSameNodes, getGraphNodeWithStructure } =
-    context;
-  const lNodeWithStructure = getGraphNodeWithStructure(lNode.id, GraphSource.A);
-  const rNodeWithStructure = getGraphNodeWithStructure(rNode.id, GraphSource.B);
+  const lNodeWithStructure = context.lNodesMap.get(lNode.id);
+  const rNodeWithStructure = context.rNodesMap.get(rNode.id);
 
   const ancestralDiffCost: number = structureDiffCost(
     lNodeWithStructure?.inEdges ?? [],
@@ -68,7 +67,7 @@ export const defaultCalcStructureDiffCost = <
         const j: number = rOutgoingEdges.findIndex(
           (roe, idx) =>
             !rPairedSet.has(idx) &&
-            areSameNodes(loe.targetNode, roe.targetNode).same
+            resolver.areSameNodes(loe.targetNode, roe.targetNode).same
         );
         if (j > -1) {
           lPairedSet.add(i);
@@ -85,7 +84,7 @@ export const defaultCalcStructureDiffCost = <
         const j: number = rOutgoingEdges.findIndex(
           (roe, idx) =>
             !rPairedSet.has(idx) &&
-            areSameNodes(loe.targetNode, roe.targetNode).same
+            resolver.areSameNodes(loe.targetNode, roe.targetNode).same
         );
         if (j > -1) {
           lPairedSet.add(i);
@@ -99,7 +98,7 @@ export const defaultCalcStructureDiffCost = <
     const countOfNotSimilar: number = totalOutgoingEdges - lPairedSet.size * 2;
     const totalDiff: number =
       countOfNotSimilar * 5 + countOfWeakSimilar * 2 + countOfStrongSimilar;
-    const cost: number = totalDiff * StructureDiffCostRate;
+    const cost: number = totalDiff * context.StructureDiffCostRate;
     return cost;
   }
 };

@@ -2,7 +2,13 @@ import { createMcmf } from "@algorithm.ts/mcmf";
 import { IGraphNode, IMapping } from "../types";
 
 const mcmf = createMcmf();
-export const findMapping = <Node extends IGraphNode>(
+
+/**
+ * Find the maximum matching with minimum cost in bipartite graph.
+ *
+ * @returns
+ */
+export const findBipartiteGraphMaxMapping = <Node extends IGraphNode>(
   candidates: IMapping<Node>[]
 ): IMapping<Node>[] => {
   const sourceId = 0;
@@ -50,5 +56,7 @@ export const findMapping = <Node extends IGraphNode>(
       }
     }
   });
+
+  fromId2Mapping.clear();
   return filteredMappings;
 };

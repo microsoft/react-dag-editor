@@ -11,6 +11,7 @@ import { NodeModel } from "../models/NodeModel";
 import { getNodeAutomationId, getNodeConfig, getNodeUid } from "../utils";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
+import { checkIsMultiSelect } from "../utils/keyboard";
 import classes from "./Graph.styles.module.scss";
 import { IGraphProps } from "./Graph/IGraphProps";
 
@@ -43,6 +44,17 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = (props) => {
       eventChannel.trigger(e);
     };
 
+  const onClick = (e: React.MouseEvent) => {
+    e.persist();
+    const isMultiSelect = checkIsMultiSelect(e);
+    eventChannel.trigger({
+      type: GraphNodeEvent.Click,
+      rawEvent: e,
+      isMultiSelect,
+      node,
+    });
+  };
+
   const id = getNodeUid(graphId, node);
 
   const automationId = node.automationId ?? getNodeAutomationId(node);
@@ -74,6 +86,7 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = (props) => {
       onMouseMove={nodeEvent(GraphNodeEvent.MouseMove)}
       onMouseOver={nodeEvent(GraphNodeEvent.MouseOver)}
       onMouseOut={nodeEvent(GraphNodeEvent.MouseOut)}
+      onClick={onClick}
       onKeyDown={nodeEvent(GraphNodeEvent.KeyDown)}
       aria-label={getNodeAriaLabel(node)}
       role="group"

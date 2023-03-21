@@ -1,4 +1,4 @@
-import { IGraphEdge, IGraphNode } from "./graph";
+import { GraphSource, IGraphEdge, IGraphNode } from "./graph";
 
 export enum GraphNodeDiffType {
   equal = "equal",
@@ -21,11 +21,31 @@ export interface IDiffGraphNode<Node extends IGraphNode> {
   rNode: Node | undefined; // Node from GraphSource.B
 }
 
-export interface IDiffGraphEdge<Edge extends IGraphEdge> {
-  id: number; // DiffGraph edge id.
+export interface IDiffGraphEdge<
+  Node extends IGraphNode,
+  Edge extends IGraphEdge
+> {
+  id: string; // DiffGraph edge id.
   diffType: GraphEdgeDiffType;
-  lDiffNodeId: string;
-  rDiffNodeId: string;
+  sourceDiffNode: IDiffGraphNode<Node>;
+  targetDiffNode: IDiffGraphNode<Node>;
   lEdge: Edge | undefined; // Edge from GraphSource.A
   rEdge: Edge | undefined; // Edge from GraphSource.B
+}
+
+export interface IDiffGraph<Node extends IGraphNode, Edge extends IGraphEdge> {
+  diffNodes: IDiffGraphNode<Node>[];
+  diffEdges: IDiffGraphEdge<Node, Edge>[];
+}
+
+export interface IDiffGraphNodeSearcher<Node extends IGraphNode> {
+  diffNodeMap: Map<number, IDiffGraphNode<Node>>;
+  lNodeId2diffNodeMap: Map<string, IDiffGraphNode<Node>>;
+  rNodeId2diffNodeMap: Map<string, IDiffGraphNode<Node>>;
+}
+
+export interface IABOnlyNode<Node extends IGraphNode> {
+  fromGraph: GraphSource;
+  node: Node;
+  active: boolean;
 }

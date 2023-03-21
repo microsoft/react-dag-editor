@@ -58,9 +58,3 @@ export interface IGraphNodeDiffCost {
    */
   structure: number;
 }
-
-export interface IABOnlyNode<Node extends IGraphNode> {
-  fromGraph: GraphSource;
-  node: Node;
-  active: boolean;
-}

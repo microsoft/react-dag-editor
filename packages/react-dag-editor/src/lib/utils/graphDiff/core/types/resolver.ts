@@ -1,28 +1,17 @@
 import { IGraphDiffContext } from "./context";
 import {
-  GraphSource,
-  IGraphEdge,
-  IGraphNode,
-  IGraphNodeDiffCost,
-} from "./graph";
+  IABOnlyNode,
+  IDiffGraph,
+  IDiffGraphEdge,
+  IDiffGraphNode,
+  IDiffGraphNodeSearcher,
+} from "./diffGraph";
+import { IGraphEdge, IGraphNode, IGraphNodeDiffCost } from "./graph";
 
 export interface IMapping<Node extends IGraphNode> {
   lNode: Node;
   rNode: Node;
   cost: IGraphNodeDiffCost;
-}
-
-export interface IMappingWithDiffInfo<
-  Node extends IGraphNode,
-  Edge extends IGraphEdge
-> extends IMapping<Node> {
-  diffNodeId: string;
-  overrideEdges: Array<{
-    fromGraph: GraphSource;
-    edge: Edge;
-    sourceDiffNodeId?: string;
-    targetDiffNodeId?: string;
-  }>;
 }
 
 export interface IGraphNodeDiffResult {
@@ -46,6 +35,28 @@ export interface IGraphDiffResolver<
   buildCandidateMapping(
     context: IGraphDiffContext<Node, Edge>
   ): IMapping<Node>[];
+
+  buildDiffEdges(
+    diffNodeSearcher: IDiffGraphNodeSearcher<Node>,
+    context: IGraphDiffContext<Node, Edge>
+  ): {
+    diffEdges: IDiffGraphEdge<Node, Edge>[];
+  };
+
+  buildDiffGraph(
+    mappings: IMapping<Node>[],
+    abOnlyNodes: IABOnlyNode<Node>[],
+    context: IGraphDiffContext<Node, Edge>
+  ): IDiffGraph<Node, Edge>;
+
+  buildDiffNodes(
+    mappings: IMapping<Node>[],
+    abOnlyNodes: IABOnlyNode<Node>[],
+    context: IGraphDiffContext<Node, Edge>
+  ): {
+    diffNodes: IDiffGraphNode<Node>[];
+    diffNodeSearcher: IDiffGraphNodeSearcher<Node>;
+  };
 
   calcStructureDiffCost(
     lNode: Node,

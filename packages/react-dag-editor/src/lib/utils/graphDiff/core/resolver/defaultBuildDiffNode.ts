@@ -4,32 +4,34 @@ import {
   IGraphDiffResolver,
   IGraphEdge,
   IGraphNode,
-  IMappingWithDiffInfo,
+  IMapping,
 } from "../types";
-import { GraphNodeDiffType, IDiffGraphNode } from "../types/diffGraph";
-import { genAutoIncrementId } from "../util/id";
+import {
+  GraphNodeDiffType,
+  IDiffGraphNode,
+  IDiffGraphNodeSearcher,
+} from "../types/diffGraph";
+import { genAutoIncrementId } from "../util/genAutoIncrementId";
 
-export const defaultBuildDiffNodes = async <
+export function defaultBuildDiffNodes<
   Node extends IGraphNode,
   Edge extends IGraphEdge
 >(
-  mappings: IMappingWithDiffInfo<Node, Edge>[],
+  mappings: IMapping<Node>[],
   abOnlyNodes: IABOnlyNode<Node>[],
   resolver: IGraphDiffResolver<Node, Edge>
-): Promise<{
-  diffGraphNodes: IDiffGraphNode<Node>[];
-  diffNodeMap: Map<number, IDiffGraphNode<Node>>;
-  lNodeId2diffNodeMap: Map<string, IDiffGraphNode<Node>>;
-  rNodeId2diffNodeMap: Map<string, IDiffGraphNode<Node>>;
-}> => {
-  const genDiffGraphId = genAutoIncrementId();
-  const diffGraphNodes: IDiffGraphNode<Node>[] = [];
+): {
+  diffNodes: IDiffGraphNode<Node>[];
+  diffNodeSearcher: IDiffGraphNodeSearcher<Node>;
+} {
+  const genDiffNodeId = genAutoIncrementId();
+  const diffNodes: IDiffGraphNode<Node>[] = [];
   const diffNodeMap = new Map<number, IDiffGraphNode<Node>>();
   const lNodeId2diffNodeMap = new Map<string, IDiffGraphNode<Node>>();
   const rNodeId2diffNodeMap = new Map<string, IDiffGraphNode<Node>>();
 
   const addDiffNode = (diffNode: IDiffGraphNode<Node>): void => {
-    diffGraphNodes.push(diffNode);
+    diffNodes.push(diffNode);
     diffNodeMap.set(diffNode.id, diffNode);
     if (diffNode.lNode) {
       lNodeId2diffNodeMap.set(diffNode.lNode.id, diffNode);
@@ -41,7 +43,7 @@ export const defaultBuildDiffNodes = async <
 
   const addAOnlyNode = (node: Node): void => {
     const diffNode: IDiffGraphNode<Node> = {
-      id: genDiffGraphId.next().value,
+      id: genDiffNodeId.next().value,
       diffType: GraphNodeDiffType.AOnly,
       lNode: node,
       rNode: undefined,
@@ -51,7 +53,7 @@ export const defaultBuildDiffNodes = async <
 
   const addBOnlyNode = (node: Node): void => {
     const diffNode: IDiffGraphNode<Node> = {
-      id: genDiffGraphId.next().value,
+      id: genDiffNodeId.next().value,
       diffType: GraphNodeDiffType.BOnly,
       lNode: undefined,
       rNode: node,
@@ -78,7 +80,7 @@ export const defaultBuildDiffNodes = async <
   for (const mapping of mappings) {
     const { lNode, rNode } = mapping;
     const diffNode: IDiffGraphNode<Node> = {
-      id: genDiffGraphId.next().value,
+      id: genDiffNodeId.next().value,
       diffType: GraphNodeDiffType.equal,
       lNode,
       rNode,
@@ -99,9 +101,11 @@ export const defaultBuildDiffNodes = async <
     addDiffNode(diffNode);
   }
   return {
-    diffGraphNodes,
-    diffNodeMap,
-    lNodeId2diffNodeMap,
-    rNodeId2diffNodeMap,
+    diffNodes,
+    diffNodeSearcher: {
+      diffNodeMap,
+      lNodeId2diffNodeMap,
+      rNodeId2diffNodeMap,
+    },
   };
-};
+}

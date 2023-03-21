@@ -6,13 +6,13 @@ import {
   IMapping,
 } from "../types";
 
-export const defaultBuildCandidateMapping = <
+export function defaultBuildCandidateMapping<
   Node extends IGraphNode,
   Edge extends IGraphEdge
 >(
   context: IGraphDiffContext<Node, Edge>,
   resolver: IGraphDiffResolver<Node, Edge>
-): IMapping<Node>[] => {
+): IMapping<Node>[] {
   const { ABOnlyCostThreshold, lGraph, rGraph } = context;
   const lNodes: Node[] = lGraph.nodes;
   const rNodes: Node[] = rGraph.nodes;
@@ -49,4 +49,4 @@ export const defaultBuildCandidateMapping = <
     }
   }
   return candidates;
-};
+}

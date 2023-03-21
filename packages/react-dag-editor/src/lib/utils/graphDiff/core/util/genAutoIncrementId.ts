@@ -1,8 +1,8 @@
 export function* genAutoIncrementId(
   start = 0
 ): Iterator<number, number, number> {
-  let i: number = start;
-  for (; ; ++i) {
-    yield i;
+  let id: number = start;
+  for (; ; ++id) {
+    yield id;
   }
 }

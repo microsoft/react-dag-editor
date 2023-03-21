@@ -1,4 +1,9 @@
 import {
+  IABOnlyNode,
+  IDiffGraph,
+  IDiffGraphEdge,
+  IDiffGraphNode,
+  IDiffGraphNodeSearcher,
   IGraphDiffContext,
   IGraphDiffResolver,
   IGraphEdge,
@@ -7,6 +12,9 @@ import {
   IMapping,
 } from "../types";
 import { defaultBuildCandidateMapping } from "./defaultBuildCandidateMapping";
+import { defaultBuildDiffEdges } from "./defaultBuildDiffEdge";
+import { defaultBuildDiffNodes } from "./defaultBuildDiffNode";
+import { defaultBuildDiffGraph } from "./defaultBuildDiffGraph";
 import { defaultCalcStructureDiffCost } from "./defaultCalcStructureDiffCost";
 
 export abstract class BaseGraphDiffResolver<
@@ -20,6 +28,32 @@ export abstract class BaseGraphDiffResolver<
     context: IGraphDiffContext<Node, Edge>
   ): IMapping<Node>[] {
     return defaultBuildCandidateMapping<Node, Edge>(context, this);
+  }
+
+  public buildDiffEdges(
+    diffNodeSearcher: IDiffGraphNodeSearcher<Node>,
+    context: IGraphDiffContext<Node, Edge>
+  ): { diffEdges: IDiffGraphEdge<Node, Edge>[] } {
+    return defaultBuildDiffEdges(diffNodeSearcher, context);
+  }
+
+  buildDiffGraph(
+    mappings: IMapping<Node>[],
+    abOnlyNodes: IABOnlyNode<Node>[],
+    context: IGraphDiffContext<Node, Edge>
+  ): IDiffGraph<Node, Edge> {
+    return defaultBuildDiffGraph(mappings, abOnlyNodes, context, this);
+  }
+
+  public buildDiffNodes(
+    mappings: IMapping<Node>[],
+    abOnlyNodes: IABOnlyNode<Node>[],
+    _context: IGraphDiffContext<Node, Edge>
+  ): {
+    diffNodes: IDiffGraphNode<Node>[];
+    diffNodeSearcher: IDiffGraphNodeSearcher<Node>;
+  } {
+    return defaultBuildDiffNodes(mappings, abOnlyNodes, this);
   }
 
   public calcStructureDiffCost(

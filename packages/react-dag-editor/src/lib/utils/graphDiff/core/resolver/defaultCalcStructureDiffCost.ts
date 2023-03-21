@@ -6,7 +6,7 @@ import {
   IGraphNodeOutgoingEdge,
 } from "../types";
 
-export const defaultCalcStructureDiffCost = <
+export function defaultCalcStructureDiffCost<
   Node extends IGraphNode,
   Edge extends IGraphEdge
 >(
@@ -14,7 +14,7 @@ export const defaultCalcStructureDiffCost = <
   rNode: Node,
   context: IGraphDiffContext<Node, Edge>,
   resolver: IGraphDiffResolver<Node, Edge>
-): number => {
+): number {
   const lNodeWithStructure = context.lNodesMap.get(lNode.id);
   const rNodeWithStructure = context.rNodesMap.get(rNode.id);
 
@@ -101,4 +101,4 @@ export const defaultCalcStructureDiffCost = <
     const cost: number = totalDiff * context.StructureDiffCostRate;
     return cost;
   }
-};
+}

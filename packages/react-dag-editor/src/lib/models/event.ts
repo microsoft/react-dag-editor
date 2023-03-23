@@ -10,6 +10,7 @@ import { ICanvasNode } from "./node";
 import { NodeModel } from "./NodeModel";
 import { ICanvasPort } from "./port";
 import { IGraphSettings } from "./state";
+import { HashMap, OrderedMap } from "../collections";
 
 interface IEventBase<E = Event | React.SyntheticEvent> {
   rawEvent: E;
@@ -252,9 +253,20 @@ export interface ICanvasSimpleEvent {
     | GraphCanvasEvent.Copy
     | GraphCanvasEvent.Undo
     | GraphCanvasEvent.Redo
-    | GraphCanvasEvent.Delete
     | GraphCanvasEvent.ResetSelection
     | GraphCanvasEvent.ResetUndoStack;
+}
+
+export interface ICanvasDeleteEvent<
+  NodeData = unknown,
+  EdgeData = unknown,
+  PortData = unknown
+> {
+  type: GraphCanvasEvent.Delete;
+  data: {
+    nodes: OrderedMap<string, NodeModel<NodeData, PortData>>;
+    edges: HashMap<string, EdgeModel<EdgeData>>;
+  };
 }
 
 export interface ICanvasPasteEvent<
@@ -344,6 +356,7 @@ export type ICanvasEvent<
   | ICanvasSelectMoveEvent
   | ICanvasUpdateNodeSelectionBySelectBoxEvent
   | ICanvasSimpleEvent
+  | ICanvasDeleteEvent<NodeData, EdgeData, PortData>
   | ICanvasPasteEvent<NodeData, EdgeData, PortData>
   | ICanvasKeyboardEvent
   | ICanvasAddNodeEvent

@@ -4,11 +4,14 @@ import type { IGraphConfig } from "../models/config/types";
 import { GraphCanvasEvent, GraphNodeEvent } from "../models/event";
 import type { EventChannel } from "../utils/eventChannel";
 import { metaControl } from "../utils/keyboard";
+import { isSelected } from "../models/status";
+import { IGraphState } from "../models/state";
 
 export interface IGetCanvasKeyboardEventHandlers {
   featureControl: ReturnType<typeof useFeatureControl>;
   eventChannel: EventChannel;
   graphConfig: IGraphConfig;
+  graphState: IGraphState;
   setCurHoverNode(nodeId: string | undefined): void;
   setCurHoverPort(value: [string, string] | undefined): void;
 }
@@ -19,6 +22,7 @@ export const useCanvasKeyboardEventHandlers = (
   const {
     featureControl,
     graphConfig,
+    graphState,
     setCurHoverNode,
     setCurHoverPort,
     eventChannel,
@@ -43,6 +47,10 @@ export const useCanvasKeyboardEventHandlers = (
 
         eventChannel.trigger({
           type: GraphCanvasEvent.Delete,
+          data: {
+            nodes: graphState.data.present.nodes.filter(isSelected),
+            edges: graphState.data.present.edges.filter(isSelected),
+          },
         });
 
         setCurHoverNode(undefined);
@@ -176,6 +184,7 @@ export const useCanvasKeyboardEventHandlers = (
   }, [
     eventChannel,
     graphConfig,
+    graphState,
     isDeleteDisabled,
     isPasteDisabled,
     isUndoEnabled,

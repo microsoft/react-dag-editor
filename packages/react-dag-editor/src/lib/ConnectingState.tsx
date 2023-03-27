@@ -13,11 +13,9 @@ interface IProps {
   connectState: IConnectingState | undefined;
 }
 
-export const ConnectingState: React.FunctionComponent<IProps> = ({
-  children,
-  data,
-  connectState,
-}) => {
+export const ConnectingState: React.FunctionComponent<
+  React.PropsWithChildren<IProps>
+> = ({ children, data, connectState }) => {
   let sourceNode: NodeModel | undefined;
   let sourcePort: ICanvasPort | undefined;
   let targetNode: NodeModel | undefined;

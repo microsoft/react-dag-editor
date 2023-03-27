@@ -114,7 +114,9 @@ const adjustPosition = (
  * @param props type IItemProps
  * @returns
  */
-export const Item: React.FunctionComponent<IItemProps> = (props) => {
+export const Item: React.FunctionComponent<
+  React.PropsWithChildren<IItemProps>
+> = (props) => {
   const graphConfig = useGraphConfig();
   const graphController = useGraphController();
   const [workingModel, setWorkingModel] = React.useState<ICanvasNode | null>(

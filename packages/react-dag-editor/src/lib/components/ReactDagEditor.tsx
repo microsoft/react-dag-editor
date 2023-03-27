@@ -57,9 +57,9 @@ export interface IReactDagEditorProps<
  *
  * @param props
  */
-export const ReactDagEditor: React.FunctionComponent<IReactDagEditorProps> = (
-  props
-) => {
+export const ReactDagEditor: React.FunctionComponent<
+  React.PropsWithChildren<IReactDagEditorProps>
+> = (props) => {
   React.useEffect(() => {
     if (props.handleWarning) {
       Debug.warn = props.handleWarning;

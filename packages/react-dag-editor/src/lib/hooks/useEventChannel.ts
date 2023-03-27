@@ -22,7 +22,7 @@ import {
 import { IContainerRect } from "../models/geometry";
 import { GraphBehavior } from "../models/state";
 import { handleBehaviorChange } from "../reducers/behaviorReducer";
-import { filterSelectedItems } from "../utils";
+import { filterSelectedItems, isWithinThreshold } from "../utils";
 import {
   findDOMElement,
   focusDownNode,
@@ -473,14 +473,20 @@ export function useEventChannel({
           clientY,
         });
       };
-      dragging.onEnd = ({ e }) => {
+      dragging.onEnd = ({ e, totalDY, totalDX }) => {
+        const isCancel = isWithinThreshold(totalDX, totalDY, dragThreshold);
+
         eventChannel.trigger({
           type: GraphEdgeEvent.ConnectEnd,
           rawEvent: e,
           edgeWillAdd,
-          isCancel: false,
+          isCancel,
         });
         graphController.pointerId = null;
+        if (isCancel) {
+          const simulatedEvent = new MouseEvent("click", e);
+          (evt.currentTarget ?? evt.target)?.dispatchEvent(simulatedEvent);
+        }
       };
       eventChannel.trigger({
         type: GraphEdgeEvent.ConnectStart,

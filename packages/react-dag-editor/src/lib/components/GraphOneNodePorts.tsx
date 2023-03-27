@@ -86,6 +86,7 @@ export const GraphOneNodePorts: React.FunctionComponent<
             onFocus={portEvent(GraphPortEvent.Focus, p)}
             onBlur={portEvent(GraphPortEvent.Blur, p)}
             onKeyDown={portEvent(GraphPortEvent.KeyDown, p)}
+            onClick={portEvent(GraphPortEvent.Click, p)}
             aria-label={getPortAriaLabel(data, node, p)}
             role="group"
             aria-roledescription="port"

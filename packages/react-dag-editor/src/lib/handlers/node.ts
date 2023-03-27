@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DragNodeController, TGetPositionFromEvent } from "../controllers";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
-import { GraphNodeEvent, IEvent } from "../models/event";
+import { GraphNodeEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { isWithinThreshold } from "../utils";
@@ -85,26 +85,22 @@ export const onNodePointerDown = (
 
   dragging.onEnd = ({ totalDX, totalDY, e }) => {
     graphController.pointerId = null;
-    const events: IEvent[] = [];
     const isDragCanceled = isWithinThreshold(totalDX, totalDY, dragThreshold);
-    events.push(
-      {
-        type: GraphNodeEvent.DragEnd,
-        node: target,
-        rawEvent: e,
-        isDragCanceled,
-      },
-      {
-        type: GraphNodeEvent.Click,
-        rawEvent: e,
-        isMultiSelect,
-        node: target,
-      }
-    );
+
     if (isDragCanceled || !isNodesDraggable) {
       graphController.nodeClickOnce = target;
     }
-    eventChannel.batch(events);
+    eventChannel.trigger({
+      type: GraphNodeEvent.DragEnd,
+      node: target,
+      rawEvent: e,
+      isDragCanceled,
+    });
+
+    if (isDragCanceled) {
+      const simulatedEvent = new MouseEvent("click", e);
+      (evt.currentTarget ?? evt.target)?.dispatchEvent(simulatedEvent);
+    }
   };
   graphController.pointerId = evt.pointerId;
   if (evt.target instanceof Element && evt.pointerType !== "mouse") {

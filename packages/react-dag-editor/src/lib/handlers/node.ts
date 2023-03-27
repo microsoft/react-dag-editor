@@ -97,18 +97,10 @@ export const onNodePointerDown = (
       isDragCanceled,
     });
 
-    const simulatedEvent = new MouseEvent("click", {
-      clientX: e.clientX,
-      clientY: e.clientY,
-      metaKey: e.metaKey,
-      shiftKey: e.shiftKey,
-      altKey: e.altKey,
-      screenX: e.screenX,
-      screenY: e.screenY,
-      button: e.button,
-      buttons: e.buttons,
-    });
-    (e.currentTarget ?? e.target)?.dispatchEvent(simulatedEvent);
+    if (isDragCanceled) {
+      const simulatedEvent = new MouseEvent("click", e);
+      (evt.currentTarget ?? evt.target)?.dispatchEvent(simulatedEvent);
+    }
   };
   graphController.pointerId = evt.pointerId;
   if (evt.target instanceof Element && evt.pointerType !== "mouse") {

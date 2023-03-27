@@ -1,0 +1,28 @@
+{
+  "name": "react-dag-editor-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/react-dag-editor-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/react-dag-editor-e2e/cypress.json",
+        "devServerTarget": "react-dag-editor:storybook",
+        "tsConfig": "packages/react-dag-editor-e2e/tsconfig.json"
+      },
+      "configurations": {
+        "ci": {
+          "devServerTarget": "react-dag-editor:storybook:ci"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/react-dag-editor-e2e/**/*.{js,ts}"]
+      }
+    }
+  }
+}

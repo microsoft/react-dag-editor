@@ -1,6 +1,6 @@
 import { debounce } from "../../lib/utils/debounce";
 
-jest.useFakeTimers("modern");
+jest.useFakeTimers();
 
 describe("test debounce", () => {
   it("should work", () => {

@@ -223,7 +223,7 @@ export const Item: React.FunctionComponent<
     [graphController, getNode, graphConfig, dragWillStart, nextNodeRef]
   );
 
-  const className = mergeStyles(classes.moduleItem, props.className);
+  const className = mergeStyles(classes["module-item"], props.className);
 
   return (
     <>

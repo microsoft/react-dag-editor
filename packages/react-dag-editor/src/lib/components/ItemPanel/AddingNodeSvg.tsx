@@ -103,7 +103,7 @@ export const AddingNodeSvg: React.FunctionComponent<
     <svg
       id={tempGraphId}
       ref={svgRef}
-      className={classes.addingNodeSvg}
+      className={classes["adding-node-svg"]}
       preserveAspectRatio="xMidYMid meet"
     >
       <Transform matrix={viewport.transformMatrix}>

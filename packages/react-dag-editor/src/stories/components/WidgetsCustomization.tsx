@@ -1,5 +1,9 @@
 import * as React from "react";
 import { Graph, GraphModel, ReactDagEditor, useGraphReducer } from "../..";
+import {
+  INodeFrameProps,
+  INodeResizeHandlerProps,
+} from "../../lib/contexts/SlotsContext";
 import { sampleGraphData } from "../data/sample-graph-1";
 import { graphConfig } from "./FeaturesDemo";
 
@@ -14,18 +18,21 @@ export const NodeFrameCustomization: React.FC = () => {
     undefined
   );
 
-  const renderNodeFrame = React.useCallback(({ height, width, x, y }) => {
-    return (
-      <rect
-        transform={`translate(${x},${y})`}
-        height={height}
-        width={width}
-        stroke={"blue"}
-        strokeDasharray="4"
-        fill="red"
-      />
-    );
-  }, []);
+  const renderNodeFrame = React.useCallback(
+    ({ height, width, x, y }: INodeFrameProps) => {
+      return (
+        <rect
+          transform={`translate(${x},${y})`}
+          height={height}
+          width={width}
+          stroke={"blue"}
+          strokeDasharray="4"
+          fill="red"
+        />
+      );
+    },
+    []
+  );
 
   return (
     <ReactDagEditor
@@ -51,7 +58,7 @@ export const NodeResizeHandlerCustomization: React.FC = () => {
   );
 
   const renderNodeResizeHandler = React.useCallback(
-    ({ x, y, cursor, onMouseDown }) => {
+    ({ x, y, cursor, onMouseDown }: INodeResizeHandlerProps) => {
       return (
         <circle
           cx={x}

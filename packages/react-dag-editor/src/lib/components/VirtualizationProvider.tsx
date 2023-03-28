@@ -17,7 +17,7 @@ export interface IVirtualizationProviderProps {
 }
 
 export const VirtualizationProvider: React.FunctionComponent<
-  IVirtualizationProviderProps
+  React.PropsWithChildren<IVirtualizationProviderProps>
 > = ({
   viewport,
   isVirtualizationEnabled,

@@ -15,7 +15,7 @@ export interface IErrorBoundaryState {
 }
 
 export class ErrorBoundary extends React.Component<
-  IErrorBoundaryProps,
+  React.PropsWithChildren<IErrorBoundaryProps>,
   IErrorBoundaryState
 > {
   public constructor(props: IErrorBoundaryProps) {

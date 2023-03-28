@@ -20,6 +20,7 @@ import {
   IPortDrawArgs,
   ReactDagEditor,
   useGraphReducer,
+  RenderNodeAnchors,
 } from "../..";
 import { sampleGraphData } from "../data/sample-graph-1";
 
@@ -344,9 +345,10 @@ export const FeaturesDemo: React.FC = () => {
   );
 
   /** Render your custom anchors of node by shape */
-  const renderNodeAnchors = React.useCallback(
+  const renderNodeAnchors: RenderNodeAnchors = React.useCallback(
     (node, getMouseDown, defaultAnchors) => {
-      return node.shape === "note" ? (
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (node as any).shape === "note" ? (
         <SquareNodeAnchors node={node} getMouseDown={getMouseDown} />
       ) : (
         defaultAnchors

@@ -4,9 +4,9 @@ import { defaultColors } from "../../../common/constants";
 import { IContextMenuProps } from "../../../contexts";
 import { useContextMenuConfigContext } from "../../../hooks";
 
-export const ContextMenu: React.FunctionComponent<IContextMenuProps> = (
-  props
-) => {
+export const ContextMenu: React.FunctionComponent<
+  React.PropsWithChildren<IContextMenuProps>
+> = (props) => {
   const classes = mergeStyleSets({
     contextMenu: {
       fontSize: 14,

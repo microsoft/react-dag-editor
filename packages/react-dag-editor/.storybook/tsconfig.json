@@ -10,6 +10,6 @@
     "../../../node_modules/@nrwl/react/typings/cssmodule.d.ts",
     "../../../node_modules/@nrwl/react/typings/image.d.ts"
   ],
-  "exclude": ["../src/test"],
+  "exclude": ["../src/test", "jest.config.ts"],
   "include": ["../src/**/*", "*.js"]
 }

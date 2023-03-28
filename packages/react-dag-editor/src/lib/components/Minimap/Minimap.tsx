@@ -310,7 +310,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
     >
       {staticGraphEl}
       <svg
-        className={classes.minimapSvg}
+        className={classes["minimap-svg"]}
         {...touchController.eventHandlers}
         onMouseDown={onMouseDown}
         ref={svgRef}

@@ -4,17 +4,17 @@ exports[`should copy and paste with edge 1`] = `
 <div>
   <div>
     <div
-      class="react-dag-editor-container container container-1"
+      class="react-dag-editor-container container-9"
       id="graph-mock-uuid"
       role="application"
     >
       <button
         accesskey="f"
-        class="react-dag-editor-a11y-help-button buttonA11Y"
+        class="react-dag-editor-a11y-help-button buttonA11Y-3"
         hidden=""
       />
       <svg
-        class="react-dag-editor-svg-container svg svg-0"
+        class="react-dag-editor-svg-container svg-8"
         data-graph-id="graph-mock-uuid"
         focusable="true"
         preserveAspectRatio="xMidYMid meet"
@@ -137,7 +137,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Select Columns in Dataset"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Select Columns in Dataset-47566002"
             focusable="true"
             id="node:graph-mock-uuid:47566002"
@@ -201,7 +201,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Clean Missing Data"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Clean Missing Data-f6dc0eb1"
             focusable="true"
             id="node:graph-mock-uuid:f6dc0eb1"
@@ -281,7 +281,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Split Data"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Split Data-d1647408"
             focusable="true"
             id="node:graph-mock-uuid:d1647408"
@@ -361,7 +361,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Linear Regression"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Linear Regression-4b199015"
             focusable="true"
             id="node:graph-mock-uuid:4b199015"
@@ -411,7 +411,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Train Model"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Train Model-fb404f70"
             focusable="true"
             id="node:graph-mock-uuid:fb404f70"
@@ -489,7 +489,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Score Model"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Score Model-c4ee5025"
             focusable="true"
             id="node:graph-mock-uuid:c4ee5025"
@@ -567,7 +567,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Evaluate Model"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Evaluate Model-81777c66"
             focusable="true"
             id="node:graph-mock-uuid:81777c66"
@@ -647,7 +647,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Automobile price data (Raw)"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Automobile price data (Raw)-1fd27f80"
             focusable="true"
             id="node:graph-mock-uuid:1fd27f80"
@@ -697,7 +697,7 @@ exports[`should copy and paste with edge 1`] = `
           <g
             aria-label="test aria label for node Train Model"
             aria-roledescription="node"
-            class="node"
+            class="node-1"
             data-automation-id="node-container-Train Model-mock-uuid"
             focusable="true"
             id="node:graph-mock-uuid:mock-uuid"

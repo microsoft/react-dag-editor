@@ -24,7 +24,7 @@ import {
 } from "../../utils";
 import { isMouseButNotLeft } from "../../utils/mouse";
 import { noop } from "../../utils/noop";
-import classes from "../Graph.styles.module.scss";
+import classes from "../Graph.styles";
 import { AddingNodeSvg } from "./AddingNodeSvg";
 
 export interface IItemProps<N = unknown, P = unknown> {
@@ -223,7 +223,7 @@ export const Item: React.FunctionComponent<
     [graphController, getNode, graphConfig, dragWillStart, nextNodeRef]
   );
 
-  const className = mergeStyles(classes["module-item"], props.className);
+  const className = mergeStyles(classes.moduleItem, props.className);
 
   return (
     <>

@@ -30,7 +30,7 @@ import {
   transformPoint,
 } from "../../utils";
 import { clamp } from "../../utils/clamp";
-import classes from "../Graph.styles.module.scss";
+import classes from "../Graph.styles";
 import { StaticGraph } from "../StaticGraph/StaticGraph";
 import { IRect, MiniMapShadow } from "./Shadow";
 
@@ -310,7 +310,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
     >
       {staticGraphEl}
       <svg
-        className={classes["minimap-svg"]}
+        className={classes.minimapSvg}
         {...touchController.eventHandlers}
         onMouseDown={onMouseDown}
         ref={svgRef}

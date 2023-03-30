@@ -15,7 +15,7 @@ import { defaultGetNodeAriaLabel } from "../../utils/a11yUtils";
 import { getAutoAlignDisplacement } from "../../utils/autoAlign";
 import { EventChannel } from "../../utils/eventChannel";
 import { GraphNode } from "../GraphNode";
-import classes from "../Graph.styles.module.scss";
+import classes from "../Graph.styles";
 import { Transform } from "../Transform";
 import { useSvgRect } from "./useSvgRect";
 
@@ -103,7 +103,7 @@ export const AddingNodeSvg: React.FunctionComponent<
     <svg
       id={tempGraphId}
       ref={svgRef}
-      className={classes["adding-node-svg"]}
+      className={classes.addingNodeSvg}
       preserveAspectRatio="xMidYMid meet"
     >
       <Transform matrix={viewport.transformMatrix}>

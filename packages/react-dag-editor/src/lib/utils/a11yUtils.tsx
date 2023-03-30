@@ -317,15 +317,15 @@ export const goToConnectedPort = (
 };
 
 /**
- * @param data graph data
- * @param node node model
+ * @param _data graph data
+ * @param _node node model
  * @param port port data
  *
  * @returns port arial label
  */
 export function defaultGetPortAriaLabel(
-  data: GraphModel,
-  node: NodeModel,
+  _data: GraphModel,
+  _node: NodeModel,
   port: ICanvasPort
 ): string | undefined {
   return port.ariaLabel;

@@ -11,6 +11,8 @@
     "importHelpers": true,
     "resolveJsonModule": true,
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "target": "es2015",
     "module": "esnext",
     "lib": ["es2017", "dom"],

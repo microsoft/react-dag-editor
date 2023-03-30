@@ -46,12 +46,12 @@ export const getAlignmentLines = (
  * get the dx or dy to auto align/attach
  * @param alignmentLines all alignment lines
  * @param nodes the dragging dummy node(s)
- * @param graphConfig graphConfig of type IGraphConfig
+ * @param _graphConfig graphConfig of type IGraphConfig
  */
 export const getAutoAlignDisplacement = (
   alignmentLines: readonly ILine[],
   nodes: readonly IDummyNode[],
-  graphConfig: IGraphConfig,
+  _graphConfig: IGraphConfig,
   alignDirection: "x" | "y"
 ): number => {
   let min = Infinity;

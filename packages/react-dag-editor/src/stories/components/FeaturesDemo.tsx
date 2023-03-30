@@ -187,8 +187,8 @@ export const Port: React.FunctionComponent<IPortProps> = (props) => {
 class MyPortConfig implements IPortConfig {
   public getStyle(
     port: ICanvasPort,
-    parentNode: ICanvasNode,
-    data: GraphModel,
+    _parentNode: ICanvasNode,
+    _data: GraphModel,
     isConnectable: boolean | undefined,
     connectedAsSource: boolean,
     connectedAsTarget: boolean

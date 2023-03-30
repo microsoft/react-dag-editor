@@ -34,7 +34,7 @@ export const VisitPortHelper: React.FunctionComponent<
     [selectedItem, props]
   );
 
-  const onContainerBlur: React.FocusEventHandler = React.useCallback((evt) => {
+  const onContainerBlur: React.FocusEventHandler = React.useCallback(() => {
     //
   }, []);
 

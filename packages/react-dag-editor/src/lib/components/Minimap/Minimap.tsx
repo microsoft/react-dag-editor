@@ -70,7 +70,7 @@ export const Minimap: React.FunctionComponent<IMiniMapProps> = (props) => {
     shadowPadding = 0,
     maxNodesCountAllowed = 150,
     onRenderUnavailable = () => null,
-    renderArrow = (arrowDeg: number) => undefined,
+    renderArrow = () => undefined,
   } = props;
 
   const graphViewport = useViewport();

@@ -5,7 +5,7 @@ import {
   GraphBehavior,
   IGraphState,
 } from "../../models/state";
-import classes from "../Graph.styles.module.scss";
+import classes from "../Graph.styles";
 import { IGraphProps } from "./IGraphProps";
 
 interface IGetCursorStyleArgs {

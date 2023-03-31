@@ -56,7 +56,7 @@ export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
   }
 
   public onStart(
-    events: Map<number, PointerEvent>,
+    _events: Map<number, PointerEvent>,
     e: PointerEvent,
     ...args: ExtraArgs
   ): void {
@@ -66,7 +66,7 @@ export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
   }
 
   public onMove(
-    events: Map<number, PointerEvent>,
+    _events: Map<number, PointerEvent>,
     e: PointerEvent,
     ...args: ExtraArgs
   ): void {

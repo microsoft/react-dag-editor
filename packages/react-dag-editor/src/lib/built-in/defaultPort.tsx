@@ -10,8 +10,8 @@ import { defaultColors } from "../common/constants";
 class DefaultPort implements IPortConfig {
   public getStyle(
     port: ICanvasPort,
-    parentNode: ICanvasNode,
-    data: GraphModel,
+    _parentNode: ICanvasNode,
+    _data: GraphModel,
     connectedAsSource: boolean,
     connectedAsTarget: boolean
   ): Partial<React.CSSProperties> {

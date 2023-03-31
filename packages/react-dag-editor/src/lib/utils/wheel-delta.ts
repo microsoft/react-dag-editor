@@ -55,4 +55,4 @@ export const normalizeWheelDelta =
             return delta;
         }
       }
-    : (deltaMode: number, delta: number) => delta;
+    : (_deltaMode: number, delta: number) => delta;

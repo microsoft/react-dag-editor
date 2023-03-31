@@ -35,7 +35,7 @@ export const GraphNodeAnchors: React.FunctionComponent<
     };
   });
 
-  const n = getMouseDown((dx, dy) => {
+  const n = getMouseDown((_dx, dy) => {
     const finalDy = Math.min(dy, height - minHeight);
     return {
       dy: +finalDy,
@@ -69,7 +69,7 @@ export const GraphNodeAnchors: React.FunctionComponent<
     };
   });
 
-  const s = getMouseDown((dx, dy) => {
+  const s = getMouseDown((_dx, dy) => {
     const finalDy = Math.max(dy, minHeight - height);
     return {
       dHeight: +finalDy,

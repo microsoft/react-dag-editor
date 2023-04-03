@@ -10,10 +10,11 @@
       "options": {
         "outputPath": "dist/packages/react-dag-editor",
         "tsConfig": "packages/react-dag-editor/tsconfig.lib.json",
+        "format": ["esm", "cjs"],
         "project": "packages/react-dag-editor/package.json",
         "entryFile": "packages/react-dag-editor/src/index.ts",
         "external": ["react/jsx-runtime"],
-        "rollupConfig": "packages/react-dag-editor/rollup.config.js",
+        "rollupConfig": ["packages/react-dag-editor/rollup.config.js"],
         "extractCss": false,
         "assets": [
           {

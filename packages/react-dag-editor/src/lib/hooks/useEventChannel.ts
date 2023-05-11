@@ -105,7 +105,6 @@ export function useEventChannel({
     featureControl,
     eventChannel,
     graphConfig,
-    graphState: graphController.state,
     setCurHoverNode,
     setCurHoverPort,
   });

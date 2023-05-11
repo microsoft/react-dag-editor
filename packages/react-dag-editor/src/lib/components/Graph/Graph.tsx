@@ -109,7 +109,7 @@ export function Graph<
     graphController,
   });
 
-  useContainerRect(svgRef, containerRef, updateViewport);
+  useContainerRect(state, svgRef, containerRef, updateViewport);
 
   const {
     isNodesDraggable,

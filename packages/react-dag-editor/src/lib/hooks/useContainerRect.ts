@@ -7,6 +7,7 @@ import {
 } from "react";
 import { GraphCanvasEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
+import { IGraphState } from "../models/state";
 import { debounce } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
 import { nextFrame } from "../utils/nextFrame";
@@ -18,11 +19,11 @@ const isRectChanged = (
   a: IContainerRect | undefined,
   b: IContainerRect | undefined
 ): boolean => {
-  if (!a || !b) {
-    return true;
-  }
   if (a === b) {
     return false;
+  }
+  if (!a || !b) {
+    return true;
   }
   return (
     a.top !== b.top ||
@@ -37,23 +38,31 @@ export const useUpdateViewportCallback = (
   svgRef: RefObject<SVGSVGElement>,
   eventChannel: EventChannel
 ) =>
-  useCallback((): void => {
-    const viewportRect = svgRef.current?.getBoundingClientRect();
-    if (isRectChanged(rectRef.current, viewportRect)) {
-      rectRef.current = viewportRect;
-      eventChannel.trigger({
-        type: GraphCanvasEvent.ViewportResize,
-        viewportRect,
-      });
-    }
-  }, [eventChannel, rectRef, svgRef]);
+  useCallback(
+    (force = false): void => {
+      const viewportRect = svgRef.current?.getBoundingClientRect();
+      if (force || isRectChanged(rectRef.current, viewportRect)) {
+        rectRef.current = viewportRect;
+        eventChannel.trigger({
+          type: GraphCanvasEvent.ViewportResize,
+          viewportRect,
+        });
+      }
+    },
+    [eventChannel, rectRef, svgRef]
+  );
 
 export const useContainerRect = (
+  state: IGraphState,
   svgRef: RefObject<SVGSVGElement>,
   containerRef: RefObject<HTMLDivElement>,
-  updateViewport: () => void
+  updateViewport: (force?: boolean) => void
 ): void => {
-  useLayoutEffect(updateViewport, [updateViewport]);
+  useLayoutEffect(() => {
+    if (!state.viewport.rect) {
+      updateViewport(true);
+    }
+  }, [updateViewport, state.viewport.rect]);
 
   useEffect(() => {
     const container = containerRef.current;

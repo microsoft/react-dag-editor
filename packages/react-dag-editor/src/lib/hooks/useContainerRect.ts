@@ -62,7 +62,7 @@ export const useContainerRect = (
     if (!state.viewport.rect) {
       updateViewport(true);
     }
-  }, [updateViewport, state.viewport.rect]);
+  });
 
   useEffect(() => {
     const container = containerRef.current;

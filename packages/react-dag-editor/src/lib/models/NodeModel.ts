@@ -48,14 +48,6 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     return this.inner.automationId;
   }
 
-  public get isInSearchResults(): boolean | undefined {
-    return this.inner.isInSearchResults;
-  }
-
-  public get isCurrentSearchResult(): boolean | undefined {
-    return this.inner.isCurrentSearchResult;
-  }
-
   public get data(): Readonly<NodeData> | undefined {
     return this.inner.data;
   }

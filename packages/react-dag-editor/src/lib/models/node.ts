@@ -10,8 +10,6 @@ export interface ICanvasNode<T = unknown, P = unknown> {
   readonly height?: number;
   readonly width?: number;
   readonly automationId?: string;
-  readonly isInSearchResults?: boolean;
-  readonly isCurrentSearchResult?: boolean;
   readonly ports?: ReadonlyArray<ICanvasPort<P>>;
   readonly ariaLabel?: string;
   readonly data?: Readonly<T>;

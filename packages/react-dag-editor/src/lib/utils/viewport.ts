@@ -93,7 +93,7 @@ export const getVisibleNodes = <NodeData, PortData>(
 
   nodes.forEach((n) => {
     if (isNodeVisible(n, viewport, graphConfig)) {
-      result.push(n.inner);
+      result.push(n.toJSON());
     }
   });
 
@@ -111,7 +111,7 @@ export const getRenderedNodes = <NodeData, PortData>(
 
   nodes.forEach((n) => {
     if (isNodeInRenderedArea(n, renderedArea)) {
-      result.push(n.inner);
+      result.push(n.toJSON());
     }
   });
 

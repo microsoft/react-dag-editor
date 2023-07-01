@@ -34,7 +34,7 @@ export const AnimatingNodeGroup: React.FunctionComponent<
 
         if (nodeConfig?.renderDummy) {
           return nodeConfig.renderDummy({
-            ...node.inner,
+            ...node.toJSON(),
             x,
             y,
             width,

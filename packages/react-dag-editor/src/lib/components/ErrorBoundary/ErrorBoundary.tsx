@@ -54,7 +54,7 @@ export class ErrorBoundary extends React.Component<
     }
 
     const componentStackLines = this.state.errorInfo
-      ? this.state.errorInfo.componentStack.split("\n")
+      ? this.state.errorInfo.componentStack?.split("\n")
       : [];
 
     return (
@@ -63,7 +63,7 @@ export class ErrorBoundary extends React.Component<
         <p>{`Error: ${this.state.error}`}</p>
         <p>{`ErrorInfo: ${JSON.stringify(this.state.errorInfo)}`}</p>
         <h2>Component Stack</h2>
-        {componentStackLines.map((line, index) => (
+        {(componentStackLines ?? []).map((line, index) => (
           <p key={index}>{line}</p>
         ))}
       </div>

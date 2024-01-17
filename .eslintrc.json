@@ -1,0 +1,70 @@
+{
+  "root": true,
+  "plugins": [],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["plugin:prettier/recommended"],
+      "rules": {
+        
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "plugins": ["@typescript-eslint", "import"],
+      "parser": "@typescript-eslint/parser",
+      "extends": [
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": {
+              "accessors": "off",
+              "constructors": "off"
+            }
+          }
+        ],
+        "import/no-cycle": [
+          "warn",
+          {
+            "ignoreExternal": true
+          }
+        ],
+        "import/no-default-export": "error",
+        "import/no-duplicates": "error",
+        "import/no-self-import": "error",
+        "import/order": [
+          "error",
+          {
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "no-console": "error"
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": [],
+      "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    },
+    {
+      "files": ["vite.config.ts"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    }
+  ]
+}

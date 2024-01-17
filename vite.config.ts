@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
 export default defineConfig({
@@ -10,13 +10,12 @@ export default defineConfig({
     lib: {
       entry: "src/index.ts",
       name: "ReactDagEditor",
-      fileName: (format) => {
+      fileName: format => {
         if (format === "es") {
           return "index.es.js";
         }
         return "index.js";
-      },
-      
+      }
     },
     rollupOptions: {
       external: ["react", "react-dom"],
@@ -24,9 +23,9 @@ export default defineConfig({
         globals: {
           react: "React"
         }
-      },
+      }
     },
     sourcemap: true,
-    emptyOutDir: true,
-  },
+    emptyOutDir: true
+  }
 });

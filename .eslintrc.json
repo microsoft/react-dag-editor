@@ -1,17 +1,31 @@
 {
   "root": true,
   "plugins": [],
+  "extends": [
+    "plugin:storybook/recommended"
+  ],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "extends": ["plugin:prettier/recommended"],
-      "rules": {
-        
-      }
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
+      "extends": [
+        "plugin:prettier/recommended"
+      ],
+      "rules": {}
     },
     {
-      "files": ["*.ts", "*.tsx"],
-      "plugins": ["@typescript-eslint", "import"],
+      "files": [
+        "*.ts",
+        "*.tsx"
+      ],
+      "plugins": [
+        "@typescript-eslint",
+        "import"
+      ],
       "parser": "@typescript-eslint/parser",
       "extends": [
         "plugin:@typescript-eslint/recommended"
@@ -49,19 +63,37 @@
       }
     },
     {
-      "files": ["*.js", "*.jsx"],
+      "files": [
+        "*.js",
+        "*.jsx"
+      ],
       "extends": [],
       "rules": {}
     },
     {
-      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "files": [
+        "*.spec.ts",
+        "*.spec.tsx",
+        "*.spec.js",
+        "*.spec.jsx"
+      ],
       "env": {
         "jest": true
       },
       "rules": {}
     },
     {
-      "files": ["vite.config.ts"],
+      "files": [
+        "vite.config.ts"
+      ],
+      "rules": {
+        "import/no-default-export": "off"
+      }
+    },
+    {
+      "files": [
+        "*.stories.ts"
+      ],
       "rules": {
         "import/no-default-export": "off"
       }

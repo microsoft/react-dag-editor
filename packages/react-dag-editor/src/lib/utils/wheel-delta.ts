@@ -4,6 +4,7 @@
  * https://stackoverflow.com/questions/20110224/what-is-the-height-of-a-line-in-a-wheel-event-deltamode-dom-delta-line
  */
 
+import DOMPurify from "dompurify";
 import { Debug } from "./debug";
 
 /**
@@ -16,20 +17,20 @@ function getScrollLineHeight(): number {
     const iframe = document.createElement("iframe");
     iframe.src = "#";
     document.body.appendChild(iframe);
-    const { contentWindow } = iframe;
-    if (!contentWindow) {
+    const { contentDocument } = iframe;
+    if (!contentDocument) {
       throw new Error("Fail to create iframe");
     }
-    const doc = contentWindow.document;
-    if (!doc) {
-      throw new Error("Fail to create iframe");
-    }
-    doc.open();
-    doc.write(
-      "<!DOCTYPE html><html><head></head><body><span>a</span></body></html>"
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    contentDocument.documentElement.innerHTML = DOMPurify.sanitize(
+      "<span>a</span>",
+      {
+        RETURN_TRUSTED_TYPE: true,
+      }
     );
-    doc.close();
-    const span = doc.body.firstElementChild as HTMLSpanElement;
+    const span = contentDocument.body.firstElementChild as HTMLSpanElement;
     const height = span.offsetHeight;
     document.body.removeChild(iframe);
     return height;

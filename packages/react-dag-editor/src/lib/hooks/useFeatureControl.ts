@@ -34,6 +34,12 @@ export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
       !features.has(GraphFeatures.AddNewNodes) ||
       !features.has(GraphFeatures.AddNewEdges);
     const isUndoEnabled = features.has(GraphFeatures.UndoStack);
+    const isScrollbarVisible =
+      (!isVerticalScrollDisabled ||
+        !isHorizontalScrollDisabled ||
+        !isPanDisabled) &&
+      isLimitBoundary &&
+      !features.has(GraphFeatures.InvisibleScrollbar);
 
     return {
       isNodesDraggable,
@@ -58,6 +64,7 @@ export const useFeatureControl = (features: ReadonlySet<GraphFeatures>) => {
       isDeleteDisabled,
       isPasteDisabled,
       isUndoEnabled,
+      isScrollbarVisible,
     };
   }, [features]);
 };

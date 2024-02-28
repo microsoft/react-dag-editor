@@ -22,6 +22,7 @@ export enum GraphFeatures {
   CtrlKeyZoom = "ctrlKeyZoom",
   LimitBoundary = "limitBoundary",
   EditEdge = "editEdge",
+  InvisibleScrollbar = "InvisibleScrollbar",
 }
 
 export const allFeatures = new Set([

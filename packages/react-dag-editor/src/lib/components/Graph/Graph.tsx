@@ -122,8 +122,8 @@ export function Graph<
     isHorizontalScrollDisabled,
     isA11yEnable,
     isCtrlKeyZoomEnable,
-    isLimitBoundary,
     isVirtualizationEnabled,
+    isScrollbarVisible,
   } = featureControl;
 
   useSelectBox(dispatch, state.selectBoxPosition);
@@ -361,27 +361,23 @@ export function Graph<
           />
         )}
       </svg>
-      {(!isVerticalScrollDisabled ||
-        !isHorizontalScrollDisabled ||
-        !isPanDisabled) &&
-        isLimitBoundary &&
-        isViewportComplete(state.viewport) && (
-          <Scrollbar
-            viewport={state.viewport}
-            offsetLimit={getOffsetLimit({
-              data,
-              graphConfig,
-              rect: state.viewport.rect,
-              transformMatrix: viewport.transformMatrix,
-              canvasBoundaryPadding: state.settings.canvasBoundaryPadding,
-              groupPadding: data.groups[0]?.padding,
-            })}
-            dispatch={dispatch}
-            horizontal={!isHorizontalScrollDisabled}
-            vertical={!isVerticalScrollDisabled}
-            eventChannel={eventChannel}
-          />
-        )}
+      {isScrollbarVisible && isViewportComplete(state.viewport) && (
+        <Scrollbar
+          viewport={state.viewport}
+          offsetLimit={getOffsetLimit({
+            data,
+            graphConfig,
+            rect: state.viewport.rect,
+            transformMatrix: viewport.transformMatrix,
+            canvasBoundaryPadding: state.settings.canvasBoundaryPadding,
+            groupPadding: data.groups[0]?.padding,
+          })}
+          dispatch={dispatch}
+          horizontal={!isHorizontalScrollDisabled}
+          vertical={!isVerticalScrollDisabled}
+          eventChannel={eventChannel}
+        />
+      )}
       <GraphContextMenu
         state={state}
         onClick={onContextMenuClick}

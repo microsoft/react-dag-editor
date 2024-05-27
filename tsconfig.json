@@ -6,7 +6,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "noUnusedLocals": true
   }

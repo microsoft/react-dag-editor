@@ -4,51 +4,19 @@
   "sourceRoot": "packages/react-dag-editor/src",
   "projectType": "library",
   "targets": {
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/react-dag-editor",
-        "tsConfig": "packages/react-dag-editor/tsconfig.lib.json",
-        "format": ["esm", "cjs"],
-        "project": "packages/react-dag-editor/package.json",
-        "entryFile": "packages/react-dag-editor/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": ["packages/react-dag-editor/rollup.config.js"],
-        "extractCss": false,
-        "assets": [
-          {
-            "glob": "README.md",
-            "input": ".",
-            "output": "."
-          },
-          {
-            "glob": "packages/react-dag-editor/src",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/react-dag-editor/**/*.{ts,tsx,js,jsx}"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/react-dag-editor"],
       "options": {
-        "jestConfig": "packages/react-dag-editor/jest.config.ts",
-        "passWithNoTests": true
+        "jestConfig": "packages/react-dag-editor/jest.config.ts"
       }
     },
     "storybook": {
-      "executor": "@nrwl/storybook:storybook",
+      "executor": "@nx/storybook:storybook",
       "options": {
-        "uiFramework": "@storybook/react",
         "port": 4400,
         "configDir": "packages/react-dag-editor/.storybook"
       },
@@ -59,10 +27,9 @@
       }
     },
     "build-storybook": {
-      "executor": "@nrwl/storybook:build",
+      "executor": "@nx/storybook:build",
       "outputs": ["{options.outputDir}"],
       "options": {
-        "uiFramework": "@storybook/react",
         "configDir": "packages/react-dag-editor/.storybook",
         "outputDir": "dist/storybook/react-dag-editor"
       },
@@ -88,6 +55,22 @@
           "yarn nx run react-dag-editor:build-storybook",
           "yarn nx run react-dag-editor:typedoc"
         ]
+      }
+    },
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/packages/react-dag-editor"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
       }
     }
   }

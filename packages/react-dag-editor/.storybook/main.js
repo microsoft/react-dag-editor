@@ -8,7 +8,7 @@ module.exports = {
   addons: [
     "@storybook/addon-essentials",
     ...rootMain.addons,
-    "@nrwl/react/plugins/storybook",
+    "@nx/react/plugins/storybook",
   ],
   webpackFinal: async (config, { configType }) => {
     // apply any global webpack configs that might have been specified in .storybook/main.js

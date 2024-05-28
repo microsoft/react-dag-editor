@@ -3,12 +3,9 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "allowJs": false,
-    "esModuleInterop": true,
+    "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "strict": true
   },
   "files": [],
   "include": [],
@@ -20,7 +17,7 @@
       "path": "./tsconfig.spec.json"
     },
     {
-      "path": "./.storybook/tsconfig.json"
+      "path": "./tsconfig.storybook.json"
     }
   ]
 }

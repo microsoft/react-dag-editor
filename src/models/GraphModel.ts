@@ -1,4 +1,5 @@
-import { HashMap, HashMapBuilder, OrderedMap } from "../collections";
+import { HashMap, HashMapBuilder } from "../collections/hashMap";
+import { OrderedMap } from "../collections/orderedMap";
 import * as Bitset from "../utils/bitset";
 import { markEdgeDirty } from "../utils/graphDataUtils";
 import { preventSpread } from "../utils/preventSpread";

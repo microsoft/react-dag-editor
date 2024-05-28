@@ -1,5 +1,4 @@
 /* eslint-disable import/no-default-export */
-import * as React from "react";
 import { BackgroundCustomization } from "./components/BackgroundCustomization";
 import { FeaturesDemo } from "./components/FeaturesDemo";
 import { OutlineDragAndDrop } from "./components/OutlineDragAndDrop";

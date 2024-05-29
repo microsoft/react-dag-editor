@@ -98,7 +98,7 @@
       "rules": {}
     },
     {
-      "files": ["*.stories.tsx", "*.stories.jsx", "vite.config.ts"],
+      "files": ["*.stories.tsx", "*.stories.jsx", "vite.config.ts", ".storybook/**"],
       "rules": {
         "import/no-default-export": "off"
       }

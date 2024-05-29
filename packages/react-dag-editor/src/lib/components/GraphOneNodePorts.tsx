@@ -64,6 +64,7 @@ export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps>
             id={portKey}
             tabIndex={0}
             // for IE and Edge
+            // eslint-disable-next-line react/no-unknown-property
             focusable="true"
             onPointerDown={portEvent(GraphPortEvent.PointerDown, p)}
             onPointerUp={portEvent(GraphPortEvent.PointerUp, p)}

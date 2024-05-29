@@ -66,8 +66,8 @@ function dragNodeHandler(state: IGraphState, event: INodeDragEvent): IGraphState
   if (!isViewportComplete(state.viewport)) {
     return state;
   }
-  const limitScale = (scale: number) => {
-    return Math.max(scale, getScaleLimit(data, state.settings));
+  const limitScale = (curScale: number): number => {
+    return Math.max(curScale, getScaleLimit(data, state.settings));
   };
   const e = event.rawEvent as MouseEvent;
   const { rect } = state.viewport;

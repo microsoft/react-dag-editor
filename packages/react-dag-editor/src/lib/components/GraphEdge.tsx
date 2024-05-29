@@ -59,14 +59,16 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
     const virtualization = useVirtualization();
     const { viewport, renderedArea, visibleArea } = virtualization;
 
-    const edgeEvent = (type: IEdgeCommonEvent["type"]) => (e: React.SyntheticEvent) => {
-      e.persist();
-      eventChannel.trigger({
-        type,
-        edge,
-        rawEvent: e,
-      });
-    };
+    const edgeEvent =
+      (type: IEdgeCommonEvent["type"]) =>
+      (e: React.SyntheticEvent): void => {
+        e.persist();
+        eventChannel.trigger({
+          type,
+          edge,
+          rawEvent: e,
+        });
+      };
 
     const isSourceRendered = isPointInRect(renderedArea, source);
     const isTargetRendered = isPointInRect(renderedArea, target);
@@ -176,3 +178,5 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
     );
   },
 );
+
+GraphEdge.displayName = "GraphEdge";

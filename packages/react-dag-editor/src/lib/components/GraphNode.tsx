@@ -29,7 +29,8 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
   const nodeConfig = getNodeConfig(node, graphConfig);
 
   const nodeEvent =
-    (type: (INodeCommonEvent | INodeContextMenuEvent)["type"]) => (evt: React.SyntheticEvent | React.MouseEvent) => {
+    (type: (INodeCommonEvent | INodeContextMenuEvent)["type"]) =>
+    (evt: React.SyntheticEvent | React.MouseEvent): void => {
       evt.persist();
       const e = {
         type,
@@ -39,7 +40,7 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
       eventChannel.trigger(e);
     };
 
-  const onClick = (e: React.MouseEvent) => {
+  const onClick = (e: React.MouseEvent): void => {
     e.persist();
     const isMultiSelect = checkIsMultiSelect(e);
     eventChannel.trigger({
@@ -64,6 +65,7 @@ const GraphNode: React.FunctionComponent<IGraphNodeProps> = props => {
     <g
       id={id}
       // for IE and Edge
+      // eslint-disable-next-line react/no-unknown-property
       focusable="true"
       tabIndex={0} // why hard coded 0? - Dynamically calculating tabindex costs a lot in big graph. Then we always let it have tabIndex 0 to be focusable and override the "tab" key behavior.
       className={classes.node}

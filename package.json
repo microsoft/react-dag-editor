@@ -2,7 +2,10 @@
   "name": "react-dag-editor",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build": "nx run-many --target=build --all",
+    "lint": "nx run-many --target=lint --all"
+  },
   "private": true,
   "dependencies": {
     "react": "18.3.1",

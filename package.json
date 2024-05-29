@@ -38,6 +38,7 @@
     "prettier": "^2.6.2",
     "sass": "^1.55.0",
     "typescript": "~5.4.2",
+    "uuid": "^9.0.1",
     "vite": "~5.0.0",
     "vite-plugin-dts": "~3.8.1",
     "vitest": "^1.3.1"

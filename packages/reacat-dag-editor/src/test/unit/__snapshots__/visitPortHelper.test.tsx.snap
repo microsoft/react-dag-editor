@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test VisitPortHelper the port has multi neighbor ports 1`] = `
+<div>
+  <select>
+    <option
+      aria-label="Execute Python Script: Dataset1"
+      value="{\\"nodeId\\":\\"fc9f8703\\",\\"portId\\":\\"port-0\\"}"
+    >
+      Execute Python Script: Dataset1
+    </option>
+    <option
+      aria-label="Normalize Data: Dataset"
+      value="{\\"nodeId\\":\\"24a8e253\\",\\"portId\\":\\"port-0\\"}"
+    >
+      Normalize Data: Dataset
+    </option>
+    <option
+      aria-label="Train Model: Dataset"
+      value="{\\"nodeId\\":\\"2a1e48b4\\",\\"portId\\":\\"port-1\\"}"
+    >
+      Train Model: Dataset
+    </option>
+  </select>
+</div>
+`;
+
+exports[`test VisitPortHelper the port has no neighbor port 1`] = `
+<div>
+  <select />
+</div>
+`;
+
+exports[`test VisitPortHelper the port has one neighbor port 1`] = `
+<div>
+  <select>
+    <option
+      aria-label="Train Model: Dataset"
+      value="{\\"nodeId\\":\\"20268eed\\",\\"portId\\":\\"port-1\\"}"
+    >
+      Train Model: Dataset
+    </option>
+  </select>
+</div>
+`;

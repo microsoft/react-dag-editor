@@ -23,10 +23,12 @@ it("test useDeferredValue", () => {
           setState(nextValue);
         },
       }),
-      [value, setState]
+      [value, setState],
     );
     return null;
   });
+
+  App.displayName = "App";
 
   const appRef = React.createRef<IUseDeferredValueRef>();
   renderIntoDocument(<App ref={appRef} />);

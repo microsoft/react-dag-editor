@@ -6,13 +6,10 @@ import { inputData, outputData } from "./cpm_sample1.data";
  */
 
 const constructInputData = (): Set<Task> => {
-  const getSuccessors = (
-    names: string[],
-    allTasksMap: Map<string, Task>
-  ): Set<Task> => {
+  const getSuccessors = (names: string[], allTasksMap: Map<string, Task>): Set<Task> => {
     const successors = new Set<Task>();
 
-    names.forEach((name) => {
+    names.forEach(name => {
       const task = allTasksMap.get(name);
       if (task) {
         successors.add(task);
@@ -25,18 +22,14 @@ const constructInputData = (): Set<Task> => {
   const allTasks = new Set<Task>();
   const curAllTasksMap = new Map<string, Task>();
 
-  inputData.forEach((item) => {
-    allTasks?.forEach((t) => {
+  inputData.forEach(item => {
+    allTasks?.forEach(t => {
       if (!curAllTasksMap.has(t.name)) {
         curAllTasksMap.set(t.name, t);
       }
     });
 
-    const task = new Task(
-      item.name,
-      item.cost,
-      getSuccessors(item.dependencies, curAllTasksMap)
-    );
+    const task = new Task(item.name, item.cost, getSuccessors(item.dependencies, curAllTasksMap));
     allTasks.add(task);
   });
 
@@ -69,11 +62,7 @@ const constructOutputData = (): Task => {
     return dependenciesSet;
   };
 
-  const path = new Task(
-    outputData.name,
-    outputData.cost,
-    getSuccessorsSet(outputData)
-  );
+  const path = new Task(outputData.name, outputData.cost, getSuccessorsSet(outputData));
   path.earlyStart = outputData.earlyStart;
   path.earlyFinish = outputData.earlyFinish;
   path.latestStart = outputData.latestStart;

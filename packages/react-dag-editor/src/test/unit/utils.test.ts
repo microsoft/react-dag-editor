@@ -1,21 +1,9 @@
-import {
-  filterSelectedItems,
-  GraphEdgeStatus,
-  GraphModel,
-  GraphNodeStatus,
-  GraphPortStatus,
-} from "../../index";
+import { filterSelectedItems, GraphEdgeStatus, GraphModel, GraphNodeStatus, GraphPortStatus } from "../../index";
 import { ISelectBoxPosition } from "../../lib/components/Graph/SelectBox";
 import { getNeighborPorts } from "../../lib/utils";
+import { IHistory, pushHistory, redo, resetUndoStack, undo } from "../../lib/utils/history";
 import { selectNodeBySelectBox } from "../../lib/utils/updateNodeBySelectBox";
 import { getGraphConfig, makeEdges, makeNodes, makePorts } from "../utils";
-import {
-  IHistory,
-  pushHistory,
-  redo,
-  resetUndoStack,
-  undo,
-} from "../../lib/utils/history";
 
 describe("test getNeighborPorts", () => {
   /**
@@ -28,16 +16,8 @@ describe("test getNeighborPorts", () => {
         [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
       ]),
       nodes: makeNodes(
-        [
-          GraphNodeStatus.Default,
-          GraphNodeStatus.Default,
-          GraphNodeStatus.Default,
-        ],
-        makePorts([
-          GraphPortStatus.Default,
-          GraphPortStatus.Default,
-          GraphPortStatus.Default,
-        ])
+        [GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default],
+        makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]),
       ),
     });
   }
@@ -72,18 +52,10 @@ describe("test filterSelectedItems", () => {
           [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
         ]),
         nodes: makeNodes(
-          [
-            GraphNodeStatus.Default,
-            GraphNodeStatus.Default,
-            GraphNodeStatus.Default,
-          ],
-          makePorts([
-            GraphPortStatus.Default,
-            GraphPortStatus.Default,
-            GraphPortStatus.Default,
-          ])
+          [GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default],
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]),
         ),
-      })
+      }),
     );
     expect(selected).toEqual({
       nodes: [],
@@ -95,26 +67,14 @@ describe("test filterSelectedItems", () => {
     const selected = filterSelectedItems(
       GraphModel.fromJSON({
         edges: makeEdges([
-          [
-            GraphEdgeStatus.ConnectedToSelected | GraphEdgeStatus.Selected,
-            ["0", "0"],
-            ["1", "1"],
-          ],
+          [GraphEdgeStatus.ConnectedToSelected | GraphEdgeStatus.Selected, ["0", "0"], ["1", "1"]],
           [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
         ]),
         nodes: makeNodes(
-          [
-            GraphNodeStatus.ConnectedToSelected,
-            GraphNodeStatus.Selected,
-            GraphNodeStatus.UnconnectedToSelected,
-          ],
-          makePorts([
-            GraphPortStatus.Default,
-            GraphPortStatus.Default,
-            GraphPortStatus.Default,
-          ])
+          [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]),
         ),
-      })
+      }),
     );
     expect(selected.nodes.length).toBe(1);
     expect(selected.nodes[0].id).toBe("1");
@@ -130,18 +90,10 @@ describe("test filterSelectedItems", () => {
           [GraphEdgeStatus.ConnectedToSelected, ["0", "1"], ["2", "0"]],
         ]),
         nodes: makeNodes(
-          [
-            GraphNodeStatus.Selected,
-            GraphNodeStatus.Selected,
-            GraphNodeStatus.ConnectedToSelected,
-          ],
-          makePorts([
-            GraphPortStatus.Default,
-            GraphPortStatus.Default,
-            GraphPortStatus.Default,
-          ])
+          [GraphNodeStatus.Selected, GraphNodeStatus.Selected, GraphNodeStatus.ConnectedToSelected],
+          makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]),
         ),
-      })
+      }),
     );
     expect(selected.nodes.length).toBe(2);
     expect(selected.nodes[0].id).toBe("0");
@@ -183,12 +135,7 @@ describe("test updateNodeBySelectBox", () => {
   });
   const transformMatrix = [1, 0, 0, 1, 0, 0] as const;
   const select = (selectBox: ISelectBoxPosition) => {
-    return selectNodeBySelectBox(
-      getGraphConfig(),
-      transformMatrix,
-      selectBox,
-      mockData
-    ).toJSON();
+    return selectNodeBySelectBox(getGraphConfig(), transformMatrix, selectBox, mockData).toJSON();
   };
   it("should select nothing", () => {
     expect(
@@ -197,7 +144,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 10,
         width: 10,
         height: 10,
-      })
+      }),
     ).toEqual(mockData.toJSON());
     expect(
       select({
@@ -205,7 +152,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 160,
         width: 0,
         height: 10,
-      })
+      }),
     ).toEqual(mockData.toJSON());
     expect(
       select({
@@ -213,7 +160,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 160,
         width: 10,
         height: 0,
-      })
+      }),
     ).toEqual(mockData.toJSON());
   });
 
@@ -253,7 +200,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 140,
         width: 20,
         height: 20,
-      })
+      }),
     ).toEqual(expected);
     expect(
       select({
@@ -261,7 +208,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 160,
         width: 20,
         height: 20,
-      })
+      }),
     ).toEqual(expected);
     expect(
       select({
@@ -269,7 +216,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 140,
         width: 20,
         height: 20,
-      })
+      }),
     ).toEqual(expected);
     expect(
       select({
@@ -277,7 +224,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 160,
         width: 20,
         height: 20,
-      })
+      }),
     ).toEqual(expected);
     expect(
       select({
@@ -285,7 +232,7 @@ describe("test updateNodeBySelectBox", () => {
         startY: 240,
         width: 20,
         height: 20,
-      })
+      }),
     ).toEqual(expected);
   });
 });

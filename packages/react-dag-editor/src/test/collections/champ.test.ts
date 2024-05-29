@@ -1,10 +1,4 @@
-import {
-  bitCount,
-  BitmapIndexedNode,
-  bitPosFrom,
-  HashCollisionNode,
-  indexFrom,
-} from "../../lib/collections/champ";
+import { bitCount, BitmapIndexedNode, bitPosFrom, HashCollisionNode, indexFrom } from "../../lib/collections/champ";
 
 const hashCollision = () =>
   new BitmapIndexedNode(
@@ -41,36 +35,25 @@ const hashCollision = () =>
                     1,
                     [],
                     [],
-                    [
-                      new BitmapIndexedNode(
-                        0,
-                        0,
-                        1,
-                        [],
-                        [],
-                        [new HashCollisionNode(0, 0, [0, 1], [0, 1])],
-                        [],
-                        2
-                      ),
-                    ],
+                    [new BitmapIndexedNode(0, 0, 1, [], [], [new HashCollisionNode(0, 0, [0, 1], [0, 1])], [], 2)],
                     [],
-                    2
+                    2,
                   ),
                 ],
                 [],
-                2
+                2,
               ),
             ],
             [],
-            2
+            2,
           ),
         ],
         [],
-        2
+        2,
       ),
     ],
     [],
-    2
+    2,
   );
 
 describe("test utils", () => {
@@ -93,31 +76,13 @@ describe("test utils", () => {
 
 describe("test get", () => {
   it("should get value", () => {
-    const node = new BitmapIndexedNode(
-      1,
-      0b11,
-      0,
-      [0, 1],
-      [0, 1],
-      [],
-      [0, 1],
-      2
-    );
+    const node = new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2);
     const result = node.get(1, 1, 0);
     expect(result).toBe(1);
   });
 
   it("should get nothing", () => {
-    const node = new BitmapIndexedNode(
-      1,
-      0b11,
-      0,
-      [0, 1],
-      [0, 1],
-      [],
-      [0, 1],
-      2
-    );
+    const node = new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2);
     expect(node.get(3, 1, 0)).toBeUndefined();
     expect(node.get(1, 3, 0)).toBeUndefined();
   });
@@ -135,9 +100,7 @@ describe("test update", () => {
     const next = node.insert(1, 0, 0, 0, 0);
     next.insert(1, 1, 1, 1, 0);
     expect(node).not.toBe(next);
-    expect(next).toEqual(
-      new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2)
-    );
+    expect(next).toEqual(new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2));
   });
 
   it("should do nothing if value is the same", () => {
@@ -146,9 +109,7 @@ describe("test update", () => {
     node.insert(0, 1, 1, 1, 0);
     const next = node.update(1, 1, () => 1, 1, 0);
     expect(next).toBe(node);
-    expect(next).toEqual(
-      new BitmapIndexedNode(0, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2)
-    );
+    expect(next).toEqual(new BitmapIndexedNode(0, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2));
   });
 
   it("should copy on write", () => {
@@ -157,9 +118,7 @@ describe("test update", () => {
     node.insert(0, 1, 1, 1, 0);
     const next = node.update(1, 1, () => 10, 1, 0);
     expect(next).not.toBe(node);
-    expect(next).toEqual(
-      new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 10], [], [0, 1], 2)
-    );
+    expect(next).toEqual(new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 10], [], [0, 1], 2));
   });
 
   it("should transform from value to node", () => {
@@ -174,21 +133,10 @@ describe("test update", () => {
         0b10,
         [0],
         [0],
-        [
-          new BitmapIndexedNode(
-            1,
-            0b11,
-            0,
-            [1, 0b100001],
-            [1, 0b100001],
-            [],
-            [1, 0b100001],
-            2
-          ),
-        ],
+        [new BitmapIndexedNode(1, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
         [0],
-        3
-      )
+        3,
+      ),
     );
   });
 
@@ -204,21 +152,10 @@ describe("test update", () => {
         0b10,
         [0],
         [0],
-        [
-          new BitmapIndexedNode(
-            1,
-            0b11,
-            0,
-            [1, 0b100001],
-            [1, 0b100001],
-            [],
-            [1, 0b100001],
-            2
-          ),
-        ],
+        [new BitmapIndexedNode(1, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
         [0],
-        3
-      )
+        3,
+      ),
     );
   });
 
@@ -229,20 +166,9 @@ describe("test update", () => {
       0b10,
       [0],
       [0],
-      [
-        new BitmapIndexedNode(
-          0,
-          0b11,
-          0,
-          [1, 0b100001],
-          [1, 0b100001],
-          [],
-          [1, 0b100001],
-          2
-        ),
-      ],
+      [new BitmapIndexedNode(0, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
       [0],
-      3
+      3,
     );
     expect(node.update(1, 1, () => 10, 1, 0)).toEqual(
       new BitmapIndexedNode(
@@ -251,21 +177,10 @@ describe("test update", () => {
         0b10,
         [0],
         [0],
-        [
-          new BitmapIndexedNode(
-            1,
-            0b11,
-            0,
-            [1, 0b100001],
-            [10, 0b100001],
-            [],
-            [1, 0b100001],
-            2
-          ),
-        ],
+        [new BitmapIndexedNode(1, 0b11, 0, [1, 0b100001], [10, 0b100001], [], [1, 0b100001], 2)],
         [0],
-        3
-      )
+        3,
+      ),
     );
   });
 
@@ -276,20 +191,9 @@ describe("test update", () => {
       0b10,
       [0],
       [0],
-      [
-        new BitmapIndexedNode(
-          0,
-          0b11,
-          0,
-          [1, 0b100001],
-          [1, 0b100001],
-          [],
-          [1, 0b100001],
-          2
-        ),
-      ],
+      [new BitmapIndexedNode(0, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
       [0],
-      3
+      3,
     );
     const next = node.update(1, 1, () => 1, 1, 0);
     expect(next).toBe(node);
@@ -300,21 +204,10 @@ describe("test update", () => {
         0b10,
         [0],
         [0],
-        [
-          new BitmapIndexedNode(
-            0,
-            0b11,
-            0,
-            [1, 0b100001],
-            [1, 0b100001],
-            [],
-            [1, 0b100001],
-            2
-          ),
-        ],
+        [new BitmapIndexedNode(0, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
         [0],
-        3
-      )
+        3,
+      ),
     );
   });
 
@@ -328,30 +221,15 @@ describe("test update", () => {
 
 describe("test remove", () => {
   it("should remove value", () => {
-    const node = new BitmapIndexedNode(
-      0,
-      0b11,
-      0,
-      [0, 1],
-      [0, 1],
-      [],
-      [0, 1],
-      2
-    );
+    const node = new BitmapIndexedNode(0, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2);
     const next = node.remove(1, 1, 1, 0);
-    expect(next).toEqual([
-      new BitmapIndexedNode(1, 0b1, 0, [0], [0], [], [0], 1),
-      1,
-    ]);
+    expect(next).toEqual([new BitmapIndexedNode(1, 0b1, 0, [0], [0], [], [0], 1), 1]);
   });
 
   it("should remove from child node", () => {
     const node = hashCollision();
     const next = node.remove(1, 1, 0, 0);
-    expect(next).toEqual([
-      new BitmapIndexedNode(1, 1, 0, [0], [0], [], [0], 1),
-      1,
-    ]);
+    expect(next).toEqual([new BitmapIndexedNode(1, 1, 0, [0], [0], [], [0], 1), 1]);
   });
 
   it("should remove child into single value", () => {
@@ -361,26 +239,12 @@ describe("test remove", () => {
       0b10,
       [],
       [],
-      [
-        new BitmapIndexedNode(
-          0,
-          0b11,
-          0,
-          [1, 0b100001],
-          [1, 0b100001],
-          [],
-          [1, 0b100001],
-          2
-        ),
-      ],
+      [new BitmapIndexedNode(0, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
       [],
-      2
+      2,
     );
     const next = node.remove(1, 0b100001, 0b100001, 0);
-    expect(next).toEqual([
-      new BitmapIndexedNode(1, 0b10, 0, [1], [1], [], [1], 1),
-      0b100001,
-    ]);
+    expect(next).toEqual([new BitmapIndexedNode(1, 0b10, 0, [1], [1], [], [1], 1), 0b100001]);
   });
 
   it("should migrate sub node to value", () => {
@@ -390,26 +254,12 @@ describe("test remove", () => {
       0b10,
       [0],
       [0],
-      [
-        new BitmapIndexedNode(
-          0,
-          0b11,
-          0,
-          [1, 0b100001],
-          [1, 0b100001],
-          [],
-          [1, 0b100001],
-          2
-        ),
-      ],
+      [new BitmapIndexedNode(0, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
       [0],
-      3
+      3,
     );
     const next = node.remove(1, 0b100001, 0b100001, 0);
-    expect(next).toEqual([
-      new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2),
-      0b100001,
-    ]);
+    expect(next).toEqual([new BitmapIndexedNode(1, 0b11, 0, [0, 1], [0, 1], [], [0, 1], 2), 0b100001]);
   });
 
   it("should update child node on remove", () => {
@@ -428,11 +278,11 @@ describe("test remove", () => {
           [1, 0b100001, 0b1100001],
           [],
           [1, 0b100001, 0b1100001],
-          3
+          3,
         ),
       ],
       [0],
-      4
+      4,
     );
     const next = node.remove(1, 0b1100001, 0b1100001, 0);
     expect(next).toEqual([
@@ -442,20 +292,9 @@ describe("test remove", () => {
         0b10,
         [0],
         [0],
-        [
-          new BitmapIndexedNode(
-            1,
-            0b11,
-            0,
-            [1, 0b100001],
-            [1, 0b100001],
-            [],
-            [1, 0b100001],
-            2
-          ),
-        ],
+        [new BitmapIndexedNode(1, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
         [0],
-        3
+        3,
       ),
       0b1100001,
     ]);
@@ -469,20 +308,9 @@ describe("test remove", () => {
         0b10,
         [0],
         [0],
-        [
-          new BitmapIndexedNode(
-            0,
-            0b11,
-            0,
-            [1, 0b100001],
-            [1, 0b100001],
-            [],
-            [1, 0b100001],
-            2
-          ),
-        ],
+        [new BitmapIndexedNode(0, 0b11, 0, [1, 0b100001], [1, 0b100001], [], [1, 0b100001], 2)],
         [0],
-        3
+        3,
       );
     const node = make();
     const next = node.remove(1, 2, 1, 0);

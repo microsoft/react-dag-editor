@@ -11,7 +11,7 @@ const dummy = new Proxy(
       }
       return paramCase(prop);
     },
-  }
+  },
 );
 
 module.exports = dummy;

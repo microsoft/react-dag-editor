@@ -1,10 +1,7 @@
 import { getNodeSize, IGraphConfig } from "../../index";
 import { ILine } from "../../lib/components/Line";
 import { IDummyNode } from "../../lib/models/dummy-node";
-import {
-  getAlignmentLines,
-  getAutoAlignDisplacement,
-} from "../../lib/utils/autoAlign";
+import { getAlignmentLines, getAutoAlignDisplacement } from "../../lib/utils/autoAlign";
 import { getGraphConfig } from "../utils";
 import { getSample1Data } from "./__data__/getSample1Data";
 
@@ -21,7 +18,7 @@ describe("AutoAlign", () => {
    *
    */
   function initData(): void {
-    allNodes = getSample1Data().nodes.map((node) => ({
+    allNodes = getSample1Data().nodes.map(node => ({
       id: node.id,
       x: node.x,
       y: node.y,
@@ -134,108 +131,51 @@ describe("AutoAlign", () => {
 
   describe("getAlignmentLines", () => {
     it("dragging one node with default threshold, align x and y, should has 4 alignment lines", () => {
-      const alignmentLines = getAlignmentLines(
-        testData[0].dummyNodes,
-        allNodes,
-        graphConfig
-      );
+      const alignmentLines = getAlignmentLines(testData[0].dummyNodes, allNodes, graphConfig);
       expect(alignmentLines).toEqual(testData[0].expected);
     });
 
     it("dragging one node with default threshold, with a larger width, align middle, should has one alignment line", () => {
-      const alignmentLines = getAlignmentLines(
-        testData[1].dummyNodes,
-        allNodes,
-        graphConfig
-      );
+      const alignmentLines = getAlignmentLines(testData[1].dummyNodes, allNodes, graphConfig);
       expect(alignmentLines).toEqual(testData[1].expected);
     });
 
     it("dragging one node with specified threshold, with a larger width, align x right, should has 1 alignment ling", () => {
-      const alignmentLines = getAlignmentLines(
-        testData[2].dummyNodes,
-        allNodes,
-        graphConfig,
-        5
-      );
+      const alignmentLines = getAlignmentLines(testData[2].dummyNodes, allNodes, graphConfig, 5);
       expect(alignmentLines).toEqual(testData[2].expected);
     });
 
     it("dragging multi nodes with default threshold, align x left, should has 1 alignment line", () => {
-      const alignmentLines = getAlignmentLines(
-        testData[3].dummyNodes,
-        allNodes,
-        graphConfig
-      );
+      const alignmentLines = getAlignmentLines(testData[3].dummyNodes, allNodes, graphConfig);
       expect(alignmentLines).toEqual(testData[3].expected);
     });
   });
 
   describe("getAutoAlignDisplacement", () => {
     it("dragging one node", () => {
-      const dx = getAutoAlignDisplacement(
-        testData[0].expected,
-        testData[0].dummyNodes,
-        graphConfig,
-        "x"
-      );
-      const dy = getAutoAlignDisplacement(
-        testData[0].expected,
-        testData[0].dummyNodes,
-        graphConfig,
-        "y"
-      );
+      const dx = getAutoAlignDisplacement(testData[0].expected, testData[0].dummyNodes, graphConfig, "x");
+      const dy = getAutoAlignDisplacement(testData[0].expected, testData[0].dummyNodes, graphConfig, "y");
       expect(dx).toBe(-1);
       expect(dy).toBe(0);
     });
 
     it("dragging one node, and the node has a different width, align x middle", () => {
-      const dx = getAutoAlignDisplacement(
-        testData[1].expected,
-        testData[1].dummyNodes,
-        graphConfig,
-        "x"
-      );
-      const dy = getAutoAlignDisplacement(
-        testData[1].expected,
-        testData[1].dummyNodes,
-        graphConfig,
-        "y"
-      );
+      const dx = getAutoAlignDisplacement(testData[1].expected, testData[1].dummyNodes, graphConfig, "x");
+      const dy = getAutoAlignDisplacement(testData[1].expected, testData[1].dummyNodes, graphConfig, "y");
       expect(dx).toBe(0);
       expect(dy).toBe(0);
     });
 
     it("dragging one node, and the node has a different width, align x right", () => {
-      const dx = getAutoAlignDisplacement(
-        testData[2].expected,
-        testData[2].dummyNodes,
-        graphConfig,
-        "x"
-      );
-      const dy = getAutoAlignDisplacement(
-        testData[2].expected,
-        testData[2].dummyNodes,
-        graphConfig,
-        "y"
-      );
+      const dx = getAutoAlignDisplacement(testData[2].expected, testData[2].dummyNodes, graphConfig, "x");
+      const dy = getAutoAlignDisplacement(testData[2].expected, testData[2].dummyNodes, graphConfig, "y");
       expect(dx).toBe(0);
       expect(dy).toBe(0);
     });
 
     it("dragging multi nodes", () => {
-      const dx = getAutoAlignDisplacement(
-        testData[3].expected,
-        testData[3].dummyNodes,
-        graphConfig,
-        "x"
-      );
-      const dy = getAutoAlignDisplacement(
-        testData[3].expected,
-        testData[3].dummyNodes,
-        graphConfig,
-        "y"
-      );
+      const dx = getAutoAlignDisplacement(testData[3].expected, testData[3].dummyNodes, graphConfig, "x");
+      const dy = getAutoAlignDisplacement(testData[3].expected, testData[3].dummyNodes, graphConfig, "y");
       expect(dx).toBe(1);
       expect(dy).toBe(0);
     });

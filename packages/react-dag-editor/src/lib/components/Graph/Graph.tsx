@@ -1,6 +1,7 @@
 /* eslint-disable max-lines */
 import * as React from "react";
 import { v4 as uuid } from "uuid";
+import { OrderedMap } from "../../collections";
 import {
   useContainerRect,
   useGraphState,
@@ -16,6 +17,7 @@ import { useEventChannel } from "../../hooks/useEventChannel";
 import { useFeatureControl } from "../../hooks/useFeatureControl";
 import { GraphCanvasEvent, GraphContextMenuEvent, ICanvasCommonEvent, ICanvasKeyboardEvent } from "../../models/event";
 import type { IContainerRect, IViewport } from "../../models/geometry";
+import { NodeModel } from "../../models/NodeModel";
 import { GraphBehavior } from "../../models/state";
 import { isSelected } from "../../models/status";
 import { isSupported, isViewportComplete } from "../../utils";
@@ -27,15 +29,13 @@ import { AnimatingNodeGroup } from "../AnimatingNodeGroup";
 import { Connecting } from "../Connecting";
 import { GraphContextMenu } from "../GraphContextMenu";
 import { GraphGroupsRenderer } from "../Group/GraphGroupsRenderer";
+import { NodeLayers } from "../NodeLayers";
 import { NodeTooltips } from "../NodeTooltips";
 import { PortTooltips } from "../PortTooltips";
 import { Scrollbar } from "../Scrollbar";
 import { Transform } from "../Transform";
 import { EdgeTree } from "../tree/EdgeTree";
 import { NodeTree } from "../tree/NodeTree";
-import { NodeLayers } from "../NodeLayers";
-import { OrderedMap } from "../../collections";
-import { NodeModel } from "../../models/NodeModel";
 import { VirtualizationProvider } from "../VirtualizationProvider";
 import { getGraphStyles } from "./Graph.styles";
 import type { IGraphProps } from "./IGraphProps";

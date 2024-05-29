@@ -1,11 +1,11 @@
 import * as React from "react";
+import { defaultColors } from "../common/constants";
+import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
+import { GraphModel } from "../models/GraphModel";
 import type { ICanvasNode } from "../models/node";
 import type { ICanvasPort } from "../models/port";
-import { GraphModel } from "../models/GraphModel";
 import { GraphPortStatus } from "../models/status";
 import * as Bitset from "../utils/bitset";
-import type { IPortConfig, IPortDrawArgs } from "../models/config/types";
-import { defaultColors } from "../common/constants";
 
 class DefaultPort implements IPortConfig {
   public getStyle(

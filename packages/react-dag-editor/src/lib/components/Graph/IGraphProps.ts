@@ -1,13 +1,13 @@
 import * as React from "react";
-import { RenderNodeAnchors } from "../NodeAnchors";
 import { TGetPositionFromEvent } from "../../controllers";
-import { IEvent } from "../../models/event";
 import { ICanvasEdge } from "../../models/edge";
+import { IEvent } from "../../models/event";
 import { GraphModel } from "../../models/GraphModel";
 import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
 import { ICanvasPort } from "../../models/port";
 import { CanvasMouseMode } from "../../models/state";
+import { RenderNodeAnchors } from "../NodeAnchors";
 
 export interface IGraphProps<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   /**

@@ -2,9 +2,9 @@ import * as React from "react";
 import { ConnectingStateContext } from "../contexts/ConnectingStateContext";
 import { useGraphConfig } from "../hooks/context";
 import { IViewport } from "../models/geometry";
-import { ICanvasPort } from "../models/port";
 import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
+import { ICanvasPort } from "../models/port";
 import { GraphPortStatus } from "../models/status";
 import * as Bitset from "../utils/bitset";
 

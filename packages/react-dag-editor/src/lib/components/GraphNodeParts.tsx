@@ -5,8 +5,8 @@ import { NodeModel } from "../models/NodeModel";
 import { isNodeEditing } from "../models/status";
 import { isPointInRect } from "../utils";
 import { GraphNode, IGraphNodeCommonProps } from "./GraphNode";
-import { GraphNodeAnchors, RenderNodeAnchors } from "./NodeAnchors";
 import { GraphOneNodePorts, IGraphOneNodePortsProps } from "./GraphOneNodePorts";
+import { GraphNodeAnchors, RenderNodeAnchors } from "./NodeAnchors";
 
 export interface IGraphNodePartsProps
   extends Required<Omit<IGraphNodeCommonProps, "viewport">>,

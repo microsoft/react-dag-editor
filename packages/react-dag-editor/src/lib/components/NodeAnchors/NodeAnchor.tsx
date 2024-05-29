@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Slots } from "../Slots/Slots";
 import { defaultColors } from "../../common/constants";
 import { INodeResizeHandlerProps } from "../../contexts/SlotsContext";
+import { Slots } from "../Slots/Slots";
 
 export const RESIZE_POINT_WIDTH = 8;
 export const RESIZE_POINT_HEIGHT = 8;

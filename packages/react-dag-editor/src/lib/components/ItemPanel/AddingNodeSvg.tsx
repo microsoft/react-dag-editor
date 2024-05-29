@@ -1,7 +1,7 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
-import { useConst } from "../../hooks/useConst";
 import { useAlignmentLines, useGraphConfig, useGraphController, useViewport } from "../../hooks/context";
+import { useConst } from "../../hooks/useConst";
 import { GraphCanvasEvent } from "../../models/event";
 import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
@@ -9,8 +9,8 @@ import { getNodeSize } from "../../utils";
 import { defaultGetNodeAriaLabel } from "../../utils/a11yUtils";
 import { getAutoAlignDisplacement } from "../../utils/autoAlign";
 import { EventChannel } from "../../utils/eventChannel";
-import { GraphNode } from "../GraphNode";
 import classes from "../Graph.styles";
+import { GraphNode } from "../GraphNode";
 import { Transform } from "../Transform";
 import { useSvgRect } from "./useSvgRect";
 

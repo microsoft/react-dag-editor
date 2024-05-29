@@ -1,7 +1,7 @@
 import { HashMap, HashMapBuilder, OrderedMap } from "../collections";
+import * as Bitset from "../utils/bitset";
 import { markEdgeDirty } from "../utils/graphDataUtils";
 import { preventSpread } from "../utils/preventSpread";
-import * as Bitset from "../utils/bitset";
 import { ICanvasData, ICanvasGroup } from "./canvas";
 import { ICanvasEdge } from "./edge";
 import { EdgeModel } from "./EdgeModel";

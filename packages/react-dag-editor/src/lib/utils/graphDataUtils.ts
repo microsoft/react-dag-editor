@@ -18,10 +18,10 @@ import {
   isSelected,
   updateStatus,
 } from "../models/status";
+import * as Bitset from "./bitset";
 import { getPortPositionByPortId } from "./getPortPosition";
 import { identical } from "./identical";
 import { checkIsMultiSelect } from "./keyboard";
-import * as Bitset from "./bitset";
 import { getRealPointFromClientPoint } from "./transformMatrix";
 
 export type TDataPatch<NodeData, EdgeData, PortData> = (

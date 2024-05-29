@@ -1,5 +1,5 @@
-import { useRenderedArea } from "./useRenderedArea";
 import { IGraphState } from "../models/state";
+import { useRenderedArea } from "./useRenderedArea";
 
 export const useBackgroundRect = (state: IGraphState) => {
   const { viewport } = state;

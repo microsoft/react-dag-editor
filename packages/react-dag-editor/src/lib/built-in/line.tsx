@@ -2,8 +2,8 @@ import * as React from "react";
 import { defaultColors } from "../common/constants";
 import type { IEdgeConfig } from "../models/config/types";
 import { GraphEdgeStatus } from "../models/status";
-import { getCurvePathD } from "../utils/getCurvePathD";
 import * as Bitset from "../utils/bitset";
+import { getCurvePathD } from "../utils/getCurvePathD";
 
 export const line: IEdgeConfig = {
   render(args): React.ReactNode {

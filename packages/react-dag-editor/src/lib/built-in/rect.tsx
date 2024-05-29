@@ -1,10 +1,10 @@
 import * as React from "react";
+import { defaultColors } from "../common/constants";
 import type { INodeConfig, INodeDrawArgs } from "../models/config/types";
 import type { ICanvasNode } from "../models/node";
 import { GraphNodeStatus } from "../models/status";
 import { has } from "../utils/bitset";
 import { getRectHeight, getRectWidth } from "../utils/layout";
-import { defaultColors } from "../common/constants";
 import { RectComponent } from "./RectComponent";
 
 export const rect: INodeConfig = {

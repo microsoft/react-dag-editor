@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useGraphConfig, useVirtualization } from "../hooks/context";
+import { EdgeModel } from "../models/EdgeModel";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
-import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { GraphEdgeStatus } from "../models/status";
 import { getEdgeUid, getLinearFunction, isPointInRect } from "../utils";
+import * as Bitset from "../utils/bitset";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
-import * as Bitset from "../utils/bitset";
 
 export interface IGraphEdgeCommonProps {
   data: GraphModel;

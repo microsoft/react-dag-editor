@@ -8,8 +8,8 @@ import { getNodeAutomationId, getNodeConfig, getNodeUid } from "../utils";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
 import { checkIsMultiSelect } from "../utils/keyboard";
-import classes from "./Graph.styles";
 import { IGraphProps } from "./Graph/IGraphProps";
+import classes from "./Graph.styles";
 
 export interface IGraphNodeCommonProps {
   isNodeEditDisabled?: boolean;

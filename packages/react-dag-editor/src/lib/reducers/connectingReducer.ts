@@ -5,8 +5,8 @@ import { GraphEdgeEvent, GraphNodeEvent, GraphPortEvent } from "../models/event"
 import { IGraphState } from "../models/state";
 import { GraphEdgeStatus, GraphPortStatus, updateStatus } from "../models/status";
 import { getNearestConnectablePort, isConnectable, isViewportComplete, pushHistory, unSelectAllEntity } from "../utils";
-import * as Bitset from "../utils/bitset";
 import { nextConnectablePort } from "../utils/a11yUtils";
+import * as Bitset from "../utils/bitset";
 
 function attachPort(state: IGraphState, nodeId: string, portId: string): IGraphState {
   if (!state.connectState) {

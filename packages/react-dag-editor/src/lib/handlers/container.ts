@@ -1,12 +1,12 @@
 import * as React from "react";
 import { MouseEventButton } from "../common/constants";
 import { DragController, IOnDragEnd } from "../controllers";
+import { GraphController } from "../controllers/GraphController";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { GraphCanvasEvent, ICanvasCommonEvent, IEvent } from "../models/event";
 import { IPoint } from "../models/geometry";
 import { CanvasMouseMode, IGraphState } from "../models/state";
 import { EventChannel } from "../utils/eventChannel";
-import { GraphController } from "../controllers/GraphController";
 import { isWithinThreshold } from "../utils/isWithinThreshold";
 
 export interface IContainerMouseDownParams {

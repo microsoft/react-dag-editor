@@ -1,6 +1,6 @@
 import * as React from "react";
-import { GraphModel } from "../models/GraphModel";
 import { OrderedMap } from "../collections";
+import { GraphModel } from "../models/GraphModel";
 import { NodeModel } from "../models/NodeModel";
 interface INodeLayersProps {
   data: GraphModel;

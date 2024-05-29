@@ -21,6 +21,7 @@ export enum GraphBehavior {
   AddingNode = "addingNode",
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IGraphDataState<
   NodeData = unknown,
   EdgeData = unknown,

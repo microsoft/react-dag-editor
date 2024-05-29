@@ -27,12 +27,14 @@ export function memoize<T extends unknown[], R, D>(
     const selectedArgs = selector
       ? Array.isArray(selector)
         ? selector
+        // eslint-disable-next-line prefer-spread
         : selector.apply(undefined, args)
       : args;
     if (shallowEqual(prev, selectedArgs)) {
       return value!;
     }
     prev = selectedArgs;
+    // eslint-disable-next-line prefer-spread
     value = f.apply(undefined, args);
     return value!;
   };

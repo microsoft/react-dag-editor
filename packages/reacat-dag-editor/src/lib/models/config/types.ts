@@ -13,6 +13,7 @@ export interface IItemConfigArgs<T> {
   viewport: Required<IViewport>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface INodeDrawArgs<NodeData = unknown, PortData = unknown>
   extends IItemConfigArgs<NodeModel<NodeData, PortData>> {}
 

@@ -22,6 +22,7 @@ function makeScheduledCallback<T, Args extends unknown[]>(
       task = schedule(() => {
         scheduled = false;
         batchedUpdates(() => {
+          // eslint-disable-next-line prefer-spread
           callback.apply(null, currentArgs);
         });
       });

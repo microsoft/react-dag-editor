@@ -807,7 +807,7 @@ exports[`should copy and paste with edge 1`] = `
 `;
 
 exports[`should copy and paste with edge: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]KeyDown",
@@ -818,7 +818,7 @@ Array [
 `;
 
 exports[`should delete selected edge: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]KeyDown",
@@ -827,7 +827,7 @@ Array [
 `;
 
 exports[`should focus first node: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]KeyDown",
@@ -837,7 +837,7 @@ Array [
 `;
 
 exports[`should navigate with keyboard: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]Focus",
@@ -881,7 +881,7 @@ Array [
 `;
 
 exports[`should record keyup and keydown: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]KeyDown",
@@ -894,7 +894,7 @@ Array [
 `;
 
 exports[`should select all: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]KeyDown",
@@ -903,7 +903,7 @@ Array [
 `;
 
 exports[`should undo, redo: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
   "[Canvas]KeyDown",

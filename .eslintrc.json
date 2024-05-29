@@ -5,6 +5,7 @@
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["plugin:prettier/recommended"],
       "rules": {
         "@nx/enforce-module-boundaries": [
           "error",
@@ -23,8 +24,66 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
+      "plugins": ["import"],
       "extends": ["plugin:@nx/typescript"],
-      "rules": {}
+      "rules": {
+        "no-var": "error",
+        "consistent-return": "error",
+        "@typescript-eslint/no-shadow": [
+          "error",
+          {
+            "hoist": "all"
+          }
+        ],
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "array-simple"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": {
+              "accessors": "off",
+              "constructors": "off"
+            }
+          }
+        ],
+        "import/no-cycle": [
+          "warn",
+          {
+            "ignoreExternal": true
+          }
+        ],
+        "import/no-default-export": "error",
+        "import/no-duplicates": "error",
+        "import/no-self-import": "error",
+        "import/order": [
+          "error",
+          {
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "no-console": "error"
+      }
+    },
+    {
+      "files": ["*.tsx"],
+      "plugins": ["react-refresh"],
+      "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
+      "rules": {
+        "react-refresh/only-export-components": "warn",
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],
@@ -37,6 +96,12 @@
         "jest": true
       },
       "rules": {}
+    },
+    {
+      "files": ["*.stories.tsx", "*.stories.jsx", "vite.config.ts", ".storybook/**"],
+      "rules": {
+        "import/no-default-export": "off"
+      }
     }
   ]
 }

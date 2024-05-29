@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`drag node should not drag when dragging is disabled: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+]
+`;
+
+exports[`drag node should not receive click event: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+]
+`;
+
+exports[`drag node should receive click event: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+  "[Canvas]Focus",
+  "[Node]DragStart",
+  "[Node]Drag",
+  "[Node]Drag",
+  "[Node]DragEnd",
+  "[Node]Click",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+]
+`;
+
+exports[`drag node should receive drag event: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+  "[Canvas]Focus",
+  "[Node]DragStart",
+  "[Node]Drag",
+  "[Node]Drag",
+  "[Node]DragEnd",
+]
+`;
+
+exports[`test drag and selection should drag multiple nodes: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+  "[Canvas]Focus",
+  "[Node]DragStart",
+  "[Node]Drag",
+  "[Node]Drag",
+  "[Node]DragEnd",
+]
+`;
+
+exports[`test drag and selection should drag one node when multiple nodes selected: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+  "[Canvas]Focus",
+  "[Node]DragStart",
+  "[Node]Drag",
+  "[Node]Drag",
+  "[Node]DragEnd",
+]
+`;
+
+exports[`test drag and selection should drag one node: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+  "[Canvas]Focus",
+  "[Node]DragStart",
+  "[Node]Drag",
+  "[Node]Drag",
+  "[Node]DragEnd",
+]
+`;
+
+exports[`test drag and selection should select one more node and drag multiple nodes: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+  "[Canvas]Focus",
+  "[Node]DragStart",
+  "[Node]Drag",
+  "[Node]Drag",
+  "[Node]DragEnd",
+]
+`;
+
+exports[`test drag and selection should select one node: events 1`] = `
+Array [
+  "[Canvas]ViewportResize",
+  "[Canvas]VirtualizationRecalculated",
+  "[Node]PointerDown",
+  "[Canvas]Focus",
+  "[Node]DragStart",
+  "[Node]Drag",
+  "[Node]Drag",
+  "[Node]DragEnd",
+  "[Node]Click",
+  "[Canvas]Blur",
+  "[Canvas]Focus",
+]
+`;

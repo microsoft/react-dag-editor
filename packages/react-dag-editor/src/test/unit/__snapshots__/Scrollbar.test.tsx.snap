@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Scrollbar should match the snapshot 1`] = `
+<div>
+  <div
+    class="verticalScrollWrapper-0-2-1"
+  >
+    <div
+      aria-label="vertical scrollbar"
+      aria-roledescription="vertical scrollbar"
+      class="verticalScrollStyle-0-2-3 verticalScrollStyle-d0-0-2-5"
+      id="canvas-vertical-scrollbar"
+      role="button"
+    />
+  </div>
+  <div
+    class="horizontalScrollWrapper-0-2-2"
+  >
+    <div
+      aria-label="horizontal scrollbar"
+      aria-roledescription="horizontal scrollbar"
+      class="horizontalScrollStyle-0-2-4 horizontalScrollStyle-d1-0-2-6"
+      id="canvas-horizontal-scrollbar"
+      role="button"
+    />
+  </div>
+</div>
+`;

@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/display-name */
 import * as React from "react";
-import { SquareNodeAnchors } from "./SquareNodeAnchors";
 import {
   getRectHeight,
   getRectWidth,
@@ -23,6 +22,7 @@ import {
   RenderNodeAnchors,
 } from "../..";
 import { sampleGraphData } from "../data/sample-graph-1";
+import { SquareNodeAnchors } from "./SquareNodeAnchors";
 
 /** How to customize a node by graphConfig.getNodeConfig */
 
@@ -33,7 +33,7 @@ const stepNodeContainerStyles: React.CSSProperties = {
   opacity: 0.5,
 };
 
-const StepNode: React.FC<{ name: string }> = (props) => {
+const StepNode: React.FC<{ name: string }> = props => {
   return (
     <div style={stepNodeContainerStyles}>
       {props.name}
@@ -58,12 +58,8 @@ const sourceNodeConfig: INodeConfig = {
     const height = getRectHeight(sourceNodeConfig, args.model);
     const width = getRectWidth(sourceNodeConfig, args.model);
 
-    const fill = Bitset.has(GraphNodeStatus.Activated)(args.model.status)
-      ? "red"
-      : "blue";
-    const stroke = Bitset.has(GraphNodeStatus.Selected)(args.model.status)
-      ? "green"
-      : "none";
+    const fill = Bitset.has(GraphNodeStatus.Activated)(args.model.status) ? "red" : "blue";
+    const stroke = Bitset.has(GraphNodeStatus.Selected)(args.model.status) ? "green" : "none";
 
     return (
       <ellipse
@@ -84,8 +80,8 @@ const sourceNodeConfig: INodeConfig = {
 
 const stepNodeConfig: INodeConfig = {
   getMinHeight: () => 64,
-  getMinWidth: (model) => model.width ?? 120 + (model.name?.length ?? 0) * 12,
-  render: (args) => {
+  getMinWidth: model => model.width ?? 120 + (model.name?.length ?? 0) * 12,
+  render: args => {
     const height = getRectHeight(stepNodeConfig, args.model);
     const width = getRectWidth(stepNodeConfig, args.model);
 
@@ -108,7 +104,7 @@ const stepNodeConfig: INodeConfig = {
 const noteNodeConfig: INodeConfig = {
   getMinHeight: () => 100,
   getMinWidth: () => 100,
-  render: (args) => {
+  render: args => {
     const height = getRectHeight(noteNodeConfig, args.model);
     const width = getRectWidth(noteNodeConfig, args.model);
 
@@ -146,36 +142,24 @@ interface IPortProps {
  */
 const RADIUS = 18;
 
-export const Port: React.FunctionComponent<IPortProps> = (props) => {
+export const Port: React.FunctionComponent<IPortProps> = props => {
   const { port, x, y, parentNode, style, isConnectable } = props;
 
-  const renderCircle = (
-    r: number,
-    circleStyle: Partial<React.CSSProperties>
-  ): React.ReactNode => {
+  const renderCircle = (r: number, circleStyle: Partial<React.CSSProperties>): React.ReactNode => {
     return <circle r={r} cx={x} cy={y} style={circleStyle} />;
   };
 
-  const opacity = Bitset.has(GraphNodeStatus.UnconnectedToSelected)(
-    parentNode.status
-  )
-    ? "60%"
-    : "100%";
+  const opacity = Bitset.has(GraphNodeStatus.UnconnectedToSelected)(parentNode.status) ? "60%" : "100%";
 
   return (
     <g opacity={opacity}>
       {isConnectable === undefined ? ( // isConnectable === undefined is when the graph is not in connecting state
-        <>
-          {Bitset.has(GraphPortStatus.Activated)(port.status)
-            ? renderCircle(7, style)
-            : renderCircle(5, style)}
-        </>
+        <>{Bitset.has(GraphPortStatus.Activated)(port.status) ? renderCircle(7, style) : renderCircle(5, style)}</>
       ) : Bitset.has(GraphPortStatus.ConnectingAsTarget)(port.status) ? (
         renderCircle(7, style)
       ) : (
         <>
-          {isConnectable &&
-            renderCircle(RADIUS, { fill: "#0078ba", opacity: 0.2 })}
+          {isConnectable && renderCircle(RADIUS, { fill: "#0078ba", opacity: 0.2 })}
           {renderCircle(5, style)}
         </>
       )}
@@ -191,7 +175,7 @@ class MyPortConfig implements IPortConfig {
     _data: GraphModel,
     isConnectable: boolean | undefined,
     connectedAsSource: boolean,
-    connectedAsTarget: boolean
+    connectedAsTarget: boolean,
   ): Partial<React.CSSProperties> {
     const strokeWidth = 1;
     let stroke = "#B3B0AD";
@@ -202,13 +186,7 @@ class MyPortConfig implements IPortConfig {
       fill = "#B3B0AD";
     }
 
-    if (
-      Bitset.has(
-        GraphPortStatus.Activated |
-          GraphPortStatus.Selected |
-          GraphPortStatus.Connecting
-      )(port.status)
-    ) {
+    if (Bitset.has(GraphPortStatus.Activated | GraphPortStatus.Selected | GraphPortStatus.Connecting)(port.status)) {
       fill = "#0078D4";
       stroke = "#0078D4";
     }
@@ -240,10 +218,7 @@ class MyPortConfig implements IPortConfig {
 
   // Where you can figure out your own validators for node connections.
 
-  public getIsConnectable({
-    anotherPort,
-    model,
-  }: IGetConnectableParams): boolean | undefined {
+  public getIsConnectable({ anotherPort, model }: IGetConnectableParams): boolean | undefined {
     if (!anotherPort) {
       return undefined;
     }
@@ -256,14 +231,8 @@ class MyPortConfig implements IPortConfig {
   public render(args: IPortDrawArgs): React.ReactNode {
     const { model: port, data, x, y, parentNode } = args;
     const isConnectable = this.getIsConnectable(args);
-    const connectedAsSource = data.isPortConnectedAsSource(
-      parentNode.id,
-      port.id
-    );
-    const connectedAsTarget = data.isPortConnectedAsTarget(
-      parentNode.id,
-      port.id
-    );
+    const connectedAsSource = data.isPortConnectedAsSource(parentNode.id, port.id);
+    const connectedAsTarget = data.isPortConnectedAsTarget(parentNode.id, port.id);
 
     return (
       <Port
@@ -272,14 +241,7 @@ class MyPortConfig implements IPortConfig {
         parentNode={parentNode}
         x={x}
         y={y}
-        style={this.getStyle(
-          port,
-          parentNode,
-          data,
-          isConnectable,
-          connectedAsSource,
-          connectedAsTarget
-        )}
+        style={this.getStyle(port, parentNode, data, isConnectable, connectedAsSource, connectedAsTarget)}
         isConnectable={isConnectable}
       />
     );
@@ -307,9 +269,8 @@ class MyPortConfig implements IPortConfig {
 }
 
 export const graphConfig = GraphConfigBuilder.default()
-  .registerNode((node) => {
-    const nodeType =
-      (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
+  .registerNode(node => {
+    const nodeType = (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
     switch (nodeType) {
       case "source":
         return sourceNodeConfig;
@@ -321,9 +282,8 @@ export const graphConfig = GraphConfigBuilder.default()
         return undefined;
     }
   })
-  .registerPort((port) => {
-    const nodeType =
-      (port.data as { nodeType: string } | undefined)?.nodeType ?? "";
+  .registerPort(port => {
+    const nodeType = (port.data as { nodeType: string } | undefined)?.nodeType ?? "";
     switch (nodeType) {
       case "myPort":
         return new MyPortConfig();
@@ -341,28 +301,21 @@ export const FeaturesDemo: React.FC = () => {
       },
       data: GraphModel.fromJSON(sampleGraphData),
     },
-    undefined
+    undefined,
   );
 
   /** Render your custom anchors of node by shape */
-  const renderNodeAnchors: RenderNodeAnchors = React.useCallback(
-    (node, getMouseDown, defaultAnchors) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return (node as any).shape === "note" ? (
-        <SquareNodeAnchors node={node} getMouseDown={getMouseDown} />
-      ) : (
-        defaultAnchors
-      );
-    },
-    []
-  );
+  const renderNodeAnchors: RenderNodeAnchors = React.useCallback((node, getMouseDown, defaultAnchors) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (node as any).shape === "note" ? (
+      <SquareNodeAnchors node={node} getMouseDown={getMouseDown} />
+    ) : (
+      defaultAnchors
+    );
+  }, []);
 
   return (
-    <ReactDagEditor
-      style={{ width: "900px", height: "600px" }}
-      state={state}
-      dispatch={dispatch}
-    >
+    <ReactDagEditor style={{ width: "900px", height: "600px" }} state={state} dispatch={dispatch}>
       <Graph renderNodeAnchors={renderNodeAnchors} />
     </ReactDagEditor>
   );

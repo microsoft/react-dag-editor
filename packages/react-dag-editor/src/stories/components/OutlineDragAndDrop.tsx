@@ -1,3 +1,5 @@
+import { mergeStyles } from "@fluentui/merge-styles";
+import * as React from "react";
 import {
   Bitset,
   getRectHeight,
@@ -9,15 +11,13 @@ import {
   ReactDagEditor,
   useGraphReducer,
 } from "../..";
-import * as React from "react";
-import { mergeStyles } from "@fluentui/merge-styles";
 
 export const OutlineDragAndDrop: React.FC = () => {
   const [state, dispatch] = useGraphReducer(
     {
       settings: {
         graphConfig: GraphConfigBuilder.default()
-          .registerNode((node) => {
+          .registerNode(node => {
             return {
               // min height constraint for node resizing.
               getMinHeight: () => 60,
@@ -28,27 +28,12 @@ export const OutlineDragAndDrop: React.FC = () => {
                 const height = getRectHeight(this, args.model);
                 const width = getRectWidth(this, args.model);
 
-                const fill = Bitset.has(GraphNodeStatus.Activated)(
-                  args.model.status
-                )
-                  ? "gray"
-                  : "white";
-                const stroke = Bitset.has(GraphNodeStatus.Selected)(
-                  args.model.status
-                )
-                  ? "red"
-                  : "blue";
+                const fill = Bitset.has(GraphNodeStatus.Activated)(args.model.status) ? "gray" : "white";
+                const stroke = Bitset.has(GraphNodeStatus.Selected)(args.model.status) ? "red" : "blue";
 
                 return (
                   <g transform={`translate(${args.model.x}, ${args.model.y})`}>
-                    <rect
-                      width={width}
-                      height={height}
-                      stroke={stroke}
-                      strokeWidth={2}
-                      fill={fill}
-                      fillOpacity={0.8}
-                    />
+                    <rect width={width} height={height} stroke={stroke} strokeWidth={2} fill={fill} fillOpacity={0.8} />
                     <text x={10} y={20}>
                       {(node.data as { id: string; title: string })?.title}
                     </text>
@@ -61,7 +46,7 @@ export const OutlineDragAndDrop: React.FC = () => {
       },
       data: undefined,
     },
-    undefined
+    undefined,
   );
 
   const nodes = React.useMemo(() => {
@@ -88,15 +73,9 @@ export const OutlineDragAndDrop: React.FC = () => {
   });
 
   return (
-    <ReactDagEditor
-      style={{ display: "flex", width: "900px", height: "600px" }}
-      state={state}
-      dispatch={dispatch}
-    >
-      <ul
-        style={{ width: "200px", flexShrink: 0, listStyle: "none", padding: 0 }}
-      >
-        {nodes.map((node) => (
+    <ReactDagEditor style={{ display: "flex", width: "900px", height: "600px" }} state={state} dispatch={dispatch}>
+      <ul style={{ width: "200px", flexShrink: 0, listStyle: "none", padding: 0 }}>
+        {nodes.map(node => (
           <li key={node.id}>
             <Item
               getNode={() => {

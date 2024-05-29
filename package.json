@@ -1,5 +1,5 @@
 {
-  "name": "react-dag-editor",
+  "name": "react-dag-editor-legacy",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
@@ -103,7 +103,7 @@
     "react-jss": "^10.8.0",
     "regenerator-runtime": "0.13.7",
     "toposort": "^2.0.2",
-    "tslib": "^2.0.0",
+    "tslib": "^2.3.0",
     "uuid": "^8.3.2"
   }
 }

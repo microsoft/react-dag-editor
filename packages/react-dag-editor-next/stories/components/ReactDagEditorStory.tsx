@@ -1,6 +1,19 @@
 import { FC } from "react";
-import { ReactDagEditor } from "../../src";
+import { ICanvasData } from "react-dag-editor";
+import { ReactDagEditor, SingleGraphViewModel } from "../../src";
+
+const initData: ICanvasData = {
+  nodes: [],
+  edges: [],
+};
+
+const viewModel = new SingleGraphViewModel();
 
 export const ReactDagEditorStory: FC = () => {
-  return <ReactDagEditor />;
+  return (
+    <div>
+      <button onClick={() => viewModel.setData(initData)}>Load init data</button>
+      <ReactDagEditor viewModel={viewModel} />
+    </div>
+  );
 };

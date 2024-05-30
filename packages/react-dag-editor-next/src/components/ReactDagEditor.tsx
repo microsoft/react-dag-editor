@@ -1,5 +1,10 @@
 import { FC } from "react";
+import { SingleGraphViewModel } from "../viewmodels/SingleGraphViewModel";
 
-export const ReactDagEditor: FC = () => {
+export interface IReactDagEditorProps {
+  viewModel: SingleGraphViewModel;
+}
+
+export const ReactDagEditor: FC<IReactDagEditorProps> = () => {
   return <div>ReactDagEditor</div>;
 };

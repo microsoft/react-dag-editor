@@ -1,1 +1,5 @@
-export * from "./lib/react-dag-editor-next";
+// components
+export * from "./components/ReactDagEditor";
+export * from "./components/Canvas";
+export * from "./components/Toolbar";
+export * from "./components/Palette";

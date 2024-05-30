@@ -22,7 +22,7 @@ describe("Scrollbar", () => {
       },
       {
         ...EMPTY_GRAPH_STATE,
-      }
+      },
     );
 
     const viewport: Required<IViewport> = {

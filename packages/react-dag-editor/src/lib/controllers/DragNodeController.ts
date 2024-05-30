@@ -9,7 +9,7 @@ export class DragNodeController extends DragController {
   public constructor(
     globalMoveEventProvider: IEventProvider<IGlobalMoveEventTypes>,
     getPositionFromEvent: TGetPositionFromEvent,
-    rectRef: React.RefObject<IContainerRect | undefined>
+    rectRef: React.RefObject<IContainerRect | undefined>,
   ) {
     super(globalMoveEventProvider, getPositionFromEvent);
     this.rectRef = rectRef;
@@ -21,12 +21,7 @@ export class DragNodeController extends DragController {
     if (!rect || !this.lastEvent) {
       return;
     }
-    if (
-      e.clientX < rect.left ||
-      e.clientX > rect.right ||
-      e.clientY < rect.top ||
-      e.clientY > rect.bottom
-    ) {
+    if (e.clientX < rect.left || e.clientX > rect.right || e.clientY < rect.top || e.clientY > rect.bottom) {
       this.mouseMove(this.lastEvent);
     }
   }

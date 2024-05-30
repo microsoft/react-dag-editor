@@ -8,7 +8,7 @@ export interface IDebounceOptions {
 export const debounce = <Args extends unknown[]>(
   callback: (...args: Args) => void,
   timeout: number,
-  options?: IDebounceOptions
+  options?: IDebounceOptions,
 ) => {
   const { instance, maxWait } = options || {};
   let timer = 0;

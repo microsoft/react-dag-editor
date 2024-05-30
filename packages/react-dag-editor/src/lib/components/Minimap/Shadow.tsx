@@ -59,13 +59,7 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
             width={rect.width}
             style={shadowStyle}
           />
-          <line
-            x1={viewportStartX}
-            y1={viewportStartY}
-            x2={viewportEndX}
-            y2={viewportStartY}
-            style={lineStyle}
-          />
+          <line x1={viewportStartX} y1={viewportStartY} x2={viewportEndX} y2={viewportStartY} style={lineStyle} />
         </g>
       )}
       {viewportStartX && sideShadowHeight > 0 && (
@@ -80,13 +74,7 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
             width={viewportStartX}
             style={shadowStyle}
           />
-          <line
-            x1={viewportStartX}
-            y1={viewportStartY}
-            x2={viewportStartX}
-            y2={viewportEndY}
-            style={lineStyle}
-          />
+          <line x1={viewportStartX} y1={viewportStartY} x2={viewportStartX} y2={viewportEndY} style={lineStyle} />
         </g>
       )}
       {rightShadowWidth && sideShadowHeight > 0 && (
@@ -101,13 +89,7 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
             width={rightShadowWidth}
             style={shadowStyle}
           />
-          <line
-            x1={viewportEndX}
-            y1={viewportStartY}
-            x2={viewportEndX}
-            y2={viewportEndY}
-            style={lineStyle}
-          />
+          <line x1={viewportEndX} y1={viewportStartY} x2={viewportEndX} y2={viewportEndY} style={lineStyle} />
         </g>
       )}
       {bottomShadowHeight > 0 && (
@@ -122,13 +104,7 @@ export const MiniMapShadow: React.FunctionComponent<IProps> = ({
             width={rect.width}
             style={shadowStyle}
           />
-          <line
-            x1={viewportStartX}
-            y1={viewportEndY}
-            x2={viewportEndX}
-            y2={viewportEndY}
-            style={lineStyle}
-          />
+          <line x1={viewportStartX} y1={viewportEndY} x2={viewportEndX} y2={viewportEndY} style={lineStyle} />
         </g>
       )}
     </>

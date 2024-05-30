@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  IDispatch,
-  IDispatchCallback,
-  IGraphAction,
-  IGraphReactReducer,
-  IGraphReducer,
-} from "../contexts";
+import { IDispatch, IDispatchCallback, IGraphAction, IGraphReactReducer, IGraphReducer } from "../contexts";
 import { createGraphState } from "../createGraphState";
 import { IGraphReducerInitializerParams, IGraphState } from "../models/state";
 import { behaviorReducer } from "../reducers/behaviorReducer";
@@ -35,57 +29,31 @@ const builtinReducer = composeReducers(
     contextMenuReducer,
   ].map(
     (reducer): IGraphReducer =>
-      (next) =>
+      next =>
       (state, action) =>
-        next(reducer(state, action), action)
-  )
+        next(reducer(state, action), action),
+  ),
 );
 
-export function getGraphReducer<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
->(
-  middleware:
-    | IGraphReducer<NodeData, EdgeData, PortData, Action>
-    | undefined = undefined,
-  finalReducer: IGraphReactReducer<
+export function getGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
+  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined = undefined,
+  finalReducer: IGraphReactReducer<NodeData, EdgeData, PortData, Action> = identical,
+): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
+  const finalMiddleware = middleware ? composeReducers([middleware as IGraphReducer, builtinReducer]) : builtinReducer;
+  return finalMiddleware(finalReducer as IGraphReactReducer) as IGraphReactReducer<
     NodeData,
     EdgeData,
     PortData,
     Action
-  > = identical
-): IGraphReactReducer<NodeData, EdgeData, PortData, Action> {
-  const finalMiddleware = middleware
-    ? composeReducers([middleware as IGraphReducer, builtinReducer])
-    : builtinReducer;
-  return finalMiddleware(
-    finalReducer as IGraphReactReducer
-  ) as IGraphReactReducer<NodeData, EdgeData, PortData, Action>;
+  >;
 }
 
-export function useGraphReducer<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
->(
+export function useGraphReducer<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>(
   params: IGraphReducerInitializerParams<NodeData, EdgeData, PortData>,
-  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined
-): [
-  IGraphState<NodeData, EdgeData, PortData>,
-  IDispatch<NodeData, EdgeData, PortData, Action>
-] {
-  const reducer = React.useMemo(
-    () => getGraphReducer(middleware),
-    [middleware]
-  );
-  const [state, dispatchImpl] = React.useReducer(
-    reducer,
-    params,
-    createGraphState
-  );
+  middleware: IGraphReducer<NodeData, EdgeData, PortData, Action> | undefined,
+): [IGraphState<NodeData, EdgeData, PortData>, IDispatch<NodeData, EdgeData, PortData, Action>] {
+  const reducer = React.useMemo(() => getGraphReducer(middleware), [middleware]);
+  const [state, dispatchImpl] = React.useReducer(reducer, params, createGraphState);
   const sideEffects = useConst<IDispatchCallback[]>(() => []);
   const prevStateRef = React.useRef(state);
   const dispatch: IDispatch = React.useCallback(
@@ -93,11 +61,9 @@ export function useGraphReducer<
       if (callback) {
         sideEffects.push(callback);
       }
-      dispatchImpl(
-        action as Action | IGraphAction<NodeData, EdgeData, PortData>
-      );
+      dispatchImpl(action as Action | IGraphAction<NodeData, EdgeData, PortData>);
     },
-    [sideEffects]
+    [sideEffects],
   );
   React.useEffect((): void => {
     const prevState = prevStateRef.current;
@@ -106,7 +72,7 @@ export function useGraphReducer<
     }
     prevStateRef.current = state;
     batchedUpdates(() => {
-      sideEffects.forEach((callback) => {
+      sideEffects.forEach(callback => {
         try {
           callback(state, prevState);
         } catch (e) {
@@ -120,6 +86,6 @@ export function useGraphReducer<
   }, [state]);
   return [state, dispatch] as [
     IGraphState<NodeData, EdgeData, PortData>,
-    IDispatch<NodeData, EdgeData, PortData, Action>
+    IDispatch<NodeData, EdgeData, PortData, Action>,
   ];
 }

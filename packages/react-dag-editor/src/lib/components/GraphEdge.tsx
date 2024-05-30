@@ -1,14 +1,14 @@
 import * as React from "react";
 import { useGraphConfig, useVirtualization } from "../hooks/context";
+import { EdgeModel } from "../models/EdgeModel";
 import { GraphEdgeEvent, IEdgeCommonEvent } from "../models/event";
 import { IPoint, IRectShape } from "../models/geometry";
-import { EdgeModel } from "../models/EdgeModel";
 import { GraphModel } from "../models/GraphModel";
 import { GraphEdgeStatus } from "../models/status";
 import { getEdgeUid, getLinearFunction, isPointInRect } from "../utils";
+import * as Bitset from "../utils/bitset";
 import { Debug } from "../utils/debug";
 import { EventChannel } from "../utils/eventChannel";
-import * as Bitset from "../utils/bitset";
 
 export interface IGraphEdgeCommonProps {
   data: GraphModel;
@@ -29,7 +29,7 @@ function getHintPoints(
   yOnRightAxis: number,
   xOnBottomAxis: number,
   xOnTopAxis: number,
-  yOnLeftAxis: number
+  yOnLeftAxis: number,
 ): IPoint {
   if (source.x === target.x) {
     return {
@@ -39,43 +39,29 @@ function getHintPoints(
   }
   if (source.x < target.x) {
     if (source.y < target.y) {
-      return yOnRightAxis <= maxY
-        ? { x: maxX, y: yOnRightAxis }
-        : { x: xOnBottomAxis, y: maxY };
+      return yOnRightAxis <= maxY ? { x: maxX, y: yOnRightAxis } : { x: xOnBottomAxis, y: maxY };
     } else {
-      return yOnRightAxis >= minY
-        ? { x: maxX, y: yOnRightAxis }
-        : { x: xOnTopAxis, y: minY };
+      return yOnRightAxis >= minY ? { x: maxX, y: yOnRightAxis } : { x: xOnTopAxis, y: minY };
     }
   }
   if (source.y < target.y) {
-    return xOnBottomAxis > minX
-      ? { x: xOnBottomAxis, y: maxY }
-      : { x: minX, y: yOnLeftAxis };
+    return xOnBottomAxis > minX ? { x: xOnBottomAxis, y: maxY } : { x: minX, y: yOnLeftAxis };
   }
-  return yOnLeftAxis > minY
-    ? { x: minX, y: yOnLeftAxis }
-    : { x: xOnTopAxis, y: minY };
+  return yOnLeftAxis > minY ? { x: minX, y: yOnLeftAxis } : { x: xOnTopAxis, y: minY };
 }
 
 export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
   // eslint-disable-next-line complexity
-  (props) => {
-    const {
-      edge,
-      data: graphModel,
-      eventChannel,
-      source,
-      target,
-      graphId,
-    } = props;
+  props => {
+    const { edge, data: graphModel, eventChannel, source, target, graphId } = props;
     const graphConfig = useGraphConfig();
 
     const virtualization = useVirtualization();
     const { viewport, renderedArea, visibleArea } = virtualization;
 
     const edgeEvent =
-      (type: IEdgeCommonEvent["type"]) => (e: React.SyntheticEvent) => {
+      (type: IEdgeCommonEvent["type"]) =>
+      (e: React.SyntheticEvent): void => {
         e.persist();
         eventChannel.trigger({
           type,
@@ -106,9 +92,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
     }
 
     if (!edgeConfig.render) {
-      Debug.warn(
-        `Missing "render" method in edge config ${JSON.stringify(edge)}`
-      );
+      Debug.warn(`Missing "render" method in edge config ${JSON.stringify(edge)}`);
       return null;
     }
 
@@ -126,22 +110,9 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
       viewport,
     });
 
-    if (
-      Bitset.has(GraphEdgeStatus.ConnectedToSelected)(edge.status) &&
-      (!isSourceVisible || !isTargetVisible)
-    ) {
-      const linearFunction = getLinearFunction(
-        source.x,
-        source.y,
-        target.x,
-        target.y
-      );
-      const inverseLinearFunction = getLinearFunction(
-        source.y,
-        source.x,
-        target.y,
-        target.x
-      );
+    if (Bitset.has(GraphEdgeStatus.ConnectedToSelected)(edge.status) && (!isSourceVisible || !isTargetVisible)) {
+      const linearFunction = getLinearFunction(source.x, source.y, target.x, target.y);
+      const inverseLinearFunction = getLinearFunction(source.y, source.x, target.y, target.x);
       const hintSource = isSourceVisible ? source : target;
       const hintTarget = isSourceVisible ? target : source;
       const yOnRightAxis = linearFunction(visibleArea.maxX);
@@ -155,7 +126,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
         yOnRightAxis,
         xOnBottomAxis,
         xOnTopAxis,
-        yOnLeftAxis
+        yOnLeftAxis,
       );
       if (isSourceVisible && edgeConfig.renderWithTargetHint) {
         edgeNode = edgeConfig.renderWithTargetHint({
@@ -205,5 +176,7 @@ export const GraphEdge: React.FunctionComponent<IGraphEdgeProps> = React.memo(
         {edgeNode}
       </g>
     );
-  }
+  },
 );
+
+GraphEdge.displayName = "GraphEdge";

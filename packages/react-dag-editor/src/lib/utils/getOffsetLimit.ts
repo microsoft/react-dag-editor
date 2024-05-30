@@ -1,9 +1,5 @@
 import type { IGraphConfig } from "../models/config/types";
-import type {
-  IContainerRect,
-  IGap,
-  ITransformMatrix,
-} from "../models/geometry";
+import type { IContainerRect, IGap, ITransformMatrix } from "../models/geometry";
 import type { GraphModel } from "../models/GraphModel";
 import { memoize } from "../utils/memoize";
 import { getClientDeltaByPointDelta } from "../utils/transformMatrix";
@@ -39,14 +35,14 @@ export const getOffsetLimit = ({
   const nodeMin = getClientDeltaByPointDelta(
     contentArea.minNodeX - (groupPadding?.left || 0),
     contentArea.minNodeY - (groupPadding?.top || 0),
-    transformMatrix
+    transformMatrix,
   );
   nodeMin.x -= canvasBoundaryPadding?.left ?? 0;
   nodeMin.y -= canvasBoundaryPadding?.top ?? 0;
   const nodeMax = getClientDeltaByPointDelta(
     contentArea.maxNodeX + (groupPadding?.right || 0),
     contentArea.maxNodeY + (groupPadding?.bottom || 0),
-    transformMatrix
+    transformMatrix,
   );
   nodeMax.x += canvasBoundaryPadding?.right ?? 0;
   nodeMax.y += canvasBoundaryPadding?.bottom ?? 0;

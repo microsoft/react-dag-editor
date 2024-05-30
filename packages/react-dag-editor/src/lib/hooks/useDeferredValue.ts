@@ -7,10 +7,7 @@ export interface IDeferredValueConfig {
 /**
  * @todo migrate to React.useDeferredValue after Concurrent mode release
  */
-export function useDeferredValue<T>(
-  value: T,
-  { timeout }: IDeferredValueConfig
-): T {
+export function useDeferredValue<T>(value: T, { timeout }: IDeferredValueConfig): T {
   const [state, setState] = useState(value);
   useEffect(() => {
     const timer = setTimeout(() => {

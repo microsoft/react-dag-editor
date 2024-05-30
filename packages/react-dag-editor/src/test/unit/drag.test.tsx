@@ -1,9 +1,4 @@
-import {
-  cleanup,
-  fireEvent,
-  render,
-  RenderResult,
-} from "@testing-library/react";
+import { cleanup, fireEvent, render, RenderResult } from "@testing-library/react";
 import * as React from "react";
 
 import { act } from "react-dom/test-utils";
@@ -28,7 +23,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  jest.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+  jest.spyOn(window, "requestAnimationFrame").mockImplementation(cb => {
     cb(0);
     return 0;
   });
@@ -39,7 +34,7 @@ afterEach(cleanup);
 function simulateNodeMove(
   container: HTMLElement,
   points: Array<[number, number]>,
-  eventInit: Partial<MouseEventInit> = {}
+  eventInit: Partial<MouseEventInit> = {},
 ): void {
   const svg = container.querySelector("svg")!;
   expect(svg).toBeTruthy();
@@ -91,7 +86,7 @@ let middleware: IGraphReducer;
 
 beforeEach(() => {
   recorder = jest.fn();
-  middleware = (next) => (state, action) => {
+  middleware = next => (state, action) => {
     recorder(action);
     return next(state, action);
   };
@@ -105,7 +100,7 @@ describe("drag node", () => {
         graphProps={{
           onEvent,
         }}
-      />
+      />,
     );
     simulateNodeMove(container, [
       [100, 100],
@@ -114,60 +109,37 @@ describe("drag node", () => {
     expect(onEvent).toHaveBeenCalledWith(
       expect.objectContaining({
         type: GraphNodeEvent.Drag,
-      })
+      }),
     );
   });
 
   it("should not drag when dragging is disabled", () => {
-    const { container } = render(
-      <TestComponent
-        settings={{ features: previewMode }}
-        middleware={middleware}
-      />
-    );
+    const { container } = render(<TestComponent settings={{ features: previewMode }} middleware={middleware} />);
     simulateNodeMove(container, [
       [100, 100],
       [150, 150],
     ]);
 
-    expect(recorder).not.toBeCalledWith(
-      expect.objectContaining({ type: GraphNodeEvent.Drag })
-    );
+    expect(recorder).not.toBeCalledWith(expect.objectContaining({ type: GraphNodeEvent.Drag }));
   });
 
   it("should receive click event", () => {
-    const { container } = render(
-      <TestComponent
-        settings={{ features: dataReadonlyMode }}
-        middleware={middleware}
-      />
-    );
+    const { container } = render(<TestComponent settings={{ features: dataReadonlyMode }} middleware={middleware} />);
     simulateNodeMove(container, [
       [100, 100],
       [105, 105],
     ]);
-    expect(recorder).toBeCalledWith(
-      expect.objectContaining({ type: GraphNodeEvent.Click })
-    );
+    expect(recorder).toBeCalledWith(expect.objectContaining({ type: GraphNodeEvent.Click }));
   });
 
   it("should not receive click event", () => {
-    const { container } = render(
-      <TestComponent
-        settings={{ features: previewMode }}
-        middleware={middleware}
-      />
-    );
+    const { container } = render(<TestComponent settings={{ features: previewMode }} middleware={middleware} />);
     simulateNodeMove(container, [
       [100, 100],
       [105, 105],
     ]);
-    expect(recorder).not.toBeCalledWith(
-      expect.objectContaining({ type: GraphNodeEvent.Drag })
-    );
-    expect(recorder).not.toBeCalledWith(
-      expect.objectContaining({ type: GraphNodeEvent.Click })
-    );
+    expect(recorder).not.toBeCalledWith(expect.objectContaining({ type: GraphNodeEvent.Drag }));
+    expect(recorder).not.toBeCalledWith(expect.objectContaining({ type: GraphNodeEvent.Click }));
   });
 });
 
@@ -190,7 +162,7 @@ describe("test drag and selection", () => {
     wrapper = render(
       <TestComponent data={GraphModel.fromJSON(getSample1Data())}>
         <GraphControllerRef ref={graphControllerRef} />
-      </TestComponent>
+      </TestComponent>,
     );
     container = wrapper.container;
     graphController = graphControllerRef.current!;
@@ -204,8 +176,8 @@ describe("test drag and selection", () => {
     ]);
     expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
-        .selectNodes((node) => node.id === "47566002")
-        .toJSON()
+        .selectNodes(node => node.id === "47566002")
+        .toJSON(),
     );
   });
 
@@ -216,45 +188,36 @@ describe("test drag and selection", () => {
     ]);
     expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
-        .updateNode("47566002", (node) => ({
+        .updateNode("47566002", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .toJSON()
+        .toJSON(),
     );
   });
 
   it("should drag one node when multiple nodes selected", () => {
-    updateData((data) =>
-      data.selectNodes(
-        (node) => node.id === "fb404f70" || node.id === "4b199015"
-      )
-    );
+    updateData(data => data.selectNodes(node => node.id === "fb404f70" || node.id === "4b199015"));
     simulateNodeMove(container, [
       [100, 100],
       [110, 110],
     ]);
     expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
-        .selectNodes((node) => node.id === "fb404f70" || node.id === "4b199015")
-        .updateNode("47566002", (node) => ({
+        .selectNodes(node => node.id === "fb404f70" || node.id === "4b199015")
+        .updateNode("47566002", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .toJSON()
+        .toJSON(),
     );
   });
 
   it("should drag multiple nodes", () => {
-    updateData((data) =>
-      data.selectNodes(
-        (node) =>
-          node.id === "47566002" ||
-          node.id === "fb404f70" ||
-          node.id === "4b199015"
-      )
+    updateData(data =>
+      data.selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015"),
     );
     simulateNodeMove(container, [
       [100, 100],
@@ -262,37 +225,28 @@ describe("test drag and selection", () => {
     ]);
     expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
-        .selectNodes(
-          (node) =>
-            node.id === "47566002" ||
-            node.id === "fb404f70" ||
-            node.id === "4b199015"
-        )
-        .updateNode("47566002", (node) => ({
+        .selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015")
+        .updateNode("47566002", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .updateNode("fb404f70", (node) => ({
+        .updateNode("fb404f70", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .updateNode("4b199015", (node) => ({
+        .updateNode("4b199015", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .toJSON()
+        .toJSON(),
     );
   });
 
   it("should select one more node and drag multiple nodes", () => {
-    updateData((data) =>
-      data.selectNodes(
-        (node) => node.id === "fb404f70" || node.id === "4b199015"
-      )
-    );
+    updateData(data => data.selectNodes(node => node.id === "fb404f70" || node.id === "4b199015"));
     simulateNodeMove(
       container,
       [
@@ -301,32 +255,27 @@ describe("test drag and selection", () => {
       ],
       {
         shiftKey: true,
-      }
+      },
     );
     expect(getData().toJSON()).toEqual(
       GraphModel.fromJSON(getSample1Data())
-        .selectNodes(
-          (node) =>
-            node.id === "47566002" ||
-            node.id === "fb404f70" ||
-            node.id === "4b199015"
-        )
-        .updateNode("47566002", (node) => ({
+        .selectNodes(node => node.id === "47566002" || node.id === "fb404f70" || node.id === "4b199015")
+        .updateNode("47566002", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .updateNode("fb404f70", (node) => ({
+        .updateNode("fb404f70", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .updateNode("4b199015", (node) => ({
+        .updateNode("4b199015", node => ({
           ...node,
           x: node.x + 10,
           y: node.y + 10,
         }))
-        .toJSON()
+        .toJSON(),
     );
   });
 });

@@ -2,15 +2,11 @@ import { createRef } from "react";
 import { IEvent } from "../models/event";
 import { batchedUpdates } from "./batchedUpdates";
 
-export type IGraphEventHandler<T = unknown, P = unknown, U = unknown> = (
-  event: IEvent<T, P, U>
-) => void;
+export type IGraphEventHandler<T = unknown, P = unknown, U = unknown> = (event: IEvent<T, P, U>) => void;
 
 export class EventChannel {
   public readonly listenersRef = createRef<IGraphEventHandler>();
-  public readonly externalHandlerRef = createRef<
-    IGraphEventHandler | undefined
-  >();
+  public readonly externalHandlerRef = createRef<IGraphEventHandler | undefined>();
   private queue: IEvent[] = [];
   private working = false;
 

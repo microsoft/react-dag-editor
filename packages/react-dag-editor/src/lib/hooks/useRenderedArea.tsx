@@ -2,10 +2,7 @@ import { useMemo } from "react";
 import { IRectShape, IViewport } from "../models/geometry";
 import { getRenderedArea } from "../utils";
 
-export const useRenderedArea = (
-  viewport: IViewport,
-  isVirtualizationEnabled: boolean
-): IRectShape => {
+export const useRenderedArea = (viewport: IViewport, isVirtualizationEnabled: boolean): IRectShape => {
   return useMemo<IRectShape>(() => {
     return isVirtualizationEnabled
       ? getRenderedArea(viewport)

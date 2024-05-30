@@ -10,18 +10,9 @@ import { useGraphConfig, useGraphController } from "../../hooks/context";
 import { useRefValue } from "../../hooks/useRefValue";
 import type { INodeConfig } from "../../models/config/types";
 import { GraphCanvasEvent } from "../../models/event";
-import type {
-  IContainerRect,
-  IPoint,
-  ITransformMatrix,
-} from "../../models/geometry";
+import type { IContainerRect, IPoint, ITransformMatrix } from "../../models/geometry";
 import { ICanvasNode } from "../../models/node";
-import {
-  getRectHeight,
-  getRectWidth,
-  isViewportComplete,
-  reverseTransformPoint,
-} from "../../utils";
+import { getRectHeight, getRectWidth, isViewportComplete, reverseTransformPoint } from "../../utils";
 import { isMouseButNotLeft } from "../../utils/mouse";
 import { noop } from "../../utils/noop";
 import classes from "../Graph.styles";
@@ -53,22 +44,16 @@ document.body.appendChild(el);
  *
  * @returns boolean value to indicate whether the point is in bound or not.
  */
-function isWithInBound(
-  rect: IContainerRect,
-  clientX: number,
-  clientY: number
-): boolean {
+function isWithInBound(rect: IContainerRect, clientX: number, clientY: number): boolean {
   const { top, right, bottom, left } = rect;
-  return (
-    clientX >= left && clientX <= right && clientY >= top && clientY <= bottom
-  );
+  return clientX >= left && clientX <= right && clientY >= top && clientY <= bottom;
 }
 
 const adjustedClientPoint = (
   x: number,
   y: number,
   rect: IContainerRect | undefined | null,
-  transformMatrix: ITransformMatrix
+  transformMatrix: ITransformMatrix,
 ): IPoint => {
   let adjustedX = x;
   let adjustedY = y;
@@ -89,23 +74,16 @@ const adjustPosition = (
   rect: IContainerRect | undefined,
   transformMatrix: ITransformMatrix,
   node: Partial<ICanvasNode>,
-  nodeConfig: INodeConfig | undefined
+  nodeConfig: INodeConfig | undefined,
 ): IPoint => {
   const rectWidth = getRectWidth(nodeConfig, node);
   const rectHeight = getRectHeight(nodeConfig, node);
 
   // get transformed width and height
-  const realWidth =
-    transformMatrix[0] * rectWidth + transformMatrix[2] * rectHeight;
-  const realHeight =
-    transformMatrix[1] * rectWidth + transformMatrix[3] * rectHeight;
+  const realWidth = transformMatrix[0] * rectWidth + transformMatrix[2] * rectHeight;
+  const realHeight = transformMatrix[1] * rectWidth + transformMatrix[3] * rectHeight;
 
-  return adjustedClientPoint(
-    clientX - realWidth / 2,
-    clientY - realHeight / 2,
-    rect,
-    transformMatrix
-  );
+  return adjustedClientPoint(clientX - realWidth / 2, clientY - realHeight / 2, rect, transformMatrix);
 };
 
 /**
@@ -114,14 +92,10 @@ const adjustPosition = (
  * @param props type IItemProps
  * @returns
  */
-export const Item: React.FunctionComponent<
-  React.PropsWithChildren<IItemProps>
-> = (props) => {
+export const Item: React.FunctionComponent<React.PropsWithChildren<IItemProps>> = props => {
   const graphConfig = useGraphConfig();
   const graphController = useGraphController();
-  const [workingModel, setWorkingModel] = React.useState<ICanvasNode | null>(
-    null
-  );
+  const [workingModel, setWorkingModel] = React.useState<ICanvasNode | null>(null);
   const nextNodeRef = useRefValue(workingModel);
   const svgRef = React.useRef<SVGSVGElement>(null);
 
@@ -130,22 +104,18 @@ export const Item: React.FunctionComponent<
   const onPointerDown = React.useCallback(
     (evt: React.PointerEvent) => {
       evt.stopPropagation();
-      if (
-        isMouseButNotLeft(evt) ||
-        !graphController.getEnabledFeatures().has(GraphFeatures.AddNewNodes)
-      ) {
+      if (isMouseButNotLeft(evt) || !graphController.getEnabledFeatures().has(GraphFeatures.AddNewNodes)) {
         return;
       }
       const partial = getNode();
-      const nodeConfig =
-        graphConfig.getNodeConfig(partial as ICanvasNode) ?? emptyNodeConfig;
+      const nodeConfig = graphConfig.getNodeConfig(partial as ICanvasNode) ?? emptyNodeConfig;
       const position = adjustPosition(
         evt.clientX,
         evt.clientY,
         undefined,
         graphController.state.viewport.transformMatrix,
         partial,
-        nodeConfig
+        nodeConfig,
       );
       const node: ICanvasNode = {
         ...partial,
@@ -155,7 +125,7 @@ export const Item: React.FunctionComponent<
 
       const drag = new DragController(
         new PointerEventProvider(graphController.getGlobalEventTarget()),
-        defaultGetPositionFromEvent
+        defaultGetPositionFromEvent,
       );
 
       const eventChannel = graphController.eventChannel;
@@ -166,7 +136,7 @@ export const Item: React.FunctionComponent<
       });
 
       drag.onMove = ({ e }) => {
-        setWorkingModel((n) => {
+        setWorkingModel(n => {
           if (!n) {
             return n;
           }
@@ -178,7 +148,7 @@ export const Item: React.FunctionComponent<
               undefined,
               graphController.state.viewport.transformMatrix,
               n,
-              nodeConfig
+              nodeConfig,
             ),
           };
         });
@@ -186,11 +156,7 @@ export const Item: React.FunctionComponent<
       drag.onEnd = ({ e }) => {
         const viewport = graphController.state.viewport;
         let nextNode = nextNodeRef.current;
-        if (
-          !isViewportComplete(viewport) ||
-          !nextNode ||
-          !isWithInBound(viewport.rect, e.clientX, e.clientY)
-        ) {
+        if (!isViewportComplete(viewport) || !nextNode || !isWithInBound(viewport.rect, e.clientX, e.clientY)) {
           setWorkingModel(null);
           eventChannel.trigger({
             type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,
@@ -201,14 +167,7 @@ export const Item: React.FunctionComponent<
         nextNodeRef.current = null;
         nextNode = {
           ...nextNode,
-          ...adjustPosition(
-            e.clientX,
-            e.clientY,
-            viewport.rect,
-            viewport.transformMatrix,
-            nextNode,
-            nodeConfig
-          ),
+          ...adjustPosition(e.clientX, e.clientY, viewport.rect, viewport.transformMatrix, nextNode, nodeConfig),
         };
         eventChannel.trigger({
           type: GraphCanvasEvent.DraggingNodeFromItemPanelEnd,
@@ -220,30 +179,18 @@ export const Item: React.FunctionComponent<
       setWorkingModel(node);
       drag.start(evt.nativeEvent);
     },
-    [graphController, getNode, graphConfig, dragWillStart, nextNodeRef]
+    [graphController, getNode, graphConfig, dragWillStart, nextNodeRef],
   );
 
   const className = mergeStyles(classes.moduleItem, props.className);
 
   return (
     <>
-      <div
-        className={className}
-        style={style}
-        onPointerDown={onPointerDown}
-        role="button"
-      >
+      <div className={className} style={style} onPointerDown={onPointerDown} role="button">
         {children}
       </div>
       {workingModel &&
-        ReactDOM.createPortal(
-          <AddingNodeSvg
-            svgRef={svgRef}
-            model={workingModel}
-            nextNodeRef={nextNodeRef}
-          />,
-          el
-        )}
+        ReactDOM.createPortal(<AddingNodeSvg svgRef={svgRef} model={workingModel} nextNodeRef={nextNodeRef} />, el)}
     </>
   );
 };

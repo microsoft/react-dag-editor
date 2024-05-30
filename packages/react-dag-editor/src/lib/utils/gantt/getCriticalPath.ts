@@ -12,28 +12,22 @@ export interface IDuration {
 export const getCriticalPath = (
   canvasData: ICanvasData,
   durations: Map<string, number>,
-  isNodesSorted?: boolean
+  isNodesSorted?: boolean,
 ): Map<string, { task: Task; isCritical?: boolean }> => {
   const { edges } = canvasData;
-  const nodesSorted: ICanvasNode[] = isNodesSorted
-    ? [...canvasData.nodes]
-    : getTopoSortingNodes(canvasData);
+  const nodesSorted: ICanvasNode[] = isNodesSorted ? [...canvasData.nodes] : getTopoSortingNodes(canvasData);
 
   const allTasks = new Set<Task>();
   const curAllTasksMap = new Map<string, Task>();
 
-  nodesSorted.reverse().forEach((node) => {
-    allTasks?.forEach((t) => {
+  nodesSorted.reverse().forEach(node => {
+    allTasks?.forEach(t => {
       if (!curAllTasksMap.has(t.name)) {
         curAllTasksMap.set(t.name, t);
       }
     });
 
-    const task = new Task(
-      node.id,
-      durations.get(node.id) || 0,
-      getSuccessors(node.id, edges, curAllTasksMap)
-    );
+    const task = new Task(node.id, durations.get(node.id) || 0, getSuccessors(node.id, edges, curAllTasksMap));
     allTasks.add(task);
   });
 
@@ -49,7 +43,7 @@ export const markCriticalPath = (
   path: Task,
   ret: Map<string, { task: Task; isCritical?: boolean }>,
   isCritical = true,
-  parentTask?: Task
+  parentTask?: Task,
 ): void => {
   // set as critical, only if it's parent task is in the critical path
   if (isCritical && (!parentTask || ret.get(parentTask.name)?.isCritical)) {
@@ -63,7 +57,7 @@ export const markCriticalPath = (
     const criticalCostTask = getMaxCriticalCostTask(path.dependencies);
     markCriticalPath(criticalCostTask, ret, true, path);
 
-    dependencies.forEach((t) => {
+    dependencies.forEach(t => {
       if (criticalCostTask.name !== t.name) {
         markCriticalPath(t, ret, false, path);
       }
@@ -76,7 +70,7 @@ const getMaxCriticalCostTask = (tasks: Set<Task>): Task => {
   let max = -Infinity;
   let criticalTask: Task = tasks.values().next().value;
 
-  tasks.forEach((t) => {
+  tasks.forEach(t => {
     if (t.criticalCost > max) {
       max = t.criticalCost;
       criticalTask = t;
@@ -87,14 +81,10 @@ const getMaxCriticalCostTask = (tasks: Set<Task>): Task => {
 };
 
 // get successor dependencies
-const getSuccessors = (
-  nodeId: string,
-  edges: readonly ICanvasEdge[],
-  allTasksMap: Map<string, Task>
-): Set<Task> => {
+const getSuccessors = (nodeId: string, edges: readonly ICanvasEdge[], allTasksMap: Map<string, Task>): Set<Task> => {
   const successors = new Set<Task>();
 
-  edges.forEach((e) => {
+  edges.forEach(e => {
     if (nodeId === e.source) {
       const task = allTasksMap.get(e.target);
       if (task) {

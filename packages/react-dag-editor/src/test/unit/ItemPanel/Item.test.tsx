@@ -1,19 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  act,
-  cleanup,
-  fireEvent,
-  render,
-  RenderResult,
-  screen,
-} from "@testing-library/react";
+import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
-import {
-  GraphCanvasEvent,
-  GraphConfigBuilder,
-  GraphModel,
-  rect,
-} from "../../../index";
+import { GraphCanvasEvent, GraphConfigBuilder, GraphModel, rect } from "../../../index";
 import { Item } from "../../../lib/components/ItemPanel";
 import { GraphController } from "../../../lib/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../../TestComponent";
@@ -43,9 +31,8 @@ describe("ItemPanel - Item", () => {
   beforeEach(() => {
     dragWillStart = jest.fn();
     const graphConfig = GraphConfigBuilder.default()
-      .registerNode((node) => {
-        const nodeType =
-          (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
+      .registerNode(node => {
+        const nodeType = (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
         switch (nodeType) {
           case "nodeShape":
             return rect;
@@ -64,16 +51,12 @@ describe("ItemPanel - Item", () => {
       };
     };
     renderedWrapper = render(
-      <TestComponent
-        data={GraphModel.empty()}
-        graph={false}
-        settings={{ graphConfig }}
-      >
+      <TestComponent data={GraphModel.empty()} graph={false} settings={{ graphConfig }}>
         <Item getNode={getNode} dragWillStart={dragWillStart}>
           <TestItemContent text="test item" />
         </Item>
         <GraphControllerRef ref={graphControllerRef} />
-      </TestComponent>
+      </TestComponent>,
     );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     graphController = graphControllerRef.current!;
@@ -84,8 +67,7 @@ describe("ItemPanel - Item", () => {
         viewportRect: mockClientRect,
       });
     });
-    (graphController.eventChannel.listenersRef as any).current =
-      graphController.dispatch;
+    (graphController.eventChannel.listenersRef as any).current = graphController.dispatch;
   });
 
   afterEach(cleanup);

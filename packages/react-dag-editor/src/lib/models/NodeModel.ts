@@ -8,9 +8,7 @@ import type { ICanvasNode } from "./node";
 import type { ICanvasPort } from "./port";
 import { GraphNodeStatus, updateStatus } from "./status";
 
-export class NodeModel<NodeData = unknown, PortData = unknown>
-  implements $Complete<ICanvasNode<NodeData, PortData>>
-{
+export class NodeModel<NodeData = unknown, PortData = unknown> implements $Complete<ICanvasNode<NodeData, PortData>> {
   public readonly inner: ICanvasNode<NodeData, PortData>;
   public readonly portPositionCache: Map<string, IPoint | undefined>;
   public readonly prev: string | undefined;
@@ -76,7 +74,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     node: ICanvasNode<NodeData, PortData>,
     portPositionCache: Map<string, IPoint | undefined>,
     prev: string | undefined,
-    next: string | undefined
+    next: string | undefined,
   ) {
     this.inner = node;
     this.portPositionCache = portPositionCache;
@@ -88,57 +86,38 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   public static fromJSON<N, P>(
     node: ICanvasNode<N, P>,
     prev: string | undefined,
-    next: string | undefined
+    next: string | undefined,
   ): NodeModel<N, P> {
     return new NodeModel(node, new Map(), prev, next);
   }
 
   public getPort(id: string): ICanvasPort<PortData> | undefined {
-    return this.ports?.find((port) => port.id === id);
+    return this.ports?.find(port => port.id === id);
   }
 
-  public link({
-    prev,
-    next,
-  }: {
-    prev?: string | undefined;
-    next?: string | undefined;
-  }): NodeModel<NodeData, PortData> {
+  public link({ prev, next }: { prev?: string | undefined; next?: string | undefined }): NodeModel<NodeData, PortData> {
     if (prev === this.prev && next === this.next) {
       return this;
     }
-    return new NodeModel(
-      this.inner,
-      this.portPositionCache,
-      prev ?? this.prev,
-      next ?? this.next
-    );
+    return new NodeModel(this.inner, this.portPositionCache, prev ?? this.prev, next ?? this.next);
   }
 
-  public updateStatus(
-    f: (state: number | undefined) => number
-  ): NodeModel<NodeData, PortData> {
+  public updateStatus(f: (state: number | undefined) => number): NodeModel<NodeData, PortData> {
     return this.update(updateStatus(f));
   }
 
   public update(
-    f: (
-      curNode: ICanvasNode<NodeData, PortData>
-    ) => ICanvasNode<NodeData, PortData>
+    f: (curNode: ICanvasNode<NodeData, PortData>) => ICanvasNode<NodeData, PortData>,
   ): NodeModel<NodeData, PortData> {
     const node = f(this.inner);
-    return node === this.inner
-      ? this
-      : new NodeModel(node, new Map(), this.prev, this.next);
+    return node === this.inner ? this : new NodeModel(node, new Map(), this.prev, this.next);
   }
 
-  public updateData(
-    f: (data: Readonly<NodeData>) => Readonly<NodeData>
-  ): NodeModel<NodeData, PortData> {
+  public updateData(f: (data: Readonly<NodeData>) => Readonly<NodeData>): NodeModel<NodeData, PortData> {
     if (!this.data) {
       return this;
     }
-    return this.update((inner) => {
+    return this.update(inner => {
       const data = f(inner.data as Readonly<NodeData>);
       if (data === inner.data) {
         return inner;
@@ -150,10 +129,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
     });
   }
 
-  public getPortPosition(
-    portId: string,
-    graphConfig: IGraphConfig
-  ): IPoint | undefined {
+  public getPortPosition(portId: string, graphConfig: IGraphConfig): IPoint | undefined {
     let point = this.portPositionCache.get(portId);
     if (!point) {
       point = getPortPositionByPortId(this.inner, portId, graphConfig);
@@ -163,15 +139,13 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   }
 
   public hasPort(id: string): boolean {
-    return Boolean(this.inner.ports?.find((port) => port.id === id));
+    return Boolean(this.inner.ports?.find(port => port.id === id));
   }
 
   /**
    * @internal
    */
-  public updatePositionAndSize(
-    dummy: ICanvasNode
-  ): NodeModel<NodeData, PortData> {
+  public updatePositionAndSize(dummy: ICanvasNode): NodeModel<NodeData, PortData> {
     const { x, y, width, height } = dummy;
     const node = {
       ...this.inner,
@@ -184,7 +158,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
   }
 
   public updatePorts(
-    f: (port: ICanvasPort<PortData>, index: number) => ICanvasPort<PortData>
+    f: (port: ICanvasPort<PortData>, index: number) => ICanvasPort<PortData>,
   ): NodeModel<NodeData, PortData> {
     if (!this.inner.ports) {
       return this;
@@ -197,9 +171,7 @@ export class NodeModel<NodeData = unknown, PortData = unknown>
             ...this.inner,
             ports,
           };
-    return node === this.inner
-      ? this
-      : new NodeModel(node, new Map(), this.prev, this.next);
+    return node === this.inner ? this : new NodeModel(node, new Map(), this.prev, this.next);
   }
 
   public invalidCache(): NodeModel<NodeData, PortData> {

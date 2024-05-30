@@ -10,7 +10,7 @@ import { IScheduledCallback, throttle } from "../utils/scheduling";
 export function useThrottle<Args extends unknown[]>(
   callback: (...args: Args) => void,
   limit: number,
-  deps: any[]
+  deps: any[],
 ): IScheduledCallback<Args> {
   /**
    * wrap the throttle in useMemo,

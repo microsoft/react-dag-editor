@@ -13,41 +13,29 @@ export interface IGetCanvasKeyboardEventHandlers {
   setCurHoverPort(value: [string, string] | undefined): void;
 }
 
-export const useCanvasKeyboardEventHandlers = (
-  args: IGetCanvasKeyboardEventHandlers
-) => {
-  const {
-    featureControl,
-    graphConfig,
-    setCurHoverNode,
-    setCurHoverPort,
-    eventChannel,
-  } = args;
+export const useCanvasKeyboardEventHandlers = (args: IGetCanvasKeyboardEventHandlers) => {
+  const { featureControl, graphConfig, setCurHoverNode, setCurHoverPort, eventChannel } = args;
 
   const { isDeleteDisabled, isPasteDisabled, isUndoEnabled } = featureControl;
 
   return React.useMemo(() => {
-    const keyDownHandlerMap = new Map<
-      string,
-      React.KeyboardEventHandler<SVGGElement>
-    >();
+    const keyDownHandlerMap = new Map<string, React.KeyboardEventHandler<SVGGElement>>();
 
-    const deleteKeyDownHandler =
-      () => (evt: React.KeyboardEvent<SVGSVGElement>) => {
-        evt.preventDefault();
-        evt.stopPropagation();
+    const deleteKeyDownHandler = () => (evt: React.KeyboardEvent<SVGSVGElement>) => {
+      evt.preventDefault();
+      evt.stopPropagation();
 
-        if (isDeleteDisabled) {
-          return;
-        }
+      if (isDeleteDisabled) {
+        return;
+      }
 
-        eventChannel.trigger({
-          type: GraphCanvasEvent.Delete,
-        });
+      eventChannel.trigger({
+        type: GraphCanvasEvent.Delete,
+      });
 
-        setCurHoverNode(undefined);
-        setCurHoverPort(undefined);
-      };
+      setCurHoverNode(undefined);
+      setCurHoverPort(undefined);
+    };
 
     keyDownHandlerMap.set("delete", deleteKeyDownHandler());
     keyDownHandlerMap.set("backspace", deleteKeyDownHandler());
@@ -173,13 +161,5 @@ export const useCanvasKeyboardEventHandlers = (
         handler.call(null, evt);
       }
     };
-  }, [
-    eventChannel,
-    graphConfig,
-    isDeleteDisabled,
-    isPasteDisabled,
-    isUndoEnabled,
-    setCurHoverNode,
-    setCurHoverPort,
-  ]);
+  }, [eventChannel, graphConfig, isDeleteDisabled, isPasteDisabled, isUndoEnabled, setCurHoverNode, setCurHoverPort]);
 };

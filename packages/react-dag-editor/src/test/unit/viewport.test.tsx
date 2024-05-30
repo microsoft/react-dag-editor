@@ -1,14 +1,7 @@
 import { render } from "@testing-library/react";
 import * as React from "react";
 import { act } from "react-dom/test-utils";
-import {
-  Direction,
-  GraphCanvasEvent,
-  GraphModel,
-  IPoint,
-  ITransformMatrix,
-  IViewport,
-} from "../../index";
+import { Direction, GraphCanvasEvent, GraphModel, IPoint, ITransformMatrix, IViewport } from "../../index";
 import { Transform } from "../../lib/components/Transform";
 import { GraphController } from "../../lib/controllers/GraphController";
 import { getRenderedEdges, getRenderedNodes } from "../../lib/utils/viewport";
@@ -29,23 +22,18 @@ describe("viewport", () => {
     y: 16,
   };
   const data = getSample1Data();
-  const viewport = (
-    transformMatrix: ITransformMatrix
-  ): Required<IViewport> => ({
+  const viewport = (transformMatrix: ITransformMatrix): Required<IViewport> => ({
     transformMatrix,
     rect,
   });
 
   it("getRenderedNodes", () => {
-    const renderedNodes = getRenderedNodes(
-      GraphModel.fromJSON(data).nodes,
-      viewport([1, 0, 0, 1, 0, 0])
-    );
+    const renderedNodes = getRenderedNodes(GraphModel.fromJSON(data).nodes, viewport([1, 0, 0, 1, 0, 0]));
     expect(renderedNodes.length).toBe(8);
 
     const renderedNodes2 = getRenderedNodes(
       GraphModel.fromJSON(data).nodes,
-      viewport([4.77, 0, 0, 4.77, -2281.56, -1995.55])
+      viewport([4.77, 0, 0, 4.77, -2281.56, -1995.55]),
     );
     expect(renderedNodes2.length).toBe(5);
   });
@@ -54,19 +42,14 @@ describe("viewport", () => {
     const { nodes, edges } = GraphModel.fromJSON(data);
     const graphConfig = getGraphConfig();
 
-    const renderedEdges = getRenderedEdges(
-      edges,
-      nodes,
-      graphConfig,
-      viewport([1, 0, 0, 1, 0, 0])
-    );
+    const renderedEdges = getRenderedEdges(edges, nodes, graphConfig, viewport([1, 0, 0, 1, 0, 0]));
     expect(renderedEdges.length).toBe(8);
 
     const renderedEdges2 = getRenderedEdges(
       edges,
       nodes,
       graphConfig,
-      viewport([4.77, 0, 0, 4.77, -2281.56, -1995.55])
+      viewport([4.77, 0, 0, 4.77, -2281.56, -1995.55]),
     );
     expect(renderedEdges2.length).toBe(7);
   });
@@ -81,11 +64,7 @@ describe("test zoom", () => {
       direction,
     });
   }
-  function zoomTo(
-    scale: number,
-    anchor?: IPoint | undefined,
-    direction?: Direction
-  ): void {
+  function zoomTo(scale: number, anchor?: IPoint | undefined, direction?: Direction): void {
     graphController.dispatch({
       type: GraphCanvasEvent.ZoomTo,
       scale,
@@ -101,7 +80,7 @@ describe("test zoom", () => {
     render(
       <TestComponent>
         <GraphControllerRef ref={graphControllerRef} />
-      </TestComponent>
+      </TestComponent>,
     );
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();
@@ -158,8 +137,6 @@ describe("test zoom", () => {
 
 describe("test Transform", () => {
   it("should get correct transform", () => {
-    expect(
-      render(<Transform matrix={[1, 0, 0, 1, 0, 0]} />).container
-    ).toMatchSnapshot();
+    expect(render(<Transform matrix={[1, 0, 0, 1, 0, 0]} />).container).toMatchSnapshot();
   });
 });

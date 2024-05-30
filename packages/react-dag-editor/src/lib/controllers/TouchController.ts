@@ -3,16 +3,8 @@ import * as React from "react";
 import { animationFramed } from "../utils/scheduling";
 
 export interface ITouchHandler<ExtraArgs extends unknown[] = []> {
-  onStart(
-    events: Map<number, PointerEvent>,
-    e: PointerEvent,
-    ...args: ExtraArgs
-  ): void;
-  onMove(
-    events: Map<number, PointerEvent>,
-    e: PointerEvent,
-    ...args: ExtraArgs
-  ): void;
+  onStart(events: Map<number, PointerEvent>, e: PointerEvent, ...args: ExtraArgs): void;
+  onMove(events: Map<number, PointerEvent>, e: PointerEvent, ...args: ExtraArgs): void;
   onEnd(e: PointerEvent, ...args: ExtraArgs): void;
 }
 
@@ -52,11 +44,9 @@ export class TouchController<ExtraArgs extends unknown[] = []> {
   private currentHandler: ITouchHandler<ExtraArgs> | undefined;
   private readonly handlers: Map<number, ITouchHandler<ExtraArgs>>;
 
-  private readonly onMove = animationFramed(
-    (e: PointerEvent, ...args: ExtraArgs) => {
-      this.currentHandler?.onMove(this.pointers, e, ...args);
-    }
-  );
+  private readonly onMove = animationFramed((e: PointerEvent, ...args: ExtraArgs) => {
+    this.currentHandler?.onMove(this.pointers, e, ...args);
+  });
 
   public constructor(handlers: Map<number, ITouchHandler<ExtraArgs>>) {
     this.handlers = handlers;

@@ -15,10 +15,7 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateEdge(
-            action.edge.id,
-            updateStatus(Bitset.replace(GraphEdgeStatus.Editing))
-          ),
+          present: state.data.present.updateEdge(action.edge.id, updateStatus(Bitset.replace(GraphEdgeStatus.Editing))),
         },
       };
     case GraphEdgeEvent.MouseEnter:
@@ -26,10 +23,7 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
         ...state,
         data: {
           ...state.data,
-          present: state.data.present.updateEdge(
-            action.edge.id,
-            updateStatus(Bitset.add(GraphEdgeStatus.Activated))
-          ),
+          present: state.data.present.updateEdge(action.edge.id, updateStatus(Bitset.add(GraphEdgeStatus.Activated))),
         },
       };
     case GraphEdgeEvent.MouseLeave:
@@ -39,7 +33,7 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
           ...state.data,
           present: state.data.present.updateEdge(
             action.edge.id,
-            updateStatus(Bitset.remove(GraphEdgeStatus.Activated))
+            updateStatus(Bitset.remove(GraphEdgeStatus.Activated)),
           ),
         },
       };
@@ -51,17 +45,14 @@ export const edgeReducer: IGraphReactReducer = (state, action) => {
           ...state.data,
           present: unSelectAllEntity()(state.data.present).updateEdge(
             action.edge.id,
-            updateStatus(Bitset.add(GraphEdgeStatus.Selected))
+            updateStatus(Bitset.add(GraphEdgeStatus.Selected)),
           ),
         },
       };
     case GraphEdgeEvent.Add:
       return {
         ...state,
-        data: pushHistory(
-          state.data,
-          state.data.present.insertEdge(action.edge)
-        ),
+        data: pushHistory(state.data, state.data.present.insertEdge(action.edge)),
       };
     default:
       return state;

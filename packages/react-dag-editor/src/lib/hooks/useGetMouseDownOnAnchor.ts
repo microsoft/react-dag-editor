@@ -7,10 +7,7 @@ import { GraphNodeEvent } from "../models/event";
 import { NodeModel } from "../models/NodeModel";
 import { EventChannel } from "../utils/eventChannel";
 
-export const useGetMouseDownOnAnchor = (
-  node: NodeModel,
-  eventChannel: EventChannel
-) => {
+export const useGetMouseDownOnAnchor = (node: NodeModel, eventChannel: EventChannel) => {
   const graphController = useGraphController();
 
   return React.useCallback(
@@ -26,7 +23,7 @@ export const useGetMouseDownOnAnchor = (
 
       const drag = new DragController(
         new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
-        defaultGetPositionFromEvent
+        defaultGetPositionFromEvent,
       );
       drag.onMove = ({ totalDX, totalDY, e: rawEvent }) => {
         eventChannel.trigger({
@@ -54,6 +51,6 @@ export const useGetMouseDownOnAnchor = (
       });
       drag.start(evt.nativeEvent);
     },
-    [eventChannel, graphController, node]
+    [eventChannel, graphController, node],
   );
 };

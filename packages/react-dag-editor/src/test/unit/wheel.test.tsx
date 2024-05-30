@@ -10,7 +10,7 @@ beforeAll(() => {
 });
 
 beforeEach(() => {
-  jest.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+  jest.spyOn(window, "requestAnimationFrame").mockImplementation(cb => {
     cb(0);
     return 0;
   });
@@ -37,7 +37,7 @@ describe("Wheel", () => {
     expect(onEvent).not.toHaveBeenCalledWith(
       expect.objectContaining({
         type: GraphCanvasEvent.MouseWheelScroll,
-      })
+      }),
     );
   });
 });

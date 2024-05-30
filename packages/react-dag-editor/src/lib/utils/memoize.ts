@@ -19,7 +19,7 @@ const shallowEqual = <T extends unknown[]>(a: T | undefined, b: T): boolean => {
 
 export function memoize<T extends unknown[], R, D>(
   f: (...args: T) => R,
-  selector?: ((...args: T) => D[]) | D[]
+  selector?: ((...args: T) => D[]) | D[],
 ): (...args: T) => R {
   let prev: T | D[] | undefined;
   let value: R | undefined;
@@ -27,12 +27,14 @@ export function memoize<T extends unknown[], R, D>(
     const selectedArgs = selector
       ? Array.isArray(selector)
         ? selector
-        : selector.apply(undefined, args)
+        : // eslint-disable-next-line prefer-spread
+          selector.apply(undefined, args)
       : args;
     if (shallowEqual(prev, selectedArgs)) {
       return value!;
     }
     prev = selectedArgs;
+    // eslint-disable-next-line prefer-spread
     value = f.apply(undefined, args);
     return value!;
   };

@@ -1,11 +1,7 @@
 import * as React from "react";
 
 export interface IErrorBoundaryProps {
-  renderOnError?(
-    error?: Error,
-    errorInfo?: React.ErrorInfo,
-    children?: React.ReactNode
-  ): React.ReactChild;
+  renderOnError?(error?: Error, errorInfo?: React.ErrorInfo, children?: React.ReactNode): React.ReactChild;
 }
 
 export interface IErrorBoundaryState {
@@ -14,18 +10,13 @@ export interface IErrorBoundaryState {
   errorInfo?: React.ErrorInfo;
 }
 
-export class ErrorBoundary extends React.Component<
-  React.PropsWithChildren<IErrorBoundaryProps>,
-  IErrorBoundaryState
-> {
+export class ErrorBoundary extends React.Component<React.PropsWithChildren<IErrorBoundaryProps>, IErrorBoundaryState> {
   public constructor(props: IErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  public static getDerivedStateFromError(
-    error: Error
-  ): Partial<IErrorBoundaryState> {
+  public static getDerivedStateFromError(error: Error): Partial<IErrorBoundaryState> {
     return { hasError: true, error };
   }
 
@@ -44,18 +35,10 @@ export class ErrorBoundary extends React.Component<
     }
 
     if (this.props.renderOnError) {
-      return (
-        this.props.renderOnError(
-          this.state.error,
-          this.state.errorInfo,
-          this.props.children
-        ) ?? null
-      );
+      return this.props.renderOnError(this.state.error, this.state.errorInfo, this.props.children) ?? null;
     }
 
-    const componentStackLines = this.state.errorInfo
-      ? this.state.errorInfo.componentStack?.split("\n")
-      : [];
+    const componentStackLines = this.state.errorInfo ? this.state.errorInfo.componentStack?.split("\n") : [];
 
     return (
       <div style={{ color: "red" }}>

@@ -8,7 +8,7 @@ interface IStaticNodeProps {
   node: NodeModel;
 }
 
-const StaticNode: React.FunctionComponent<IStaticNodeProps> = (props) => {
+const StaticNode: React.FunctionComponent<IStaticNodeProps> = props => {
   const { node } = props;
   const graphConfig = useGraphConfig();
 

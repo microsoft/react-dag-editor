@@ -8,7 +8,7 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
 >
   <Transform
     matrix={
-      Array [
+      [
         1,
         0,
         0,
@@ -21,21 +21,21 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
     <GraphNode
       eventChannel={
         EventChannel {
-          "externalHandlerRef": Object {
+          "externalHandlerRef": {
             "current": null,
           },
-          "listenersRef": Object {
+          "listenersRef": {
             "current": null,
           },
-          "queue": Array [],
+          "queue": [],
           "working": false,
         }
       }
       getNodeAriaLabel={[Function]}
       graphId="mock-uuid"
       node={
-        Object {
-          "data": Object {
+        {
+          "data": {
             "nodeType": "nodeShape",
           },
           "id": "mock-id",
@@ -45,9 +45,9 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
         }
       }
       viewport={
-        Object {
+        {
           "rect": [Circular],
-          "transformMatrix": Array [
+          "transformMatrix": [
             1,
             0,
             0,
@@ -62,7 +62,7 @@ exports[`ItemPanel - AddingNodeSvg Should match the snapshot 1`] = `
 </svg>
 `;
 
-exports[`ItemPanel - AddingNodeSvg Should match the snapshot: events 1`] = `Array []`;
+exports[`ItemPanel - AddingNodeSvg Should match the snapshot: events 1`] = `[]`;
 
 exports[`ItemPanel - AddingNodeSvg adding node 1`] = `
 <div
@@ -75,7 +75,7 @@ exports[`ItemPanel - AddingNodeSvg adding node 1`] = `
 </div>
 `;
 
-exports[`ItemPanel - AddingNodeSvg adding node: events 1`] = `Array []`;
+exports[`ItemPanel - AddingNodeSvg adding node: events 1`] = `[]`;
 
 exports[`ItemPanel - AddingNodeSvg not adding node if out of graph 1`] = `
 <div
@@ -88,7 +88,7 @@ exports[`ItemPanel - AddingNodeSvg not adding node if out of graph 1`] = `
 </div>
 `;
 
-exports[`ItemPanel - AddingNodeSvg not adding node if out of graph: events 1`] = `Array []`;
+exports[`ItemPanel - AddingNodeSvg not adding node if out of graph: events 1`] = `[]`;
 
 exports[`ItemPanel - AddingNodeSvg without left mouse down when dragging 1`] = `
 <div
@@ -101,4 +101,4 @@ exports[`ItemPanel - AddingNodeSvg without left mouse down when dragging 1`] = `
 </div>
 `;
 
-exports[`ItemPanel - AddingNodeSvg without left mouse down when dragging: events 1`] = `Array []`;
+exports[`ItemPanel - AddingNodeSvg without left mouse down when dragging: events 1`] = `[]`;

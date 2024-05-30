@@ -1,9 +1,6 @@
 import * as React from "react";
 import { Graph, GraphModel, ReactDagEditor, useGraphReducer } from "../..";
-import {
-  INodeFrameProps,
-  INodeResizeHandlerProps,
-} from "../../lib/contexts/SlotsContext";
+import { INodeFrameProps, INodeResizeHandlerProps } from "../../lib/contexts/SlotsContext";
 import { sampleGraphData } from "../data/sample-graph-1";
 import { graphConfig } from "./FeaturesDemo";
 
@@ -15,24 +12,21 @@ export const NodeFrameCustomization: React.FC = () => {
       },
       data: GraphModel.fromJSON(sampleGraphData),
     },
-    undefined
+    undefined,
   );
 
-  const renderNodeFrame = React.useCallback(
-    ({ height, width, x, y }: INodeFrameProps) => {
-      return (
-        <rect
-          transform={`translate(${x},${y})`}
-          height={height}
-          width={width}
-          stroke={"blue"}
-          strokeDasharray="4"
-          fill="red"
-        />
-      );
-    },
-    []
-  );
+  const renderNodeFrame = React.useCallback(({ height, width, x, y }: INodeFrameProps) => {
+    return (
+      <rect
+        transform={`translate(${x},${y})`}
+        height={height}
+        width={width}
+        stroke={"blue"}
+        strokeDasharray="4"
+        fill="red"
+      />
+    );
+  }, []);
 
   return (
     <ReactDagEditor
@@ -54,24 +48,12 @@ export const NodeResizeHandlerCustomization: React.FC = () => {
       },
       data: GraphModel.fromJSON(sampleGraphData),
     },
-    undefined
+    undefined,
   );
 
-  const renderNodeResizeHandler = React.useCallback(
-    ({ x, y, cursor, onMouseDown }: INodeResizeHandlerProps) => {
-      return (
-        <circle
-          cx={x}
-          cy={y}
-          r={4}
-          fill="green"
-          cursor={cursor}
-          onMouseDown={onMouseDown}
-        />
-      );
-    },
-    []
-  );
+  const renderNodeResizeHandler = React.useCallback(({ x, y, cursor, onMouseDown }: INodeResizeHandlerProps) => {
+    return <circle cx={x} cy={y} r={4} fill="green" cursor={cursor} onMouseDown={onMouseDown} />;
+  }, []);
 
   return (
     <ReactDagEditor

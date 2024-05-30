@@ -12,10 +12,7 @@ export interface IDiffGraphEdge {
   edges: ICanvasEdge[];
 }
 
-export const diffGraphEdge = (
-  preData: ICanvasData,
-  data: ICanvasData
-): IDiffGraphEdge => {
+export const diffGraphEdge = (preData: ICanvasData, data: ICanvasData): IDiffGraphEdge => {
   const isAdded = data.edges.length > preData.edges.length;
 
   const larger = isAdded ? data : preData;
@@ -23,9 +20,9 @@ export const diffGraphEdge = (
 
   const edgeIdSet = new Set();
 
-  smaller.edges.forEach((n) => edgeIdSet.add(n.id));
+  smaller.edges.forEach(n => edgeIdSet.add(n.id));
 
-  const edges = larger.edges.filter((n) => !edgeIdSet.has(n.id));
+  const edges = larger.edges.filter(n => !edgeIdSet.has(n.id));
 
   return { isAdded, edges };
 };

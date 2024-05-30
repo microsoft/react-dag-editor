@@ -8,29 +8,29 @@ exports[`test Transform should get correct transform 1`] = `
 </div>
 `;
 
-exports[`test Transform should get correct transform: events 1`] = `Array []`;
+exports[`test Transform should get correct transform: events 1`] = `[]`;
 
 exports[`test zoom should zoom x only: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
 
 exports[`test zoom should zoom x,y: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
 
 exports[`test zoom should zoom y only: events 1`] = `
-Array [
+[
   "[Canvas]ViewportResize",
   "[Canvas]VirtualizationRecalculated",
 ]
 `;
 
-exports[`viewport getRenderedEdges: events 1`] = `Array []`;
+exports[`viewport getRenderedEdges: events 1`] = `[]`;
 
-exports[`viewport getRenderedNodes: events 1`] = `Array []`;
+exports[`viewport getRenderedNodes: events 1`] = `[]`;

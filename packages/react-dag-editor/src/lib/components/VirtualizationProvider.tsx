@@ -1,8 +1,5 @@
 import * as React from "react";
-import {
-  IVirtualizationContext,
-  VirtualizationContext,
-} from "../contexts/VirtualizationContext";
+import { IVirtualizationContext, VirtualizationContext } from "../contexts/VirtualizationContext";
 import { useDeferredValue, useRenderedArea } from "../hooks";
 import { GraphCanvasEvent } from "../models/event";
 import { IViewport } from "../models/geometry";
@@ -16,9 +13,7 @@ export interface IVirtualizationProviderProps {
   eventChannel: EventChannel;
 }
 
-export const VirtualizationProvider: React.FunctionComponent<
-  React.PropsWithChildren<IVirtualizationProviderProps>
-> = ({
+export const VirtualizationProvider: React.FunctionComponent<React.PropsWithChildren<IVirtualizationProviderProps>> = ({
   viewport,
   isVirtualizationEnabled,
   virtualizationDelay,
@@ -37,7 +32,7 @@ export const VirtualizationProvider: React.FunctionComponent<
       renderedNodes: new Set(),
       timestamp: performance.now(),
     }),
-    [viewport, renderedArea, visibleArea]
+    [viewport, renderedArea, visibleArea],
   );
 
   const context = useDeferredValue(contextValue, {
@@ -59,9 +54,5 @@ export const VirtualizationProvider: React.FunctionComponent<
     });
   }, [context, eventChannel]);
 
-  return (
-    <VirtualizationContext.Provider value={context}>
-      {children}
-    </VirtualizationContext.Provider>
-  );
+  return <VirtualizationContext.Provider value={context}>{children}</VirtualizationContext.Provider>;
 };

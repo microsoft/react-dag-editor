@@ -9,10 +9,7 @@ import { getNodeConfig } from "./getNodeConfig";
  * @param rectConfig
  * @param rect
  */
-export function getRectWidth<T>(
-  rectConfig: INodeConfig<T> | undefined,
-  rect: Partial<ICanvasNode<T>>
-): number {
+export function getRectWidth<T>(rectConfig: INodeConfig<T> | undefined, rect: Partial<ICanvasNode<T>>): number {
   const minWidth = rectConfig?.getMinWidth(rect) ?? 0;
 
   if (rect.width && rect.width >= minWidth) {
@@ -26,10 +23,7 @@ export function getRectWidth<T>(
  * @param rectConfig
  * @param rect
  */
-export function getRectHeight<T>(
-  rectConfig: INodeConfig<T> | undefined,
-  rect: Partial<ICanvasNode<T>>
-): number {
+export function getRectHeight<T>(rectConfig: INodeConfig<T> | undefined, rect: Partial<ICanvasNode<T>>): number {
   const minHeight = rectConfig?.getMinHeight(rect) ?? 0;
 
   if (rect.height && rect.height >= minHeight) {
@@ -50,10 +44,7 @@ export interface INodeRect {
  * @param node the node to get the size
  * @param graphConfig type IGraphConfig
  */
-export function getNodeSize(
-  node: ICanvasNode,
-  graphConfig: IGraphConfig
-): INodeRect {
+export function getNodeSize(node: ICanvasNode, graphConfig: IGraphConfig): INodeRect {
   const nodeConfig = getNodeConfig(node, graphConfig);
   const width = getRectWidth(nodeConfig, node);
   const height = getRectHeight(nodeConfig, node);
@@ -79,20 +70,14 @@ export interface IShapeRect extends INodeRect, IShapePosition {}
 export function getGroupRect<NodeData, PortData>(
   group: ICanvasGroup,
   nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
-  graphConfig: IGraphConfig
+  graphConfig: IGraphConfig,
 ): IShapeRect {
   const childrenIds = new Set(group.nodeIds);
-  const children = Array.from(nodes.values()).filter((node) =>
-    childrenIds.has(node.id)
-  );
-  const minX = Math.min(...children.map((node) => node.x));
-  const maxX = Math.max(
-    ...children.map((node) => node.x + getNodeSize(node, graphConfig).width)
-  );
-  const minY = Math.min(...children.map((node) => node.y));
-  const maxY = Math.max(
-    ...children.map((node) => node.y + getNodeSize(node, graphConfig).height)
-  );
+  const children = Array.from(nodes.values()).filter(node => childrenIds.has(node.id));
+  const minX = Math.min(...children.map(node => node.x));
+  const maxX = Math.max(...children.map(node => node.x + getNodeSize(node, graphConfig).width));
+  const minY = Math.min(...children.map(node => node.y));
+  const maxY = Math.max(...children.map(node => node.y + getNodeSize(node, graphConfig).height));
 
   const x = minX - (group.padding?.left ?? 0);
   const y = minY - (group.padding?.top ?? 0);

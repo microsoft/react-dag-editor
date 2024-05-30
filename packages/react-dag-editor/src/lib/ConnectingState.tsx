@@ -1,8 +1,5 @@
 import * as React from "react";
-import {
-  ConnectingStateContext,
-  IConnectingStateContext,
-} from "./contexts/ConnectingStateContext";
+import { ConnectingStateContext, IConnectingStateContext } from "./contexts/ConnectingStateContext";
 import { GraphModel } from "./models/GraphModel";
 import { NodeModel } from "./models/NodeModel";
 import { ICanvasPort } from "./models/port";
@@ -13,9 +10,11 @@ interface IProps {
   connectState: IConnectingState | undefined;
 }
 
-export const ConnectingState: React.FunctionComponent<
-  React.PropsWithChildren<IProps>
-> = ({ children, data, connectState }) => {
+export const ConnectingState: React.FunctionComponent<React.PropsWithChildren<IProps>> = ({
+  children,
+  data,
+  connectState,
+}) => {
   let sourceNode: NodeModel | undefined;
   let sourcePort: ICanvasPort | undefined;
   let targetNode: NodeModel | undefined;
@@ -23,12 +22,8 @@ export const ConnectingState: React.FunctionComponent<
   if (connectState) {
     sourceNode = data.nodes.get(connectState.sourceNode);
     sourcePort = sourceNode?.getPort(connectState.sourcePort);
-    targetNode = connectState.targetNode
-      ? data.nodes.get(connectState.targetNode)
-      : undefined;
-    targetPort = connectState.targetPort
-      ? targetNode?.getPort(connectState.targetPort)
-      : undefined;
+    targetNode = connectState.targetNode ? data.nodes.get(connectState.targetNode) : undefined;
+    targetPort = connectState.targetPort ? targetNode?.getPort(connectState.targetPort) : undefined;
   }
   const context: IConnectingStateContext = React.useMemo(
     () => ({
@@ -37,13 +32,9 @@ export const ConnectingState: React.FunctionComponent<
       targetNode,
       targetPort,
     }),
-    [sourceNode, sourcePort, targetNode, targetPort]
+    [sourceNode, sourcePort, targetNode, targetPort],
   );
-  return (
-    <ConnectingStateContext.Provider value={context}>
-      {children}
-    </ConnectingStateContext.Provider>
-  );
+  return <ConnectingStateContext.Provider value={context}>{children}</ConnectingStateContext.Provider>;
 };
 
 ConnectingState.displayName = "ConnectingState";

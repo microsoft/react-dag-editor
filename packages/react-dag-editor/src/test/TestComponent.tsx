@@ -1,12 +1,5 @@
 import * as React from "react";
-import {
-  applyDefaultPortsPosition,
-  GraphModel,
-  ICanvasData,
-  IEvent,
-  IGraphReducer,
-  IGraphSettings,
-} from "../index";
+import { applyDefaultPortsPosition, GraphModel, ICanvasData, IEvent, IGraphReducer, IGraphSettings } from "../index";
 import { Graph, IGraphProps, ReactDagEditor } from "../lib/components";
 import { GraphController } from "../lib/controllers/GraphController";
 import { useGraphController } from "../lib/hooks/context";
@@ -16,7 +9,7 @@ import { defaultConfig } from "./unit/__mocks__/mockContext";
 
 const data: ICanvasData = {
   ...Sample0,
-  nodes: Sample0.nodes.map((node) => ({
+  nodes: Sample0.nodes.map(node => ({
     ...node,
     ports: applyDefaultPortsPosition<unknown>(node.ports || []),
   })),
@@ -40,33 +33,25 @@ afterEach(() => {
   expect(events).toMatchSnapshot("events");
 });
 
-export const GraphControllerRef = React.forwardRef<GraphController>(
-  (_, ref) => {
-    const graphController = useGraphController();
-    React.useImperativeHandle(ref, () => graphController, [graphController]);
-    return null;
-  }
-);
+export const GraphControllerRef = React.forwardRef<GraphController>((_, ref) => {
+  const graphController = useGraphController();
+  React.useImperativeHandle(ref, () => graphController, [graphController]);
+  return null;
+});
+
+GraphControllerRef.displayName = "GraphControllerRef";
 
 const defaultData = GraphModel.fromJSON(data);
 
-export const TestComponent = (
-  props: React.PropsWithChildren<ITestComponentProps>
-) => {
-  const {
-    graphProps,
-    settings,
-    middleware,
-    graph = true,
-    data = defaultData,
-  } = props;
+export const TestComponent = (props: React.PropsWithChildren<ITestComponentProps>) => {
+  const { graphProps, settings, middleware, graph = true, data: propsData = defaultData } = props;
   const onEvent = React.useCallback(
     (event: IEvent) => {
       graphProps?.onEvent?.(event);
       events.push(event.type);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [graphProps?.onEvent]
+    [graphProps?.onEvent],
   );
 
   const [state, dispatch] = useGraphReducer(
@@ -75,9 +60,9 @@ export const TestComponent = (
         graphConfig: defaultConfig,
         ...settings,
       },
-      data,
+      data: propsData,
     },
-    middleware
+    middleware,
   );
 
   return (

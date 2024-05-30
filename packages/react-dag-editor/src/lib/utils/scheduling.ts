@@ -10,7 +10,7 @@ type Callback = () => void;
 function makeScheduledCallback<T, Args extends unknown[]>(
   callback: (...args: Args) => void,
   schedule: (callback: Callback) => T,
-  cancel: (task: T) => void
+  cancel: (task: T) => void,
 ): IScheduledCallback<Args> {
   let scheduled = false;
   let currentArgs: Args;
@@ -22,6 +22,7 @@ function makeScheduledCallback<T, Args extends unknown[]>(
       task = schedule(() => {
         scheduled = false;
         batchedUpdates(() => {
+          // eslint-disable-next-line prefer-spread
           callback.apply(null, currentArgs);
         });
       });
@@ -33,13 +34,8 @@ function makeScheduledCallback<T, Args extends unknown[]>(
   return scheduledCallback;
 }
 
-export const animationFramed = <Args extends unknown[]>(
-  callback: (...args: Args) => void
-) =>
+export const animationFramed = <Args extends unknown[]>(callback: (...args: Args) => void) =>
   makeScheduledCallback(callback, requestAnimationFrame, cancelAnimationFrame);
 
-export const throttle = <Args extends unknown[]>(
-  callback: (...args: Args) => void,
-  limit: number
-) =>
-  makeScheduledCallback(callback, (cb) => setTimeout(cb, limit), clearTimeout);
+export const throttle = <Args extends unknown[]>(callback: (...args: Args) => void, limit: number) =>
+  makeScheduledCallback(callback, cb => setTimeout(cb, limit), clearTimeout);

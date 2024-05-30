@@ -6,11 +6,7 @@ import { Debug } from "./debug";
 import { getNodeConfig } from "./getNodeConfig";
 import { getRectHeight, getRectWidth } from "./layout";
 
-export const getPortPosition = (
-  node: ICanvasNode,
-  port: ICanvasPort,
-  nodeConfig: INodeConfig
-): IPoint => {
+export const getPortPosition = (node: ICanvasNode, port: ICanvasPort, nodeConfig: INodeConfig): IPoint => {
   const width = getRectWidth(nodeConfig, node);
   const height = getRectHeight(nodeConfig, node);
 
@@ -28,7 +24,7 @@ export const getPortPosition = (
 export const getPortPositionByPortId = (
   node: ICanvasNode,
   portId: string,
-  graphConfig: IGraphConfig
+  graphConfig: IGraphConfig,
 ): IPoint | undefined => {
   const nodeConfig = getNodeConfig(node, graphConfig);
 
@@ -38,7 +34,7 @@ export const getPortPositionByPortId = (
 
   const ports = node.ports || [];
 
-  const port = ports.find((p) => p.id === portId);
+  const port = ports.find(p => p.id === portId);
 
   if (!port) {
     Debug.warn(`invalid port id ${JSON.stringify(port)}`);

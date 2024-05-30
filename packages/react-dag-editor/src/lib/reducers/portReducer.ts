@@ -15,7 +15,7 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: state.data.present.updatePort(
             action.node.id,
             action.port.id,
-            updateStatus(Bitset.add(GraphPortStatus.Activated))
+            updateStatus(Bitset.add(GraphPortStatus.Activated)),
           ),
         },
       };
@@ -28,7 +28,7 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: state.data.present.updatePort(
             action.node.id,
             action.port.id,
-            updateStatus(Bitset.remove(GraphPortStatus.Activated))
+            updateStatus(Bitset.remove(GraphPortStatus.Activated)),
           ),
         },
       };
@@ -41,7 +41,7 @@ export const portReducer: IGraphReactReducer = (state, action) => {
           present: unSelectAllEntity()(state.data.present).updatePort(
             action.node.id,
             action.port.id,
-            updateStatus(Bitset.add(GraphPortStatus.Selected))
+            updateStatus(Bitset.add(GraphPortStatus.Selected)),
           ),
         },
       };

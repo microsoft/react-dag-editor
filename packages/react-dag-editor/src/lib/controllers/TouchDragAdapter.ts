@@ -3,23 +3,15 @@ import { $Cons } from "../utils/tuple";
 import { ITouchHandler } from "./TouchController";
 
 export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
-  implements
-    IEventProvider<IGlobalMoveEventTypes<ExtraArgs>>,
-    ITouchHandler<ExtraArgs>
+  implements IEventProvider<IGlobalMoveEventTypes<ExtraArgs>>, ITouchHandler<ExtraArgs>
 {
-  private readonly startListeners = new Set<
-    (...args: $Cons<MouseEvent, ExtraArgs>) => void
-  >();
-  private readonly moveListeners = new Set<
-    (...args: $Cons<MouseEvent, ExtraArgs>) => void
-  >();
-  private readonly endListeners = new Set<
-    (...args: $Cons<MouseEvent, ExtraArgs>) => void
-  >();
+  private readonly startListeners = new Set<(...args: $Cons<MouseEvent, ExtraArgs>) => void>();
+  private readonly moveListeners = new Set<(...args: $Cons<MouseEvent, ExtraArgs>) => void>();
+  private readonly endListeners = new Set<(...args: $Cons<MouseEvent, ExtraArgs>) => void>();
 
   public off(
     type: "start" | "move" | "end",
-    callback: (...args: $Cons<MouseEvent, ExtraArgs>) => void
+    callback: (...args: $Cons<MouseEvent, ExtraArgs>) => void,
   ): TouchDragAdapter<ExtraArgs> {
     switch (type) {
       case "start":
@@ -38,7 +30,7 @@ export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
 
   public on(
     type: "start" | "move" | "end",
-    callback: (...args: $Cons<MouseEvent, ExtraArgs>) => void
+    callback: (...args: $Cons<MouseEvent, ExtraArgs>) => void,
   ): TouchDragAdapter<ExtraArgs> {
     switch (type) {
       case "start":
@@ -55,28 +47,20 @@ export class TouchDragAdapter<ExtraArgs extends unknown[] = []>
     return this;
   }
 
-  public onStart(
-    _events: Map<number, PointerEvent>,
-    e: PointerEvent,
-    ...args: ExtraArgs
-  ): void {
-    this.startListeners.forEach((cb) => {
+  public onStart(_events: Map<number, PointerEvent>, e: PointerEvent, ...args: ExtraArgs): void {
+    this.startListeners.forEach(cb => {
       cb.call(undefined, e, ...args);
     });
   }
 
-  public onMove(
-    _events: Map<number, PointerEvent>,
-    e: PointerEvent,
-    ...args: ExtraArgs
-  ): void {
-    this.moveListeners.forEach((cb) => {
+  public onMove(_events: Map<number, PointerEvent>, e: PointerEvent, ...args: ExtraArgs): void {
+    this.moveListeners.forEach(cb => {
       cb.call(undefined, e, ...args);
     });
   }
 
   public onEnd(e: PointerEvent, ...args: ExtraArgs): void {
-    this.endListeners.forEach((cb) => {
+    this.endListeners.forEach(cb => {
       cb.call(undefined, e, ...args);
     });
   }

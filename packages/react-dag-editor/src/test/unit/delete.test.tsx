@@ -13,11 +13,7 @@ import { GraphController } from "../../lib/controllers/GraphController";
 import { GraphControllerRef, TestComponent } from "../TestComponent";
 import { makeEdge, makeEdges, makeNode, makeNodes, makePorts } from "../utils";
 
-const ports = makePorts([
-  GraphPortStatus.Default,
-  GraphPortStatus.Default,
-  GraphPortStatus.Default,
-]);
+const ports = makePorts([GraphPortStatus.Default, GraphPortStatus.Default, GraphPortStatus.Default]);
 
 const deleteSelectedItems = (data: GraphModel) => {
   return data.deleteItems({
@@ -33,12 +29,8 @@ it("should do nothing if delete disabled", () => {
       [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
     ]),
     nodes: makeNodes(
-      [
-        GraphNodeStatus.ConnectedToSelected,
-        GraphNodeStatus.Selected,
-        GraphNodeStatus.UnconnectedToSelected,
-      ],
-      ports
+      [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+      ports,
     ),
   });
 
@@ -51,7 +43,7 @@ it("should do nothing if delete disabled", () => {
       }}
     >
       <GraphControllerRef ref={graphControllerRef} />
-    </TestComponent>
+    </TestComponent>,
   );
 
   const graphController = graphControllerRef.current!;
@@ -69,12 +61,8 @@ it("should do nothing if delete disabled", () => {
       [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
     ]),
     nodes: makeNodes(
-      [
-        GraphNodeStatus.ConnectedToSelected,
-        GraphNodeStatus.Selected,
-        GraphNodeStatus.UnconnectedToSelected,
-      ],
-      ports
+      [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+      ports,
     ),
   });
 });
@@ -85,14 +73,7 @@ it("should do nothing if nothing selected", () => {
       [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
       [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
     ]),
-    nodes: makeNodes(
-      [
-        GraphNodeStatus.Default,
-        GraphNodeStatus.Editing,
-        GraphNodeStatus.Default,
-      ],
-      ports
-    ),
+    nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
   });
 
   expect(deleteSelectedItems(data).toJSON()).toEqual(
@@ -101,15 +82,8 @@ it("should do nothing if nothing selected", () => {
         [GraphEdgeStatus.Default, ["0", "0"], ["1", "1"]],
         [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
       ]),
-      nodes: makeNodes(
-        [
-          GraphNodeStatus.Default,
-          GraphNodeStatus.Editing,
-          GraphNodeStatus.Default,
-        ],
-        ports
-      ),
-    }).toJSON()
+      nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Editing, GraphNodeStatus.Default], ports),
+    }).toJSON(),
   );
 });
 
@@ -120,23 +94,16 @@ it("should delete related edges", () => {
       [GraphEdgeStatus.UnconnectedToSelected, ["0", "1"], ["2", "0"]],
     ]),
     nodes: makeNodes(
-      [
-        GraphNodeStatus.ConnectedToSelected,
-        GraphNodeStatus.Selected,
-        GraphNodeStatus.UnconnectedToSelected,
-      ],
-      ports
+      [GraphNodeStatus.ConnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+      ports,
     ),
   });
 
   expect(deleteSelectedItems(data).toJSON()).toEqual(
     GraphModel.fromJSON({
       edges: [makeEdge("1", GraphEdgeStatus.Default, ["0", "1"], ["2", "0"])],
-      nodes: [
-        makeNode("0", GraphNodeStatus.Default, ports),
-        makeNode("2", GraphNodeStatus.Default, ports),
-      ],
-    }).toJSON()
+      nodes: [makeNode("0", GraphNodeStatus.Default, ports), makeNode("2", GraphNodeStatus.Default, ports)],
+    }).toJSON(),
   );
 });
 
@@ -144,21 +111,14 @@ it("should only delete node", () => {
   const data = GraphModel.fromJSON({
     edges: [],
     nodes: makeNodes(
-      [
-        GraphNodeStatus.UnconnectedToSelected,
-        GraphNodeStatus.Selected,
-        GraphNodeStatus.UnconnectedToSelected,
-      ],
-      ports
+      [GraphNodeStatus.UnconnectedToSelected, GraphNodeStatus.Selected, GraphNodeStatus.UnconnectedToSelected],
+      ports,
     ),
   });
 
   expect(deleteSelectedItems(data).toJSON()).toEqual({
     edges: [],
-    nodes: [
-      makeNode("0", GraphNodeStatus.Default, ports),
-      makeNode("2", GraphNodeStatus.Default, ports),
-    ],
+    nodes: [makeNode("0", GraphNodeStatus.Default, ports), makeNode("2", GraphNodeStatus.Default, ports)],
   });
 });
 
@@ -168,26 +128,12 @@ it("should only delete edge", () => {
       [GraphEdgeStatus.Selected, ["0", "0"], ["1", "1"]],
       [GraphEdgeStatus.Default, ["0", "1"], ["2", "0"]],
     ]),
-    nodes: makeNodes(
-      [
-        GraphNodeStatus.Default,
-        GraphNodeStatus.Default,
-        GraphNodeStatus.Default,
-      ],
-      ports
-    ),
+    nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
   });
   expect(deleteSelectedItems(data).toJSON()).toEqual(
     GraphModel.fromJSON({
       edges: [makeEdge("1", GraphEdgeStatus.Default, ["0", "1"], ["2", "0"])],
-      nodes: makeNodes(
-        [
-          GraphNodeStatus.Default,
-          GraphNodeStatus.Default,
-          GraphNodeStatus.Default,
-        ],
-        ports
-      ),
-    }).toJSON()
+      nodes: makeNodes([GraphNodeStatus.Default, GraphNodeStatus.Default, GraphNodeStatus.Default], ports),
+    }).toJSON(),
   );
 });

@@ -2,17 +2,11 @@ import * as React from "react";
 import { useGraphConfig } from "../../hooks";
 import { getNodeConfig, getRectHeight, getRectWidth } from "../../utils";
 import { IGraphNodeAnchorsProps } from "./INodeAnchors";
-import {
-  NodeAnchor,
-  RESIZE_POINT_HEIGHT,
-  RESIZE_POINT_WIDTH,
-} from "./NodeAnchor";
+import { NodeAnchor, RESIZE_POINT_HEIGHT, RESIZE_POINT_WIDTH } from "./NodeAnchor";
 
 const BBOX_PADDING = 15;
 
-export const GraphNodeAnchors: React.FunctionComponent<
-  IGraphNodeAnchorsProps
-> = (props) => {
+export const GraphNodeAnchors: React.FunctionComponent<IGraphNodeAnchorsProps> = props => {
   const { node, getMouseDown } = props;
 
   const graphConfig = useGraphConfig();
@@ -53,7 +47,7 @@ export const GraphNodeAnchors: React.FunctionComponent<
     };
   });
 
-  const e = getMouseDown((dx) => {
+  const e = getMouseDown(dx => {
     const finalDx = Math.max(dx, minWidth - width);
     return {
       dWidth: +finalDx,
@@ -86,7 +80,7 @@ export const GraphNodeAnchors: React.FunctionComponent<
     };
   });
 
-  const w = getMouseDown((dx) => {
+  const w = getMouseDown(dx => {
     const finalDx = Math.min(dx, width - minWidth);
     return {
       dx: finalDx,

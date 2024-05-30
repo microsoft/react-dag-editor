@@ -96,10 +96,7 @@ export function useEventChannel({
     isA11yEnable,
   } = featureControl;
 
-  const animationFramedDispatch = React.useMemo(
-    () => animationFramed(dispatch),
-    [dispatch]
-  );
+  const animationFramedDispatch = React.useMemo(() => animationFramed(dispatch), [dispatch]);
 
   const keyDownHandler = useCanvasKeyboardEventHandlers({
     featureControl,
@@ -114,12 +111,7 @@ export function useEventChannel({
     if (data.nodes.size > 0 && svgRef.current) {
       const firstNode = data.head && data.nodes.get(data.head);
       if (firstNode) {
-        focusItem(
-          svgRef,
-          { node: firstNode, port: undefined },
-          e,
-          eventChannel
-        );
+        focusItem(svgRef, { node: firstNode, port: undefined }, e, eventChannel);
       }
     }
   };
@@ -224,11 +216,7 @@ export function useEventChannel({
         if (graphController.canvasClickOnce) {
           graphController.canvasClickOnce = false;
           const evt = event.rawEvent as React.MouseEvent;
-          if (
-            evt.target instanceof Node &&
-            svgRef.current?.contains(evt.target) &&
-            evt.target.nodeName === "svg"
-          ) {
+          if (evt.target instanceof Node && svgRef.current?.contains(evt.target) && evt.target.nodeName === "svg") {
             eventChannel.trigger({
               type: GraphCanvasEvent.Click,
               rawEvent: event.rawEvent,
@@ -307,9 +295,7 @@ export function useEventChannel({
         {
           evt.preventDefault();
           evt.stopPropagation();
-          const nextItem = evt.shiftKey
-            ? getPrevItem(data, node)
-            : getNextItem(data, node);
+          const nextItem = evt.shiftKey ? getPrevItem(data, node) : getNextItem(data, node);
           focusItem(svgRef, nextItem, evt, eventChannel);
         }
         break;
@@ -321,38 +307,17 @@ export function useEventChannel({
       case "ArrowDown":
         evt.preventDefault();
         evt.stopPropagation();
-        focusDownNode(
-          data,
-          node.id,
-          svgRef,
-          graphController,
-          evt,
-          eventChannel
-        );
+        focusDownNode(data, node.id, svgRef, graphController, evt, eventChannel);
         break;
       case "ArrowLeft":
         evt.preventDefault();
         evt.stopPropagation();
-        focusLeftNode(
-          data,
-          node.id,
-          svgRef,
-          graphController,
-          evt,
-          eventChannel
-        );
+        focusLeftNode(data, node.id, svgRef, graphController, evt, eventChannel);
         break;
       case "ArrowRight":
         evt.preventDefault();
         evt.stopPropagation();
-        focusRightNode(
-          data,
-          node.id,
-          svgRef,
-          graphController,
-          evt,
-          eventChannel
-        );
+        focusRightNode(data, node.id, svgRef, graphController, evt, eventChannel);
         break;
       default:
     }
@@ -371,10 +336,7 @@ export function useEventChannel({
         dispatch(event);
         break;
       case GraphNodeEvent.PointerMove:
-        if (
-          (event.rawEvent as PointerEvent).pointerId ===
-          graphController.pointerId
-        ) {
+        if ((event.rawEvent as PointerEvent).pointerId === graphController.pointerId) {
           animationFramedDispatch(event);
         }
         break;
@@ -462,7 +424,7 @@ export function useEventChannel({
       const globalEventTarget = graphController.getGlobalEventTarget();
       const dragging = new DragController<PointerEvent>(
         new PointerEventProvider(globalEventTarget, evt.pointerId),
-        getPositionFromEvent
+        getPositionFromEvent,
       );
       dragging.onMove = ({ clientX, clientY, e }) => {
         eventChannel.trigger({
@@ -511,7 +473,7 @@ export function useEventChannel({
       isConnectDisabled,
       setFocusedWithoutMouse,
       updateViewport,
-    ]
+    ],
   );
 
   const onPortPointerUp = React.useCallback(
@@ -519,10 +481,7 @@ export function useEventChannel({
       const evt = event.rawEvent as PointerEvent;
       const { node, port } = event;
       // simulate port click event
-      if (
-        prevMouseDownPortId === `${node.id}:${port.id}` &&
-        performance.now() - (prevMouseDownPortTime || 0) < 500
-      ) {
+      if (prevMouseDownPortId === `${node.id}:${port.id}` && performance.now() - (prevMouseDownPortTime || 0) < 500) {
         prevMouseDownPortId = undefined;
         prevMouseDownPortTime = undefined;
 
@@ -534,7 +493,7 @@ export function useEventChannel({
         });
       }
     },
-    [eventChannel]
+    [eventChannel],
   );
 
   const onPortPointerEnter = (event: IPortEvent) => {
@@ -548,9 +507,7 @@ export function useEventChannel({
     if (isPortHoverViewEnable) {
       setCurHoverPort([event.node.id, event.port.id]);
     }
-    if (
-      (event.rawEvent as PointerEvent).pointerId === graphController.pointerId
-    ) {
+    if ((event.rawEvent as PointerEvent).pointerId === graphController.pointerId) {
       dispatch(event);
     }
   };
@@ -581,10 +538,7 @@ export function useEventChannel({
     const { node, port } = event;
     switch (evt.key) {
       case "Tab":
-        if (
-          isA11yEnable &&
-          graphController.getBehavior() === GraphBehavior.Connecting
-        ) {
+        if (isA11yEnable && graphController.getBehavior() === GraphBehavior.Connecting) {
           evt.preventDefault();
           evt.stopPropagation();
           eventChannel.trigger({
@@ -592,9 +546,7 @@ export function useEventChannel({
             rawEvent: evt,
           });
         } else {
-          const nextItem = evt.shiftKey
-            ? getPrevItem(data, node, port)
-            : getNextItem(data, node, port);
+          const nextItem = evt.shiftKey ? getPrevItem(data, node, port) : getNextItem(data, node, port);
           focusItem(svgRef, nextItem, evt, eventChannel);
         }
         break;
@@ -602,27 +554,13 @@ export function useEventChannel({
       case "ArrowLeft":
         evt.preventDefault();
         evt.stopPropagation();
-        focusPrevPort(
-          node.ports ?? [],
-          node,
-          port.id,
-          svgRef,
-          evt,
-          eventChannel
-        );
+        focusPrevPort(node.ports ?? [], node, port.id, svgRef, evt, eventChannel);
         break;
       case "ArrowDown":
       case "ArrowRight":
         evt.preventDefault();
         evt.stopPropagation();
-        focusNextPort(
-          node.ports ?? [],
-          node,
-          port.id,
-          svgRef,
-          evt,
-          eventChannel
-        );
+        focusNextPort(node.ports ?? [], node, port.id, svgRef, evt, eventChannel);
         break;
       case "g":
         evt.preventDefault();
@@ -723,8 +661,5 @@ export function useEventChannel({
   };
 
   React.useImperativeHandle(eventChannel.listenersRef, () => handleEvent);
-  React.useImperativeHandle(
-    eventChannel.externalHandlerRef,
-    () => props.onEvent
-  );
+  React.useImperativeHandle(eventChannel.externalHandlerRef, () => props.onEvent);
 }

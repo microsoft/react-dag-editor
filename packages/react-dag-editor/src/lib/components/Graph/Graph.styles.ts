@@ -1,10 +1,6 @@
 import { mergeStyleSets } from "@fluentui/merge-styles";
 import { defaultColors } from "../../common/constants";
-import {
-  CanvasMouseMode,
-  GraphBehavior,
-  IGraphState,
-} from "../../models/state";
+import { CanvasMouseMode, GraphBehavior, IGraphState } from "../../models/state";
 import classes from "../Graph.styles";
 import { IGraphProps } from "./IGraphProps";
 
@@ -15,19 +11,12 @@ interface IGetCursorStyleArgs {
   isMultiSelecting: boolean;
 }
 
-const getCursorStyle = ({
-  canvasMouseMode,
-  state,
-  isPanDisabled,
-  isMultiSelecting,
-}: IGetCursorStyleArgs): string => {
+const getCursorStyle = ({ canvasMouseMode, state, isPanDisabled, isMultiSelecting }: IGetCursorStyleArgs): string => {
   if (state.behavior === GraphBehavior.Connecting) {
     return "initial";
   }
 
-  const isClickMultipleSelect = ["meta", "control"].some((key) =>
-    state.activeKeys.has(key)
-  );
+  const isClickMultipleSelect = ["meta", "control"].some(key => state.activeKeys.has(key));
 
   if (isClickMultipleSelect) {
     return "initial";
@@ -76,7 +65,7 @@ export const getGraphStyles = (
   isPanDisabled: boolean,
   isNodeDraggable: boolean,
   focusedWithoutMouse: boolean,
-  isMultiSelecting: boolean
+  isMultiSelecting: boolean,
 ): IGraphStyles => {
   return mergeStyleSets({
     svg: [

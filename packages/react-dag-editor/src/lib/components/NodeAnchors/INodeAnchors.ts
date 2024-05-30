@@ -13,5 +13,5 @@ export interface IGraphNodeAnchorsProps {
 export type RenderNodeAnchors<NodeData = unknown, PortData = unknown> = (
   node: NodeModel<NodeData, PortData>,
   getMouseDown: GetMouseDown,
-  defaultAnchors: JSX.Element
+  defaultAnchors: JSX.Element,
 ) => JSX.Element;

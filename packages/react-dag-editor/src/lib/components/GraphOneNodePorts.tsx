@@ -11,19 +11,14 @@ import { IGraphProps } from "./Graph/IGraphProps";
 import { IGraphNodeCommonProps } from "./GraphNode";
 
 export interface IGraphOneNodePortsProps
-  extends Required<
-    Omit<IGraphNodeCommonProps, "onNodeEvent" | "isNodeEditDisabled">
-  > {
+  extends Required<Omit<IGraphNodeCommonProps, "onNodeEvent" | "isNodeEditDisabled">> {
   node: NodeModel;
   data: GraphModel;
   getPortAriaLabel: Required<IGraphProps>["getPortAriaLabel"];
 }
 
-export const GraphOneNodePorts: React.FunctionComponent<
-  IGraphOneNodePortsProps
-> = (props) => {
-  const { data, node, getPortAriaLabel, eventChannel, viewport, graphId } =
-    props;
+export const GraphOneNodePorts: React.FunctionComponent<IGraphOneNodePortsProps> = props => {
+  const { data, node, getPortAriaLabel, eventChannel, viewport, graphId } = props;
   const graphConfig = useGraphConfig();
 
   const ports = node.ports;
@@ -46,13 +41,11 @@ export const GraphOneNodePorts: React.FunctionComponent<
 
   return (
     <g>
-      {ports.map((p) => {
+      {ports.map(p => {
         const portConfig = graphConfig.getPortConfig(p);
 
         if (!portConfig || !portConfig.render) {
-          Debug.warn(
-            `invalid port config ${node.id}:${node.name} - ${p.id}:${p.name}`
-          );
+          Debug.warn(`invalid port config ${node.id}:${node.name} - ${p.id}:${p.name}`);
 
           return null;
         }
@@ -71,6 +64,7 @@ export const GraphOneNodePorts: React.FunctionComponent<
             id={portKey}
             tabIndex={0}
             // for IE and Edge
+            // eslint-disable-next-line react/no-unknown-property
             focusable="true"
             onPointerDown={portEvent(GraphPortEvent.PointerDown, p)}
             onPointerUp={portEvent(GraphPortEvent.PointerUp, p)}

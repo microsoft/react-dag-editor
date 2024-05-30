@@ -40,7 +40,7 @@ export class ContextMenuConfig implements IContextMenuConfig {
           className,
           style: styles,
         },
-        this.contextMenu.get(menuType)
+        this.contextMenu.get(menuType),
       );
       return reactElement;
     }
@@ -48,6 +48,4 @@ export class ContextMenuConfig implements IContextMenuConfig {
   }
 }
 
-export const ContextMenuConfigContext = React.createContext<IContextMenuConfig>(
-  new ContextMenuConfig()
-);
+export const ContextMenuConfigContext = React.createContext<IContextMenuConfig>(new ContextMenuConfig());

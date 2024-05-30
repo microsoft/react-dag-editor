@@ -1,9 +1,6 @@
 import { is } from "./is";
 
-export function mapCow<T, U>(
-  list: readonly T[],
-  f: (value: T, index: number) => U
-): U[] {
+export function mapCow<T, U>(list: readonly T[], f: (value: T, index: number) => U): U[] {
   const values = [] as U[];
   let same = true;
   for (let i = 0; i < list.length; i += 1) {

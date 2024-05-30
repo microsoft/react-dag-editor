@@ -23,9 +23,7 @@ export function hashing(o: unknown): number {
     case "object":
     case "function":
     case "symbol":
-      throw new Error(
-        "Using object, function and symbol as hash map key is not supported"
-      );
+      throw new Error("Using object, function and symbol as hash map key is not supported");
     case "undefined":
       return 0x32108423;
     default:

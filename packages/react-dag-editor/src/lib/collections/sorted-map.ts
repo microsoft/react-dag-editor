@@ -1,12 +1,6 @@
 /* eslint-disable max-classes-per-file */
 
-import {
-  BTreeIterator,
-  emptyRoot,
-  INode,
-  rootInsert,
-  rootRemove,
-} from "./b-tree";
+import { BTreeIterator, emptyRoot, INode, rootInsert, rootRemove } from "./b-tree";
 import { IMap, IMapBuilder } from "./common";
 import { Uid } from "./uid";
 import { MapIterator } from "./utils";
@@ -35,9 +29,7 @@ export class SortedMap<K, V> implements IMap<K, V> {
     return SortedMapBuilder.empty<Key, Value>().finish();
   }
 
-  public static from<Key, Value>(
-    iterable: Iterable<[Key, Value]>
-  ): SortedMap<Key, Value> {
+  public static from<Key, Value>(iterable: Iterable<[Key, Value]>): SortedMap<Key, Value> {
     return SortedMapBuilder.from<Key, Value>(iterable).finish();
   }
 
@@ -127,9 +119,7 @@ export class SortedMapBuilder<K, V> implements IMapBuilder<K, V> {
     return new SortedMapBuilder<Key, Value>(root);
   }
 
-  public static from<Key, Value>(
-    iterable: Iterable<[Key, Value]>
-  ): SortedMapBuilder<Key, Value> {
+  public static from<Key, Value>(iterable: Iterable<[Key, Value]>): SortedMapBuilder<Key, Value> {
     if (Array.isArray(iterable)) {
       return SortedMapBuilder.fromArray(iterable);
     }
@@ -144,9 +134,7 @@ export class SortedMapBuilder<K, V> implements IMapBuilder<K, V> {
     return builder;
   }
 
-  private static fromArray<Key, Value>(
-    list: Array<[Key, Value]>
-  ): SortedMapBuilder<Key, Value> {
+  private static fromArray<Key, Value>(list: Array<[Key, Value]>): SortedMapBuilder<Key, Value> {
     const builder = SortedMapBuilder.empty<Key, Value>();
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < list.length; i += 1) {

@@ -12,7 +12,7 @@ describe("defaultClipboard", () => {
     clipboard = new DefaultClipboard(clipboardStorage);
     data = {
       ...dataRaw,
-      nodes: dataRaw.nodes.map((node) => ({
+      nodes: dataRaw.nodes.map(node => ({
         ...node,
         ports: applyDefaultPortsPosition(node.ports || []),
       })),

@@ -100,8 +100,4 @@ export const GanttChartFeatures = new Set([
   GraphFeatures.LimitBoundary,
 ]);
 
-export const previewMode = new Set([
-  GraphFeatures.NodeHoverView,
-  GraphFeatures.PortHoverView,
-  GraphFeatures.AutoFit,
-]);
+export const previewMode = new Set([GraphFeatures.NodeHoverView, GraphFeatures.PortHoverView, GraphFeatures.AutoFit]);

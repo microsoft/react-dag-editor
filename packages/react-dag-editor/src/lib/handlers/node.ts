@@ -1,12 +1,12 @@
 import * as React from "react";
 import { DragNodeController, TGetPositionFromEvent } from "../controllers";
+import { GraphController } from "../controllers/GraphController";
 import { PointerEventProvider } from "../event-provider/PointerEventProvider";
 import { GraphNodeEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
 import { NodeModel } from "../models/NodeModel";
 import { isWithinThreshold } from "../utils";
 import { EventChannel } from "../utils/eventChannel";
-import { GraphController } from "../controllers/GraphController";
 import { checkIsMultiSelect } from "../utils/keyboard";
 import { isMouseButNotLeft } from "../utils/mouse";
 
@@ -23,11 +23,7 @@ export interface INodePointerDownParams {
   graphController: GraphController;
 }
 
-export const onNodePointerDown = (
-  evt: React.PointerEvent,
-  target: NodeModel,
-  params: INodePointerDownParams
-) => {
+export const onNodePointerDown = (evt: React.PointerEvent, target: NodeModel, params: INodePointerDownParams) => {
   evt.preventDefault();
 
   const {
@@ -60,12 +56,9 @@ export const onNodePointerDown = (
   const isMultiSelect = checkIsMultiSelect(evt);
 
   const dragging = new DragNodeController(
-    new PointerEventProvider(
-      graphController.getGlobalEventTarget(),
-      evt.pointerId
-    ),
+    new PointerEventProvider(graphController.getGlobalEventTarget(), evt.pointerId),
     getPositionFromEvent,
-    rectRef
+    rectRef,
   );
 
   dragging.onMove = ({ dx, dy, totalDX, totalDY, e }) => {

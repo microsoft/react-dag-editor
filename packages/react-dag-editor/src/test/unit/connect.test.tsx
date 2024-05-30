@@ -284,13 +284,9 @@ describe("test Connecting", () => {
     edgeWillAdd = jest.fn(identical);
     const graphControllerRef = React.createRef<GraphController>();
     container = render(
-      <TestComponent
-        settings={{ graphConfig: getGraphConfig() }}
-        data={mockData}
-        graphProps={{ edgeWillAdd }}
-      >
+      <TestComponent settings={{ graphConfig: getGraphConfig() }} data={mockData} graphProps={{ edgeWillAdd }}>
         <GraphControllerRef ref={graphControllerRef} />
-      </TestComponent>
+      </TestComponent>,
     );
     graphController = graphControllerRef.current!;
     expect(graphController).toBeDefined();
@@ -307,9 +303,7 @@ describe("test Connecting", () => {
 
   afterEach(cleanup);
 
-  const getConnectLineElement = () =>
-    container.baseElement.querySelector("#markerArrow")?.parentElement
-      ?.parentElement;
+  const getConnectLineElement = () => container.baseElement.querySelector("#markerArrow")?.parentElement?.parentElement;
 
   it("should render invisible lines", () => {
     expect(getConnectLineElement()).toMatchSnapshot();
@@ -339,22 +333,14 @@ describe("test Connecting", () => {
     });
     expect(getConnectLineElement()).toMatchSnapshot();
     act(() => {
-      connecting.attach(
-        mockData.nodes.get("1")!,
-        mockData.nodes.get("1")!.ports![1]
-      );
+      connecting.attach(mockData.nodes.get("1")!, mockData.nodes.get("1")!.ports![1]);
     });
-    expect(
-      Bitset.has(GraphPortStatus.ConnectingAsTarget)(
-        connecting.data?.nodes.get("1")!.ports![1].status
-      )
-    ).toBe(true);
+    expect(Bitset.has(GraphPortStatus.ConnectingAsTarget)(connecting.data?.nodes.get("1")!.ports![1].status)).toBe(
+      true,
+    );
     expect(getConnectLineElement()).toMatchSnapshot();
     act(() => {
-      connecting.clearAttach(
-        mockData.nodes.get("1")!,
-        mockData.nodes.get("1")!.ports![1]
-      );
+      connecting.clearAttach(mockData.nodes.get("1")!, mockData.nodes.get("1")!.ports![1]);
     });
     expect(getData().toJSON()).toMatchSnapshot();
     expect(getConnectLineElement()).toMatchSnapshot();
@@ -468,10 +454,7 @@ describe("test Connecting", () => {
       });
     });
     act(() => {
-      connecting.start(
-        NodeModel.fromJSON(data.nodes[0], undefined, "1"),
-        data.nodes[0].ports![1]
-      );
+      connecting.start(NodeModel.fromJSON(data.nodes[0], undefined, "1"), data.nodes[0].ports![1]);
     });
     expect(connecting.targetNode).toBeUndefined();
     expect(connecting.targetPort).toBeUndefined();
@@ -512,20 +495,14 @@ describe("test Connecting", () => {
 
   it("should attach to port when mouse enter a connectable port, should not add edge after mouse leave", () => {
     act(() => {
-      connecting.start(
-        mockData.nodes.get("0")!,
-        mockData.nodes.get("0")!.ports![1]
-      );
+      connecting.start(mockData.nodes.get("0")!, mockData.nodes.get("0")!.ports![1]);
     });
     expect(connecting.targetNode).toBeUndefined();
     expect(connecting.targetPort).toBeUndefined();
     expect(getConnectLineElement()).toMatchSnapshot();
 
     act(() => {
-      connecting.attach(
-        mockData.nodes.get("1")!,
-        mockData.nodes.get("1")!.ports![0]
-      );
+      connecting.attach(mockData.nodes.get("1")!, mockData.nodes.get("1")!.ports![0]);
     });
     expect(connecting.targetNode).toBeUndefined();
     expect(connecting.targetPort).toBeUndefined();
@@ -544,10 +521,7 @@ describe("test Connecting", () => {
     expect(getConnectLineElement()).toMatchSnapshot();
 
     act(() => {
-      connecting.attach(
-        mockData.nodes.get("1")!,
-        mockData.nodes.get("1")!.ports![1]
-      );
+      connecting.attach(mockData.nodes.get("1")!, mockData.nodes.get("1")!.ports![1]);
     });
     expect(connecting.targetNode).toBe("1");
     expect(connecting.targetPort).toBe("1");

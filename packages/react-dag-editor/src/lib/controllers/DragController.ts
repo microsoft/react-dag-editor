@@ -42,7 +42,7 @@ export class DragController<T extends MouseEvent = MouseEvent> {
 
   public constructor(
     eventProvider: IEventProvider<IGlobalMoveEventTypes>,
-    getPositionFromEvent: TGetPositionFromEvent
+    getPositionFromEvent: TGetPositionFromEvent,
   ) {
     this.eventProvider = eventProvider;
     this.getPositionFromEvent = getPositionFromEvent;
@@ -125,9 +125,7 @@ export class DragController<T extends MouseEvent = MouseEvent> {
   };
 }
 
-export function defaultGetPositionFromEvent<T extends MouseEvent>(
-  e: T
-): IPoint {
+export function defaultGetPositionFromEvent<T extends MouseEvent>(e: T): IPoint {
   return {
     x: e.clientX,
     y: e.clientY,

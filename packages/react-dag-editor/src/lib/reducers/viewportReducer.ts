@@ -44,7 +44,7 @@ function resetViewport(
   viewport: IViewport,
   data: GraphModel,
   graphConfig: IGraphConfig,
-  action: ICanvasResetViewportEvent
+  action: ICanvasResetViewportEvent,
 ): IViewport {
   if (!isViewportComplete(viewport)) {
     return viewport;
@@ -70,7 +70,7 @@ function resetViewport(
     return isRectVisible(r, viewport);
   };
 
-  const nodeRects = nodes.map((n) => getNodeRect(n, graphConfig));
+  const nodeRects = nodes.map(n => getNodeRect(n, graphConfig));
   const hasVisibleNode = nodeRects.find(isShapeRectInViewport);
 
   if (hasVisibleNode) {
@@ -80,7 +80,7 @@ function resetViewport(
     };
   }
 
-  const groupRects = groups.map((g) => getGroupRect(g, nodes, graphConfig));
+  const groupRects = groups.map(g => getGroupRect(g, nodes, graphConfig));
   const hasVisibleGroup = groupRects.find(isShapeRectInViewport);
   if (hasVisibleGroup) {
     return {
@@ -109,7 +109,7 @@ function zoomToFit(
   viewport: IViewport,
   data: GraphModel,
   settings: IGraphSettings,
-  action: ICanvasZoomToFitEvent
+  action: ICanvasZoomToFitEvent,
 ): IViewport {
   if (!isViewportComplete(viewport)) {
     return viewport;
@@ -129,12 +129,7 @@ function zoomToFit(
   };
 }
 
-const reducer = (
-  viewport: IViewport,
-  action: IEvent,
-  data: GraphModel,
-  settings: IGraphSettings
-): IViewport => {
+const reducer = (viewport: IViewport, action: IEvent, data: GraphModel, settings: IGraphSettings): IViewport => {
   const { graphConfig, canvasBoundaryPadding, features } = settings;
   const limitScale = (scale: number) => {
     return Math.max(scale, getScaleLimit(data, settings));
@@ -188,7 +183,7 @@ const reducer = (
           scale,
           anchor,
           limitScale,
-        })
+        }),
       )(viewport);
     }
     case GraphMinimapEvent.Pan:
@@ -209,11 +204,7 @@ const reducer = (
       return zoomToFit(viewport, data, settings, action);
     case GraphCanvasEvent.ScrollIntoView:
       if (viewport.rect) {
-        const { x, y } = transformPoint(
-          action.x,
-          action.y,
-          viewport.transformMatrix
-        );
+        const { x, y } = transformPoint(action.x, action.y, viewport.transformMatrix);
         return scrollIntoView(x, y, viewport.rect, true)(viewport);
       }
       return viewport;
@@ -223,12 +214,7 @@ const reducer = (
 };
 
 export const viewportReducer: IGraphReactReducer = (state, action) => {
-  const viewport = reducer(
-    state.viewport,
-    action,
-    state.data.present,
-    state.settings
-  );
+  const viewport = reducer(state.viewport, action, state.data.present, state.settings);
   return viewport === state.viewport
     ? state
     : {

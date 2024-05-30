@@ -14,10 +14,7 @@ interface IProps {
   onClick(evt: React.MouseEvent<HTMLDivElement>): void;
 }
 
-export const GraphContextMenu: React.FunctionComponent<IProps> = ({
-  state,
-  onClick,
-}) => {
+export const GraphContextMenu: React.FunctionComponent<IProps> = ({ state, onClick }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const [style, setStyle] = React.useState<React.CSSProperties>({
     ...defaultStyle,
@@ -56,17 +53,17 @@ export const GraphContextMenu: React.FunctionComponent<IProps> = ({
     let selectedNodesCount = 0;
     let selectedPortsCount = 0;
     let selectedEdgesCount = 0;
-    data.nodes.forEach((node) => {
+    data.nodes.forEach(node => {
       if (isSelected(node)) {
         selectedNodesCount += 1;
       }
-      node.ports?.forEach((port) => {
+      node.ports?.forEach(port => {
         if (isSelected(port)) {
           selectedPortsCount += 1;
         }
       });
     });
-    data.edges.forEach((edge) => {
+    data.edges.forEach(edge => {
       if (isSelected(edge)) {
         selectedEdgesCount += 1;
       }
@@ -76,10 +73,7 @@ export const GraphContextMenu: React.FunctionComponent<IProps> = ({
     // todo port menu
     if (selectedPortsCount + selectedNodesCount + selectedEdgesCount > 1) {
       menu = contextMenuConfig.getMenu(MenuType.Multi);
-    } else if (
-      selectedPortsCount + selectedNodesCount + selectedEdgesCount ===
-      0
-    ) {
+    } else if (selectedPortsCount + selectedNodesCount + selectedEdgesCount === 0) {
       menu = contextMenuConfig.getMenu(MenuType.Canvas);
     } else if (selectedNodesCount === 1) {
       menu = contextMenuConfig.getMenu(MenuType.Node);
@@ -92,22 +86,15 @@ export const GraphContextMenu: React.FunctionComponent<IProps> = ({
     setContent(menu);
   }, [state.data.present, contextMenuConfig]);
 
-  const handleContextMenu: React.MouseEventHandler<HTMLDivElement> =
-    React.useCallback((evt) => {
-      evt.stopPropagation();
-      evt.preventDefault();
-    }, []);
+  const handleContextMenu: React.MouseEventHandler<HTMLDivElement> = React.useCallback(evt => {
+    evt.stopPropagation();
+    evt.preventDefault();
+  }, []);
 
   return (
     <>
       {state.contextMenuPosition && (
-        <div
-          ref={ref}
-          onClick={onClick}
-          onContextMenu={handleContextMenu}
-          role="button"
-          style={style}
-        >
+        <div ref={ref} onClick={onClick} onContextMenu={handleContextMenu} role="button" style={style}>
           {content}
         </div>
       )}

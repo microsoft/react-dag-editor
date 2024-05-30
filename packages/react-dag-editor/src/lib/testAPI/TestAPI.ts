@@ -37,39 +37,23 @@ export class TestAPI {
   }
 
   public async getNodesCount(): Promise<number> {
-    return (
-      await this.adapter.selectAll("g[data-automation-id*='node-container-']")
-    ).length;
+    return (await this.adapter.selectAll("g[data-automation-id*='node-container-']")).length;
   }
 
   public async getEdgesCount(): Promise<number> {
-    return (
-      await this.adapter.selectAll("g[data-automation-id*='edge-container-']")
-    ).length;
+    return (await this.adapter.selectAll("g[data-automation-id*='edge-container-']")).length;
   }
 
-  public async addNodeFromItemPanel(options: {
-    itemSelector: string;
-    x: number;
-    y: number;
-  }): Promise<void> {
-    const addColumnsModuleInPanelElPos = await this.getCentralPosBySelector(
-      options.itemSelector
-    );
+  public async addNodeFromItemPanel(options: { itemSelector: string; x: number; y: number }): Promise<void> {
+    const addColumnsModuleInPanelElPos = await this.getCentralPosBySelector(options.itemSelector);
 
-    await this.adapter.mouseMove(
-      addColumnsModuleInPanelElPos.x,
-      addColumnsModuleInPanelElPos.y
-    );
+    await this.adapter.mouseMove(addColumnsModuleInPanelElPos.x, addColumnsModuleInPanelElPos.y);
 
     await this.adapter.mouseDown();
 
     const canvasBBOx = await this.getCanvasBoundingBox();
 
-    await this.adapter.mouseMove(
-      canvasBBOx.x + options.x,
-      canvasBBOx.y + options.y
-    );
+    await this.adapter.mouseMove(canvasBBOx.x + options.x, canvasBBOx.y + options.y);
     await this.adapter.mouseUp();
   }
 
@@ -79,37 +63,25 @@ export class TestAPI {
     targetNodeName,
     targetPortName,
   }: IConnectTwoNodesConfig): Promise<void> {
-    const sourcePos = await this.getCentralPosBySelector(
-      this.getPortCssSelector(sourceNodeName, sourcePortName)
-    );
+    const sourcePos = await this.getCentralPosBySelector(this.getPortCssSelector(sourceNodeName, sourcePortName));
     await this.adapter.mouseMove(sourcePos.x, sourcePos.y);
 
     await this.adapter.mouseDown();
-    const targetPos = await this.getCentralPosBySelector(
-      this.getPortCssSelector(targetNodeName, targetPortName)
-    );
+    const targetPos = await this.getCentralPosBySelector(this.getPortCssSelector(targetNodeName, targetPortName));
     await this.adapter.mouseMove(targetPos.x, targetPos.y);
 
     await this.adapter.mouseUp();
   }
 
-  public async draggingNode(
-    nodeName: string,
-    toPosition: IPosition
-  ): Promise<void> {
-    const nodeCenterPos = await this.getCentralPosBySelector(
-      this.getNodeCssSelector(nodeName)
-    );
+  public async draggingNode(nodeName: string, toPosition: IPosition): Promise<void> {
+    const nodeCenterPos = await this.getCentralPosBySelector(this.getNodeCssSelector(nodeName));
 
     await this.adapter.mouseMove(nodeCenterPos.x, nodeCenterPos.y);
     await this.adapter.mouseDown();
 
     const canvasBBOx = await this.getCanvasBoundingBox();
 
-    await this.adapter.mouseMove(
-      toPosition.x + canvasBBOx.x,
-      toPosition.y + canvasBBOx.y
-    );
+    await this.adapter.mouseMove(toPosition.x + canvasBBOx.x, toPosition.y + canvasBBOx.y);
   }
 
   public async rightClickOnNode(nodeName: string): Promise<void> {
@@ -258,17 +230,10 @@ export class TestAPI {
     await this.adapter.mouseUp();
   }
 
-  public async getElementBoundingBox(
-    cssSelector: string
-  ): Promise<IBoundingBox> {
+  public async getElementBoundingBox(cssSelector: string): Promise<IBoundingBox> {
     const el = await this.adapter.waitForSelector(cssSelector);
 
-    const {
-      x = 0,
-      y = 0,
-      height = 0,
-      width = 0,
-    } = (await el.boundingBox()) || {};
+    const { x = 0, y = 0, height = 0, width = 0 } = (await el.boundingBox()) || {};
 
     return {
       x,
@@ -283,9 +248,7 @@ export class TestAPI {
   }
 
   public async getMinimapBoundingBox(): Promise<IBoundingBox> {
-    const { x, y, height, width } = await this.getElementBoundingBox(
-      "svg[data-automation-id*='minimap-id']"
-    );
+    const { x, y, height, width } = await this.getElementBoundingBox("svg[data-automation-id*='minimap-id']");
 
     return {
       x,
@@ -300,9 +263,7 @@ export class TestAPI {
   }
 
   public async getNodeCentralPosition(nodeName: string): Promise<IPosition> {
-    const pos = await this.getCentralPosBySelector(
-      this.getNodeCssSelector(nodeName)
-    );
+    const pos = await this.getCentralPosBySelector(this.getNodeCssSelector(nodeName));
     return pos;
   }
 
@@ -342,17 +303,13 @@ export class TestAPI {
     };
   }
 
-  protected async getCentralPosBySelector(
-    cssSelector: string
-  ): Promise<IPosition> {
-    return this.getCentralPosByBBox(
-      await this.getElementBoundingBox(cssSelector)
-    );
+  protected async getCentralPosBySelector(cssSelector: string): Promise<IPosition> {
+    return this.getCentralPosByBBox(await this.getElementBoundingBox(cssSelector));
   }
 
   protected async getDomElements(selector: string): Promise<IGraphDomObject[]> {
     return Promise.all(
-      (await this.adapter.selectAll(selector))?.map(async (handle) => {
+      (await this.adapter.selectAll(selector))?.map(async handle => {
         const bbox = await handle.boundingBox();
         const className = await handle.getAttribute("class");
         const innerHTML = await handle.innerHTML();
@@ -368,7 +325,7 @@ export class TestAPI {
           ariaLabel,
           automationId,
         };
-      })
+      }),
     );
   }
 

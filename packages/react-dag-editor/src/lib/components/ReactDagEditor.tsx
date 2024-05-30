@@ -1,9 +1,5 @@
 import * as React from "react";
-import {
-  ContextMenuConfig,
-  ContextMenuConfigContext,
-  IDispatch,
-} from "../contexts";
+import { ContextMenuConfig, ContextMenuConfigContext, IDispatch } from "../contexts";
 import { ISlotsContext, SlotsContext } from "../contexts/SlotsContext";
 import { GraphController } from "../controllers/GraphController";
 import { useConst } from "../hooks/useConst";
@@ -16,12 +12,8 @@ import { GraphStateStore } from "./Graph/GraphStateStore";
 /**
  * ReactDagEditor props
  */
-export interface IReactDagEditorProps<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown,
-  Action = never
-> extends ISlotsContext {
+export interface IReactDagEditorProps<NodeData = unknown, EdgeData = unknown, PortData = unknown, Action = never>
+  extends ISlotsContext {
   /**
    * Additional css styles to apply to the container element.
    */
@@ -40,11 +32,7 @@ export interface IReactDagEditorProps<
   /**
    * Fired when ReactDagEditor catches an error. And the return value will be rendered.
    */
-  handleError?(
-    error?: Error,
-    errorInfo?: React.ErrorInfo,
-    children?: React.ReactNode
-  ): React.ReactChild;
+  handleError?(error?: Error, errorInfo?: React.ErrorInfo, children?: React.ReactNode): React.ReactChild;
 
   /**
    * Fallback to `window` if this is not provided or returns null or undefined
@@ -57,9 +45,7 @@ export interface IReactDagEditorProps<
  *
  * @param props
  */
-export const ReactDagEditor: React.FunctionComponent<
-  React.PropsWithChildren<IReactDagEditorProps>
-> = (props) => {
+export const ReactDagEditor: React.FunctionComponent<React.PropsWithChildren<IReactDagEditorProps>> = props => {
   React.useEffect(() => {
     if (props.handleWarning) {
       Debug.warn = props.handleWarning;
@@ -87,14 +73,8 @@ export const ReactDagEditor: React.FunctionComponent<
   return (
     <ErrorBoundary renderOnError={handleError}>
       <SlotsContext.Provider value={props}>
-        <GraphStateStore
-          state={state}
-          dispatch={dispatch}
-          graphController={graphController}
-        >
-          <ContextMenuConfigContext.Provider
-            value={useConst(() => new ContextMenuConfig())}
-          >
+        <GraphStateStore state={state} dispatch={dispatch} graphController={graphController}>
+          <ContextMenuConfigContext.Provider value={useConst(() => new ContextMenuConfig())}>
             <div style={props.style} className={props.className}>
               {props.children}
             </div>

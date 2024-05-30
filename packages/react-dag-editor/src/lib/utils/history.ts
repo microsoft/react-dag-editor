@@ -11,11 +11,7 @@ export interface IHistory<T> {
   future: IHistoryNode<T> | null;
 }
 
-export const pushHistory = <T>(
-  history: IHistory<T>,
-  data: T,
-  mapPresent: (value: T) => T = identical
-): IHistory<T> => {
+export const pushHistory = <T>(history: IHistory<T>, data: T, mapPresent: (value: T) => T = identical): IHistory<T> => {
   return {
     present: data,
     past: {

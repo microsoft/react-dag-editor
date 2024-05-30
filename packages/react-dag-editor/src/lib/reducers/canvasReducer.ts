@@ -3,12 +3,7 @@ import { IGraphReactReducer } from "../contexts";
 import { GraphFeatures } from "../Features";
 import { GraphCanvasEvent } from "../models/event";
 import { GraphNodeStatus, notSelected } from "../models/status";
-import {
-  getRealPointFromClientPoint,
-  isViewportComplete,
-  resetUndoStack,
-  unSelectAllEntity,
-} from "../utils";
+import { getRealPointFromClientPoint, isViewportComplete, resetUndoStack, unSelectAllEntity } from "../utils";
 import { pushHistory, redo, undo } from "../utils/history";
 
 export const canvasReducer: IGraphReactReducer = (state, action) => {
@@ -22,11 +17,7 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
       let pasteNodes = action.data.nodes;
 
       if (position && rect) {
-        const realPoint = getRealPointFromClientPoint(
-          position.x,
-          position.y,
-          state.viewport
-        );
+        const realPoint = getRealPointFromClientPoint(position.x, position.y, state.viewport);
 
         let dx: number;
         let dy: number;
@@ -48,10 +39,10 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
       }
 
       let next = unSelectAllEntity()(state.data.present);
-      pasteNodes.forEach((node) => {
+      pasteNodes.forEach(node => {
         next = next.insertNode(node);
       });
-      action.data.edges.forEach((edge) => {
+      action.data.edges.forEach(edge => {
         next = next.insertEdge(edge);
       });
       return {
@@ -71,7 +62,7 @@ export const canvasReducer: IGraphReactReducer = (state, action) => {
             node: notSelected,
             edge: notSelected,
           }),
-          unSelectAllEntity()
+          unSelectAllEntity(),
         ),
       };
     case GraphCanvasEvent.Undo:

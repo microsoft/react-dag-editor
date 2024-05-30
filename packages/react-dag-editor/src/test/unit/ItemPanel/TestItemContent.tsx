@@ -5,7 +5,7 @@ export interface ITestItemContentProps {
   text: string;
 }
 
-export const TestItemContent: React.FC<ITestItemContentProps> = (props) => {
+export const TestItemContent: React.FC<ITestItemContentProps> = props => {
   const { state } = useGraphState();
 
   return <p>{`${props.text}:${state.behavior}`}</p>;

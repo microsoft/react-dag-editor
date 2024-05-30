@@ -1,12 +1,7 @@
 import * as React from "react";
 import { v4 as uuid } from "uuid";
+import { useAlignmentLines, useGraphConfig, useGraphController, useViewport } from "../../hooks/context";
 import { useConst } from "../../hooks/useConst";
-import {
-  useAlignmentLines,
-  useGraphConfig,
-  useGraphController,
-  useViewport,
-} from "../../hooks/context";
 import { GraphCanvasEvent } from "../../models/event";
 import { ICanvasNode } from "../../models/node";
 import { NodeModel } from "../../models/NodeModel";
@@ -14,8 +9,8 @@ import { getNodeSize } from "../../utils";
 import { defaultGetNodeAriaLabel } from "../../utils/a11yUtils";
 import { getAutoAlignDisplacement } from "../../utils/autoAlign";
 import { EventChannel } from "../../utils/eventChannel";
-import { GraphNode } from "../GraphNode";
 import classes from "../Graph.styles";
+import { GraphNode } from "../GraphNode";
 import { Transform } from "../Transform";
 import { useSvgRect } from "./useSvgRect";
 
@@ -25,9 +20,11 @@ interface IAddingNodeSvgProps<NodeData, PortData> {
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const AddingNodeSvg: React.FunctionComponent<
-  IAddingNodeSvgProps<unknown, unknown>
-> = ({ model, svgRef, nextNodeRef }) => {
+export const AddingNodeSvg: React.FunctionComponent<IAddingNodeSvgProps<unknown, unknown>> = ({
+  model,
+  svgRef,
+  nextNodeRef,
+}) => {
   const rect = useSvgRect(svgRef);
   const graphConfig = useGraphConfig();
   const graphController = useGraphController();
@@ -66,18 +63,8 @@ export const AddingNodeSvg: React.FunctionComponent<
       return null;
     }
 
-    const dxAligned = getAutoAlignDisplacement(
-      alignmentLines,
-      [dummyNode],
-      graphConfig,
-      "x"
-    );
-    const dyAligned = getAutoAlignDisplacement(
-      alignmentLines,
-      [dummyNode],
-      graphConfig,
-      "y"
-    );
+    const dxAligned = getAutoAlignDisplacement(alignmentLines, [dummyNode], graphConfig, "x");
+    const dyAligned = getAutoAlignDisplacement(alignmentLines, [dummyNode], graphConfig, "y");
 
     return {
       ...model,
@@ -96,16 +83,11 @@ export const AddingNodeSvg: React.FunctionComponent<
 
   const node = React.useMemo(
     () => NodeModel.fromJSON(attachedNode ?? model, undefined, undefined),
-    [attachedNode, model]
+    [attachedNode, model],
   );
 
   return (
-    <svg
-      id={tempGraphId}
-      ref={svgRef}
-      className={classes.addingNodeSvg}
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <svg id={tempGraphId} ref={svgRef} className={classes.addingNodeSvg} preserveAspectRatio="xMidYMid meet">
       <Transform matrix={viewport.transformMatrix}>
         {rect && (
           <GraphNode

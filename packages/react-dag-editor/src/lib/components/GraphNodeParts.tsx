@@ -5,11 +5,8 @@ import { NodeModel } from "../models/NodeModel";
 import { isNodeEditing } from "../models/status";
 import { isPointInRect } from "../utils";
 import { GraphNode, IGraphNodeCommonProps } from "./GraphNode";
+import { GraphOneNodePorts, IGraphOneNodePortsProps } from "./GraphOneNodePorts";
 import { GraphNodeAnchors, RenderNodeAnchors } from "./NodeAnchors";
-import {
-  GraphOneNodePorts,
-  IGraphOneNodePortsProps,
-} from "./GraphOneNodePorts";
 
 export interface IGraphNodePartsProps
   extends Required<Omit<IGraphNodeCommonProps, "viewport">>,
@@ -19,12 +16,7 @@ export interface IGraphNodePartsProps
   renderNodeAnchors?: RenderNodeAnchors;
 }
 
-const GraphNodeParts = ({
-  node,
-  isNodeResizable,
-  renderNodeAnchors,
-  ...commonProps
-}: IGraphNodePartsProps) => {
+const GraphNodeParts = ({ node, isNodeResizable, renderNodeAnchors, ...commonProps }: IGraphNodePartsProps) => {
   const virtualization = useVirtualization();
   const { renderedArea, viewport } = virtualization;
   const getMouseDown = useGetMouseDownOnAnchor(node, commonProps.eventChannel);
@@ -43,12 +35,8 @@ const GraphNodeParts = ({
 
   let nodeAnchors;
   if (isNodeResizable && isNodeEditing(node)) {
-    const defaultAnchors = (
-      <GraphNodeAnchors node={node} getMouseDown={getMouseDown} />
-    );
-    nodeAnchors = renderNodeAnchors
-      ? renderNodeAnchors(node, getMouseDown, defaultAnchors)
-      : defaultAnchors;
+    const defaultAnchors = <GraphNodeAnchors node={node} getMouseDown={getMouseDown} />;
+    nodeAnchors = renderNodeAnchors ? renderNodeAnchors(node, getMouseDown, defaultAnchors) : defaultAnchors;
   }
 
   return (

@@ -42,15 +42,11 @@ export class HashMap<K, V> implements IMap<K, V> {
   }
 
   public set(key: K, value: V): HashMap<K, V> {
-    return this.withRoot(
-      this.root.insert(uid.peek(), key, value, hashing(key), 0)
-    );
+    return this.withRoot(this.root.insert(uid.peek(), key, value, hashing(key), 0));
   }
 
   public update(key: K, updater: (prev: V) => V): HashMap<K, V> {
-    return this.withRoot(
-      this.root.update(uid.peek(), key, updater, hashing(key), 0)
-    );
+    return this.withRoot(this.root.update(uid.peek(), key, updater, hashing(key), 0));
   }
 
   public delete(key: K): HashMap<K, V> {
@@ -125,9 +121,7 @@ export class HashMapBuilder<K, V> implements IMapBuilder<K, V> {
     return new HashMapBuilder<TK, TV>(root);
   }
 
-  public static from<TK, TV>(
-    iterable: Iterable<[TK, TV]>
-  ): HashMapBuilder<TK, TV> {
+  public static from<TK, TV>(iterable: Iterable<[TK, TV]>): HashMapBuilder<TK, TV> {
     if (Array.isArray(iterable)) {
       return HashMapBuilder.fromArray(iterable);
     }
@@ -142,9 +136,7 @@ export class HashMapBuilder<K, V> implements IMapBuilder<K, V> {
     return builder;
   }
 
-  private static fromArray<TK, TV>(
-    list: Array<[TK, TV]>
-  ): HashMapBuilder<TK, TV> {
+  private static fromArray<TK, TV>(list: Array<[TK, TV]>): HashMapBuilder<TK, TV> {
     const builder = HashMapBuilder.empty<TK, TV>();
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < list.length; i += 1) {

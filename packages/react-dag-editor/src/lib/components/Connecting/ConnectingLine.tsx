@@ -9,9 +9,7 @@ interface IConnectingLineProps {
   styles?: React.CSSProperties;
 }
 
-export const ConnectingLine: React.FunctionComponent<IConnectingLineProps> = (
-  props
-) => {
+export const ConnectingLine: React.FunctionComponent<IConnectingLineProps> = props => {
   const { autoAttachLine, connectingLine, styles } = props;
 
   const strokeColor = styles?.stroke || defaultColors.primaryColor;
@@ -32,10 +30,7 @@ export const ConnectingLine: React.FunctionComponent<IConnectingLineProps> = (
           orient="auto"
           markerUnits="strokeWidth"
         >
-          <path
-            d="M0,0 L6,5 L0,10"
-            style={{ stroke: connectingLineStroke, fill: "none" }}
-          />
+          <path d="M0,0 L6,5 L0,10" style={{ stroke: connectingLineStroke, fill: "none" }} />
         </marker>
       </defs>
       {/* connecting line */}
@@ -49,12 +44,7 @@ export const ConnectingLine: React.FunctionComponent<IConnectingLineProps> = (
       />
       {/* temporary edge, for automatically attach effect*/}
       <path
-        d={getCurvePathD(
-          autoAttachLine.x2,
-          autoAttachLine.x1,
-          autoAttachLine.y2,
-          autoAttachLine.y1
-        )}
+        d={getCurvePathD(autoAttachLine.x2, autoAttachLine.x1, autoAttachLine.y2, autoAttachLine.y1)}
         style={{
           stroke: autoAttachLine.visible ? strokeColor : "none",
           fill: "none",

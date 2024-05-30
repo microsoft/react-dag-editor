@@ -12,10 +12,7 @@ export interface IDiffGraphNode {
   nodes: ICanvasNode[];
 }
 
-export const diffGraphNode = (
-  preData: ICanvasData,
-  data: ICanvasData
-): IDiffGraphNode => {
+export const diffGraphNode = (preData: ICanvasData, data: ICanvasData): IDiffGraphNode => {
   const isAdded = data.nodes.length > preData.nodes.length;
 
   const larger = isAdded ? data : preData;
@@ -23,9 +20,9 @@ export const diffGraphNode = (
 
   const nodeIdSet = new Set();
 
-  smaller.nodes.forEach((n) => nodeIdSet.add(n.id));
+  smaller.nodes.forEach(n => nodeIdSet.add(n.id));
 
-  const nodes = larger.nodes.filter((n) => !nodeIdSet.has(n.id));
+  const nodes = larger.nodes.filter(n => !nodeIdSet.has(n.id));
 
   return { isAdded, nodes };
 };

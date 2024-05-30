@@ -1,10 +1,4 @@
-import {
-  MutableRefObject,
-  RefObject,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-} from "react";
+import { MutableRefObject, RefObject, useCallback, useEffect, useLayoutEffect } from "react";
 import { GraphCanvasEvent } from "../models/event";
 import { IContainerRect } from "../models/geometry";
 import { IGraphState } from "../models/state";
@@ -15,28 +9,20 @@ import { noop } from "../utils/noop";
 
 const LIMIT = 20;
 
-const isRectChanged = (
-  a: IContainerRect | undefined,
-  b: IContainerRect | undefined
-): boolean => {
+const isRectChanged = (a: IContainerRect | undefined, b: IContainerRect | undefined): boolean => {
   if (a === b) {
     return false;
   }
   if (!a || !b) {
     return true;
   }
-  return (
-    a.top !== b.top ||
-    a.left !== b.left ||
-    a.width !== b.width ||
-    a.height !== b.height
-  );
+  return a.top !== b.top || a.left !== b.left || a.width !== b.width || a.height !== b.height;
 };
 
 export const useUpdateViewportCallback = (
   rectRef: MutableRefObject<IContainerRect | undefined>,
   svgRef: RefObject<SVGSVGElement>,
-  eventChannel: EventChannel
+  eventChannel: EventChannel,
 ) =>
   useCallback(
     (force = false): void => {
@@ -49,14 +35,14 @@ export const useUpdateViewportCallback = (
         });
       }
     },
-    [eventChannel, rectRef, svgRef]
+    [eventChannel, rectRef, svgRef],
   );
 
 export const useContainerRect = (
   state: IGraphState,
   svgRef: RefObject<SVGSVGElement>,
   containerRef: RefObject<HTMLDivElement>,
-  updateViewport: (force?: boolean) => void
+  updateViewport: (force?: boolean) => void,
 ): void => {
   useLayoutEffect(() => {
     if (!state.viewport.rect) {
@@ -81,7 +67,7 @@ export const useContainerRect = (
         nextFrame(() => {
           updateViewport();
         }),
-      LIMIT
+      LIMIT,
     );
 
     if (typeof ResizeObserver !== "undefined") {

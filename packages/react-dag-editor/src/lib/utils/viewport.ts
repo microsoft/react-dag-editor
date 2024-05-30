@@ -20,14 +20,9 @@ import type { IGraphSettings } from "../models/state";
 import { isPointInRect } from "./geometric";
 import { identical } from "./identical";
 import { getNodeSize, IShapeRect } from "./layout";
-import {
-  getContainerClientPoint,
-  reverseTransformPoint,
-} from "./transformMatrix";
+import { getContainerClientPoint, reverseTransformPoint } from "./transformMatrix";
 
-export const isViewportComplete = (
-  viewport: IViewport
-): viewport is Required<IViewport> => {
+export const isViewportComplete = (viewport: IViewport): viewport is Required<IViewport> => {
   return !!viewport.rect;
 };
 
@@ -38,10 +33,7 @@ export const isViewportEmpty = (viewport: IViewport): boolean => {
   return !viewport.rect.width || !viewport.rect.height;
 };
 
-export const getNodeRect = (
-  node: ICanvasNode,
-  graphConfig: IGraphConfig
-): IShapeRect => {
+export const getNodeRect = (node: ICanvasNode, graphConfig: IGraphConfig): IShapeRect => {
   const { x, y } = node;
   const { width, height } = getNodeSize(node, graphConfig);
   return {
@@ -52,18 +44,11 @@ export const getNodeRect = (
   };
 };
 
-export const isNodeVisible = (
-  node: ICanvasNode,
-  viewport: Required<IViewport>,
-  graphConfig: IGraphConfig
-): boolean => {
+export const isNodeVisible = (node: ICanvasNode, viewport: Required<IViewport>, graphConfig: IGraphConfig): boolean => {
   return isRectVisible(getNodeRect(node, graphConfig), viewport);
 };
 
-export const isRectVisible = (
-  shapeRect: IShapeRect,
-  viewport: Required<IViewport>
-) => {
+export const isRectVisible = (shapeRect: IShapeRect, viewport: Required<IViewport>) => {
   const { x, y, width, height } = shapeRect;
   return (
     isPointVisible({ x, y }, viewport) ||
@@ -73,10 +58,7 @@ export const isRectVisible = (
   );
 };
 
-export const isPointVisible = (
-  point: IPoint,
-  viewport: Required<IViewport>
-): boolean => {
+export const isPointVisible = (point: IPoint, viewport: Required<IViewport>): boolean => {
   const { x, y } = getContainerClientPoint(point.x, point.y, viewport);
 
   const { height, width } = viewport.rect;
@@ -87,11 +69,11 @@ export const isPointVisible = (
 export const getVisibleNodes = <NodeData, PortData>(
   nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
   viewport: Required<IViewport>,
-  graphConfig: IGraphConfig
+  graphConfig: IGraphConfig,
 ): ICanvasNode[] => {
   const result: ICanvasNode[] = [];
 
-  nodes.forEach((n) => {
+  nodes.forEach(n => {
     if (isNodeVisible(n, viewport, graphConfig)) {
       result.push(n.inner);
     }
@@ -103,13 +85,13 @@ export const getVisibleNodes = <NodeData, PortData>(
 // Get rendered nodes count
 export const getRenderedNodes = <NodeData, PortData>(
   nodes: OrderedMap<string, NodeModel<NodeData, PortData>>,
-  viewport: IViewport
+  viewport: IViewport,
 ): ICanvasNode[] => {
   const result: ICanvasNode[] = [];
 
   const renderedArea = getRenderedArea(viewport);
 
-  nodes.forEach((n) => {
+  nodes.forEach(n => {
     if (isNodeInRenderedArea(n, renderedArea)) {
       result.push(n.inner);
     }
@@ -118,10 +100,7 @@ export const getRenderedNodes = <NodeData, PortData>(
   return result;
 };
 
-const isNodeInRenderedArea = (
-  node: ICanvasNode,
-  renderedArea: IRectShape
-): boolean => {
+const isNodeInRenderedArea = (node: ICanvasNode, renderedArea: IRectShape): boolean => {
   return isPointInRect(renderedArea, node);
 };
 
@@ -130,21 +109,17 @@ export const getRenderedEdges = (
   edges: HashMap<string, EdgeModel>,
   nodes: OrderedMap<string, NodeModel>,
   graphConfig: IGraphConfig,
-  viewport: IViewport
+  viewport: IViewport,
 ) => {
   const result: ICanvasEdge[] = [];
   const renderedArea = getRenderedArea(viewport);
 
-  edges.forEach((e) => {
+  edges.forEach(e => {
     const edgeCoordinate = getEdgeSourceTargetCoordinate(e, nodes, graphConfig);
     if (
       edgeCoordinate.source &&
       edgeCoordinate.target &&
-      isEdgeInRenderedArea(
-        edgeCoordinate.source,
-        edgeCoordinate.target,
-        renderedArea
-      )
+      isEdgeInRenderedArea(edgeCoordinate.source, edgeCoordinate.target, renderedArea)
     ) {
       result.push(e.inner);
     }
@@ -153,11 +128,7 @@ export const getRenderedEdges = (
   return result;
 };
 
-const isEdgeInRenderedArea = (
-  source: IPoint,
-  target: IPoint,
-  renderedArea: IRectShape
-): boolean => {
+const isEdgeInRenderedArea = (source: IPoint, target: IPoint, renderedArea: IRectShape): boolean => {
   const isSourceVisible = isPointInRect(renderedArea, source);
   const isTargetVisible = isPointInRect(renderedArea, target);
 
@@ -205,16 +176,8 @@ export const getRenderedArea = (viewport: IViewport): IRectShape => {
   const minY = 0;
   const maxX = rect.width;
   const maxY = rect.height;
-  const min = reverseTransformPoint(
-    minX - rect.width,
-    minY - rect.height,
-    transformMatrix
-  );
-  const max = reverseTransformPoint(
-    maxX + rect.width,
-    maxY + rect.height,
-    transformMatrix
-  );
+  const min = reverseTransformPoint(minX - rect.width, minY - rect.height, transformMatrix);
+  const max = reverseTransformPoint(maxX + rect.width, maxY + rect.height, transformMatrix);
 
   return {
     minX: min.x,
@@ -227,15 +190,11 @@ export const getRenderedArea = (viewport: IViewport): IRectShape => {
 export const getEdgeSourceTargetCoordinate = (
   edge: ICanvasEdge,
   nodes: OrderedMap<string, NodeModel>,
-  graphConfig: IGraphConfig
+  graphConfig: IGraphConfig,
 ): { source?: IPoint; target?: IPoint } => {
   return {
-    source: nodes
-      .get(edge.source)
-      ?.getPortPosition(edge.sourcePortId, graphConfig),
-    target: nodes
-      .get(edge.target)
-      ?.getPortPosition(edge.targetPortId, graphConfig),
+    source: nodes.get(edge.source)?.getPortPosition(edge.sourcePortId, graphConfig),
+    target: nodes.get(edge.target)?.getPortPosition(edge.targetPortId, graphConfig),
   };
 };
 
@@ -256,9 +215,7 @@ export interface IZoomFixPublicParams {
   spacing?: number | IGap;
 }
 
-const normalizeSpacing = (
-  spacing: number | IGap | undefined
-): Required<IGap> => {
+const normalizeSpacing = (spacing: number | IGap | undefined): Required<IGap> => {
   if (!spacing) {
     return {
       top: 0,
@@ -284,9 +241,7 @@ const normalizeSpacing = (
   };
 };
 
-export interface IZoomFitParams
-  extends IZoomFixPublicParams,
-    IZoomCommonParams {
+export interface IZoomFitParams extends IZoomFixPublicParams, IZoomCommonParams {
   data: GraphModel;
   graphConfig: IGraphConfig;
   rect: IContainerRect;
@@ -309,13 +264,8 @@ export interface IZoomParams {
 /**
  * zoom to [scale]
  */
-export const zoomTo = ({
-  scale,
-  anchor,
-  direction,
-  limitScale,
-}: IZoomParams): Action => {
-  return (prevState) => {
+export const zoomTo = ({ scale, anchor, direction, limitScale }: IZoomParams): Action => {
+  return prevState => {
     const scaleX = limitScale(scale) / prevState.transformMatrix[0];
     const scaleY = limitScale(scale) / prevState.transformMatrix[3];
     const { x, y } = anchor;
@@ -362,17 +312,12 @@ export const zoomTo = ({
   };
 };
 
-export const zoom = ({
-  scale,
-  anchor,
-  direction,
-  limitScale,
-}: IZoomParams): Action => {
+export const zoom = ({ scale, anchor, direction, limitScale }: IZoomParams): Action => {
   if (scale === 1) {
     return identical;
   }
 
-  return (prevState) => {
+  return prevState => {
     let transformMatrix: ITransformMatrix;
     switch (direction) {
       case Direction.X:
@@ -419,7 +364,7 @@ export const pan = (dx: number, dy: number): Action => {
   if (dx === 0 && dy === 0) {
     return identical;
   }
-  return (prevState) => {
+  return prevState => {
     return {
       ...prevState,
       transformMatrix: [
@@ -437,7 +382,7 @@ export const minimapPan = (dx: number, dy: number): Action => {
   if (dx === 0 && dy === 0) {
     return identical;
   }
-  return (prevState) => {
+  return prevState => {
     const [a, b, c, d] = prevState.transformMatrix;
     return {
       ...prevState,
@@ -453,11 +398,7 @@ export const minimapPan = (dx: number, dy: number): Action => {
   };
 };
 
-export const getContentArea = (
-  data: GraphModel,
-  graphConfig: IGraphConfig,
-  nodeIds?: Set<string>
-) => {
+export const getContentArea = (data: GraphModel, graphConfig: IGraphConfig, nodeIds?: Set<string>) => {
   let minNodeWidth = Infinity;
   let minNodeHeight = Infinity;
   let minNodeX = Infinity;
@@ -469,7 +410,7 @@ export const getContentArea = (
 
   const forEachNode = (fn: Fn) => data.nodes.forEach(fn);
   const forEachByIds = (fn: Fn) =>
-    nodeIds?.forEach((id) => {
+    nodeIds?.forEach(id => {
       const node = data.nodes.get(id);
       if (node) {
         fn(node);
@@ -478,11 +419,8 @@ export const getContentArea = (
 
   const forEach = nodeIds === undefined ? forEachNode : forEachByIds;
 
-  forEach((node) => {
-    const { width: nodeWidth, height: nodeHeight } = getNodeSize(
-      node,
-      graphConfig
-    );
+  forEach(node => {
+    const { width: nodeWidth, height: nodeHeight } = getNodeSize(node, graphConfig);
 
     if (node.x < minNodeX) {
       minNodeX = node.x;
@@ -514,14 +452,9 @@ export const getContentArea = (
   };
 };
 
-const normalizeNodeVisibleMinMax = ({
-  nodeMinVisibleSize,
-  nodeMaxVisibleSize,
-}: IZoomCommonParams) => {
-  let { width: nodeMinVisibleWidth, height: nodeMinVisibleHeight } =
-    nodeMinVisibleSize;
-  let { width: nodeMaxVisibleWidth, height: nodeMaxVisibleHeight } =
-    nodeMaxVisibleSize;
+const normalizeNodeVisibleMinMax = ({ nodeMinVisibleSize, nodeMaxVisibleSize }: IZoomCommonParams) => {
+  let { width: nodeMinVisibleWidth, height: nodeMinVisibleHeight } = nodeMinVisibleSize;
+  let { width: nodeMaxVisibleWidth, height: nodeMaxVisibleHeight } = nodeMaxVisibleSize;
   if (nodeMinVisibleWidth > nodeMaxVisibleWidth) {
     const temp = nodeMinVisibleWidth;
     nodeMinVisibleWidth = nodeMaxVisibleWidth;
@@ -540,16 +473,9 @@ const normalizeNodeVisibleMinMax = ({
   };
 };
 
-export const getScaleRange = (
-  params: IZoomCommonParams,
-  { width: minNodeWidth, height: minNodeHeight }: IRectSize
-) => {
-  const {
-    nodeMinVisibleWidth,
-    nodeMinVisibleHeight,
-    nodeMaxVisibleWidth,
-    nodeMaxVisibleHeight,
-  } = normalizeNodeVisibleMinMax(params);
+export const getScaleRange = (params: IZoomCommonParams, { width: minNodeWidth, height: minNodeHeight }: IRectSize) => {
+  const { nodeMinVisibleWidth, nodeMinVisibleHeight, nodeMaxVisibleWidth, nodeMaxVisibleHeight } =
+    normalizeNodeVisibleMinMax(params);
   let minScaleX = 0;
   let minScaleY = 0;
   let maxScaleX = Infinity;
@@ -580,14 +506,7 @@ export const getZoomFitMatrix = (args: IZoomFitParams): ITransformMatrix => {
     return [1, 0, 0, 1, 0, 0];
   }
 
-  const {
-    minNodeWidth,
-    minNodeHeight,
-    minNodeX,
-    minNodeY,
-    maxNodeX,
-    maxNodeY,
-  } = getContentArea(data, graphConfig);
+  const { minNodeWidth, minNodeHeight, minNodeX, minNodeY, maxNodeX, maxNodeY } = getContentArea(data, graphConfig);
 
   const { minScaleX, minScaleY, maxScaleX, maxScaleY } = getScaleRange(args, {
     width: minNodeWidth,
@@ -602,20 +521,10 @@ export const getZoomFitMatrix = (args: IZoomFitParams): ITransformMatrix => {
   const scaleCommon =
     direction === Direction.Y
       ? Math.min(Math.max(minScaleX, minScaleY, scaleY), maxScaleX, maxScaleY)
-      : Math.min(
-          Math.max(minScaleX, minScaleY, Math.min(scaleX, scaleY)),
-          maxScaleY,
-          maxScaleY
-        );
+      : Math.min(Math.max(minScaleX, minScaleY, Math.min(scaleX, scaleY)), maxScaleY, maxScaleY);
 
-  const newScaleX =
-    direction === Direction.XY
-      ? Math.min(Math.max(minScaleX, scaleX), maxScaleX)
-      : scaleCommon;
-  const newScaleY =
-    direction === Direction.XY
-      ? Math.min(Math.max(minScaleY, scaleY), maxScaleY)
-      : scaleCommon;
+  const newScaleX = direction === Direction.XY ? Math.min(Math.max(minScaleX, scaleX), maxScaleX) : scaleCommon;
+  const newScaleY = direction === Direction.XY ? Math.min(Math.max(minScaleY, scaleY), maxScaleY) : scaleCommon;
 
   if (disablePan) {
     return [newScaleX, 0, 0, newScaleY, 0, 0];
@@ -630,7 +539,7 @@ export const getZoomFitMatrix = (args: IZoomFitParams): ITransformMatrix => {
       rect,
       transformMatrix: [newScaleX, 0, 0, newScaleY, dx, dy],
     },
-    graphConfig
+    graphConfig,
   );
 
   if (visibleNodes.length > 0) {
@@ -640,7 +549,7 @@ export const getZoomFitMatrix = (args: IZoomFitParams): ITransformMatrix => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   let focusNode = data.nodes.first()!;
   if (focusNode) {
-    data.nodes.forEach((node) => {
+    data.nodes.forEach(node => {
       if (focusNode.y > node.y) {
         focusNode = node;
       }
@@ -662,15 +571,12 @@ export const focusArea = (
   minY: number,
   maxX: number,
   maxY: number,
-  viewport: Required<IViewport>
+  viewport: Required<IViewport>,
 ): IViewport => {
   const width = maxX - minX;
   const height = maxY - minY;
 
-  const scale = Math.min(
-    viewport.rect.width / width,
-    viewport.rect.height / height
-  );
+  const scale = Math.min(viewport.rect.width / width, viewport.rect.height / height);
 
   const dx = -scale * (minX + width / 2) + viewport.rect.width / 2;
   const dy = -scale * (minY + height / 2) + viewport.rect.height / 2;
@@ -686,9 +592,7 @@ export const getContainer = (svgRef: React.RefObject<SVGSVGElement>) =>
 /**
  * @param rectRef
  */
-export function getContainerCenter(
-  rectRef: React.RefObject<IContainerRect | undefined>
-): IPoint | undefined {
+export function getContainerCenter(rectRef: React.RefObject<IContainerRect | undefined>): IPoint | undefined {
   const rect = rectRef.current;
   if (!rect) {
     return undefined;
@@ -720,7 +624,7 @@ export const scrollIntoView = (
   y: number,
   rect: IContainerRect | undefined | null,
   alwaysScroll?: boolean,
-  position?: IPoint
+  position?: IPoint,
 ): Action => {
   // istanbul ignore next
   if (!rect) {
@@ -733,7 +637,7 @@ export const scrollIntoView = (
     return identical;
   }
 
-  return (prevState) => {
+  return prevState => {
     const dx = position ? position.x - x : width / 2 - x;
     const dy = position ? position.y - y : height / 2 - y;
 
@@ -752,10 +656,7 @@ export const scrollIntoView = (
 };
 
 export const getScaleLimit = (data: GraphModel, settings: IGraphSettings) => {
-  const { minNodeWidth, minNodeHeight } = getContentArea(
-    data,
-    settings.graphConfig
-  );
+  const { minNodeWidth, minNodeHeight } = getContentArea(data, settings.graphConfig);
 
   const { minScaleX, minScaleY } = getScaleRange(settings, {
     width: minNodeWidth,

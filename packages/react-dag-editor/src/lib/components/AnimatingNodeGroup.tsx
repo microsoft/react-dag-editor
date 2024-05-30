@@ -11,9 +11,7 @@ interface IAnimatingNodeGroup {
   graphData: GraphModel;
 }
 
-export const AnimatingNodeGroup: React.FunctionComponent<
-  IAnimatingNodeGroup
-> = (props) => {
+export const AnimatingNodeGroup: React.FunctionComponent<IAnimatingNodeGroup> = props => {
   const { dummyNodes, graphData } = props;
   const graphConfig = useGraphConfig();
   const { dWidth, dHeight } = dummyNodes;
@@ -21,7 +19,7 @@ export const AnimatingNodeGroup: React.FunctionComponent<
   const dy = dummyNodes.alignedDY ?? dummyNodes.dy;
   return (
     <g>
-      {dummyNodes.nodes.map((dummyNode) => {
+      {dummyNodes.nodes.map(dummyNode => {
         const node = graphData.nodes.get(dummyNode.id);
         if (!node) {
           return null;
@@ -42,13 +40,7 @@ export const AnimatingNodeGroup: React.FunctionComponent<
           });
         }
         return (
-          <Slots.NodeFrame
-            height={height}
-            width={width}
-            x={x}
-            y={y}
-            key={`node-frame-${dummyNode.id}`}
-          >
+          <Slots.NodeFrame height={height} width={width} x={x} y={y} key={`node-frame-${dummyNode.id}`}>
             <rect
               key={node.id}
               transform={`translate(${x},${y})`}

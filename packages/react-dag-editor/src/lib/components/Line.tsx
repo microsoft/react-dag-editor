@@ -21,7 +21,7 @@ interface IAlignmentLineProps {
   style?: React.CSSProperties;
 }
 
-export const Line: React.FunctionComponent<IAlignmentLineProps> = (props) => {
+export const Line: React.FunctionComponent<IAlignmentLineProps> = props => {
   const { line, style } = props;
 
   const lineStyle: React.CSSProperties = {
@@ -31,14 +31,5 @@ export const Line: React.FunctionComponent<IAlignmentLineProps> = (props) => {
     stroke: line.visible ? style?.stroke ?? "#ea4300" : "none",
   };
 
-  return (
-    <line
-      className="auto-align-hint"
-      x1={line.x1}
-      y1={line.y1}
-      x2={line.x2}
-      y2={line.y2}
-      style={lineStyle}
-    />
-  );
+  return <line className="auto-align-hint" x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} style={lineStyle} />;
 };

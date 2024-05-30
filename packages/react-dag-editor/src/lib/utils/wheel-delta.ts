@@ -24,12 +24,9 @@ function getScrollLineHeight(): number {
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    contentDocument.documentElement.innerHTML = DOMPurify.sanitize(
-      "<span>a</span>",
-      {
-        RETURN_TRUSTED_TYPE: true,
-      }
-    );
+    contentDocument.documentElement.innerHTML = DOMPurify.sanitize("<span>a</span>", {
+      RETURN_TRUSTED_TYPE: true,
+    });
     const span = contentDocument.body.firstElementChild as HTMLSpanElement;
     const height = span.offsetHeight;
     document.body.removeChild(iframe);

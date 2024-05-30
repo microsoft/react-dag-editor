@@ -5,12 +5,10 @@ import { EventChannel } from "../utils/eventChannel";
 
 export const useGraphTouchHandler = (
   rectRef: React.RefObject<IContainerRect | undefined>,
-  eventChannel: EventChannel
+  eventChannel: EventChannel,
 ) => {
   return React.useMemo(() => {
-    const touchEvents = new TouchController(
-      new Map().set(2, new TwoFingerHandler(rectRef, eventChannel))
-    );
+    const touchEvents = new TouchController(new Map().set(2, new TwoFingerHandler(rectRef, eventChannel)));
     return touchEvents.eventHandlers;
   }, [rectRef, eventChannel]);
 };

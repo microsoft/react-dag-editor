@@ -4,8 +4,7 @@ import { INode, NodeType } from "../../collections/b-tree";
 import { NodeModel } from "../../models/NodeModel";
 import { GraphNodeParts, IGraphNodePartsProps } from "../GraphNodeParts";
 
-export interface INodeTreeNodeProps
-  extends Omit<IGraphNodePartsProps, "node" | "viewport"> {
+export interface INodeTreeNodeProps extends Omit<IGraphNodePartsProps, "node" | "viewport"> {
   node: INode<number, [string, NodeModel]>;
 }
 
@@ -15,7 +14,7 @@ export interface INodeTreeProps extends Omit<INodeTreeNodeProps, "node"> {
 
 const NodeTreeNode = React.memo<INodeTreeNodeProps>(
   ({ node, ...others }) => {
-    const values = node.values.map((arg) => {
+    const values = node.values.map(arg => {
       const it = arg[1];
       return <GraphNodeParts key={it.id} node={it} {...others} />;
     });
@@ -35,14 +34,11 @@ const NodeTreeNode = React.memo<INodeTreeNodeProps>(
       </>
     );
   },
-  (prevProps, nextProps) => prevProps.node === nextProps.node
+  (prevProps, nextProps) => prevProps.node === nextProps.node,
 );
 
 NodeTreeNode.displayName = "NodeTreeNode";
 
-export const NodeTree: React.FunctionComponent<INodeTreeProps> = ({
-  tree,
-  ...others
-}) => {
+export const NodeTree: React.FunctionComponent<INodeTreeProps> = ({ tree, ...others }) => {
   return <NodeTreeNode node={tree.sortedRoot} {...others} />;
 };

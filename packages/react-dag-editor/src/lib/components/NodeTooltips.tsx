@@ -11,7 +11,7 @@ interface IProps {
   viewport: Required<IViewport>;
 }
 
-export const NodeTooltips: React.FunctionComponent<IProps> = (props) => {
+export const NodeTooltips: React.FunctionComponent<IProps> = props => {
   const { node, viewport } = props;
   const graphConfig = useGraphConfig();
 

@@ -1,10 +1,8 @@
 import { ICanvasPort, ICanvasPortInit } from "../models/port";
 
-export function applyDefaultPortsPosition<T>(
-  list: ReadonlyArray<ICanvasPortInit<T>>
-): Array<ICanvasPort<T>> {
-  const inputPorts = list.filter((p) => !p.isInputDisabled);
-  const outputPorts = list.filter((p) => p.isInputDisabled);
+export function applyDefaultPortsPosition<T>(list: ReadonlyArray<ICanvasPortInit<T>>): Array<ICanvasPort<T>> {
+  const inputPorts = list.filter(p => !p.isInputDisabled);
+  const outputPorts = list.filter(p => p.isInputDisabled);
   const inputPortsCount = inputPorts.length;
   const outputPortsCount = outputPorts.length;
   const inputPortsInterval = 1 / (inputPortsCount + 1);

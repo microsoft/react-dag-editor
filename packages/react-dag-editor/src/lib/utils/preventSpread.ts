@@ -15,7 +15,7 @@ export function preventSpread(obj: object): void {
        */
       if (document.currentScript) {
         Debug.error(
-          `${obj.constructor.name} is a class, which should not be used in the spread syntax or argument of Object.assign`
+          `${obj.constructor.name} is a class, which should not be used in the spread syntax or argument of Object.assign`,
         );
       }
       return undefined;

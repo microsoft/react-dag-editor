@@ -6,11 +6,7 @@ import { IPoint, ITransformMatrix, IViewport } from "../models/geometry";
  * @param y
  * @param transformMatrix
  */
-export const transformPoint = (
-  x: number,
-  y: number,
-  transformMatrix: ITransformMatrix
-): IPoint => {
+export const transformPoint = (x: number, y: number, transformMatrix: ITransformMatrix): IPoint => {
   return {
     x: transformMatrix[0] * x + transformMatrix[2] * y + transformMatrix[4],
     y: transformMatrix[1] * x + transformMatrix[3] * y + transformMatrix[5],
@@ -23,11 +19,7 @@ export const transformPoint = (
  * @param y
  * @param transformMatrix
  */
-export const reverseTransformPoint = (
-  x: number,
-  y: number,
-  transformMatrix: ITransformMatrix
-): IPoint => {
+export const reverseTransformPoint = (x: number, y: number, transformMatrix: ITransformMatrix): IPoint => {
   const [t0, t1, t2, t3, t4, t5] = transformMatrix;
   return {
     x: ((x - t4) * t3 - (y - t5) * t2) / (t0 * t3 - t1 * t2),
@@ -35,11 +27,7 @@ export const reverseTransformPoint = (
   };
 };
 
-export const getPointDeltaByClientDelta = (
-  x: number,
-  y: number,
-  transformMatrix: ITransformMatrix
-): IPoint => {
+export const getPointDeltaByClientDelta = (x: number, y: number, transformMatrix: ITransformMatrix): IPoint => {
   const [a, b, c, d] = transformMatrix;
   const realDx = (d * x) / (a * d - b * c) + (c * y) / (b * c - a * d);
   const realDy = (b * x) / (b * c - a * d) + (a * y) / (a * d - b * c);
@@ -49,11 +37,7 @@ export const getPointDeltaByClientDelta = (
   };
 };
 
-export const getClientDeltaByPointDelta = (
-  x: number,
-  y: number,
-  transformMatrix?: ITransformMatrix
-) => {
+export const getClientDeltaByPointDelta = (x: number, y: number, transformMatrix?: ITransformMatrix) => {
   if (!transformMatrix) {
     return {
       x,
@@ -67,7 +51,7 @@ export const getClientDeltaByPointDelta = (
 export const getRealPointFromClientPoint = (
   clientX: number,
   clientY: number,
-  viewport: Required<IViewport>
+  viewport: Required<IViewport>,
 ): IPoint => {
   const { rect } = viewport;
   const x = clientX - rect.left;
@@ -75,11 +59,7 @@ export const getRealPointFromClientPoint = (
   return reverseTransformPoint(x, y, viewport.transformMatrix);
 };
 
-export const getClientPointFromRealPoint = (
-  realX: number,
-  realY: number,
-  viewport: Required<IViewport>
-): IPoint => {
+export const getClientPointFromRealPoint = (realX: number, realY: number, viewport: Required<IViewport>): IPoint => {
   const { x, y } = transformPoint(realX, realY, viewport.transformMatrix);
   const { rect } = viewport;
   return {
@@ -91,11 +71,7 @@ export const getClientPointFromRealPoint = (
 /**
  * get client point relative to container
  */
-export const getContainerClientPoint = (
-  realX: number,
-  realY: number,
-  viewport: Required<IViewport>
-) => {
+export const getContainerClientPoint = (realX: number, realY: number, viewport: Required<IViewport>) => {
   const client = getClientPointFromRealPoint(realX, realY, viewport);
   const { rect } = viewport;
   return {

@@ -16,9 +16,7 @@ export const EMPTY_CONNECT_CONTEXT: IConnectingStateContext = {
   targetPort: undefined,
 };
 
-const ConnectingStateContext = createContext<IConnectingStateContext>(
-  EMPTY_CONNECT_CONTEXT
-);
+const ConnectingStateContext = createContext<IConnectingStateContext>(EMPTY_CONNECT_CONTEXT);
 
 ConnectingStateContext.displayName = "ConnectingStateContext";
 

@@ -23,26 +23,9 @@ interface INodeBase<K, V, Type extends NodeType = NodeType> {
   getHash(index: number): number;
   get(key: K, hash: number, shift: number): V | undefined;
   contains(key: K, hash: number, shift: number): boolean;
-  insert(
-    owner: Owner,
-    key: K,
-    value: V,
-    keyHash: number,
-    shift: number
-  ): INode<K, V>;
-  update(
-    owner: Owner,
-    key: K,
-    updater: (prev: V) => V,
-    keyHash: number,
-    shift: number
-  ): INode<K, V>;
-  remove(
-    owner: Owner,
-    key: K,
-    hash: number,
-    shift: number
-  ): [INode<K, V>, V] | undefined;
+  insert(owner: Owner, key: K, value: V, keyHash: number, shift: number): INode<K, V>;
+  update(owner: Owner, key: K, updater: (prev: V) => V, keyHash: number, shift: number): INode<K, V>;
+  remove(owner: Owner, key: K, hash: number, shift: number): [INode<K, V>, V] | undefined;
   iter(): IterableIterator<[K, V]>;
   map<T>(owner: Owner, f: (value: V, key: K) => T): INode<K, T>;
   forEach(f: (value: V, key: K) => void): void;
@@ -67,11 +50,7 @@ export function bitPosFrom(mask: number): number {
  * @param mask
  * @param bitPos
  */
-export function indexFrom(
-  bitmap: number,
-  mask: number,
-  bitPos: number
-): number {
+export function indexFrom(bitmap: number, mask: number, bitPos: number): number {
   return bitmap === FULL_MASK ? mask : bitCount(bitmap & (bitPos - 1));
 }
 
@@ -99,9 +78,7 @@ export function bitCount(x: number): number {
 }
 // tslint:enable:no-parameter-reassignment comment-format
 
-export class BitmapIndexedNode<K, V>
-  implements INodeBase<K, V, NodeType.Bitmap>
-{
+export class BitmapIndexedNode<K, V> implements INodeBase<K, V, NodeType.Bitmap> {
   public readonly type = NodeType.Bitmap;
   public dataMap: number;
   public nodeMap: number;
@@ -128,7 +105,7 @@ export class BitmapIndexedNode<K, V>
     values: V[],
     children: Array<INode<K, V>>,
     hashes: number[],
-    size: number
+    size: number,
   ) {
     this.owner = owner;
     this.dataMap = dataMap;
@@ -170,11 +147,7 @@ export class BitmapIndexedNode<K, V>
       return is(key0, key);
     } else if ((nodeMap & bitPos) !== 0) {
       const index = indexFrom(nodeMap, mask, bitPos);
-      return this.getNode(index).contains(
-        key,
-        keyHash,
-        shift + BIT_PARTITION_SIZE
-      );
+      return this.getNode(index).contains(key, keyHash, shift + BIT_PARTITION_SIZE);
     }
     return false;
   }
@@ -194,13 +167,7 @@ export class BitmapIndexedNode<K, V>
     return undefined;
   }
 
-  public insert(
-    owner: Owner,
-    key: K,
-    value: V,
-    hash: number,
-    shift: number
-  ): BitmapIndexedNode<K, V> {
+  public insert(owner: Owner, key: K, value: V, hash: number, shift: number): BitmapIndexedNode<K, V> {
     const mask = maskFrom(hash, shift);
     const bitPos = bitPosFrom(mask);
     const { dataMap, nodeMap } = this;
@@ -220,32 +187,20 @@ export class BitmapIndexedNode<K, V>
           key,
           value,
           hash,
-          shift + BIT_PARTITION_SIZE
+          shift + BIT_PARTITION_SIZE,
         );
         return this.migrateInlineToNode(owner, bitPos, subNodeNew);
       }
     } else if ((nodeMap & bitPos) !== 0) {
       const index = indexFrom(nodeMap, mask, bitPos);
       const subNode = this.getNode(index);
-      const subNodeNew = subNode.insert(
-        owner,
-        key,
-        value,
-        hash,
-        shift + BIT_PARTITION_SIZE
-      );
+      const subNodeNew = subNode.insert(owner, key, value, hash, shift + BIT_PARTITION_SIZE);
       return this.setNode(owner, 1, subNodeNew, bitPos);
     }
     return this.insertValue(owner, bitPos, key, hash, value);
   }
 
-  public update(
-    owner: Owner,
-    key: K,
-    updater: (prev: V) => V,
-    hash: number,
-    shift: number
-  ): BitmapIndexedNode<K, V> {
+  public update(owner: Owner, key: K, updater: (prev: V) => V, hash: number, shift: number): BitmapIndexedNode<K, V> {
     const mask = maskFrom(hash, shift);
     const bitPos = bitPosFrom(mask);
     const { dataMap, nodeMap } = this;
@@ -261,26 +216,13 @@ export class BitmapIndexedNode<K, V>
     } else if ((nodeMap & bitPos) !== 0) {
       const index = indexFrom(nodeMap, mask, bitPos);
       const subNode = this.getNode(index);
-      const subNodeNew = subNode.update(
-        owner,
-        key,
-        updater,
-        hash,
-        shift + BIT_PARTITION_SIZE
-      );
-      return subNodeNew === subNode
-        ? this
-        : this.setNode(owner, 0, subNodeNew, bitPos);
+      const subNodeNew = subNode.update(owner, key, updater, hash, shift + BIT_PARTITION_SIZE);
+      return subNodeNew === subNode ? this : this.setNode(owner, 0, subNodeNew, bitPos);
     }
     return this;
   }
 
-  public remove(
-    owner: Owner,
-    key: K,
-    keyHash: number,
-    shift: number
-  ): [BitmapIndexedNode<K, V>, V] | undefined {
+  public remove(owner: Owner, key: K, keyHash: number, shift: number): [BitmapIndexedNode<K, V>, V] | undefined {
     const mask = maskFrom(keyHash, shift);
     const bitPos = bitPosFrom(mask);
     if ((this.dataMap & bitPos) !== 0) {
@@ -293,12 +235,7 @@ export class BitmapIndexedNode<K, V>
     } else if ((this.nodeMap & bitPos) !== 0) {
       const index = indexFrom(this.nodeMap, mask, bitPos);
       const subNode = this.getNode(index);
-      const remove = subNode.remove(
-        owner,
-        key,
-        keyHash,
-        shift + BIT_PARTITION_SIZE
-      );
+      const remove = subNode.remove(owner, key, keyHash, shift + BIT_PARTITION_SIZE);
       if (remove === undefined) {
         return undefined;
       }
@@ -315,15 +252,12 @@ export class BitmapIndexedNode<K, V>
               [subNodeNew.getValue(0)],
               [],
               [subNodeNew.getHash(0)],
-              1
+              1,
             ),
             removedValue,
           ];
         }
-        return [
-          this.migrateNodeToInline(owner, bitPos, subNodeNew),
-          removedValue,
-        ];
+        return [this.migrateNodeToInline(owner, bitPos, subNodeNew), removedValue];
       }
       return [this.setNode(owner, -1, subNodeNew, bitPos), removedValue];
     }
@@ -341,7 +275,7 @@ export class BitmapIndexedNode<K, V>
           this.values.slice(),
           this.children.slice(),
           this.hashes.slice(),
-          this.size
+          this.size,
         );
   }
 
@@ -349,10 +283,7 @@ export class BitmapIndexedNode<K, V>
     return new BitmapIndexedNodeIterator(this);
   }
 
-  public map<T>(
-    owner: Owner,
-    f: (value: V, key: K) => T
-  ): BitmapIndexedNode<K, T> {
+  public map<T>(owner: Owner, f: (value: V, key: K) => T): BitmapIndexedNode<K, T> {
     const valueCount = this.valueCount;
     const keys: K[] = [];
     const values: T[] = [];
@@ -374,16 +305,7 @@ export class BitmapIndexedNode<K, V>
     }
     return same
       ? (this as unknown as BitmapIndexedNode<K, T>)
-      : new BitmapIndexedNode(
-          owner,
-          this.dataMap,
-          this.nodeMap,
-          keys,
-          values,
-          children,
-          this.hashes,
-          this.size
-        );
+      : new BitmapIndexedNode(owner, this.dataMap, this.nodeMap, keys, values, children, this.hashes, this.size);
   }
 
   public forEach(f: (value: V, key: K) => void): void {
@@ -423,23 +345,13 @@ export class BitmapIndexedNode<K, V>
     return bitCount(this.nodeMap & (bitPos - 1));
   }
 
-  private setValue(
-    owner: Owner,
-    value: V,
-    index: number
-  ): BitmapIndexedNode<K, V> {
+  private setValue(owner: Owner, value: V, index: number): BitmapIndexedNode<K, V> {
     const next = this.toOwned(owner);
     next.values[index] = value;
     return next;
   }
 
-  private insertValue(
-    owner: Owner,
-    bitPos: number,
-    key: K,
-    originalHash: number,
-    value: V
-  ): BitmapIndexedNode<K, V> {
+  private insertValue(owner: Owner, bitPos: number, key: K, originalHash: number, value: V): BitmapIndexedNode<K, V> {
     const index = this.dataIndex(bitPos);
     const next = this.toOwned(owner);
     next.size += 1;
@@ -450,11 +362,7 @@ export class BitmapIndexedNode<K, V>
     return next;
   }
 
-  private migrateInlineToNode(
-    owner: Owner,
-    bitPos: number,
-    child: INode<K, V>
-  ): BitmapIndexedNode<K, V> {
+  private migrateInlineToNode(owner: Owner, bitPos: number, child: INode<K, V>): BitmapIndexedNode<K, V> {
     const indexOld = this.dataIndex(bitPos);
     const indexNew = this.nodeIndex(bitPos);
     const next = this.toOwned(owner);
@@ -468,11 +376,7 @@ export class BitmapIndexedNode<K, V>
     return next;
   }
 
-  private migrateNodeToInline(
-    owner: Owner,
-    bitPos: number,
-    node: INodeBase<K, V>
-  ): BitmapIndexedNode<K, V> {
+  private migrateNodeToInline(owner: Owner, bitPos: number, node: INodeBase<K, V>): BitmapIndexedNode<K, V> {
     const indexOld = this.nodeIndex(bitPos);
     const indexNew = this.dataIndex(bitPos);
     const key = node.getKey(0);
@@ -489,12 +393,7 @@ export class BitmapIndexedNode<K, V>
     return next;
   }
 
-  private setNode(
-    owner: Owner,
-    sizeDelta: number,
-    newNode: INode<K, V>,
-    bitPos: number
-  ): BitmapIndexedNode<K, V> {
+  private setNode(owner: Owner, sizeDelta: number, newNode: INode<K, V>, bitPos: number): BitmapIndexedNode<K, V> {
     const index = this.nodeIndex(bitPos);
     const next = this.toOwned(owner);
     next.children[index] = newNode;
@@ -502,10 +401,7 @@ export class BitmapIndexedNode<K, V>
     return next;
   }
 
-  private removeValue(
-    owner: Owner,
-    bitPos: number
-  ): [BitmapIndexedNode<K, V>, V] {
+  private removeValue(owner: Owner, bitPos: number): [BitmapIndexedNode<K, V>, V] {
     const index = this.dataIndex(bitPos);
     const value = this.getValue(index);
     const next = this.toOwned(owner);
@@ -536,15 +432,10 @@ function mergeTwoKeyValPairs<K, V>(
   key1: K,
   value1: V,
   keyHash1: number,
-  shift: number
+  shift: number,
 ): INode<K, V> {
   if (shift >= HASH_CODE_LENGTH) {
-    return new HashCollisionNode(
-      owner,
-      keyHash0,
-      [key0, key1],
-      [value0, value1]
-    );
+    return new HashCollisionNode(owner, keyHash0, [key0, key1], [value0, value1]);
   } else {
     const mask0 = maskFrom(keyHash0, shift);
     const mask1 = maskFrom(keyHash1, shift);
@@ -559,7 +450,7 @@ function mergeTwoKeyValPairs<K, V>(
           [value0, value1],
           [],
           [keyHash0, keyHash1],
-          2
+          2,
         );
       }
       return new BitmapIndexedNode<K, V>(
@@ -570,7 +461,7 @@ function mergeTwoKeyValPairs<K, V>(
         [value1, value0],
         [],
         [keyHash1, keyHash0],
-        2
+        2,
       );
     } else {
       const nodeMap = bitPosFrom(mask0);
@@ -582,25 +473,14 @@ function mergeTwoKeyValPairs<K, V>(
         key1,
         value1,
         keyHash1,
-        shift + BIT_PARTITION_SIZE
+        shift + BIT_PARTITION_SIZE,
       );
-      return new BitmapIndexedNode(
-        owner,
-        0,
-        nodeMap,
-        [],
-        [],
-        [node],
-        [],
-        node.size
-      );
+      return new BitmapIndexedNode(owner, 0, nodeMap, [], [], [node], [], node.size);
     }
   }
 }
 
-export class HashCollisionNode<K, V>
-  implements INodeBase<K, V, NodeType.Collision>
-{
+export class HashCollisionNode<K, V> implements INodeBase<K, V, NodeType.Collision> {
   public readonly type = NodeType.Collision;
   public readonly owner: Owner;
   public hash: number;
@@ -621,12 +501,7 @@ export class HashCollisionNode<K, V>
   public toOwned(owner: Owner): HashCollisionNode<K, V> {
     return this.owner === owner
       ? this
-      : new HashCollisionNode<K, V>(
-          owner,
-          this.hash,
-          this.keys.slice(),
-          this.values.slice()
-        );
+      : new HashCollisionNode<K, V>(owner, this.hash, this.keys.slice(), this.values.slice());
   }
 
   public contains(key: K): boolean {
@@ -634,12 +509,12 @@ export class HashCollisionNode<K, V>
   }
 
   public get(key: K): V | undefined {
-    const index = this.keys.findIndex((it) => is(it, key));
+    const index = this.keys.findIndex(it => is(it, key));
     return index >= 0 ? this.values[index] : undefined;
   }
 
   public insert(owner: Owner, key: K, value: V): INode<K, V> {
-    const index = this.keys.findIndex((it) => is(it, key));
+    const index = this.keys.findIndex(it => is(it, key));
     if (index >= 0) {
       const value0 = this.values[index];
       if (is(value0, value)) {
@@ -657,7 +532,7 @@ export class HashCollisionNode<K, V>
   }
 
   public update(owner: Owner, key: K, updater: (prev: V) => V): INode<K, V> {
-    const index = this.keys.findIndex((it) => is(it, key));
+    const index = this.keys.findIndex(it => is(it, key));
     if (index >= 0) {
       const value0 = this.values[index];
       const value = updater(value0);
@@ -671,11 +546,8 @@ export class HashCollisionNode<K, V>
     return this;
   }
 
-  public remove(
-    owner: Owner,
-    key: K
-  ): [HashCollisionNode<K, V>, V] | undefined {
-    const index = this.keys.findIndex((it) => is(it, key));
+  public remove(owner: Owner, key: K): [HashCollisionNode<K, V>, V] | undefined {
+    const index = this.keys.findIndex(it => is(it, key));
     if (index === -1) {
       return undefined;
     }
@@ -685,7 +557,7 @@ export class HashCollisionNode<K, V>
         owner,
         this.hash,
         this.keys.filter((_, i) => i !== index),
-        this.values.filter((_, i) => i !== index)
+        this.values.filter((_, i) => i !== index),
       ),
       value,
     ];
@@ -707,10 +579,7 @@ export class HashCollisionNode<K, V>
     return new HashCollisionNodeIterator(this);
   }
 
-  public map<T>(
-    owner: Owner,
-    f: (value: V, key: K) => T
-  ): HashCollisionNode<K, T> {
+  public map<T>(owner: Owner, f: (value: V, key: K) => T): HashCollisionNode<K, T> {
     const len = this.size;
     const values = [] as T[];
     let update = false;
@@ -740,9 +609,7 @@ export class HashCollisionNode<K, V>
   }
 }
 
-export class BitmapIndexedNodeIterator<K, V>
-  implements IterableIterator<[K, V]>
-{
+export class BitmapIndexedNodeIterator<K, V> implements IterableIterator<[K, V]> {
   private readonly valueCount: number;
   private readonly nodeCount: number;
   private readonly size: number;
@@ -806,9 +673,7 @@ export class BitmapIndexedNodeIterator<K, V>
   }
 }
 
-export class HashCollisionNodeIterator<K, V>
-  implements IterableIterator<[K, V]>
-{
+export class HashCollisionNodeIterator<K, V> implements IterableIterator<[K, V]> {
   private index = 0;
   private readonly node: HashCollisionNode<K, V>;
 

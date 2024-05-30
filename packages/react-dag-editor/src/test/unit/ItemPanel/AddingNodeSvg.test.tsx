@@ -1,12 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  act,
-  cleanup,
-  fireEvent,
-  render,
-  RenderResult,
-  screen,
-} from "@testing-library/react";
+import { act, cleanup, fireEvent, render, RenderResult, screen } from "@testing-library/react";
 import * as React from "react";
 import * as ShallowRenderer from "react-test-renderer/shallow";
 import { GraphCanvasEvent, GraphConfigBuilder, rect } from "../../../index";
@@ -39,9 +32,8 @@ describe("ItemPanel - AddingNodeSvg", () => {
 
   beforeEach(() => {
     const graphConfig = GraphConfigBuilder.default()
-      .registerNode((node) => {
-        const nodeType =
-          (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
+      .registerNode(node => {
+        const nodeType = (node.data as { nodeType: string } | undefined)?.nodeType ?? "";
         switch (nodeType) {
           case "nodeShape":
             return rect;
@@ -65,7 +57,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
           <TestItemContent text="test item for addingNodeSVG" />
         </Item>
         <GraphControllerRef ref={graphControllerRef} />
-      </TestComponent>
+      </TestComponent>,
     );
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     graphController = graphControllerRef.current!;
@@ -88,7 +80,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
   function simulateDragging(
     el: HTMLElement | Window,
     mouseEventButton: MouseEventButton,
-    points: Array<[number, number]>
+    points: Array<[number, number]>,
   ): void {
     if (points.length === 0) {
       return;
@@ -143,7 +135,7 @@ describe("ItemPanel - AddingNodeSvg", () => {
           id: "mock-id",
         }}
         svgRef={React.createRef<SVGSVGElement>()}
-      />
+      />,
     );
     expect(renderer.getRenderOutput()).toMatchSnapshot();
   });

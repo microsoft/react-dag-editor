@@ -1,12 +1,13 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx"],
+  "plugins": ["@nx"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["plugin:prettier/recommended"],
       "rules": {
-        "@nrwl/nx/enforce-module-boundaries": [
+        "@nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -18,37 +19,88 @@
               }
             ]
           }
-        ],
-        "no-restricted-imports": [
-          "error",
-          {
-            "name": "lodash",
-            "message": "Use lodash-es instead"
-          }
-        ],
-        "array-callback-return": "error"
+        ]
       }
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
+      "plugins": ["import"],
+      "extends": ["plugin:@nx/typescript"],
       "rules": {
-        "@typescript-eslint/no-empty-interface": "off",
-        "prefer-spread": "off",
-        "@typescript-eslint/no-non-null-assertion": "error",
-        "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/no-unused-vars": "error"
+        "no-var": "error",
+        "consistent-return": "error",
+        "@typescript-eslint/no-shadow": [
+          "error",
+          {
+            "hoist": "all"
+          }
+        ],
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "array-simple"
+          }
+        ],
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "error",
+          {
+            "accessibility": "explicit",
+            "overrides": {
+              "accessors": "off",
+              "constructors": "off"
+            }
+          }
+        ],
+        "import/no-cycle": [
+          "warn",
+          {
+            "ignoreExternal": true
+          }
+        ],
+        "import/no-default-export": "error",
+        "import/no-duplicates": "error",
+        "import/no-self-import": "error",
+        "import/order": [
+          "error",
+          {
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "no-console": "error"
+      }
+    },
+    {
+      "files": ["*.tsx"],
+      "plugins": ["react-refresh"],
+      "extends": ["plugin:react/recommended", "plugin:react-hooks/recommended"],
+      "rules": {
+        "react-refresh/only-export-components": "warn",
+        "react/jsx-uses-react": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/prop-types": "off"
       }
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "extends": ["plugin:@nx/javascript"],
       "rules": {}
     },
     {
-      "files": ["*.test.ts", "*.test.tsx"],
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      },
+      "rules": {}
+    },
+    {
+      "files": ["*.stories.tsx", "*.stories.jsx", "vite.config.ts", ".storybook/**"],
       "rules": {
-        "@typescript-eslint/no-non-null-assertion": "warn"
+        "import/no-default-export": "off"
       }
     }
   ]

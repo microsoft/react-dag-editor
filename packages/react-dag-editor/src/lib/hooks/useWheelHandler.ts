@@ -75,12 +75,9 @@ export const useWheelHandler = (args: IWheelOptions) => {
 
       const dx = isHorizontalScrollDisabled
         ? 0
-        : -normalizeWheelDelta(e.deltaMode, e.shiftKey ? e.deltaY : e.deltaX) *
-          scrollSensitivity;
+        : -normalizeWheelDelta(e.deltaMode, e.shiftKey ? e.deltaY : e.deltaX) * scrollSensitivity;
       const dy =
-        isVerticalScrollDisabled || e.shiftKey
-          ? 0
-          : -normalizeWheelDelta(e.deltaMode, e.deltaY) * scrollSensitivity;
+        isVerticalScrollDisabled || e.shiftKey ? 0 : -normalizeWheelDelta(e.deltaMode, e.deltaY) * scrollSensitivity;
 
       eventChannel.trigger({
         type: GraphCanvasEvent.MouseWheelScroll,

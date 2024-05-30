@@ -32,10 +32,7 @@ export class TwoFingerHandler implements ITouchHandler {
   private prevEvents: [PointerEvent, PointerEvent] | undefined;
   private prevDistance = 0;
 
-  public constructor(
-    rectRef: React.RefObject<IContainerRect | undefined>,
-    eventChannel: EventChannel
-  ) {
+  public constructor(rectRef: React.RefObject<IContainerRect | undefined>, eventChannel: EventChannel) {
     this.rectRef = rectRef;
     this.eventChannel = eventChannel;
   }
@@ -45,16 +42,8 @@ export class TwoFingerHandler implements ITouchHandler {
   }
 
   public onMove(pointers: Map<number, PointerEvent>, e: PointerEvent): void {
-    const events = Array.from(pointers.values()) as [
-      PointerEvent,
-      PointerEvent
-    ];
-    const currentDistance = distance(
-      events[0].clientX,
-      events[0].clientY,
-      events[1].clientX,
-      events[1].clientY
-    );
+    const events = Array.from(pointers.values()) as [PointerEvent, PointerEvent];
+    const currentDistance = distance(events[0].clientX, events[0].clientY, events[1].clientX, events[1].clientY);
 
     const { prevEvents, prevDistance } = this;
     this.prevDistance = currentDistance;
@@ -87,15 +76,12 @@ export class TwoFingerHandler implements ITouchHandler {
     if (pointers.size !== 2) {
       throw new Error(`Unexpected touch event with ${pointers.size} touches`);
     }
-    this.prevEvents = Array.from(pointers.values()) as [
-      PointerEvent,
-      PointerEvent
-    ];
+    this.prevEvents = Array.from(pointers.values()) as [PointerEvent, PointerEvent];
     this.prevDistance = distance(
       this.prevEvents[0].clientX,
       this.prevEvents[0].clientY,
       this.prevEvents[1].clientX,
-      this.prevEvents[1].clientY
+      this.prevEvents[1].clientY,
     );
   }
 }

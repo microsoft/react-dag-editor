@@ -17,10 +17,7 @@ export interface IDiffGraphPort {
  * can not add some ports meanwhile remove some ports
  */
 
-export const diffGraphPort = (
-  preData: ICanvasData,
-  data: ICanvasData
-): IDiffGraphPort => {
+export const diffGraphPort = (preData: ICanvasData, data: ICanvasData): IDiffGraphPort => {
   const prePortIdSet = new Set<string>();
   const preNodes = new Map<string, ICanvasNode>();
 
@@ -29,17 +26,17 @@ export const diffGraphPort = (
 
   const CONNECT = "--CONNECT--";
 
-  preData.nodes.forEach((n) => {
+  preData.nodes.forEach(n => {
     preNodes.set(n.id, n);
     if (n.ports) {
-      n.ports.forEach((p) => prePortIdSet.add(`${n.id}${CONNECT}${p.id}`));
+      n.ports.forEach(p => prePortIdSet.add(`${n.id}${CONNECT}${p.id}`));
     }
   });
 
-  data.nodes.forEach((n) => {
+  data.nodes.forEach(n => {
     nodes.set(n.id, n);
     if (n.ports) {
-      n.ports.forEach((p) => portIdSet.add(`${n.id}${CONNECT}${p.id}`));
+      n.ports.forEach(p => portIdSet.add(`${n.id}${CONNECT}${p.id}`));
     }
   });
 
@@ -51,7 +48,7 @@ export const diffGraphPort = (
 
   const map = new Map<string, IDiffPort>();
 
-  large.forEach((id) => {
+  large.forEach(id => {
     if (!small.has(id)) {
       const [nodeId, portId] = id.split(CONNECT);
       const node = largeNodes.get(nodeId);
@@ -61,7 +58,7 @@ export const diffGraphPort = (
           map.set(nodeId, { node, ports: [] });
         }
 
-        const [port] = node.ports.filter((p) => p.id === portId);
+        const [port] = node.ports.filter(p => p.id === portId);
         map.get(nodeId)?.ports.push(port);
       }
     }

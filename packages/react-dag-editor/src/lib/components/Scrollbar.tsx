@@ -2,10 +2,7 @@ import * as React from "react";
 import { createUseStyles } from "react-jss";
 import { defaultColors } from "../common/constants";
 import { IDispatch } from "../contexts/GraphStateContext";
-import {
-  defaultGetPositionFromEvent,
-  DragController,
-} from "../controllers/DragController";
+import { defaultGetPositionFromEvent, DragController } from "../controllers/DragController";
 import { MouseMoveEventProvider } from "../event-provider/MouseMoveEventProvider";
 import { useGraphController } from "../hooks/context";
 import { useRefValue } from "../hooks/useRefValue";
@@ -74,14 +71,8 @@ const useStyles = createUseStyles({
   }),
 });
 
-export const Scrollbar: React.FC<IProps> = (props) => {
-  const {
-    vertical = true,
-    horizontal = true,
-    offsetLimit,
-    eventChannel,
-    viewport,
-  } = props;
+export const Scrollbar: React.FC<IProps> = props => {
+  const { vertical = true, horizontal = true, offsetLimit, eventChannel, viewport } = props;
 
   const graphController = useGraphController();
 
@@ -101,7 +92,7 @@ export const Scrollbar: React.FC<IProps> = (props) => {
 
     const dragging = new DragController(
       new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
-      defaultGetPositionFromEvent
+      defaultGetPositionFromEvent,
     );
     dragging.onMove = ({ dy: scrollbarDy, e: rawEvent }) => {
       const { totalContentHeight } = scrollbarLayoutRef.current;
@@ -135,7 +126,7 @@ export const Scrollbar: React.FC<IProps> = (props) => {
 
     const dragging = new DragController(
       new MouseMoveEventProvider(graphController.getGlobalEventTarget()),
-      defaultGetPositionFromEvent
+      defaultGetPositionFromEvent,
     );
     dragging.onMove = ({ dx: scrollbarDx, e: rawEvent }) => {
       const { totalContentWidth } = scrollbarLayoutRef.current;
@@ -199,10 +190,7 @@ export const Scrollbar: React.FC<IProps> = (props) => {
  * @param offsetLimit
  * @returns totalContentHeight
  */
-function getTotalContentHeight(
-  containerHeight: number,
-  offsetLimit: IOffsetLimit
-): number {
+function getTotalContentHeight(containerHeight: number, offsetLimit: IOffsetLimit): number {
   const { minY, maxY } = offsetLimit;
   return containerHeight + maxY - minY;
 }
@@ -214,10 +202,7 @@ function getTotalContentHeight(
  * @param offsetLimit
  * @returns totalContentWidth
  */
-function getTotalContentWidth(
-  containerWidth: number,
-  offsetLimit: IOffsetLimit
-): number {
+function getTotalContentWidth(containerWidth: number, offsetLimit: IOffsetLimit): number {
   const { minX, maxX } = offsetLimit;
   return containerWidth + maxX - minX;
 }
@@ -230,10 +215,7 @@ function getTotalContentWidth(
  * @param zoomPanSettings
  * @returns
  */
-function getScrollbarLayout(
-  viewport: Required<IViewport>,
-  offsetLimit: IOffsetLimit
-): IScrollbarLayout {
+function getScrollbarLayout(viewport: Required<IViewport>, offsetLimit: IOffsetLimit): IScrollbarLayout {
   const { rect, transformMatrix } = viewport;
   const totalContentHeight = getTotalContentHeight(rect.height, offsetLimit);
   const totalContentWidth = getTotalContentWidth(rect.width, offsetLimit);
@@ -243,11 +225,7 @@ function getScrollbarLayout(
     totalContentWidth,
     verticalScrollHeight: (rect.height * rect.height) / totalContentHeight,
     horizontalScrollWidth: (rect.width * rect.width) / totalContentWidth,
-    verticalScrollTop:
-      ((offsetLimit.maxY - transformMatrix[5]) * rect.height) /
-      totalContentHeight,
-    horizontalScrollLeft:
-      ((offsetLimit.maxX - transformMatrix[4]) * rect.width) /
-      totalContentWidth,
+    verticalScrollTop: ((offsetLimit.maxY - transformMatrix[5]) * rect.height) / totalContentHeight,
+    horizontalScrollLeft: ((offsetLimit.maxX - transformMatrix[4]) * rect.width) / totalContentWidth,
   };
 }

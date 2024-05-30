@@ -13,15 +13,14 @@ export interface IItemConfigArgs<T> {
   viewport: Required<IViewport>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface INodeDrawArgs<NodeData = unknown, PortData = unknown>
   extends IItemConfigArgs<NodeModel<NodeData, PortData>> {}
 
 export interface INodeConfig<NodeData = unknown, PortData = unknown> {
   render(args: INodeDrawArgs<NodeData, PortData>): React.ReactNode;
   renderDummy?(rect: ICanvasNode<NodeData, PortData>): React.ReactNode;
-  renderStatic?(
-    args: Omit<INodeDrawArgs<NodeData, PortData>, "viewport">
-  ): React.ReactNode;
+  renderStatic?(args: Omit<INodeDrawArgs<NodeData, PortData>, "viewport">): React.ReactNode;
   getStyle?(rect: ICanvasNode<NodeData, PortData>): React.CSSProperties;
   getMinWidth(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
   getMinHeight(rect: Partial<ICanvasNode<NodeData, PortData>>): number;
@@ -30,8 +29,7 @@ export interface INodeConfig<NodeData = unknown, PortData = unknown> {
   renderTooltips?(args: INodeDrawArgs<NodeData, PortData>): React.ReactNode;
 }
 
-export interface IEdgeDrawArgs<T = unknown>
-  extends IItemConfigArgs<EdgeModel<T>> {
+export interface IEdgeDrawArgs<T = unknown> extends IItemConfigArgs<EdgeModel<T>> {
   data: GraphModel;
   x1: number;
   y1: number;
@@ -45,11 +43,7 @@ export interface IEdgeConfig<T = unknown> {
   renderWithSourceHint?(args: IEdgeDrawArgs<T>): React.ReactNode;
 }
 
-export interface IGetConnectableParams<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export interface IGetConnectableParams<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   model: ICanvasPort<PortData>;
   parentNode: NodeModel<NodeData, PortData>;
   anotherPort?: ICanvasPort<PortData> | undefined;
@@ -57,11 +51,8 @@ export interface IGetConnectableParams<
   data: GraphModel<NodeData, EdgeData, PortData>;
 }
 
-export interface IPortDrawArgs<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> extends IItemConfigArgs<ICanvasPort<PortData>>,
+export interface IPortDrawArgs<NodeData = unknown, EdgeData = unknown, PortData = unknown>
+  extends IItemConfigArgs<ICanvasPort<PortData>>,
     IGetConnectableParams<NodeData, EdgeData, PortData> {
   x: number;
   y: number;
@@ -73,45 +64,25 @@ export interface IGroupDrawArgs {
   width: number;
 }
 
-export interface IPortConfig<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export interface IPortConfig<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   render(args: IPortDrawArgs<NodeData, EdgeData, PortData>): React.ReactNode;
-  getIsConnectable(
-    params: IGetConnectableParams<NodeData, EdgeData, PortData>
-  ): boolean | undefined;
-  renderTooltips?(
-    args: Omit<IPortDrawArgs<NodeData, EdgeData, PortData>, "setData">
-  ): React.ReactNode;
+  getIsConnectable(params: IGetConnectableParams<NodeData, EdgeData, PortData>): boolean | undefined;
+  renderTooltips?(args: Omit<IPortDrawArgs<NodeData, EdgeData, PortData>, "setData">): React.ReactNode;
 }
 
 export interface IGroupConfig {
   render(args: IGroupDrawArgs): React.ReactNode;
 }
 
-export interface IGraphClipboard<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
+export interface IGraphClipboard<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
   write(data: ICanvasData<NodeData, EdgeData, PortData>): void;
   read(): ICanvasData<NodeData, EdgeData, PortData> | null;
 }
 
-export interface IGraphConfig<
-  NodeData = unknown,
-  EdgeData = unknown,
-  PortData = unknown
-> {
-  getNodeConfig(
-    node: ICanvasNode<NodeData, PortData>
-  ): INodeConfig<ICanvasNode<NodeData, PortData>> | undefined;
+export interface IGraphConfig<NodeData = unknown, EdgeData = unknown, PortData = unknown> {
+  getNodeConfig(node: ICanvasNode<NodeData, PortData>): INodeConfig<ICanvasNode<NodeData, PortData>> | undefined;
   getEdgeConfig(edge: ICanvasEdge<EdgeData>): IEdgeConfig<EdgeData> | undefined;
-  getPortConfig(
-    port: ICanvasPort<PortData>
-  ): IPortConfig<NodeData, EdgeData, PortData> | undefined;
+  getPortConfig(port: ICanvasPort<PortData>): IPortConfig<NodeData, EdgeData, PortData> | undefined;
   getGroupConfig(group: ICanvasGroup): IGroupConfig | undefined;
   getClipboard(): IGraphClipboard<NodeData, EdgeData, PortData>;
 }

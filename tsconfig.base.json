@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "react-dag-editor": ["packages/react-dag-editor/src/index.ts"]
+      "react-dag-editor": ["packages/react-dag-editor/src/index.ts"],
+      "react-dag-editor-next": ["packages/react-dag-editor-next/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

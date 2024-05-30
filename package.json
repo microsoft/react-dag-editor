@@ -3,9 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build": "yarn nx run-many --target=build --all",
-    "lint": "yarn nx run-many --target=lint --all",
-    "test": "yarn nx test react-dag-editor"
+    "build": "yarn nx run-many --target=build",
+    "lint": "yarn nx run-many --target=lint",
+    "test": "yarn nx run-many --target=test"
   },
   "private": true,
   "dependencies": {

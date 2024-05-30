@@ -7,7 +7,7 @@ import dts from "vite-plugin-dts";
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: "../../node_modules/.vite/packages/reacat-dag-editor",
+  cacheDir: "../../node_modules/.vite/packages/react-dag-editor",
 
   plugins: [
     react(),
@@ -26,7 +26,7 @@ export default defineConfig({
   // Configuration for building your library.
   // See: https://vitejs.dev/guide/build.html#library-mode
   build: {
-    outDir: "../../dist/packages/reacat-dag-editor",
+    outDir: "../../dist/packages/react-dag-editor",
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {

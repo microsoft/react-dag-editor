@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ReactDagEditor, Graph, createGraphState, IDispatch } from "react-dag-editor";
+import { ReactDagEditor, Graph, createGraphState, IDispatch, GraphConfigBuilder } from "react-dag-editor";
 import { IGraphState } from "../types/core";
 import { SingleGraphViewModel } from "../viewmodels/SingleGraphViewModel";
 
@@ -8,8 +8,12 @@ export interface ICanvasProps {
 }
 
 export const Canvas: FC<ICanvasProps> = ({ viewModel }) => {
-  const state: IGraphState = createGraphState({
+  const graphConfig = GraphConfigBuilder.default<never, never, never>().build();
+  const state: IGraphState = createGraphState<never, never, never>({
     data: viewModel.getData(),
+    settings: {
+      graphConfig,
+    },
   });
 
   return (

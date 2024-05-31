@@ -2,7 +2,13 @@ import { FC } from "react";
 import { ICanvasData, ReactDagEditor, SingleGraphViewModel } from "../../src";
 
 const initData: ICanvasData = {
-  nodes: [],
+  nodes: [
+    {
+      id: "0",
+      x: 100,
+      y: 100,
+    },
+  ],
   edges: [],
 };
 

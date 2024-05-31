@@ -1,6 +1,8 @@
 import { FC } from "react";
-import { Canvas } from "../../src";
+import { Canvas, SingleGraphViewModel } from "../../src";
+
+const viewModel = new SingleGraphViewModel();
 
 export const CanvasStory: FC = () => {
-  return <Canvas />;
+  return <Canvas viewModel={viewModel} />;
 };

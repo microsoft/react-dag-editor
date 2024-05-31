@@ -1,6 +1,5 @@
 import { FC } from "react";
-import { ICanvasData } from "react-dag-editor";
-import { ReactDagEditor, SingleGraphViewModel } from "../../src";
+import { ICanvasData, ReactDagEditor, SingleGraphViewModel } from "../../src";
 
 const initData: ICanvasData = {
   nodes: [],

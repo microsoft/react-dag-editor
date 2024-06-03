@@ -26,6 +26,10 @@
     "stories/**/*.stories.jsx",
     "stories/**/*.stories.tsx",
     "stories/**/*.stories.mdx",
+    "stories/**/*.ts",
+    "stories/**/*.js",
+    "stories/**/*.jsx",
+    "stories/**/*.tsx",
     ".storybook/*.js",
     ".storybook/*.ts"
   ]

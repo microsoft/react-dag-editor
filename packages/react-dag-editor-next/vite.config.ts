@@ -7,15 +7,12 @@ import dts from "vite-plugin-dts";
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: "../../node_modules/.vite/packages/react-dag-editor",
+  cacheDir: "../../node_modules/.vite/packages/react-dag-editor-next",
 
   plugins: [
     react(),
     nxViteTsPaths(),
-    dts({
-      entryRoot: "src",
-      tsconfigPath: path.join(__dirname, "tsconfig.lib.json"),
-    }),
+    dts({ entryRoot: "src", tsconfigPath: path.join(__dirname, "tsconfig.lib.json") }),
   ],
 
   // Uncomment this if you are using workers.
@@ -26,7 +23,7 @@ export default defineConfig({
   // Configuration for building your library.
   // See: https://vitejs.dev/guide/build.html#library-mode
   build: {
-    outDir: "../../dist/packages/react-dag-editor",
+    outDir: "../../dist/packages/react-dag-editor-next",
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
@@ -35,7 +32,7 @@ export default defineConfig({
     lib: {
       // Could also be a dictionary or array of multiple entry points.
       entry: "src/index.ts",
-      name: "react-dag-editor",
+      name: "react-dag-editor-next",
       fileName: "index",
       // Change this to the formats you want to support.
       // Don't forget to update your package.json as well.

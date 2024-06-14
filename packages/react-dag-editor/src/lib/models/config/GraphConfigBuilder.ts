@@ -20,8 +20,12 @@ export class GraphConfigBuilder<NodeData = unknown, EdgeData = unknown, PortData
     };
   }
 
-  public static default(): GraphConfigBuilder {
-    return new GraphConfigBuilder();
+  public static default<NodeData = unknown, EdgeData = unknown, PortData = unknown>(): GraphConfigBuilder<
+    NodeData,
+    EdgeData,
+    PortData
+  > {
+    return new GraphConfigBuilder<NodeData, EdgeData, PortData>();
   }
 
   public static from(graphConfig: IGraphConfig): GraphConfigBuilder {
@@ -62,7 +66,7 @@ export class GraphConfigBuilder<NodeData = unknown, EdgeData = unknown, PortData
     return this;
   }
 
-  public build(): IGraphConfig {
+  public build(): IGraphConfig<NodeData, EdgeData, PortData> {
     return this.draft;
   }
 }

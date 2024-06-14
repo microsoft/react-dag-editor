@@ -1,0 +1,24 @@
+import { FC } from "react";
+import { ICanvasData, ReactDagEditor, SingleGraphViewModel } from "../../src";
+
+const initData: ICanvasData = {
+  nodes: [
+    {
+      id: "0",
+      x: 100,
+      y: 100,
+    },
+  ],
+  edges: [],
+};
+
+const viewModel = new SingleGraphViewModel();
+
+export const ReactDagEditorStory: FC = () => {
+  return (
+    <div>
+      <button onClick={() => viewModel.setData(initData)}>Load init data</button>
+      <ReactDagEditor viewModel={viewModel} />
+    </div>
+  );
+};

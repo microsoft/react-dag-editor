@@ -7,15 +7,22 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "suppressImplicitAnyIndexErrors": true,
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "useUnknownInCatchVariables": false,
+    "ignoreDeprecations": "5.0",
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "baseUrl": ".",
     "paths": {
-      "react-dag-editor": ["packages/react-dag-editor/src/index.ts"]
+      "react-dag-editor": ["packages/react-dag-editor/src/index.ts"],
+      "react-dag-editor-next": ["packages/react-dag-editor-next/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

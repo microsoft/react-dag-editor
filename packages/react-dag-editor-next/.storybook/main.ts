@@ -1,14 +1,24 @@
 import { dirname, join } from "path";
 import type { StorybookConfig } from "@storybook/react-vite";
+import { mergeConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const config: StorybookConfig = {
-  stories: ["../src/stories/**/*.stories.@(js|jsx|ts|tsx|mdx)"],
+  stories: ["../stories/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"],
   addons: [
     getAbsolutePath("@storybook/addon-essentials"),
     getAbsolutePath("@storybook/addon-interactions"),
     "@chromatic-com/storybook",
   ],
-
+  async viteFinal(viteConfig) {
+    return mergeConfig(viteConfig, {
+      plugins: [
+        tsconfigPaths({
+          projects: ["../../tsconfig.base.json"],
+        }),
+      ],
+    });
+  },
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {

@@ -30,7 +30,6 @@ const stepNodeContainerStyles: React.CSSProperties = {
   flexGrow: 1,
   height: "100%",
   backgroundColor: "yellow",
-  opacity: 0.5,
 };
 
 const StepNode: React.FC<{ name: string }> = props => {

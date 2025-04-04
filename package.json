@@ -68,7 +68,7 @@
     "ts-node": "10.9.1",
     "typescript": "^5.4.5",
     "uuid": "^9.0.1",
-    "vite": "^5.4.14",
+    "vite": "^5.4.17",
     "vite-plugin-dts": "^3.9.1",
     "vitest": "^1.6.1"
   },

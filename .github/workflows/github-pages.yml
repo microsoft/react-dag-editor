@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2.8.0
 
       - name: Yarn install
         run: yarn --frozen-lockfile
@@ -16,7 +16,7 @@ jobs:
 
       - name: Release pages
         if: github.ref == 'refs/heads/main'
-        uses: crazy-max/ghaction-github-pages@v2.5.0
+        uses: crazy-max/ghaction-github-pages@db4476a01402e1a7ce05f41832040eef16d14925 # v2.5.0
         with:
           build_dir: ./dist/storybook/react-dag-editor
           commit_message: Update pages

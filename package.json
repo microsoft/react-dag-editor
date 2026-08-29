@@ -62,7 +62,7 @@
     "react-jss": "^10.10.0",
     "react-test-renderer": "^18.3.1",
     "sass": "^1.55.0",
-    "storybook": "^8.6.4",
+    "storybook": "^8.6.17",
     "toposort": "^2.0.2",
     "ts-jest": "^29.1.4",
     "ts-node": "10.9.1",

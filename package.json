@@ -28,7 +28,7 @@
     "@nx/web": "^20.5.0",
     "@storybook/addon-essentials": "^8.6.4",
     "@storybook/addon-interactions": "^8.6.4",
-    "@storybook/core-server": "^8.6.4",
+    "@storybook/core-server": "^8.6.19",
     "@storybook/react-vite": "^8.6.4",
     "@storybook/test": "^8.6.4",
     "@storybook/test-runner": "^0.22.0",

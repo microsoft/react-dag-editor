@@ -45,7 +45,7 @@
     "@typescript-eslint/parser": "^7.3.0",
     "@vitejs/plugin-react": "^4.3.4",
     "@vitest/ui": "^1.6.1",
-    "dompurify": "^3.2.4",
+    "dompurify": "^3.4.17",
     "eslint": "~8.57.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "2.27.5",
